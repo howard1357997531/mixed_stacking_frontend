@@ -1,0 +1,27 @@
+.ai-worklist::-webkit-scrollbar {
+    width: 10px;
+}
+
+.ai-worklist::-webkit-scrollbar-track { 
+    background-color: #a1887f;
+}
+
+.ai-worklist::-webkit-scrollbar-thumb { 
+    background-color: #795548;
+}
+
+.gif img {
+    position: absolute;
+    top: 40% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 400px !important;
+    height: 300px !important;
+}
+
+.ai-result-img {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+

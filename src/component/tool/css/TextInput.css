@@ -1,0 +1,21 @@
+input {
+    width: 40%;
+    height: 4vh;
+    padding: 8px;
+    border:1px solid #795548;
+    text-align: center;
+    color: #ffeb3b;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+input::placeholder {
+    color: #795548;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+input:focus {
+    outline: none;
+    transform: scale(1.05);
+}

@@ -1,0 +1,26 @@
+.work-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.work-list::-webkit-scrollbar-track { 
+    background-color: #bdbdbd;
+}
+
+.work-list::-webkit-scrollbar-thumb { 
+    background-color: #616161;
+}
+
+.work-list img {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.start-aiTraining-box {
+    animation: emphasize 1.5s infinite ease-in-out;
+}
+
+@keyframes emphasize {
+    0% {transform: scale(1.05);}
+    50% {transform: scale(0.95);}
+    100% {transform: scale(1.05);}
+}
