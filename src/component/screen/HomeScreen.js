@@ -79,7 +79,8 @@ function HomeScreen() {
   }, []);
 
   const buttonHandler = (position) => {
-    navigate(position === "left" ? "/select-item" : "/control-robot");
+    // navigate(position === "left" ? "/select-item" : "/control-robot");
+    navigate(position === "left" ? "/select-item" : "/upload-file");
   };
 
   useEffect(() => {
