@@ -1,0 +1,14 @@
+.labelStyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 60px;
+    background-color: aqua;
+}
+
+.labelStyle:hover {
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
