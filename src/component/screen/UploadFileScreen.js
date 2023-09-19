@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import "./css/uploadFile.css";
 
@@ -15,10 +15,13 @@ function UploadFileScreen() {
     backgroundColor: grey[600],
   }));
 
-  const [order, setOrder] = useState([]);
-  console.log(order);
+  const [orders, setOrders] = useState([]);
+  console.log(orders);
   const fileChangeHandler = (e) => {
     const formData = new FormData();
+    console.log(e.target.files.length);
+    console.log(e.target.files);
+    console.log(e.target.files[0]);
     formData.append(`csv_file_length`, e.target.files.length);
     for (let i = 0; i < e.target.files.length; i++) {
       formData.append(`csv_file${i + 1}`, e.target.files[i]);
@@ -30,13 +33,22 @@ function UploadFileScreen() {
           "Content-Type": "multipart/form-data",
         },
       })
+      .then((res) => {});
+  };
+
+  const CreateXlsxFileHandler = (id) => {
+    console.log(id);
+    axios
+      .get(`http://127.0.0.1:8000/api/getOrderXlsxFile/${id}/`)
       .then((res) => {
-        setOrder(res.data);
+        console.log(res.data);
       });
   };
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/getOrderData/").then((res) => {});
+    axios.get("http://127.0.0.1:8000/api/getOrderData/").then((res) => {
+      setOrders(res.data);
+    });
   }, []);
 
   return (
@@ -54,6 +66,9 @@ function UploadFileScreen() {
           上傳
         </label>
       </StyleUploadBox>
+      {orders.map((order) => (
+        <Button onClick={() => CreateXlsxFileHandler(order.id)}>123</Button>
+      ))}
     </StyleBox>
   );
 }
