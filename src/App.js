@@ -5,6 +5,7 @@ import ControlRobotScreen from "./component/screen/ControlRobotScreen";
 import SelectItemScreen from "./component/screen/SelectItemScreen";
 import AiTrainingScreen from "./component/screen/AiTrainingScreen";
 import UploadFileScreen from "./component/screen/UploadFileScreen";
+import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/control-robot" element={<ControlRobotScreen />} />
         <Route path="/select-item" element={<SelectItemScreen />} />
         <Route path="/ai-training" element={<AiTrainingScreen />} />
-        <Route path="/upload-file" element={<UploadFileScreen/>} />
+        <Route path="/upload-file" element={<UploadFileScreen />} />
+        <Route path="/create-orderlist" element={<CreateOrderListScreen />} />
       </Routes>
     </Router>
   );
