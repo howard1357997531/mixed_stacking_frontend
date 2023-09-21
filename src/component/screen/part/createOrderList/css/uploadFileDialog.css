@@ -1,0 +1,18 @@
+.labelStyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 30px;
+    background-color: aqua;
+}
+
+.labelStyle:hover {
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.labelStyle:active {
+    transform: scale(.95);
+}

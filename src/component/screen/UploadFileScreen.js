@@ -19,9 +19,6 @@ function UploadFileScreen() {
   console.log(orders);
   const fileChangeHandler = (e) => {
     const formData = new FormData();
-    console.log(e.target.files.length);
-    console.log(e.target.files);
-    console.log(e.target.files[0]);
     formData.append(`csv_file_length`, e.target.files.length);
     for (let i = 0; i < e.target.files.length; i++) {
       formData.append(`csv_file${i + 1}`, e.target.files[i]);
@@ -57,7 +54,6 @@ function UploadFileScreen() {
         <input
           type="file"
           id="file"
-          name="file"
           onChange={fileChangeHandler}
           style={{ display: "none" }}
           multiple

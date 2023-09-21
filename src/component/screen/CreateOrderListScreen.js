@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Stack, styled } from "@mui/material";
 import { brown, red } from "@mui/material/colors";
 import WorkListDropdownMenu from "./part/createOrderList/WorkListDropdownMenu";
+import UploadFileDialog from "./part/createOrderList/UploadFileDialog";
 
 function CreateOrderListScreen() {
   const StyleStack = styled(Stack)(({ theme }) => ({
@@ -123,23 +124,36 @@ function CreateOrderListScreen() {
     height: "90%",
     backgroundColor: red[200],
   }));
+
+  const [functionBoxOpen, setFunctionBoxOpen] = useState(false);
+  const [uploadFileDialogOpen, setUploadFileDialogOpen] = useState(false);
+
+  const onFunctionMenuValueHandler = (mode) => {
+    console.log(mode);
+    setFunctionBoxOpen(true);
+  };
+
+  const onUploadFileOpenHAndler = () => {};
   return (
     <StyleStack>
       <StyleBox>
         <WorkListBox>
           <WorkListTopBox>
             <WorkListTopSearchBox>123</WorkListTopSearchBox>
+
             <WorkListTopDropdownBox>
-              <WorkListDropdownMenu />
+              <WorkListDropdownMenu
+                onFunctionMenuValue={onFunctionMenuValueHandler}
+              />
             </WorkListTopDropdownBox>
+
             <WorkListTopUploadFileBox>
-              <WorkListTopUploadFileButton>
-                上傳檔案
-              </WorkListTopUploadFileButton>
+              <UploadFileDialog onUploadFileOpen={onUploadFileOpenHAndler} />
             </WorkListTopUploadFileBox>
           </WorkListTopBox>
           <WorkListBottonBox>123</WorkListBottonBox>
         </WorkListBox>
+
         <FunctionBox>123</FunctionBox>
       </StyleBox>
     </StyleStack>
