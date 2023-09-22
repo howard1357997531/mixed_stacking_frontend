@@ -3,24 +3,9 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material";
-import { brown } from "@mui/material/colors";
+import { brown, grey } from "@mui/material/colors";
 
 function WorkListDropdownMenu({ onFunctionMenuValue }) {
-  const StyleButton = styled(Button)(({ theme }) => ({
-    width: "80%",
-    height: "80%",
-    color: "#fff",
-    backgroundColor: brown[500],
-    "&:hover": {
-      transform: "scale(1.05)",
-      transition: "all 0.2s ease-in-out",
-      backgroundColor: brown[700],
-      cursor: "pointer",
-    },
-    "&:active": {
-      transform: "scale(0.95)",
-    },
-  }));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -49,13 +34,13 @@ function WorkListDropdownMenu({ onFunctionMenuValue }) {
         onClick={handleClick}
         sx={{
           width: "80%",
-          height: "80%",
+          height: "60%",
           color: "#fff",
-          backgroundColor: brown[500],
+          backgroundColor: grey[700],
           "&:hover": {
             transform: "scale(1.05)",
             transition: "all 0.2s ease-in-out",
-            backgroundColor: brown[700],
+            backgroundColor: grey[800],
             cursor: "pointer",
           },
           "&:active": {
@@ -63,20 +48,22 @@ function WorkListDropdownMenu({ onFunctionMenuValue }) {
           },
         }}
       >
-        Dashboard
+        Tool
       </Button>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={() => handleClose(null)}
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={() => handleClose("qrcode")}>下載 QR code</MenuItem>
-        <MenuItem onClick={() => handleClose("modify")}>修改</MenuItem>
-        <MenuItem onClick={() => handleClose("delete")}>刪除</MenuItem>
+        <MenuItem onClick={() => handleClose("qrcode")}>
+          Download QR code
+        </MenuItem>
+        <MenuItem onClick={() => handleClose("modify")}>Modify</MenuItem>
+        <MenuItem onClick={() => handleClose("delete")}>Delete</MenuItem>
       </Menu>
     </div>
   );

@@ -10,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { brown, grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import "./css/uploadFileDialog.css";
 
@@ -25,13 +26,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function UploadFileDialog() {
   const WorkListTopUploadFileButton = styled(Button)(({ theme }) => ({
     width: "80%",
-    height: "80%",
+    height: "60%",
     color: "#fff",
     backgroundColor: brown[500],
     "&:hover": {
       transform: "scale(1.05)",
       transition: "all 0.2s ease-in-out",
-      backgroundColor: brown[700],
+      backgroundColor: brown[600],
       cursor: "pointer",
     },
     "&:active": {
@@ -40,25 +41,36 @@ function UploadFileDialog() {
   }));
   const StyleDialogContent = styled(DialogContent)(({ theme }) => ({
     position: "relative",
-    width: "680px",
-    height: "450px",
+    width: "600px",
+    height: "400px",
+    padding: "0px !important",
+    backgroundColor: brown[300],
   }));
   const DashBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "25%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "20%",
-    height: "20%",
-    border: `1px dashed ${grey[800]}`,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "25%",
+    height: "25%",
+    border: `1px dashed ${grey[100]}`,
   }));
   const UploadTextBox = styled(Box)(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "red",
   }));
+  const UploadText = styled(Typography)(({ theme }) => ({
+    color: grey[100],
+  }));
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -88,7 +100,7 @@ function UploadFileDialog() {
   return (
     <>
       <WorkListTopUploadFileButton variant="outlined" onClick={handleClickOpen}>
-        上傳工單
+        Upload
       </WorkListTopUploadFileButton>
       <BootstrapDialog
         maxWidth={false}
@@ -97,7 +109,7 @@ function UploadFileDialog() {
         open={open}
       >
         <DialogTitle
-          sx={{ m: 0, p: 2 }}
+          sx={{ m: 0, p: 2, backgroundColor: brown[300] }}
           id="customized-dialog-title"
         ></DialogTitle>
         <IconButton
@@ -107,13 +119,20 @@ function UploadFileDialog() {
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            zIndex: 88,
+            color: (theme) => theme.palette.grey[700],
           }}
         >
           <CloseIcon />
         </IconButton>
-        <StyleDialogContent>
-          <DashBox></DashBox>
+
+        <StyleDialogContent className="useAfter">
+          <DashBox>
+            <CloudUploadIcon
+              sx={{ color: grey[100], fontSize: "40px" }}
+              className="uploadIconAnimation"
+            />
+          </DashBox>
           <UploadTextBox>
             <input
               type="file"
@@ -123,8 +142,9 @@ function UploadFileDialog() {
               multiple
             />
             <label htmlFor="file" className="labelStyle">
-              上傳
+              Browse
             </label>
+            <UploadText variant="body1">or drag images here</UploadText>
           </UploadTextBox>
         </StyleDialogContent>
       </BootstrapDialog>
