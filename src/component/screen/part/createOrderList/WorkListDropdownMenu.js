@@ -37,6 +37,7 @@ function WorkListDropdownMenu({ onFunctionMenuValue }) {
           height: "60%",
           color: "#fff",
           backgroundColor: grey[700],
+          textTransform: "capitalize",
           "&:hover": {
             transform: "scale(1.05)",
             transition: "all 0.2s ease-in-out",
@@ -62,7 +63,7 @@ function WorkListDropdownMenu({ onFunctionMenuValue }) {
         <MenuItem onClick={() => handleClose("qrcode")}>
           Download QR code
         </MenuItem>
-        <MenuItem onClick={() => handleClose("modify")}>Modify</MenuItem>
+        <MenuItem onClick={() => handleClose("edit")}>Edit</MenuItem>
         <MenuItem onClick={() => handleClose("delete")}>Delete</MenuItem>
       </Menu>
     </div>

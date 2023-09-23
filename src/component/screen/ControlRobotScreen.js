@@ -6,7 +6,6 @@ import {
   grey,
   orange,
   pink,
-  purple,
   teal,
   yellow,
 } from "@mui/material/colors";
@@ -16,7 +15,6 @@ import axios from "axios";
 import Dot from "../tool/Dot";
 import OperateInterfaceDailog from "../part/home/OperateInterfaceDailog";
 import "./css/controlRobotScreen.css";
-import { color } from "../color/Color";
 import { customColor } from "../customColor/customColor";
 
 function ControlRobotScreen() {
@@ -127,10 +125,7 @@ function ControlRobotScreen() {
     color: grey[800],
   }));
   const StyleDotBox = styled(Box)(({ theme }) => ({
-    display:
-      currentState === "啟動手臂中" || robotState === "prepare"
-        ? "flex"
-        : "none",
+    display: robotState === "prepare" ? "flex" : "none",
     justifyContent: "center",
     alignItems: "flex-end",
     height: "45%",
