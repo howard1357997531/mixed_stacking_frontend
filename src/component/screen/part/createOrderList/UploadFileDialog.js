@@ -95,7 +95,9 @@ function UploadFileDialog() {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => {});
+      .then((res) => {
+        window.location.reload();
+      });
   };
 
   return (

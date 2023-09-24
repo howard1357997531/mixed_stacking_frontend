@@ -3,10 +3,10 @@ import { Avatar, Box, Button, Stack, Typography, styled } from "@mui/material";
 import {
   blueGrey,
   brown,
-  green,
+  deepPurple,
   grey,
   indigo,
-  red,
+  lightBlue,
   teal,
 } from "@mui/material/colors";
 import WorkListDropdownMenu from "./part/createOrderList/WorkListDropdownMenu";
@@ -162,11 +162,20 @@ function CreateOrderListScreen() {
     },
   }));
   const FunctionTopBox = styled(Box)(({ theme }) => ({
+    position: "relative",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    gap: "5px",
     width: "100%",
     height: "10%",
+  }));
+  const FunctionTopOrderBotton = styled(Button)(({ theme }) => ({
+    position: "absolute",
+    right: 0,
+    textTransform: "initial",
+    display:
+      functionBoxData.aiTraining_state === "is_training" ? "none" : "block",
   }));
   const FunctionTopBoxAvatar = styled(Avatar)(({ theme }) => ({
     width: 30,
@@ -176,6 +185,7 @@ function CreateOrderListScreen() {
     backgroundColor: currentColor(functionBoxMode),
   }));
   const FunctionBottonBox = styled(Box)(({ theme }) => ({
+    position: "relative",
     width: "100%",
     height: "90%",
     overflowY: "auto",
@@ -183,7 +193,37 @@ function CreateOrderListScreen() {
     boxSizing: "border-box",
     padding: functionBoxMode === "order" ? 10 : 0,
   }));
-  const FunctionDetialBox = styled(Box)(({ theme }) => ({
+  const FunctionOrderBox = styled(Box)(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+    height: "50px",
+    borderBottom: `1px solid ${blueGrey[100]}`,
+    "&:hover": {
+      color: deepPurple[500],
+      fontSize: "24px",
+      fontWeight: 600,
+      backgroundColor: grey[300],
+      cursor: "pointer",
+    },
+  }));
+  const FunctionOrderSmallBox = styled(Box)(({ theme }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "20%",
+    height: "100%",
+  }));
+  const FunctionOrderGifText = styled(Typography)({
+    position: "absolute",
+    top: "57%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    color: lightBlue[700],
+    fontSize: "24px",
+    fontWeight: 600,
+  });
+  const FunctionToolBox = styled(Box)(({ theme }) => ({
     display: "flex",
     // justifyContent: "center",
     alignItems: "center",
@@ -197,7 +237,7 @@ function CreateOrderListScreen() {
       backgroundColor: brown[300],
     },
   }));
-  const FunctionNameBox = styled(Box)(({ theme }) => ({
+  const FunctionToolNameBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -211,14 +251,14 @@ function CreateOrderListScreen() {
     //   backgroundColor: brown[300],
     // },
   }));
-  const FunctionDetialDateBox = styled(Box)(({ theme }) => ({
+  const FunctionToolDateBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "left",
     alignItems: "center",
     width: "40%",
     height: "100%",
   }));
-  const FunctionDetialRemoveBox = styled(Box)(({ theme }) => ({
+  const FunctionToolRemoveBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -248,7 +288,8 @@ function CreateOrderListScreen() {
   const [functionBoxMode, setFunctionBoxMode] = useState("");
   const [functionBoxData, setFunctionBoxData] = useState([]);
   const [uploadFileDialogOpen, setUploadFileDialogOpen] = useState(false);
-  console.log("orderSelectId: ", orderSelectId);
+  console.log("functionBoxData: ", functionBoxData);
+  // console.log("orderSelectId: ", orderSelectId);
 
   const currentColor = (mode) => {
     if (mode === "qrcode") {
@@ -261,7 +302,6 @@ function CreateOrderListScreen() {
   };
   const spanStyle = {
     color: currentColor(functionBoxMode),
-    margin: "4px",
     fontWeight: 900,
   };
   const checkOrderIdInfunctionBoxData = (id) => {
@@ -269,10 +309,31 @@ function CreateOrderListScreen() {
     return check ? true : false;
   };
 
+  const aiTrainingHandler = (id, training_state) => {
+    console.log(training_state);
+    if (training_state === "no_training") {
+      const tempOrder = orders.map((order) =>
+        order.id === id ? { ...order, aiTraining_state: "is_training" } : order
+      );
+      setOrders(tempOrder);
+      setFunctionBoxData({
+        ...functionBoxData,
+        aiTraining_state: "is_training",
+      });
+    } else if (training_state === "finish_training") {
+      setFunctionBoxMode("ai_result");
+      console.log("aiaiaiaiai");
+    }
+  };
+
   const orderDetailHandler = (id) => {
     const [orderData] = orders.filter((order) => order.id === id);
 
-    if (functionBoxOpen && functionBoxMode !== "order") {
+    if (
+      functionBoxOpen &&
+      functionBoxMode !== "order" &&
+      functionBoxMode !== "ai_result"
+    ) {
       if (!checkOrderIdInfunctionBoxData(id)) {
         setOrderSelectId([...orderSelectId, id]);
         setFunctionBoxData([...functionBoxData, orderData]);
@@ -318,6 +379,7 @@ function CreateOrderListScreen() {
       setOrders(res.data);
     });
   }, []);
+
   return (
     <StyleStack>
       <StyleBox>
@@ -398,53 +460,129 @@ function CreateOrderListScreen() {
           {/* top box */}
           <FunctionTopBox>
             {functionBoxMode === "order" ? (
-              <Typography>Orderlist Detail</Typography>
+              <>
+                <Typography variant="h6" color={grey[800]}>
+                  Order Details
+                </Typography>
+                <FunctionTopOrderBotton
+                  variant="contained"
+                  onClick={() =>
+                    aiTrainingHandler(
+                      functionBoxData.id,
+                      functionBoxData.aiTraining_state
+                    )
+                  }
+                >
+                  {functionBoxData.aiTraining_state === "no_training"
+                    ? "AI training"
+                    : "AI result"}
+                </FunctionTopOrderBotton>
+              </>
             ) : (
-              <Typography>
-                Select{" "}
+              <>
+                <Typography>Select</Typography>
                 <FunctionTopBoxAvatar>
                   {functionBoxData.length}
-                </FunctionTopBoxAvatar>{" "}
-                orders for
-                {functionBoxMode === "qrcode" && (
-                  <span style={spanStyle}> creating QRcode</span>
-                )}
-                {functionBoxMode === "edit" && (
-                  <span style={spanStyle}> editing</span>
-                )}
-                {functionBoxMode === "delete" && (
-                  <span style={spanStyle}> deleting</span>
-                )}
-              </Typography>
+                </FunctionTopBoxAvatar>
+                <Typography>
+                  orders for
+                  {functionBoxMode === "qrcode" && (
+                    <span style={spanStyle}> creating QRcode</span>
+                  )}
+                  {functionBoxMode === "edit" && (
+                    <span style={spanStyle}> editing</span>
+                  )}
+                  {functionBoxMode === "delete" && (
+                    <span style={spanStyle}> deleting</span>
+                  )}
+                </Typography>
+              </>
             )}
           </FunctionTopBox>
 
           {/* botton box */}
-          <FunctionBottonBox>
-            {functionBoxMode === "order" ? (
-              <>
-                <Typography>csv name : {functionBoxData.name}</Typography>
-              </>
-            ) : (
+          <FunctionBottonBox className="worklist-box">
+            {functionBoxMode === "order" &&
+              (functionBoxData.aiTraining_state === "is_training" ? (
+                <>
+                  <img
+                    src={"loading.gif"}
+                    alt={"loading.gif"}
+                    className="ai-gif"
+                  ></img>
+                  <FunctionOrderGifText>training</FunctionOrderGifText>
+                </>
+              ) : (
+                <>
+                  <Typography>file name : {functionBoxData.name}</Typography>
+                  <Typography>
+                    AI training state : {functionBoxData.aiTraining_state}
+                  </Typography>
+                  <Typography>
+                    upload date : {functionBoxData.createdAt}
+                  </Typography>
+                  {/* <Typography>modify date : {functionBoxData.name}</Typography> */}
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    sx={{
+                      backgroundColor: blueGrey[500],
+                      color: "#fff",
+                      marginTop: "10px",
+                      padding: "5px 0px",
+                    }}
+                  >
+                    Order list
+                  </Typography>
+                  <FunctionOrderBox>
+                    <FunctionOrderSmallBox>name</FunctionOrderSmallBox>
+                    <FunctionOrderSmallBox>width</FunctionOrderSmallBox>
+                    <FunctionOrderSmallBox>height</FunctionOrderSmallBox>
+                    <FunctionOrderSmallBox>depth</FunctionOrderSmallBox>
+                    <FunctionOrderSmallBox>quantity</FunctionOrderSmallBox>
+                  </FunctionOrderBox>
+                  {functionBoxData.orderItem.map((order, index) => (
+                    <FunctionOrderBox key={index}>
+                      <FunctionOrderSmallBox>
+                        {order.name}
+                      </FunctionOrderSmallBox>
+                      <FunctionOrderSmallBox>
+                        {order.width}
+                      </FunctionOrderSmallBox>
+                      <FunctionOrderSmallBox>
+                        {order.height}
+                      </FunctionOrderSmallBox>
+                      <FunctionOrderSmallBox>
+                        {order.depth}
+                      </FunctionOrderSmallBox>
+                      <FunctionOrderSmallBox>
+                        {order.quantity}
+                      </FunctionOrderSmallBox>
+                    </FunctionOrderBox>
+                  ))}
+                </>
+              ))}
+
+            {functionBoxMode === "ai_result" && "123"}
+
+            {functionBoxMode !== "order" &&
+              functionBoxMode !== "ai_result" &&
               functionBoxData.map((data) => (
-                <FunctionDetialBox key={data.id}>
-                  <FunctionNameBox>{data.name}</FunctionNameBox>
+                <FunctionToolBox key={data.id}>
+                  <FunctionToolNameBox>{data.name}</FunctionToolNameBox>
 
-                  <FunctionDetialDateBox>
-                    {data.createdAt}
-                  </FunctionDetialDateBox>
+                  <FunctionToolDateBox>{data.createdAt}</FunctionToolDateBox>
 
-                  <FunctionDetialRemoveBox>
+                  <FunctionToolRemoveBox>
                     <RemoveBotton
                       variant="outlined"
                       onClick={() => removeFunctionDetail(data.id)}
                     >
                       remove
                     </RemoveBotton>
-                  </FunctionDetialRemoveBox>
-                </FunctionDetialBox>
-              ))
-            )}
+                  </FunctionToolRemoveBox>
+                </FunctionToolBox>
+              ))}
           </FunctionBottonBox>
         </FunctionBox>
       </StyleBox>
