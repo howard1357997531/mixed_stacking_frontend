@@ -19,6 +19,7 @@ import { Stack, Typography, styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { blueGrey, brown, grey } from "@mui/material/colors";
 import "./css/nav.css";
+import QRcodeDialog from "./QRcodeDialog";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ function Navbar() {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    width: "15%",
+    width: "18%",
     height: "100%",
   });
 
@@ -95,6 +96,17 @@ function Navbar() {
     }
 
     setState({ ...state, [anchor]: open });
+  };
+
+  // QRcode
+  const [qrcodeOpen, setQRcodeOpen] = React.useState(false);
+
+  const qrCodeDialogOpenHandler = () => {
+    setQRcodeOpen(true);
+  };
+
+  const onQRcodeOpen = (mode) => {
+    setQRcodeOpen(mode);
   };
 
   const list = (anchor) => (
@@ -172,6 +184,20 @@ function Navbar() {
           </StyleSecondStack>
 
           <StyleSideStack className="linkBox-img">
+            <StyleLinkImageBox onClick={qrCodeDialogOpenHandler}>
+              <StyleLinkImageSmallBox>
+                <img
+                  src={"workListSetting.png"}
+                  alt={"workListSetting.png"}
+                ></img>
+                <StyleLinkImageBoxText>QRcode</StyleLinkImageBoxText>
+              </StyleLinkImageSmallBox>
+            </StyleLinkImageBox>
+            <QRcodeDialog
+              qrcodeOpen={qrcodeOpen}
+              onQRcodeOpen={onQRcodeOpen}
+            ></QRcodeDialog>
+
             <StyleLinkImageBox>
               <Link to={"/select-item"}>
                 <StyleLinkImageSmallBox>

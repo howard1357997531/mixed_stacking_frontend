@@ -15,6 +15,7 @@ import {
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import WorkListDropdownMenu from "./part/createOrderList/WorkListDropdownMenu";
 import UploadFileDialog from "./part/createOrderList/UploadFileDialog";
 import axios from "axios";
@@ -291,9 +292,6 @@ function CreateOrderListScreen() {
       backgroundColor: grey[300],
       cursor: "pointer",
     },
-    "&:active": {
-      backgroundColor: brown[300],
-    },
   }));
   const FunctionToolNameBox = styled(Box)(({ theme }) => ({
     display: "flex",
@@ -323,20 +321,15 @@ function CreateOrderListScreen() {
     width: "20%",
     height: "100%",
   }));
-  const RemoveBotton = styled(Button)(({ theme }) => ({
-    // backgroundColor: "red",
-    padding: "6px 8px",
-    textTransform: "lowercase",
+  const StyleRemoveCircleIcon = styled(RemoveCircleIcon)(({ theme }) => ({
     color: customColor.red,
-    borderColor: customColor.red,
     "&:hover": {
-      color: "#fff",
-      backgroundColor: customColor.red,
-      borderColor: customColor.red,
+      transform: "scale(1.2)",
+      transition: "all 0.2s ease-in-out",
       cursor: "pointer",
     },
     "&:active": {
-      backgroundColor: brown[300],
+      transform: "scale(.95)",
     },
   }));
 
@@ -420,8 +413,19 @@ function CreateOrderListScreen() {
           axios
             .post("http://127.0.0.1:8000/api/aiTraining/", { id, unique_code })
             .then((res) => {
+              setFunctionBoxData((prev) => {
+                return {
+                  ...prev,
+                  aiTraining_order: res.data.ai_str,
+                };
+              });
+              const tempOrders = orders.map((order) =>
+                order.id === id
+                  ? { ...order, aiTraining_order: res.data.ai_str }
+                  : order
+              );
+              setOrders(tempOrders);
               setFunctionBoxMode("ai_result");
-              console.log(res.data);
             });
         }
       });
@@ -465,6 +469,43 @@ function CreateOrderListScreen() {
       const tempData = functionBoxData.filter((data) => data.id !== id);
       setOrderSelectId(tempId);
       setFunctionBoxData(tempData);
+    }
+  };
+
+  const downloadQRcodeHandler = (mode) => {
+    if (functionBoxData.length === 0) {
+      Swal.fire({
+        title: "Please select order",
+        icon: "warning",
+        background: brown[300],
+        confirmButtonColor: deepPurple[300],
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+    if (mode === "qrcode") {
+      const formData = functionBoxData.map((data) => {
+        return {
+          id: data.id,
+          name: data.name,
+          createdAt: data.createdAt,
+          unique_code: data.unique_code,
+          aiTraining_order: data.aiTraining_order,
+        };
+      });
+      axios
+        .post("http://127.0.0.1:8000/api/getOrderXlsxFile/", {
+          datas: formData,
+        })
+        .then((res) => {
+          const a = document.createElement("a");
+          a.style.display = "none"; // 隐藏链接元素
+          a.href = res.data.xlsx_output_path;
+          a.setAttribute("download", "output.xlsx");
+          document.body.appendChild(a); // 将链接元素添加到 DOM
+          a.click();
+          document.body.removeChild(a); // 从 DOM 中移除链接元素
+        });
     }
   };
 
@@ -624,6 +665,7 @@ function CreateOrderListScreen() {
                       backgroundColor: currentHoverColor(functionBoxMode),
                     },
                   }}
+                  onClick={() => downloadQRcodeHandler(functionBoxMode)}
                 >
                   {functionBoxMode === "qrcode" && "Download"}
                   {functionBoxMode === "edit" && "Edit"}
@@ -701,7 +743,7 @@ function CreateOrderListScreen() {
                 {functionBoxData.aiTraining_order
                   .split(",")
                   .map((order, index) => (
-                    <FunctionAiResultSmallBox>
+                    <FunctionAiResultSmallBox key={index}>
                       <FunctionAiResultAvatar
                         sx={{ backgroundColor: AiResultAvatarBgcolor(index) }}
                       >
@@ -714,6 +756,7 @@ function CreateOrderListScreen() {
                   ))}
               </FunctionAiResultBox>
             )}
+
             {functionBoxMode !== "order" &&
               functionBoxMode !== "ai_result" &&
               functionBoxData.map((data) => (
@@ -723,12 +766,9 @@ function CreateOrderListScreen() {
                   <FunctionToolDateBox>{data.createdAt}</FunctionToolDateBox>
 
                   <FunctionToolRemoveBox>
-                    <RemoveBotton
-                      variant="outlined"
-                      onClick={() => removeFunctionDetail(data.id)}
-                    >
-                      remove
-                    </RemoveBotton>
+                    <IconButton onClick={() => removeFunctionDetail(data.id)}>
+                      <StyleRemoveCircleIcon />
+                    </IconButton>
                   </FunctionToolRemoveBox>
                 </FunctionToolBox>
               ))}
