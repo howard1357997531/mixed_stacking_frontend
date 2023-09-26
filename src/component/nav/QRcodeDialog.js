@@ -8,7 +8,7 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { brown, grey } from "@mui/material/colors";
+import { brown, grey, orange } from "@mui/material/colors";
 import { Box } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
@@ -22,53 +22,63 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-function QRcodeDialog({ qrcodeOpen, onQRcodeOpen }) {
-  const WorkListTopUploadFileButton = styled(Button)(({ theme }) => ({
-    width: "80%",
-    height: "60%",
-    color: "#fff",
-    backgroundColor: brown[500],
-    textTransform: "capitalize",
-    "&:hover": {
-      transform: "scale(1.05)",
-      transition: "all 0.2s ease-in-out",
-      backgroundColor: brown[600],
-      cursor: "pointer",
-    },
-    "&:active": {
-      transform: "scale(0.95)",
-    },
+function QRcodeDialog({ qrcodeOpen, onQRcodeOpen, onQRcodeId }) {
+  const StyleTitleBox = styled(Box)(({ theme }) => ({
+    display: "flex",
+    width: "400px",
+    height: "40px",
   }));
-  const StyleDialogContent = styled(DialogContent)(({ theme }) => ({
-    position: "relative",
-    width: "600px",
-    height: "400px",
-    padding: "0px !important",
-    backgroundColor: brown[300],
-  }));
-  const DashBox = styled(Box)(({ theme }) => ({
-    position: "absolute",
-    top: "25%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+  const StyleTypography = styled(Typography)(({ theme }) => ({
+    flex: 1,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "25%",
-    height: "25%",
-    border: `1px dashed ${grey[100]}`,
+    color: orange[100],
+    fontSize: "18px",
   }));
-  const UploadTextBox = styled(Box)(({ theme }) => ({
+  const StyleBox = styled(Box)(({ theme }) => ({
+    width: "400px",
+    height: "400px",
+    overflowY: "auto",
+    border: `2px solid ${brown[500]}`,
+  }));
+  const StyleInnerBox = styled(Box)(({ theme }) => ({
     display: "flex",
+    justifyContent: "center",
     alignItems: "center",
-    gap: "10px",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    width: "100%",
+    height: "60px",
+    "&:hover": {
+      backgroundColor: brown[500],
+      cursor: "pointer",
+    },
+    "&:active": {
+      backgroundColor: brown[700],
+    },
   }));
-  const UploadText = styled(Typography)(({ theme }) => ({
-    color: grey[100],
+  const StyleInnerSmallBox = styled(Box)(({ theme }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "50%",
+    height: "50px",
+    color: grey[900],
+    fontWeight: 600,
+    "&:hover": {
+      backgroundColor: brown[500],
+    },
+    "&:active": {
+      backgroundColor: brown[700],
+    },
+  }));
+  const StyleButtonBox = styled(Button)(({ theme }) => ({
+    width: "404px",
+    height: "50px",
+    marginTop: "10px",
+    backgroundColor: grey[700],
+    "&:hover": {
+      backgroundColor: grey[800],
+    },
   }));
 
   const [open, setOpen] = React.useState(qrcodeOpen);
@@ -99,21 +109,63 @@ function QRcodeDialog({ qrcodeOpen, onQRcodeOpen }) {
       });
   };
 
+  const runQRcodeOrder = (data) => {
+    if (window.location.pathname === "/control-robot2") {
+      onQRcodeId(data);
+      onQRcodeOpen(false);
+    } else {
+      window.location.reload();
+    }
+  };
+
+  const [qrcodeData, setQRcodeData] = React.useState([]);
+  console.log(qrcodeData);
+  React.useEffect(() => {
+    const FetchText = () => {
+      try {
+        if (qrcodeOpen) {
+          axios
+            .post("http://127.0.0.1:8000/api/getQRcodeDataFromDatabase/", {
+              url: window.location.pathname,
+            })
+            .then((res) => {
+              if (res.data.mode === "has data") {
+                const qrCodeData = {
+                  id: res.data.id,
+                  name: res.data.name,
+                  createdAt: res.data.createdAt,
+                  mode: "activate",
+                  speed: 50,
+                  qrcode: true,
+                };
+                setQRcodeData((prev) => {
+                  return [...prev, qrCodeData];
+                });
+              } else {
+                console.log(res.data.mode);
+              }
+            });
+        } else {
+          clearInterval(interval);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const interval = setInterval(FetchText, 1000);
+
+    return () => clearInterval(interval);
+  }, [qrcodeOpen]);
+
   return (
     <>
-      {/* <WorkListTopUploadFileButton variant="outlined" onClick={handleClickOpen}>
-        Upload
-      </WorkListTopUploadFileButton> */}
       <BootstrapDialog
         maxWidth={false}
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle
-          sx={{ m: 0, p: 2, backgroundColor: brown[300] }}
-          id="customized-dialog-title"
-        ></DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -127,28 +179,30 @@ function QRcodeDialog({ qrcodeOpen, onQRcodeOpen }) {
         >
           <CloseIcon />
         </IconButton>
+        <DialogContent sx={{ backgroundColor: brown[300] }}>
+          <StyleTitleBox>
+            <StyleTypography>Order name</StyleTypography>
+            <StyleTypography>Create time</StyleTypography>
+          </StyleTitleBox>
 
-        <StyleDialogContent className="useAfter">
-          <DashBox>
-            <CloudUploadIcon
-              sx={{ color: grey[100], fontSize: "40px" }}
-              className="uploadIconAnimation"
-            />
-          </DashBox>
-          <UploadTextBox>
-            <input
-              type="file"
-              id="file"
-              onChange={fileChangeHandler}
-              style={{ display: "none" }}
-              multiple
-            />
-            <label htmlFor="file" className="labelStyle">
-              Browse
-            </label>
-            <UploadText variant="body1">or drag images here</UploadText>
-          </UploadTextBox>
-        </StyleDialogContent>
+          <StyleBox className="dialog-box">
+            {qrcodeData.map((qrcode) => (
+              <StyleInnerBox key={qrcode.id}>
+                <StyleInnerSmallBox>{qrcode.name}</StyleInnerSmallBox>
+                <StyleInnerSmallBox>{qrcode.createdAt}</StyleInnerSmallBox>
+              </StyleInnerBox>
+            ))}
+          </StyleBox>
+
+          {qrcodeData.length !== 0 && (
+            <StyleButtonBox
+              variant="contained"
+              onClick={() => runQRcodeOrder(qrcodeData)}
+            >
+              execute
+            </StyleButtonBox>
+          )}
+        </DialogContent>
       </BootstrapDialog>
     </>
   );

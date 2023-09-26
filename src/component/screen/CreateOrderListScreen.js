@@ -555,55 +555,60 @@ function CreateOrderListScreen() {
 
           {/* botton box */}
           <WorkListBottonBox className="worklist-box">
-            {orders.map((order) => (
-              <WorkListDetialBox
-                key={order.id}
-                onClick={() => orderDetailHandler(order.id)}
-                sx={{
-                  backgroundColor: orderSelectId.includes(order.id)
-                    ? brown[300]
-                    : null,
-                  "&:hover": {
-                    backgroundColor: orderSelectId.includes(order.id)
-                      ? brown[300]
-                      : brown[100],
-                    cursor: "pointer",
-                  },
-                }}
-              >
-                <WorkListDetialNameBox>{order.name}</WorkListDetialNameBox>
+            {orders.map(
+              (order) =>
+                order.display && (
+                  <WorkListDetialBox
+                    key={order.id}
+                    onClick={() => orderDetailHandler(order.id)}
+                    sx={{
+                      backgroundColor: orderSelectId.includes(order.id)
+                        ? brown[300]
+                        : null,
+                      "&:hover": {
+                        backgroundColor: orderSelectId.includes(order.id)
+                          ? brown[300]
+                          : brown[100],
+                        cursor: "pointer",
+                      },
+                    }}
+                  >
+                    <WorkListDetialNameBox>{order.name}</WorkListDetialNameBox>
 
-                <WorkListDetialDateBox>{order.createdAt}</WorkListDetialDateBox>
+                    <WorkListDetialDateBox>
+                      {order.createdAt}
+                    </WorkListDetialDateBox>
 
-                <WorkListDetialStateBox>
-                  {order.aiTraining_state === "no_training" && (
-                    <WorkListDetialStateTextBox
-                      sx={{ backgroundColor: teal[300], color: grey[100] }}
-                    >
-                      No training
-                    </WorkListDetialStateTextBox>
-                  )}
-                  {order.aiTraining_state === "is_training" && (
-                    <WorkListDetialStateTextBox
-                      className="training"
-                      sx={{ backgroundColor: grey[600], color: grey[100] }}
-                    >
-                      training...
-                    </WorkListDetialStateTextBox>
-                  )}
-                  {order.aiTraining_state === "finish_training" && (
-                    <WorkListDetialStateTextBox
-                      sx={{
-                        backgroundColor: indigo[500],
-                        color: grey[100],
-                      }}
-                    >
-                      Finish training
-                    </WorkListDetialStateTextBox>
-                  )}
-                </WorkListDetialStateBox>
-              </WorkListDetialBox>
-            ))}
+                    <WorkListDetialStateBox>
+                      {order.aiTraining_state === "no_training" && (
+                        <WorkListDetialStateTextBox
+                          sx={{ backgroundColor: teal[300], color: grey[100] }}
+                        >
+                          No training
+                        </WorkListDetialStateTextBox>
+                      )}
+                      {order.aiTraining_state === "is_training" && (
+                        <WorkListDetialStateTextBox
+                          className="training"
+                          sx={{ backgroundColor: grey[600], color: grey[100] }}
+                        >
+                          training...
+                        </WorkListDetialStateTextBox>
+                      )}
+                      {order.aiTraining_state === "finish_training" && (
+                        <WorkListDetialStateTextBox
+                          sx={{
+                            backgroundColor: indigo[500],
+                            color: grey[100],
+                          }}
+                        >
+                          Finish training
+                        </WorkListDetialStateTextBox>
+                      )}
+                    </WorkListDetialStateBox>
+                  </WorkListDetialBox>
+                )
+            )}
           </WorkListBottonBox>
         </WorkListBox>
 

@@ -9,7 +9,7 @@ import {
   teal,
   yellow,
 } from "@mui/material/colors";
-import ListDailog from "../part/home/ListDialog";
+import ListDailog2 from "../part/home/ListDialog2";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Dot from "../tool/Dot";
@@ -17,7 +17,7 @@ import OperateInterfaceDailog from "../part/home/OperateInterfaceDailog";
 import "./css/controlRobotScreen.css";
 import { customColor } from "../customColor/customColor";
 
-function ControlRobotScreen() {
+function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
   const StyleStack = styled(Stack)(({ theme }) => ({
     flexDirection: "row",
     alignItems: "center",
@@ -132,7 +132,6 @@ function ControlRobotScreen() {
   }));
 
   //right box
-
   const StyleShowScreenBox = styled(Box)(({ theme }) => ({
     position: "relative",
     display: "flex",
@@ -237,6 +236,8 @@ function ControlRobotScreen() {
   const [readTxt, setReadTxt] = useState(false);
   const [bin, setBin] = useState(1);
 
+  console.log(aiWorkListArray);
+
   const onListDailogOpen = (mode) => {
     setListDailogOpen(mode);
   };
@@ -302,6 +303,7 @@ function ControlRobotScreen() {
           id: aiWorkListCurrentId,
           mode: "activate",
           speed: 50,
+          qrcode: false,
         };
 
         axios
@@ -379,10 +381,48 @@ function ControlRobotScreen() {
   }, [readTxt, currentState, robotOpen, imageOpen]);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/getAiWorkOrderData/").then((res) => {
+    axios.get("http://127.0.0.1:8000/api/getOrderData/").then((res) => {
       setAiWorkListArray(res.data);
     });
   }, []);
+  console.log(qrCodeId);
+  /* qrcode run robot */
+  useEffect(() => {
+    if (qrCodeId !== null) {
+      console.log("run python", qrCodeId);
+      setAiWorkListCurrentId(qrCodeId[0].id);
+      setCurrentState("啟動手臂中");
+      axios
+        .post("http://127.0.0.1:8000/api/control-robot/", qrCodeId)
+        .then((res) => {
+          setReadTxt(false);
+          setRobotOpen(false);
+          setRobotState("");
+          setRobotRealtimeOrderListId(null);
+          setImageOpen(false);
+          setCurrentState("已結束操作");
+          setRealtimeItem("視覺辨識結果");
+          setOperateInterfaceDailogOpen(false);
+
+          if (qrCodeId.length === 2) {
+            setTimeout(() => {
+              Swal.fire({
+                icon: "question",
+                title: "Execute second order?",
+                background: "#a1887f",
+              }).then(() => {
+                console.log("activate qrcode");
+                onExecuteOtherQRcode([qrCodeId[1]]);
+              });
+            }, 1000);
+          }
+        });
+      setImageOpen(true);
+      setReadTxt(true);
+    } else {
+      console.log("python null");
+    }
+  }, [qrCodeId]);
 
   const interfaceBox2TextClassName = `robot-state 
   ${currentState === "啟動手臂中" ? "activate-robot" : ""} 
@@ -512,7 +552,7 @@ function ControlRobotScreen() {
             <StyleShowScreenContentListTitle>
               工單名稱 :{" "}
               {aiWorkListArray.map((ai) => {
-                if (ai.worklist_id === aiWorkListCurrentId) {
+                if (ai.id === aiWorkListCurrentId) {
                   return ai.name;
                 } else {
                   return null;
@@ -577,59 +617,62 @@ function ControlRobotScreen() {
 
                   <StyleShowScreenContentListBottomBox className="ai-orderlist">
                     {aiWorkListArray.map((ai) => {
-                      if (ai.worklist_id === aiWorkListCurrentId) {
-                        return ai.list_order.split(",").map((order, index) => (
-                          <StyleShowScreenContentListSmallBox
-                            key={index}
-                            sx={{
-                              backgroundColor:
+                      if (ai.id === aiWorkListCurrentId) {
+                        return ai.aiTraining_order
+                          .split(",")
+                          .map((order, index) => (
+                            <StyleShowScreenContentListSmallBox
+                              key={index}
+                              sx={{
+                                backgroundColor:
+                                  index + 1 ===
+                                  parseInt(robotRealtimeOrderListId)
+                                    ? brown[300]
+                                    : "transparent",
+                              }}
+                              className={
                                 index + 1 === parseInt(robotRealtimeOrderListId)
-                                  ? brown[300]
-                                  : "transparent",
-                            }}
-                            className={
-                              index + 1 === parseInt(robotRealtimeOrderListId)
-                                ? "target-element"
-                                : ""
-                            }
-                          >
-                            <StyleShowScreenContentListSmallerBox
-                              sx={{ width: "25%" }}
+                                  ? "target-element"
+                                  : ""
+                              }
                             >
-                              <Avatar
-                                sx={{
-                                  backgroundColor:
-                                    index + 1 ===
-                                    parseInt(robotRealtimeOrderListId)
-                                      ? yellow[300]
-                                      : grey[400],
-                                  color:
-                                    index + 1 ===
-                                    parseInt(robotRealtimeOrderListId)
-                                      ? brown[300]
-                                      : "#fff",
-                                }}
+                              <StyleShowScreenContentListSmallerBox
+                                sx={{ width: "25%" }}
                               >
-                                {index + 1}
-                              </Avatar>
-                            </StyleShowScreenContentListSmallerBox>
-                            <StyleShowScreenContentListSmallerBox
-                              sx={{ width: "35%" }}
-                            >
-                              <img
-                                src={`${order}.png`}
-                                alt={`${order}.png`}
-                                style={{ marginRight: "10px" }}
-                              ></img>
-                              {order}
-                            </StyleShowScreenContentListSmallerBox>
-                            <StyleShowScreenContentListSmallerBox
-                              sx={{ width: "40%" }}
-                            >
-                              {itemSize[order]}
-                            </StyleShowScreenContentListSmallerBox>
-                          </StyleShowScreenContentListSmallBox>
-                        ));
+                                <Avatar
+                                  sx={{
+                                    backgroundColor:
+                                      index + 1 ===
+                                      parseInt(robotRealtimeOrderListId)
+                                        ? yellow[300]
+                                        : grey[400],
+                                    color:
+                                      index + 1 ===
+                                      parseInt(robotRealtimeOrderListId)
+                                        ? brown[300]
+                                        : "#fff",
+                                  }}
+                                >
+                                  {index + 1}
+                                </Avatar>
+                              </StyleShowScreenContentListSmallerBox>
+                              <StyleShowScreenContentListSmallerBox
+                                sx={{ width: "35%" }}
+                              >
+                                <img
+                                  src={`${order}.png`}
+                                  alt={`${order}.png`}
+                                  style={{ marginRight: "10px" }}
+                                ></img>
+                                {order}
+                              </StyleShowScreenContentListSmallerBox>
+                              <StyleShowScreenContentListSmallerBox
+                                sx={{ width: "40%" }}
+                              >
+                                {itemSize[order]}
+                              </StyleShowScreenContentListSmallerBox>
+                            </StyleShowScreenContentListSmallBox>
+                          ));
                       } else {
                         return null;
                       }
@@ -638,10 +681,10 @@ function ControlRobotScreen() {
                 </StyleShowScreenContentListBox>
 
                 <img
-                  src={`http://127.0.0.1:8000/static/media/Figures_${aiWorkListCurrentId}/box_${robotRealtimeOrderListId}_bin_${bin
+                  src={`http://127.0.0.1:8000/static/media/Figures_step2_${aiWorkListCurrentId}/box_${robotRealtimeOrderListId}_bin_${bin
                     .toLowerCase()
                     .replace(" ", "_")}.png`}
-                  alt={`http://127.0.0.1:8000/static/media/Figures_${aiWorkListCurrentId}/box_${robotRealtimeOrderListId}_bin_${bin
+                  alt={`http://127.0.0.1:8000/static/media/Figures_step2_${aiWorkListCurrentId}/box_${robotRealtimeOrderListId}_bin_${bin
                     .toLowerCase()
                     .replace(" ", "_")}.png`}
                   className="item-realtime-photo"
@@ -690,44 +733,46 @@ function ControlRobotScreen() {
 
                 <StyleShowScreenContentListBottomBox className="ai-orderlist">
                   {aiWorkListArray.map((ai) => {
-                    if (ai.worklist_id === aiWorkListCurrentId) {
-                      return ai.list_order.split(",").map((order, index) => (
-                        <StyleShowScreenContentListSmallBox
-                          key={index}
-                          sx={{
-                            backgroundColor:
+                    if (ai.id === aiWorkListCurrentId) {
+                      return ai.aiTraining_order
+                        .split(",")
+                        .map((order, index) => (
+                          <StyleShowScreenContentListSmallBox
+                            key={index}
+                            sx={{
+                              backgroundColor:
+                                index + 1 === parseInt(robotRealtimeOrderListId)
+                                  ? brown[300]
+                                  : "transparent",
+                            }}
+                            className={
                               index + 1 === parseInt(robotRealtimeOrderListId)
-                                ? brown[300]
-                                : "transparent",
-                          }}
-                          className={
-                            index + 1 === parseInt(robotRealtimeOrderListId)
-                              ? "target-element"
-                              : ""
-                          }
-                        >
-                          <StyleShowScreenContentListSmallerBox
-                            sx={{ width: "25%" }}
+                                ? "target-element"
+                                : ""
+                            }
                           >
-                            <Avatar>{index + 1}</Avatar>
-                          </StyleShowScreenContentListSmallerBox>
-                          <StyleShowScreenContentListSmallerBox
-                            sx={{ width: "35%" }}
-                          >
-                            <img
-                              src={`${order}.png`}
-                              alt={`${order}.png`}
-                              style={{ marginRight: "10px" }}
-                            ></img>
-                            {order}
-                          </StyleShowScreenContentListSmallerBox>
-                          <StyleShowScreenContentListSmallerBox
-                            sx={{ width: "40%" }}
-                          >
-                            {itemSize[order]}
-                          </StyleShowScreenContentListSmallerBox>
-                        </StyleShowScreenContentListSmallBox>
-                      ));
+                            <StyleShowScreenContentListSmallerBox
+                              sx={{ width: "25%" }}
+                            >
+                              <Avatar>{index + 1}</Avatar>
+                            </StyleShowScreenContentListSmallerBox>
+                            <StyleShowScreenContentListSmallerBox
+                              sx={{ width: "35%" }}
+                            >
+                              <img
+                                src={`${order}.png`}
+                                alt={`${order}.png`}
+                                style={{ marginRight: "10px" }}
+                              ></img>
+                              {order}
+                            </StyleShowScreenContentListSmallerBox>
+                            <StyleShowScreenContentListSmallerBox
+                              sx={{ width: "40%" }}
+                            >
+                              {itemSize[order]}
+                            </StyleShowScreenContentListSmallerBox>
+                          </StyleShowScreenContentListSmallBox>
+                        ));
                     } else {
                       return null;
                     }
@@ -739,7 +784,7 @@ function ControlRobotScreen() {
         </StyleShowScreenBox>
       </StyleBox>
 
-      <ListDailog
+      <ListDailog2
         listDailogOpen={listDailogOpen}
         onListDailogOpen={onListDailogOpen}
         onAiWorkListId={onAiWorkListId}
@@ -758,4 +803,4 @@ function ControlRobotScreen() {
   );
 }
 
-export default ControlRobotScreen;
+export default ControlRobotScreen2;

@@ -21,7 +21,7 @@ import { blueGrey, brown, grey } from "@mui/material/colors";
 import "./css/nav.css";
 import QRcodeDialog from "./QRcodeDialog";
 
-function Navbar() {
+function Navbar({ onQRcodeNavId }) {
   const navigate = useNavigate();
   const routeName = [
     { name: "首頁", url: "/" },
@@ -29,7 +29,6 @@ function Navbar() {
     { name: "選擇紙箱類型", url: "/select-item" },
     { name: "AI 演算", url: "/ai-training" },
   ];
-
   const StyleSecondStack = styled(Stack)({
     justifyContent: "center",
     alignItems: "center",
@@ -37,7 +36,6 @@ function Navbar() {
     flexGrow: 1,
     height: "100%",
   });
-
   const StyleSideStack = styled(Stack)({
     justifyContent: "center",
     alignItems: "center",
@@ -45,14 +43,12 @@ function Navbar() {
     width: "18%",
     height: "100%",
   });
-
   const StyleLinkImageBox = styled(Box)({
     position: "relative",
     display: "flex",
     justifyContent: "center",
     width: "40%",
   });
-
   const StyleLinkImageSmallBox = styled(Box)({
     display: "flex",
     flexDirection: "column",
@@ -63,6 +59,7 @@ function Navbar() {
     "&:hover": {
       transform: "scale(1.1)",
       backgroundColor: grey[300],
+      cursor: "pointer",
     },
     "&:active": {
       transform: "scale(.95)",
@@ -107,6 +104,10 @@ function Navbar() {
 
   const onQRcodeOpen = (mode) => {
     setQRcodeOpen(mode);
+  };
+
+  const onQRcodeId = (id) => {
+    onQRcodeNavId(id);
   };
 
   const list = (anchor) => (
@@ -184,18 +185,22 @@ function Navbar() {
           </StyleSecondStack>
 
           <StyleSideStack className="linkBox-img">
-            <StyleLinkImageBox onClick={qrCodeDialogOpenHandler}>
-              <StyleLinkImageSmallBox>
-                <img
-                  src={"workListSetting.png"}
-                  alt={"workListSetting.png"}
-                ></img>
-                <StyleLinkImageBoxText>QRcode</StyleLinkImageBoxText>
-              </StyleLinkImageSmallBox>
-            </StyleLinkImageBox>
+            {window.location.pathname === "/control-robot2" ||
+            window.location.pathname === "/create-orderlist" ? (
+              <StyleLinkImageBox onClick={qrCodeDialogOpenHandler}>
+                <Box sx={{ display: "inline-block" }}>
+                  <StyleLinkImageSmallBox>
+                    <img src={"qrcode.png"} alt={"qrcode.png"}></img>
+                    <StyleLinkImageBoxText>QRcode</StyleLinkImageBoxText>
+                  </StyleLinkImageSmallBox>
+                </Box>
+              </StyleLinkImageBox>
+            ) : null}
+
             <QRcodeDialog
               qrcodeOpen={qrcodeOpen}
               onQRcodeOpen={onQRcodeOpen}
+              onQRcodeId={onQRcodeId}
             ></QRcodeDialog>
 
             <StyleLinkImageBox>
