@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material";
 import { brown, grey } from "@mui/material/colors";
+import "./css/uploadFileDialog.css";
 
 function WorkListDropdownMenu({ onFunctionMenuValue }) {
   const [anchorEl, setAnchorEl] = React.useState(null);

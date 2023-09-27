@@ -88,19 +88,21 @@ function ListDailog({
       >
         <DialogContent sx={{ backgroundColor: brown[300] }}>
           <StyleTitleBox>
-            <StyleTypography>工單名稱</StyleTypography>
-            <StyleTypography>創建時間</StyleTypography>
+            <StyleTypography>Name</StyleTypography>
+            <StyleTypography>Create time</StyleTypography>
           </StyleTitleBox>
           <StyleBox className="dialog-box">
-            {aiWorkListArray.map((ai) => (
-              <StyleInnerBox
-                key={ai.id}
-                onClick={() => aiWorkListHandler(ai.id)}
-              >
-                <StyleInnerSmallBox>{ai.name}</StyleInnerSmallBox>
-                <StyleInnerSmallBox>{ai.createdAt}</StyleInnerSmallBox>
-              </StyleInnerBox>
-            ))}
+            {aiWorkListArray.map((ai) =>
+              ai.display ? (
+                <StyleInnerBox
+                  key={ai.id}
+                  onClick={() => aiWorkListHandler(ai.id)}
+                >
+                  <StyleInnerSmallBox>{ai.name}</StyleInnerSmallBox>
+                  <StyleInnerSmallBox>{ai.createdAt}</StyleInnerSmallBox>
+                </StyleInnerBox>
+              ) : null
+            )}
           </StyleBox>
         </DialogContent>
       </Dialog>

@@ -34,7 +34,7 @@ function HomeScreen() {
     alignItems: "center",
     color: lightBlue[700],
     borderColor: lightBlue[700],
-    fontSize: "26px",
+    fontSize: "20px",
     width: "25%",
     height: "50%",
     "&:hover": {
@@ -97,10 +97,10 @@ function HomeScreen() {
       });
     }, 1000);
   }, []);
-
+  // 請選擇方式 建立新工單 手臂控制台
   return (
     <StyleContainer>
-      <StyleTitle variant="h4">請選擇方式</StyleTitle>
+      <StyleTitle variant="h4">Please select a method</StyleTitle>
 
       <StyleContent>
         <StyleContentButton
@@ -110,7 +110,7 @@ function HomeScreen() {
           onClick={() => buttonHandler("left")}
           className="aoxItem"
         >
-          建立新工單
+          Create new order
         </StyleContentButton>
         <StyleContentButton
           variant="outlined"
@@ -119,13 +119,15 @@ function HomeScreen() {
           onClick={() => buttonHandler("right")}
           className="aoxItem"
         >
-          手臂控制台
+          Robot console
         </StyleContentButton>
       </StyleContent>
-
+      {/* "尚未建立工單，請前往去建立" "已使用過AI演算過工單，前去操控手臂" */}
       <StyleBottom>
-        {leftButtonHover && "尚未建立工單，請前往去建立"}
-        {rightButtonHover && "已使用過AI演算過工單，前去操控手臂"}
+        {leftButtonHover &&
+          "The order has not been created yet, please go to create one."}
+        {rightButtonHover &&
+          "Already used AI to calculate orders and went to control the arm"}
       </StyleBottom>
     </StyleContainer>
   );

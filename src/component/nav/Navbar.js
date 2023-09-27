@@ -202,15 +202,15 @@ function Navbar({ onQRcodeNavId }) {
               onQRcodeOpen={onQRcodeOpen}
               onQRcodeId={onQRcodeId}
             ></QRcodeDialog>
-
+            {/* 工單設定 工單查詢 */}
             <StyleLinkImageBox>
-              <Link to={"/select-item"}>
+              <Link to={"/control-robot2"}>
                 <StyleLinkImageSmallBox>
                   <img
                     src={"workListSetting.png"}
                     alt={"workListSetting.png"}
                   ></img>
-                  <StyleLinkImageBoxText>工單設定</StyleLinkImageBoxText>
+                  <StyleLinkImageBoxText>Robot</StyleLinkImageBoxText>
                 </StyleLinkImageSmallBox>
               </Link>
             </StyleLinkImageBox>
@@ -222,7 +222,7 @@ function Navbar({ onQRcodeNavId }) {
                     src={"workListSearch.png"}
                     alt={"workListSearch.png"}
                   ></img>
-                  <StyleLinkImageBoxText>工單查詢</StyleLinkImageBoxText>
+                  <StyleLinkImageBoxText>Search</StyleLinkImageBoxText>
                 </StyleLinkImageSmallBox>
               </Link>
             </StyleLinkImageBox>

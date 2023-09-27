@@ -54,5 +54,8 @@
 .worklist-box::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #616161;
-
 }
+
+/* .css-6hp17o-MuiList-root-MuiMenu-list {
+    padding: 0px !important;
+} */

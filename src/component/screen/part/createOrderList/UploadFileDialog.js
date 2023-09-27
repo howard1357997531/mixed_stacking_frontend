@@ -13,6 +13,7 @@ import { Box } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import "./css/uploadFileDialog.css";
+import Swal from "sweetalert2";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -83,12 +84,22 @@ function UploadFileDialog() {
   };
 
   const fileChangeHandler = (e) => {
+    setOpen(false);
     const formData = new FormData();
     formData.append(`csv_file_length`, e.target.files.length);
     for (let i = 0; i < e.target.files.length; i++) {
       formData.append(`csv_file${i + 1}`, e.target.files[i]);
       formData.append(`csv_file_name${i + 1}`, e.target.files[i].name);
     }
+    Swal.fire({
+      position: "center",
+      width: "16em",
+      icon: "warning",
+      title: "Upload. . .",
+      background: brown[400],
+      showConfirmButton: false,
+      timer: 5000,
+    });
     axios
       .post("http://127.0.0.1:8000/api/uploadCsv/", formData, {
         headers: {

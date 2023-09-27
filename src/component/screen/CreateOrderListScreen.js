@@ -8,6 +8,7 @@ import {
   indigo,
   lightBlue,
   orange,
+  purple,
   red,
   teal,
   yellow,
@@ -397,7 +398,7 @@ function CreateOrderListScreen() {
         confirmButtonColor: deepPurple[300],
         cancelButtonColor: "#d33",
         confirmButtonText: "Ok",
-        cancelButtonText: "Cancel",
+        cancelButtonText: "Back",
       }).then((result) => {
         if (result.isConfirmed) {
           const tempOrder = orders.map((order) =>
@@ -421,7 +422,11 @@ function CreateOrderListScreen() {
               });
               const tempOrders = orders.map((order) =>
                 order.id === id
-                  ? { ...order, aiTraining_order: res.data.ai_str }
+                  ? {
+                      ...order,
+                      aiTraining_order: res.data.ai_str,
+                      aiTraining_state: "finish_training",
+                    }
                   : order
               );
               setOrders(tempOrders);
@@ -501,6 +506,7 @@ function CreateOrderListScreen() {
           const a = document.createElement("a");
           a.style.display = "none"; // 隐藏链接元素
           a.href = res.data.xlsx_output_path;
+          // a.href = `http://127.0.0.1:8000/static/media/xlsx/output_.xlsx`;
           a.setAttribute("download", "output.xlsx");
           document.body.appendChild(a); // 将链接元素添加到 DOM
           a.click();
@@ -576,7 +582,7 @@ function CreateOrderListScreen() {
                     <WorkListDetialNameBox>{order.name}</WorkListDetialNameBox>
 
                     <WorkListDetialDateBox>
-                      {order.createdAt}
+                      {order.modifiedAt}
                     </WorkListDetialDateBox>
 
                     <WorkListDetialStateBox>
@@ -590,7 +596,10 @@ function CreateOrderListScreen() {
                       {order.aiTraining_state === "is_training" && (
                         <WorkListDetialStateTextBox
                           className="training"
-                          sx={{ backgroundColor: grey[600], color: grey[100] }}
+                          sx={{
+                            backgroundColor: purple[600],
+                            color: grey[100],
+                          }}
                         >
                           training...
                         </WorkListDetialStateTextBox>
@@ -699,7 +708,7 @@ function CreateOrderListScreen() {
                     AI training state : {functionBoxData.aiTraining_state}
                   </Typography>
                   <Typography>
-                    upload date : {functionBoxData.createdAt}
+                    upload date : {functionBoxData.modifiedAt}
                   </Typography>
                   {/* <Typography>modify date : {functionBoxData.name}</Typography> */}
                   <Typography

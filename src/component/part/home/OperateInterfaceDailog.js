@@ -30,7 +30,6 @@ function OperateInterfaceDailog({
   aiWorkListId,
   onRobotReset,
 }) {
-  console.log("dialog");
   const StyleBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -269,7 +268,9 @@ function OperateInterfaceDailog({
                   )}
                 </StyleButtonLogo>
 
-                <StyleButtonText>{pause ? "繼續" : "暫停"}</StyleButtonText>
+                <StyleButtonText>
+                  {pause ? "Continue" : "Pause"}
+                </StyleButtonText>
               </StyleButton>
             </StyleSmallBox>
 
@@ -288,7 +289,7 @@ function OperateInterfaceDailog({
                   <img src="restart.png" alt="restart.png"></img>
                 </StyleButtonLogo>
 
-                <StyleButtonText>重置</StyleButtonText>
+                <StyleButtonText>Reset</StyleButtonText>
               </StyleButton>
             </StyleSmallBox>
           </StyleBox>
@@ -316,7 +317,7 @@ function OperateInterfaceDailog({
 
             <StyleSpeedSmallMiddleBox>
               <StyleSpeedSmallMiddleBoxText variant="h4">
-                速度
+                Speed
               </StyleSpeedSmallMiddleBoxText>
               <Box
                 sx={{

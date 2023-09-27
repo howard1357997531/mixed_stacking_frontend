@@ -17,6 +17,7 @@ import OperateInterfaceDailog from "../part/home/OperateInterfaceDailog";
 import "./css/controlRobotScreen.css";
 import { customColor } from "../customColor/customColor";
 
+// 尚未選取工單 已選取工單
 function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
   const StyleStack = styled(Stack)(({ theme }) => ({
     flexDirection: "row",
@@ -145,9 +146,9 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
     position: "relative",
     width: "80%",
     height: "80%",
-    border: `1px ${currentState === "尚未選取工單" ? "dashed" : "solid"} ${
-      brown[500]
-    }`,
+    border: `1px ${
+      currentState === "No order selected yet" ? "dashed" : "solid"
+    } ${brown[500]}`,
   }));
   const StyleShowScreenContentText = styled(Typography)(({ theme }) => ({
     position: "absolute",
@@ -222,7 +223,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
   const [listDailogOpen, setListDailogOpen] = useState(false);
   const [operateInterfaceDailogOpen, setOperateInterfaceDailogOpen] =
     useState(false);
-  const [currentState, setCurrentState] = useState("尚未選取工單");
+  const [currentState, setCurrentState] = useState("No order selected yet");
   const [pauseSpeed, setPauseSpeed] = useState({
     pause: false,
     speed: 50,
@@ -270,7 +271,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
 
   const onAiWorkListId = (id) => {
     setAiWorkListCurrentId(id);
-    setCurrentState("已選取工單");
+    setCurrentState("Order selected");
   };
 
   const onRobotResetHandler = () => {
@@ -289,7 +290,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
   };
 
   const controlRobotHandler = () => {
-    if (currentState === "尚未選取工單") {
+    if (currentState === "No order selected yet") {
       Swal.fire({
         icon: "warning",
         title: "請選擇工單",
@@ -297,7 +298,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
       });
     } else {
       if (!robotOpen || currentState === "reset") {
-        setCurrentState("啟動手臂中");
+        setCurrentState("Start robot");
 
         const data = {
           id: aiWorkListCurrentId,
@@ -314,7 +315,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
             setRobotState("");
             setRobotRealtimeOrderListId(null);
             setImageOpen(false);
-            setCurrentState("已結束操作");
+            setCurrentState("Finish");
             setRealtimeItem("視覺辨識結果");
             setOperateInterfaceDailogOpen(false);
           });
@@ -391,7 +392,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
     if (qrCodeId !== null) {
       console.log("run python", qrCodeId);
       setAiWorkListCurrentId(qrCodeId[0].id);
-      setCurrentState("啟動手臂中");
+      setCurrentState("Start robot");
       axios
         .post("http://127.0.0.1:8000/api/control-robot/", qrCodeId)
         .then((res) => {
@@ -400,7 +401,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
           setRobotState("");
           setRobotRealtimeOrderListId(null);
           setImageOpen(false);
-          setCurrentState("已結束操作");
+          setCurrentState("Finish");
           setRealtimeItem("視覺辨識結果");
           setOperateInterfaceDailogOpen(false);
 
@@ -425,7 +426,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
   }, [qrCodeId]);
 
   const interfaceBox2TextClassName = `robot-state 
-  ${currentState === "啟動手臂中" ? "activate-robot" : ""} 
+  ${currentState === "Start robot" ? "activate-robot" : ""} 
   ${currentState === "pause" ? "pause" : ""} 
   ${currentState === "re-activate" ? "pause" : ""} 
   ${currentState === "reset" ? "reset" : ""} 
@@ -445,7 +446,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
     26: "144 * 50 * 40 (mm)",
     35: "204 * 92 * 36 (mm)",
   };
-
+  // 選取工單 視覺辨識結果 執行
   return (
     <StyleStack>
       {/* left box */}
@@ -465,7 +466,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
               <StyleInterfaceLogo>
                 <img src="list.png" alt="list.png"></img>
               </StyleInterfaceLogo>
-              <StyleInterfaceText>選取工單</StyleInterfaceText>
+              <StyleInterfaceText>Order</StyleInterfaceText>
             </StyleInterfaceButton_40>
 
             {/* 視覺辨識結果 */}
@@ -488,7 +489,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
                   ></img>
                 )}
               </StyleInterfaceLogo>
-              <StyleInterfaceText>視覺辨識結果</StyleInterfaceText>
+              <StyleInterfaceText>Visual results</StyleInterfaceText>
             </StyleInterfaceButton_60>
           </StyleInterfaceBox1>
 
@@ -506,7 +507,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
               <StyleInterfaceLogo>
                 <img src="start.png" alt="start.png"></img>
               </StyleInterfaceLogo>
-              <StyleInterfaceText>執行</StyleInterfaceText>
+              <StyleInterfaceText>Execute</StyleInterfaceText>
             </StyleInterfaceButton_60>
 
             {/* 操作面板 */}
@@ -522,19 +523,19 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
               <StyleInterfaceLogo>
                 <img src="control.png" alt="control.png"></img>
               </StyleInterfaceLogo>
-              <StyleInterfaceText>操作面板</StyleInterfaceText>
+              <StyleInterfaceText>Panel</StyleInterfaceText>
             </StyleInterfaceButton_40>
           </StyleInterfaceBox1>
 
-          {/* 及時面板 */}
+          {/* 及時面板  暫停  已重置*/}
           <StyleInterfaceBox2 className="board">
             <img src="board.png" alt="board.png"></img>
             <StyleInterfaceBox2TextBox>
               <StyleInterfaceBox2Text className={interfaceBox2TextClassName}>
                 {currentState === "pause" || currentState === "re-activate"
-                  ? "暫停"
+                  ? "pause"
                   : currentState === "reset"
-                  ? "已重置"
+                  ? "reset"
                   : currentState}
               </StyleInterfaceBox2Text>
               <StyleDotBox>
@@ -545,12 +546,12 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
         </StyleInterfaceStack>
       </StyleBox>
 
-      {/* right box */}
+      {/* right box  工單名稱*/}
       <StyleBox>
         <StyleShowScreenBox>
-          {imageOpen || currentState === "尚未選取工單" ? null : (
+          {imageOpen || currentState === "No order selected yet" ? null : (
             <StyleShowScreenContentListTitle>
-              工單名稱 :{" "}
+              Name :{" "}
               {aiWorkListArray.map((ai) => {
                 if (ai.id === aiWorkListCurrentId) {
                   return ai.name;
@@ -568,13 +569,13 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
                 size="small"
                 onClick={imageOpenHandler}
               >
-                {imageOpen ? "工單" : "圖片"}
+                {imageOpen ? "Order" : "Image"}
               </StyleShowScreenContentChangeButton>
             )}
 
-            {currentState === "尚未選取工單" ? (
+            {currentState === "No order selected yet" ? (
               <StyleShowScreenContentText>
-                請選擇工單
+                {/* 請選擇工單 */}Please select order
               </StyleShowScreenContentText>
             ) : robotOpen ? (
               <>
@@ -591,17 +592,18 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
                         width: "25%",
                       }}
                     >
-                      次序
+                      {/* 次序 */}Order
                     </Typography>
                     <Typography
                       sx={{
                         textAlign: "center",
                         color: "#fff",
                         width: "35%",
-                        marginLeft: "10px",
+                        marginLeft: "15px",
+                        // 10px
                       }}
                     >
-                      名稱
+                      {/* 名稱 */}Name
                     </Typography>
                     <Typography
                       sx={{
@@ -611,7 +613,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
                         marginRight: "10px",
                       }}
                     >
-                      尺寸
+                      {/* 尺寸 */}Size
                     </Typography>
                   </StyleShowScreenContentListTopBox>
 
@@ -707,17 +709,17 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
                       width: "25%",
                     }}
                   >
-                    次序
+                    {/* 次序 */}Order
                   </Typography>
                   <Typography
                     sx={{
                       textAlign: "center",
                       color: "#fff",
                       width: "35%",
-                      marginLeft: "10px",
+                      marginLeft: "15px",
                     }}
                   >
-                    名稱
+                    {/* 名稱 */}Name
                   </Typography>
                   <Typography
                     sx={{
@@ -727,7 +729,7 @@ function ControlRobotScreen2({ qrCodeId, onExecuteOtherQRcode }) {
                       marginRight: "10px",
                     }}
                   >
-                    尺寸
+                    {/* 尺寸 */}Size
                   </Typography>
                 </StyleShowScreenContentListTopBox>
 

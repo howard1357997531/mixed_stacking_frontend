@@ -23,7 +23,6 @@ function AiTrainingScreen() {
       padding: "30px 20px",
     },
   }));
-
   const StyleBox = styled(Box)(({ theme }) => ({
     position: "relative",
     display: "flex",
@@ -33,7 +32,6 @@ function AiTrainingScreen() {
     height: "70vh",
     padding: "30px 50px",
   }));
-
   const StyleTitle = styled(Typography)(({ theme }) => ({
     position: "absolute",
     top: "-30px",
@@ -41,7 +39,6 @@ function AiTrainingScreen() {
     fontSize: "40px",
     fontWeight: 600,
   }));
-
   const StyleSmallBox = styled(Box)(({ theme }) => ({
     display: "flex",
     width: "100%",
@@ -57,7 +54,6 @@ function AiTrainingScreen() {
     borderRadius: "20px",
     backgroundColor: customColor.lightOrange,
   }));
-
   const StyleTitleRightBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -66,7 +62,6 @@ function AiTrainingScreen() {
     height: "49px",
     borderBottom: `1px solid rgba(0, 0, 0, 0.12)`,
   }));
-
   const StyleContentRightBox = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
@@ -75,7 +70,6 @@ function AiTrainingScreen() {
     width: "100%",
     height: "calc(100% - 49px)",
   }));
-
   const StyleContentTopRightBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -85,7 +79,6 @@ function AiTrainingScreen() {
     fontWeight: 600,
     color: brown[600],
   }));
-
   const StyleContentTopSmallBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -93,7 +86,6 @@ function AiTrainingScreen() {
     width: "33.3%",
     height: "100%",
   }));
-
   const StyleContentMiddleRightBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -101,14 +93,12 @@ function AiTrainingScreen() {
     width: "100%",
     height: "75%",
   }));
-
   const StyleScrollBox = styled(Box)({
     border: `2px solid ${brown[400]}`,
     width: "90%",
     height: "100%",
     overflowY: "auto",
   });
-
   const StyleContentMiddleRightBoxGifText = styled(Typography)({
     position: "absolute",
     top: "58%",
@@ -118,7 +108,6 @@ function AiTrainingScreen() {
     fontSize: "26px",
     fontWeight: 600,
   });
-
   const StyleContentMiddleSmallBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -128,7 +117,6 @@ function AiTrainingScreen() {
     color: grey[800],
     fontWeight: 600,
   }));
-
   const StyleContentMiddleSmallerBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -137,7 +125,6 @@ function AiTrainingScreen() {
     width: "33.3%",
     height: "100%",
   }));
-
   const StyleContentBottomRightBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "space-between",
@@ -145,13 +132,11 @@ function AiTrainingScreen() {
     width: "100%",
     height: "15%",
   }));
-
   const StyleContentBottomText = styled(Typography)(({ theme }) => ({
     marginLeft: "5%",
     color: grey[600],
     fontWeight: 600,
   }));
-
   const StyleContentBottomButton = styled(Button)({
     width: "30%",
     fontSize: "16px",

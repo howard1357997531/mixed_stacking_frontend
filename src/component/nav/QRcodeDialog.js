@@ -12,6 +12,7 @@ import { brown, grey, orange } from "@mui/material/colors";
 import { Box } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -114,7 +115,17 @@ function QRcodeDialog({ qrcodeOpen, onQRcodeOpen, onQRcodeId }) {
       onQRcodeId(data);
       onQRcodeOpen(false);
     } else {
-      window.location.reload();
+      Swal.fire({
+        position: "center",
+        width: "16em",
+        icon: "warning",
+        title: "Upload. . .",
+        background: brown[400],
+        showConfirmButton: false,
+        timer: 1000,
+      }).then((res) => {
+        window.location.reload();
+      });
     }
   };
 
