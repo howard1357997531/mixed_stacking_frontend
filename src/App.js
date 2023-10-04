@@ -8,6 +8,7 @@ import AiTrainingScreen from "./component/screen/AiTrainingScreen";
 import UploadFileScreen from "./component/screen/UploadFileScreen";
 import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 import { useEffect, useState } from "react";
+import ControlRobotScreen_socket from "./component/screen/ControlRobotScreen_socket";
 
 function App() {
   const [qrCodeId, setQRcodeId] = useState(null);
@@ -30,6 +31,15 @@ function App() {
           path="/control-robot2"
           element={
             <ControlRobotScreen2
+              qrCodeId={qrCodeId}
+              onExecuteOtherQRcode={onExecuteOtherQRcode}
+            />
+          }
+        />
+        <Route
+          path="/control-robot-socket"
+          element={
+            <ControlRobotScreen_socket
               qrCodeId={qrCodeId}
               onExecuteOtherQRcode={onExecuteOtherQRcode}
             />

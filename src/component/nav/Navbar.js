@@ -17,7 +17,7 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { Stack, Typography, styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { blueGrey, brown, grey } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import "./css/nav.css";
 import QRcodeDialog from "./QRcodeDialog";
 
@@ -186,6 +186,7 @@ function Navbar({ onQRcodeNavId }) {
 
           <StyleSideStack className="linkBox-img">
             {window.location.pathname === "/control-robot2" ||
+            window.location.pathname === "/control-robot-socket" ||
             window.location.pathname === "/create-orderlist" ? (
               <StyleLinkImageBox onClick={qrCodeDialogOpenHandler}>
                 <Box sx={{ display: "inline-block" }}>

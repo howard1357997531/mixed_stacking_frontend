@@ -78,9 +78,12 @@ function HomeScreen() {
     }
   }, []);
 
+  // control-robot-socket
   const buttonHandler = (position) => {
     // navigate(position === "left" ? "/select-item" : "/control-robot2");
-    navigate(position === "left" ? "/create-orderlist" : "/control-robot2");
+    navigate(
+      position === "left" ? "/create-orderlist" : "/control-robot-socket"
+    );
   };
 
   useEffect(() => {

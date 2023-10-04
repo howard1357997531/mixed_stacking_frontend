@@ -111,7 +111,10 @@ function QRcodeDialog({ qrcodeOpen, onQRcodeOpen, onQRcodeId }) {
   };
 
   const runQRcodeOrder = (data) => {
-    if (window.location.pathname === "/control-robot2") {
+    if (
+      window.location.pathname === "/control-robot2" ||
+      window.location.pathname === "/control-robot-socket"
+    ) {
       onQRcodeId(data);
       onQRcodeOpen(false);
     } else {
