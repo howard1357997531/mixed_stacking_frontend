@@ -371,15 +371,15 @@ function CreateOrderListScreen() {
     return check ? true : false;
   };
   const AiResultAvatarBgcolor = (number) => {
-    if (number > 10 && number < 20) {
+    if (number > 10 && number <= 20) {
       return teal[200];
-    } else if (number >= 20 && number < 30) {
+    } else if (number > 20 && number <= 30) {
       return deepPurple[200];
-    } else if (number >= 30 && number < 40) {
+    } else if (number > 30 && number <= 40) {
       return red[300];
-    } else if (number >= 40 && number < 50) {
+    } else if (number > 40 && number <= 50) {
       return orange[300];
-    } else if (number >= 50 && number < 60) {
+    } else if (number > 50 && number <= 60) {
       return brown[300];
     }
   };
@@ -759,7 +759,9 @@ function CreateOrderListScreen() {
                   .map((order, index) => (
                     <FunctionAiResultSmallBox key={index}>
                       <FunctionAiResultAvatar
-                        sx={{ backgroundColor: AiResultAvatarBgcolor(index) }}
+                        sx={{
+                          backgroundColor: AiResultAvatarBgcolor(index + 1),
+                        }}
                       >
                         {index + 1}
                       </FunctionAiResultAvatar>

@@ -236,7 +236,7 @@ function ControlRobotScreen_socket({ qrCodeId, onExecuteOtherQRcode }) {
   const [readTxt, setReadTxt] = useState(false);
   const [bin, setBin] = useState(1);
 
-  console.log(aiWorkListArray);
+  // console.log(aiWorkListArray);
 
   const onListDailogOpen = (mode) => {
     setListDailogOpen(mode);
@@ -386,7 +386,7 @@ function ControlRobotScreen_socket({ qrCodeId, onExecuteOtherQRcode }) {
     });
   }, []);
 
-  console.log(qrCodeId);
+  // console.log(qrCodeId);
   /* qrcode run robot */
   useEffect(() => {
     if (qrCodeId !== null) {
@@ -438,8 +438,8 @@ function ControlRobotScreen_socket({ qrCodeId, onExecuteOtherQRcode }) {
     };
 
     socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log(data);
+      const realtimeData = JSON.parse(event.data);
+      console.log(realtimeData);
     };
 
     socket.onclose = (event) => {
@@ -447,7 +447,9 @@ function ControlRobotScreen_socket({ qrCodeId, onExecuteOtherQRcode }) {
     };
 
     return () => {
-      socket.close();
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      }
     };
   }, []);
 
