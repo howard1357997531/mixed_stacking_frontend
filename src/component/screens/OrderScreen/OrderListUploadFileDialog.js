@@ -11,7 +11,7 @@ import { brown, grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
-import "./css/uploadFileDialog.css";
+import "./css/OrderListUploadFileDialog.css";
 import Swal from "sweetalert2";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -23,7 +23,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-function UploadFileDialog() {
+function OrderListUploadFileDialog() {
   const WorkListTopUploadFileButton = styled(Button)(({ theme }) => ({
     width: "80%",
     height: "60%",
@@ -165,4 +165,4 @@ function UploadFileDialog() {
   );
 }
 
-export default UploadFileDialog;
+export default OrderListUploadFileDialog;

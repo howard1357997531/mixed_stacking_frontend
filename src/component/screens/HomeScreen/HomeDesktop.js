@@ -5,9 +5,9 @@ import {
   HomeContentButton,
   HomeDescription,
   HomeTitle,
-} from "../../styles/HomeScreen";
+} from "../../../styles/HomeScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { HOME_BUTTON } from "../../redux/constants";
+import { HOME_BUTTON } from "../../../redux/constants";
 import aos from "aos";
 import "aos/dist/aos.css";
 import { Typography } from "@mui/material";

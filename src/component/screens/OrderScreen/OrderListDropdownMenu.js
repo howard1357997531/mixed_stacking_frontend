@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material";
 import { brown, grey } from "@mui/material/colors";
 
-function WorkListDropdownMenu({ onFunctionMenuValue }) {
+function OrderListDropdownMenu({ onFunctionMenuValue }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -70,4 +70,4 @@ function WorkListDropdownMenu({ onFunctionMenuValue }) {
   );
 }
 
-export default WorkListDropdownMenu;
+export default OrderListDropdownMenu;

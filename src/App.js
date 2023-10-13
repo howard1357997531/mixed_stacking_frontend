@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./component/nav/Navbar";
 import HomeScreen from "./screen/HomeScreen";
 import OrderScreen from "./screen/OrderScreen";
+import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/order" element={<OrderScreen />} />
+        <Route path="/create-orderlist" element={<CreateOrderListScreen />} />
       </Routes>
     </Router>
   );

@@ -1,21 +1,21 @@
-import { ORDER_DETAIL } from "../constants";
+import { ORDER_LIST } from "../constants";
 
-export const OrderDetailReducer = (state = ["asd"], action) => {
+export const OrderListReducer = (state = { data: [] }, action) => {
   switch (action.type) {
-    case ORDER_DETAIL.request:
+    case ORDER_LIST.request:
       return {
         loading: true,
         data: [],
       };
 
-    case ORDER_DETAIL.success:
+    case ORDER_LIST.success:
       return {
         loading: false,
         success: true,
         data: action.payload,
       };
 
-    case ORDER_DETAIL.fail:
+    case ORDER_LIST.fail:
       return {
         loading: false,
         error: action.payload,

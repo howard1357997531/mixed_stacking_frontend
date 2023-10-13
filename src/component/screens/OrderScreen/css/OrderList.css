@@ -1,0 +1,18 @@
+.training {
+    animation: training 1.5s infinite ease-in-out;
+}
+
+@keyframes training {
+    0% { transform: scale(1);}
+    50% { transform: scale(1.2);}
+    100% { transform: scale(1);}
+}
+
+.ai-gif {
+    position: absolute;
+    top: 45% ;
+    left: 50% ;
+    transform: translate(-50%, -50%) ;
+    width: 400px;
+    height: 300px
+}

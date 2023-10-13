@@ -1,7 +1,7 @@
 import React from "react";
 import { useMediaQuery, useTheme } from "@mui/material";
-import HomeMobile from "../component/HomeScreen/HomeMobile";
-import HomeDesktop from "../component/HomeScreen/HomeDesktop";
+import HomeDesktop from "../component/screens/HomeScreen/HomeDesktop";
+import HomeMobile from "../component/screens/HomeScreen/HomeMobile";
 
 function HomeScreen() {
   const theme = useTheme();

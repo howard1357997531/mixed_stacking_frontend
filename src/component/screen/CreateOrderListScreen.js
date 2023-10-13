@@ -526,8 +526,6 @@ function CreateOrderListScreen() {
     }
   };
 
-  const onUploadFileOpenHandler = () => {};
-
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/getOrderData/").then((res) => {
       console.log(res.data);
@@ -555,7 +553,7 @@ function CreateOrderListScreen() {
             </WorkListTopDropdownBox>
 
             <WorkListTopUploadFileBox>
-              <UploadFileDialog onUploadFileOpen={onUploadFileOpenHandler} />
+              <UploadFileDialog />
             </WorkListTopUploadFileBox>
           </WorkListTopBox>
 
