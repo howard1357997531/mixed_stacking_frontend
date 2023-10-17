@@ -1,5 +1,14 @@
-import { Avatar, Box, Button, Stack, Typography, styled } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Typography,
+  styled,
+} from "@mui/material";
 import { Colors } from "../theme";
+import { blueGrey, brown, deepPurple, grey } from "@mui/material/colors";
 
 export const OrderContainer = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
@@ -54,36 +63,6 @@ export const OrderListBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const FunctionAreaBox = styled(Box)(({ theme }) => ({
-  // display: functionBoxOpen ? "flex" : "none",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "48%",
-  height: "100%",
-  padding: "20px",
-  boxSizing: "border-box",
-  borderRadius: "20px",
-  padding: "25px",
-  paddingTop: "10px",
-  backgroundColor: Colors.lightOrange,
-  // opacity: functionBoxOpen ? 100 : 0,
-  opacity: 100,
-  transition: "opacity 0.5s ease-in-out",
-  [theme.breakpoints.down("lg")]: {
-    width: "48%",
-  },
-  [theme.breakpoints.down("md")]: {
-    flexDirection: "column",
-    width: "70vw",
-    height: "60vh",
-  },
-  [theme.breakpoints.down("sm")]: {
-    width: "80vw",
-  },
-}));
-
 export const OrderListNav = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
@@ -120,12 +99,18 @@ export const OrderListContentBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${Colors.grey}`,
 }));
 
-export const OrderListDetial = styled(Box)(({ theme }) => ({
+export const OrderListDetial = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
   display: "flex",
-  // justifyContent: "center",
   alignItems: "center",
   width: "100%",
   height: "60px",
+  backgroundColor: itemSelect ? brown[300] : null,
+  "&:hover": {
+    backgroundColor: itemSelect ? brown[300] : brown[100],
+    cursor: "pointer",
+  },
 }));
 
 export const OrderListName = styled(Box)(({ theme }) => ({
@@ -160,4 +145,131 @@ export const OrderListStateText = styled(Box)(({ theme }) => ({
   padding: "8px 0px",
   borderRadius: "20px",
   fontSize: "14px",
+}));
+
+// functionArea
+export const FunctionAreaBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "orderListMode",
+})(({ theme, orderListMode }) => ({
+  display: orderListMode !== "close" ? "flex" : "none",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "48%",
+  height: "100%",
+  padding: "20px",
+  boxSizing: "border-box",
+  borderRadius: "20px",
+  padding: "25px",
+  paddingTop: "10px",
+  backgroundColor: Colors.lightOrange,
+  // opacity: functionBoxOpen ? 100 : 0,
+  opacity: 100,
+  transition: "opacity 0.5s ease-in-out",
+  [theme.breakpoints.down("lg")]: {
+    width: "48%",
+  },
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    width: "70vw",
+    height: "60vh",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "80vw",
+  },
+}));
+
+export const FunctionAreaNav = styled(Box)(({ theme }) => ({
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "5px",
+  width: "100%",
+  height: "10%",
+}));
+
+export const CloseIconButton = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  left: 0,
+}));
+
+export const FunctionAreaNavBtn = styled(Button)(({ theme }) => ({
+  position: "absolute",
+  right: 0,
+  textTransform: "initial",
+  // display:
+  //   functionBoxData.aiTraining_state === "is_training" ? "none" : "block",
+}));
+
+export const FunctionAreaContentBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  width: "100%",
+  height: "90%",
+  overflowY: "auto",
+  border: `1px solid ${Colors.grey}`,
+  boxSizing: "border-box",
+  // padding: functionBoxMode === "order" ? 10 : 0,
+  padding: 10,
+}));
+
+export const AiIsTraingGifText = styled(Typography)({
+  position: "absolute",
+  top: "57%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  color: Colors.blue,
+  fontSize: "24px",
+  fontWeight: 600,
+});
+
+export const OrderListDetailBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+  height: "50px",
+  borderBottom: `1px solid ${blueGrey[100]}`,
+  "&:hover": {
+    color: deepPurple[500],
+    fontSize: "24px",
+    fontWeight: 600,
+    backgroundColor: grey[300],
+    cursor: "pointer",
+  },
+}));
+
+export const OrderListDetailSmallBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "20%",
+  height: "100%",
+}));
+
+export const AiResultBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexWrap: "wrap",
+  width: "100%",
+}));
+
+export const AiResultSmallBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  width: "33.3%",
+  height: "70px",
+  borderBottom: `1px solid ${blueGrey[100]}`,
+  // "&:hover": {
+  //   color: deepPurple[500],
+  //   backgroundColor: brown[300],
+  //   cursor: "pointer",
+  // },
+}));
+
+export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
+  marginLeft: "20px",
+  // "&:hover": {
+  //   color: brown[300],
+  //   backgroundColor: yellow[300],
+  //   cursor: "pointer",
+  // },
 }));

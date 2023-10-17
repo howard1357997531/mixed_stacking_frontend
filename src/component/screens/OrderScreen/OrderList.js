@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   OrderListBox,
   OrderListDropdown,
@@ -13,7 +13,7 @@ import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
 import "./css/OrderList.css";
 import OrderListContent from "./OrderListContent";
 
-function OrderList() {
+function OrderList({ orderListMode, orderListId }) {
   const [functionBoxMode, setFunctionBoxMode] = useState("");
 
   const onFunctionMenuValueHandler = (mode) => {
@@ -47,7 +47,7 @@ function OrderList() {
         </OrderListUploadFile>
       </OrderListNav>
 
-      <OrderListContent />
+      <OrderListContent orderListId={orderListId} />
     </OrderListBox>
   );
 }
