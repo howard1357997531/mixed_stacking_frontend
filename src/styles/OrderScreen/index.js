@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Colors } from "../theme";
 import { blueGrey, brown, deepPurple, grey } from "@mui/material/colors";
+import { errorMsgIconButtonAnimation } from "../../animation";
 
 export const OrderContainer = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
@@ -93,10 +94,48 @@ export const OrderListUploadFile = styled(Box)(({ theme }) => ({
 }));
 
 export const OrderListContentBox = styled(Box)(({ theme }) => ({
+  position: "relative",
   width: "100%",
   height: "90%",
   overflowY: "auto",
   border: `1px solid ${Colors.grey}`,
+}));
+
+export const ErrorMsgBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}));
+
+export const ErrorMsgIconButton = styled(IconButton)(({ theme }) => ({
+  "&:hover": {
+    transform: "scale(1.1)",
+    animation: `${errorMsgIconButtonAnimation} .5s `,
+  },
+  "&:active": {
+    transform: "scale(0.95)",
+  },
+}));
+
+export const OrderListContentErrorMsgBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  display: "flex",
+  flexDirection: "column",
+}));
+
+export const OrderListContentMsg = styled(Typography)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  color: Colors.grey,
 }));
 
 export const OrderListDetial = styled(Box, {

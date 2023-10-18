@@ -1,6 +1,9 @@
 import React from "react";
 import {
+  ErrorMsgBox,
+  ErrorMsgIconButton,
   OrderListContentBox,
+  OrderListContentMsg,
   OrderListDate,
   OrderListDetial,
   OrderListName,
@@ -11,6 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./css/OrderList.css";
 import { ORDER_SCREEN_orderList } from "../../../redux/constants";
+import { Box, IconButton, Typography } from "@mui/material";
+import CachedIcon from "@mui/icons-material/Cached";
+import { Colors } from "../../../styles/theme";
 
 function OrderListContent({ orderListId }) {
   const dispatch = useDispatch();
@@ -61,7 +67,22 @@ function OrderListContent({ orderListId }) {
       {orderListLoading ? (
         <CircularProgress />
       ) : orderListError ? (
-        <p>{orderListError}</p>
+        <ErrorMsgBox>
+          <Typography variant="h5" color={Colors.grey}>
+            資料讀取失敗
+          </Typography>
+          <Box>
+            <ErrorMsgIconButton
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              <CachedIcon />
+            </ErrorMsgIconButton>
+          </Box>
+        </ErrorMsgBox>
+      ) : orderListData.length === 0 ? (
+        <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
       ) : (
         orderListData.map((order) => (
           <OrderListDetial

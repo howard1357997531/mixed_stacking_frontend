@@ -14,8 +14,12 @@ export const aiTrainingAction =
         payload: { orderId, aiTrainingState },
       });
 
-      //   const {data} = await axios.post("http://127.0.0.1:8000/api/aiTraining/", {})
-      const data = "12,3,5,7,8,6";
+      const { data } = await axios.post(
+        "http://127.0.0.1:8000/api/aiTraining/",
+        { orderId }
+      );
+      console.log(data);
+
       setTimeout(() => {
         dispatch({
           type: ORDER_LIST.aiTrainingOrderAdd,
@@ -28,13 +32,18 @@ export const aiTrainingAction =
         });
 
         dispatch({
+          type: ORDER_SCREEN_orderList.mode,
+          payload: "aiResult",
+        });
+
+        dispatch({
           type: ORDER_SCREEN_orderList.aiTrainingState,
           payload: "finish_training",
         });
 
         dispatch({
-          type: ORDER_SCREEN_orderList.mode,
-          payload: "aiResult",
+          type: ORDER_SCREEN_orderList.aiCurrentData,
+          payload: data,
         });
       }, 3000);
     } catch (error) {}
