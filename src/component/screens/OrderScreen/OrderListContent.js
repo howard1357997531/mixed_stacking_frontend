@@ -17,6 +17,7 @@ import { ORDER_SCREEN_orderList } from "../../../redux/constants";
 import { Box, IconButton, Typography } from "@mui/material";
 import CachedIcon from "@mui/icons-material/Cached";
 import { Colors } from "../../../styles/theme";
+import TextEffect from "../../../tool/TextEffect";
 
 function OrderListContent({ orderListId }) {
   const dispatch = useDispatch();
@@ -61,7 +62,7 @@ function OrderListContent({ orderListId }) {
       });
     }
   };
-
+  console.log(typeof Colors.red);
   return (
     <OrderListContentBox className="worklist-box">
       {orderListLoading ? (
@@ -96,13 +97,33 @@ function OrderListContent({ orderListId }) {
             <OrderListDate>{order.modifiedAt}</OrderListDate>
             <OrderListState>
               {order.aiTraining_state === "no_training" && (
-                <OrderListStateText>No training</OrderListStateText>
+                <OrderListStateText
+                  sx={{
+                    color: Colors.purple,
+                    border: `2px solid ${Colors.purple}`,
+                    borderRadius: "20px",
+                  }}
+                >
+                  尚未訓練
+                </OrderListStateText>
               )}
               {order.aiTraining_state === "is_training" && (
-                <OrderListStateText>training...</OrderListStateText>
+                <OrderListStateText>
+                  <TextEffect text={"AI演算中"} textColor={Colors.grey} />
+                </OrderListStateText>
               )}
               {order.aiTraining_state === "finish_training" && (
-                <OrderListStateText>Finish training</OrderListStateText>
+                <OrderListStateText
+                  sx={{
+                    color: Colors.grey,
+                    border: `2px solid ${Colors.grey}`,
+                  }}
+                >
+                  已訓練
+                </OrderListStateText>
+                // <OrderListStateText>
+                //   <TextEffect text={"AI演算中"} textColor={Colors.grey} />
+                // </OrderListStateText>
               )}
             </OrderListState>
           </OrderListDetial>

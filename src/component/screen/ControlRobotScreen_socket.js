@@ -388,42 +388,42 @@ function ControlRobotScreen_socket({ qrCodeId, onExecuteOtherQRcode }) {
 
   // console.log(qrCodeId);
   /* qrcode run robot */
-  useEffect(() => {
-    if (qrCodeId !== null) {
-      console.log("run python", qrCodeId);
-      setAiWorkListCurrentId(qrCodeId[0].id);
-      setCurrentState("Start robot");
-      axios
-        .post("http://127.0.0.1:8000/api/control-robot/", qrCodeId)
-        .then((res) => {
-          setReadTxt(false);
-          setRobotOpen(false);
-          setRobotState("");
-          setRobotRealtimeOrderListId(null);
-          setImageOpen(false);
-          setCurrentState("Finish");
-          setRealtimeItem("視覺辨識結果");
-          setOperateInterfaceDailogOpen(false);
+  // useEffect(() => {
+  //   if (qrCodeId !== null) {
+  //     console.log("run python", qrCodeId);
+  //     setAiWorkListCurrentId(qrCodeId[0].id);
+  //     setCurrentState("Start robot");
+  //     axios
+  //       .post("http://127.0.0.1:8000/api/control-robot/", qrCodeId)
+  //       .then((res) => {
+  //         setReadTxt(false);
+  //         setRobotOpen(false);
+  //         setRobotState("");
+  //         setRobotRealtimeOrderListId(null);
+  //         setImageOpen(false);
+  //         setCurrentState("Finish");
+  //         setRealtimeItem("視覺辨識結果");
+  //         setOperateInterfaceDailogOpen(false);
 
-          if (qrCodeId.length === 2) {
-            setTimeout(() => {
-              Swal.fire({
-                icon: "question",
-                title: "Execute second order?",
-                background: "#a1887f",
-              }).then(() => {
-                console.log("activate qrcode");
-                onExecuteOtherQRcode([qrCodeId[1]]);
-              });
-            }, 1000);
-          }
-        });
-      setImageOpen(true);
-      setReadTxt(true);
-    } else {
-      console.log("python null");
-    }
-  }, [qrCodeId]);
+  //         if (qrCodeId.length === 2) {
+  //           setTimeout(() => {
+  //             Swal.fire({
+  //               icon: "question",
+  //               title: "Execute second order?",
+  //               background: "#a1887f",
+  //             }).then(() => {
+  //               console.log("activate qrcode");
+  //               onExecuteOtherQRcode([qrCodeId[1]]);
+  //             });
+  //           }, 1000);
+  //         }
+  //       });
+  //     setImageOpen(true);
+  //     setReadTxt(true);
+  //   } else {
+  //     console.log("python null");
+  //   }
+  // }, [qrCodeId]);
 
   // web_socket
   const [count, setCount] = useState(1);

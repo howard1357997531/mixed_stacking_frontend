@@ -1,0 +1,26 @@
+:root {
+    --purple: #9575cd
+}
+
+.text-effect {
+    position: relative;
+    font-size: 16px;
+}
+
+.text-effect::after {
+    content: attr(data-text);
+    color: var(--purple);
+    border-right: 2px solid var(--purple);
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    left: 0;
+    text-shadow: 0 0 1.5px var(--purple);
+    animation: text-effect 1.5s linear infinite alternate;
+}
+
+@keyframes text-effect {
+    0% {width: 0;}
+    0% {width: 100%;}
+}

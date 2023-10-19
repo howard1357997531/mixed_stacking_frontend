@@ -33,7 +33,7 @@ function HomeDesktop({ matches }) {
   };
 
   const navigateHandler = (name) => {
-    navigate(name === "create new order" ? "/order" : "");
+    navigate(name === "create new order" ? "/order" : "/control-robot-socket");
     dispatch({ type: HOME_BUTTON.createNewOrder.unhover });
     dispatch({ type: HOME_BUTTON.robotConsole.unhover });
   };

@@ -8,7 +8,7 @@ import {
   styled,
 } from "@mui/material";
 import { Colors } from "../theme";
-import { blueGrey, brown, deepPurple, grey } from "@mui/material/colors";
+import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
 import { errorMsgIconButtonAnimation } from "../../animation";
 
 export const OrderContainer = styled(Stack)(({ theme }) => ({
@@ -145,9 +145,9 @@ export const OrderListDetial = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "60px",
-  backgroundColor: itemSelect ? brown[300] : null,
+  backgroundColor: itemSelect ? brown[200] : null,
   "&:hover": {
-    backgroundColor: itemSelect ? brown[300] : brown[100],
+    backgroundColor: itemSelect ? brown[200] : Colors.lightOrangeHover,
     cursor: "pointer",
   },
 }));
@@ -181,9 +181,9 @@ export const OrderListStateText = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "60%",
-  padding: "8px 0px",
-  borderRadius: "20px",
-  fontSize: "14px",
+  padding: "6px 0px",
+  fontSize: "16px",
+  fontWeight: 600,
 }));
 
 // functionArea
