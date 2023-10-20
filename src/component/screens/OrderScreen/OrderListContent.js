@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  ErrorMsgBox,
-  ErrorMsgIconButton,
   OrderListContentBox,
   OrderListContentMsg,
   OrderListDate,
@@ -11,13 +9,13 @@ import {
   OrderListStateText,
 } from "../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
 import "./css/OrderList.css";
-import { ORDER_SCREEN_orderList } from "../../../redux/constants";
-import { Box, IconButton, Typography } from "@mui/material";
-import CachedIcon from "@mui/icons-material/Cached";
+// import { ORDER_SCREEN_orderList } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 import TextEffect from "../../../tool/TextEffect";
+import ErrorMsgBox from "../../../tool/ErrorMsgBox";
+import LoadingCircle from "../../../tool/LoadingCircle";
+import { orderlistSelectAction } from "../../../redux/actions/OrderScreenAction";
 
 function OrderListContent({ orderListId }) {
   const dispatch = useDispatch();
@@ -28,60 +26,15 @@ function OrderListContent({ orderListId }) {
   } = useSelector((state) => state.orderList);
 
   const orderListModeHandler = (orderId, aiTraining_state) => {
-    dispatch({
-      type: ORDER_SCREEN_orderList.mode,
-      payload: "orderDetail",
-    });
-
-    dispatch({
-      type: ORDER_SCREEN_orderList.orderId,
-      payload: orderId,
-    });
-
-    dispatch({
-      type: ORDER_SCREEN_orderList.aiTrainingState,
-      payload: aiTraining_state,
-    });
-
-    const [OrderData] = orderListData.filter((order) => order.id === orderId);
-
-    dispatch({
-      type: ORDER_SCREEN_orderList.orderCurrentData,
-      payload: OrderData.orderItem,
-      payload: {
-        name: OrderData.name,
-        createdAt: OrderData.createdAt,
-        orderItem: OrderData.orderItem,
-      },
-    });
-
-    if (aiTraining_state === "finish_training") {
-      dispatch({
-        type: ORDER_SCREEN_orderList.aiCurrentData,
-        payload: OrderData.aiTraining_order,
-      });
-    }
+    dispatch(orderlistSelectAction(orderId, orderListData, aiTraining_state));
   };
-  console.log(typeof Colors.red);
+
   return (
     <OrderListContentBox className="worklist-box">
       {orderListLoading ? (
-        <CircularProgress />
+        <LoadingCircle />
       ) : orderListError ? (
-        <ErrorMsgBox>
-          <Typography variant="h5" color={Colors.grey}>
-            資料讀取失敗
-          </Typography>
-          <Box>
-            <ErrorMsgIconButton
-              onClick={() => {
-                window.location.reload();
-              }}
-            >
-              <CachedIcon />
-            </ErrorMsgIconButton>
-          </Box>
-        </ErrorMsgBox>
+        <ErrorMsgBox />
       ) : orderListData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
       ) : (

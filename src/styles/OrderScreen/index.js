@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { Colors } from "../theme";
 import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
-import { errorMsgIconButtonAnimation } from "../../animation";
 
 export const OrderContainer = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
@@ -99,26 +98,6 @@ export const OrderListContentBox = styled(Box)(({ theme }) => ({
   height: "90%",
   overflowY: "auto",
   border: `1px solid ${Colors.grey}`,
-}));
-
-export const ErrorMsgBox = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-}));
-
-export const ErrorMsgIconButton = styled(IconButton)(({ theme }) => ({
-  "&:hover": {
-    transform: "scale(1.1)",
-    animation: `${errorMsgIconButtonAnimation} .5s `,
-  },
-  "&:active": {
-    transform: "scale(0.95)",
-  },
 }));
 
 export const OrderListContentErrorMsgBox = styled(Box)(({ theme }) => ({
@@ -254,7 +233,7 @@ export const FunctionAreaContentBox = styled(Box)(({ theme }) => ({
 
 export const AiIsTraingGifText = styled(Typography)({
   position: "absolute",
-  top: "57%",
+  top: "55%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   color: Colors.blue,

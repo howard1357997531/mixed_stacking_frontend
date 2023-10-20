@@ -19,6 +19,7 @@ import {
   teal,
 } from "@mui/material/colors";
 import CircularProgress from "@mui/material/CircularProgress";
+import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 
 function FunctionAreaContent() {
   const {
@@ -54,15 +55,15 @@ function FunctionAreaContent() {
               alt={"loading.gif"}
               className="ai-gif"
             ></img>
-            <AiIsTraingGifText>training</AiIsTraingGifText>
+            <AiIsTraingGifText>演算中</AiIsTraingGifText>
           </>
         );
       } else {
         return (
           <>
-            <Typography>file name : {orderCurrentData.name}</Typography>
-            <Typography>AI training state : {aiTrainingState}</Typography>
-            <Typography>upload date : {orderCurrentData.createdAt}</Typography>
+            <Typography>檔案名稱 : {orderCurrentData.name}</Typography>
+            <Typography>是否演算 : {aiTrainingState}</Typography>
+            <Typography>上傳時間 : {orderCurrentData.createdAt}</Typography>
             <Typography
               variant="body1"
               align="center"
@@ -73,15 +74,15 @@ function FunctionAreaContent() {
                 padding: "5px 0px",
               }}
             >
-              Order list
+              清單
             </Typography>
 
             <OrderListDetailBox>
-              <OrderListDetailSmallBox>name</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>width</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>height</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>depth</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>quantity</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>名稱</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>寬度</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>長度</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>高度</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>數量</OrderListDetailSmallBox>
             </OrderListDetailBox>
 
             {orderCurrentData.orderItem.map((order, index) => (
@@ -127,7 +128,7 @@ function FunctionAreaContent() {
       {orderListLoading ? (
         <CircularProgress />
       ) : orderListError ? (
-        <p>{orderListError}</p>
+        <ErrorMsgBox />
       ) : (
         <Content></Content>
       )}

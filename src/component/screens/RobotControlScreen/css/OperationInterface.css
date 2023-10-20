@@ -1,0 +1,11 @@
+.operation-interface img {
+    position: relative;
+    z-index: 2;
+    width: 70px !important;
+    height: 70px !important;
+}
+
+.operation-interface .board img {
+    width: 100% !important;
+    height: 100% !important;
+}

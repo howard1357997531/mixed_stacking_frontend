@@ -4,6 +4,7 @@ import HomeScreen from "./screen/HomeScreen";
 import OrderScreen from "./screen/OrderScreen";
 import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 import ControlRobotScreen_socket from "./component/screen/ControlRobotScreen_socket";
+import RobotControlScreen from "./screen/RobotControlScreen";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/order" element={<OrderScreen />} />
         <Route path="/create-orderlist" element={<CreateOrderListScreen />} />
+        <Route path="/robot-control" element={<RobotControlScreen />} />
         <Route
           path="/control-robot-socket"
           element={<ControlRobotScreen_socket />}

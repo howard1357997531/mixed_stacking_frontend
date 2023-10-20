@@ -42,7 +42,7 @@ export const HomeContentButton = styled(Button)(({ theme }) => ({
   "&:hover": {
     border: `2px solid ${Colors.blue}`,
     transform: "scale(1.1)",
-    transition: "all 0.3s ease-in-out",
+    transition: "transform 0.3s ease-in-out",
     cursor: "pointer",
   },
   "&:active": {

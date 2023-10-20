@@ -29,7 +29,7 @@ function FunctionAreaNavButton() {
             variant="contained"
             onClick={() => buttonHandler("orderDetail", "is_training")}
           >
-            AI training
+            AI 演算
           </FunctionAreaNavBtn>
         );
       } else if (aiTrainingState === "finish_training") {
@@ -38,7 +38,7 @@ function FunctionAreaNavButton() {
             variant="contained"
             onClick={() => buttonHandler("aiResult", null)}
           >
-            AI result
+            AI 結果
           </FunctionAreaNavBtn>
         );
       }
@@ -48,7 +48,7 @@ function FunctionAreaNavButton() {
           variant="contained"
           onClick={() => buttonHandler("orderDetail", null)}
         >
-          Order Detail
+          清單
         </FunctionAreaNavBtn>
       );
     }

@@ -1,5 +1,12 @@
 import { alpha, createTheme } from "@mui/material";
-import { blue, brown, deepPurple, grey, pink } from "@mui/material/colors";
+import {
+  blue,
+  brown,
+  deepPurple,
+  grey,
+  pink,
+  teal,
+} from "@mui/material/colors";
 
 export const Colors = {
   primary: "#5f2c3e",
@@ -23,9 +30,12 @@ export const Colors = {
   orange: "#FE4A1B",
   lightGreen: "#01FCAC",
   darkGreen: "#14BF9C",
+  darkGreenHover: teal[500],
   darkPink: "#DFA9B2",
   darkPinkHover: pink[200],
-  grey: grey[600],
+  grey: "#E2DCD0",
+  greyHover: grey[400],
+  geryText: grey[800],
   blue: blue[700],
   red: "#FF494B",
   black: "#303030",

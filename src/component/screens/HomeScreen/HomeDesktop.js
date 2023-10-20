@@ -33,7 +33,7 @@ function HomeDesktop({ matches }) {
   };
 
   const navigateHandler = (name) => {
-    navigate(name === "create new order" ? "/order" : "/control-robot-socket");
+    navigate(name === "create new order" ? "/order" : "/robot-control");
     dispatch({ type: HOME_BUTTON.createNewOrder.unhover });
     dispatch({ type: HOME_BUTTON.robotConsole.unhover });
   };
@@ -51,7 +51,8 @@ function HomeDesktop({ matches }) {
   return (
     <HomeContainer>
       <HomeTitle variant="h4" data-aos="zoom-in">
-        Please select a method
+        {/* Please select a method */}
+        請選擇方式
       </HomeTitle>
 
       <HomeContent>
@@ -64,7 +65,8 @@ function HomeDesktop({ matches }) {
           onMouseLeave={() => mouseLeaveHandler("create new order")}
           onClick={() => navigateHandler("create new order")}
         >
-          Create new order
+          {/* Create new order */}
+          建立新工單
         </HomeContentButton>
         <HomeContentButton
           variant="outlined"
@@ -75,7 +77,8 @@ function HomeDesktop({ matches }) {
           onMouseLeave={() => mouseLeaveHandler("robot console")}
           onClick={() => navigateHandler("robot console")}
         >
-          Robot console
+          {/* Robot console */}
+          手臂控制台
         </HomeContentButton>
       </HomeContent>
 

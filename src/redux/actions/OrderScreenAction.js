@@ -3,6 +3,43 @@ import { ORDER_LIST, ORDER_SCREEN_orderList } from "../constants";
 import Swal from "sweetalert2";
 import { brown } from "@mui/material/colors";
 
+export const orderlistSelectAction =
+  (orderId, orderListData, aiTraining_state) => (dispatch) => {
+    dispatch({
+      type: ORDER_SCREEN_orderList.mode,
+      payload: "orderDetail",
+    });
+
+    dispatch({
+      type: ORDER_SCREEN_orderList.orderId,
+      payload: orderId,
+    });
+
+    dispatch({
+      type: ORDER_SCREEN_orderList.aiTrainingState,
+      payload: aiTraining_state,
+    });
+
+    const [OrderData] = orderListData.filter((order) => order.id === orderId);
+
+    dispatch({
+      type: ORDER_SCREEN_orderList.orderCurrentData,
+      payload: OrderData.orderItem,
+      payload: {
+        name: OrderData.name,
+        createdAt: OrderData.createdAt,
+        orderItem: OrderData.orderItem,
+      },
+    });
+
+    if (aiTraining_state === "finish_training") {
+      dispatch({
+        type: ORDER_SCREEN_orderList.aiCurrentData,
+        payload: OrderData.aiTraining_order,
+      });
+    }
+  };
+
 export const aiTrainingAction =
   (orderId, aiTrainingState) => async (dispatch) => {
     try {

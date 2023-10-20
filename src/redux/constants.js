@@ -21,6 +21,17 @@ export const ORDER_SCREEN_orderList = {
   delete: "ORDER_SCREEN_orderList_delete",
 };
 
+// RobotControlScreen
+export const ROBOT_CONTROL_SCREEN_orderList = {
+  selectId: "ROBOT_CONTROL_SCREEN_orderList_selectId",
+};
+
+export const ROBOT_CONTROL_SCREEN_executeRobot = {
+  request: "ROBOT_CONTROL_SCREEN_executeRobot_request",
+  success: "ROBOT_CONTROL_SCREEN_executeRobot_success",
+  fail: "ROBOT_CONTROL_SCREEN_executeRobot_fail",
+};
+
 // orderList
 export const ORDER_LIST = {
   request: "ORDER_LIST_REQUEST",
