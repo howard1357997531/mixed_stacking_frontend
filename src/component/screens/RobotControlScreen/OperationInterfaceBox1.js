@@ -19,8 +19,8 @@ function OperationInterfaceBox1() {
   return (
     <FortyRadioHeightBox>
       <FortyRadioWidthButton
-        onClick={() => setOrderListDialogOpen(true)}
         customColor={[Colors.lightOrange, orange[200]]}
+        onClick={() => setOrderListDialogOpen(true)}
       >
         <OperationInterButtonLogo>
           <img src="list.png" alt="list.png"></img>

@@ -32,6 +32,22 @@ export const ROBOT_CONTROL_SCREEN_executeRobot = {
   fail: "ROBOT_CONTROL_SCREEN_executeRobot_fail",
 };
 
+export const ROBOT_CONTROL_SCREEN_robotSetting = {
+  request: "ROBOT_CONTROL_SCREEN_robotSetting_request",
+  success: "ROBOT_CONTROL_SCREEN_robotSetting_success",
+  fail: "ROBOT_CONTROL_SCREEN_robotSetting_fail",
+  pause: "ROBOT_CONTROL_SCREEN_robotSetting_pause",
+  unPause: "ROBOT_CONTROL_SCREEN_robotSetting_unPause",
+  reset: "ROBOT_CONTROL_SCREEN_robotSetting_reset",
+  speedUp: "ROBOT_CONTROL_SCREEN_robotSetting_speedUp",
+  speedDown: "ROBOT_CONTROL_SCREEN_robotSetting_slowDown",
+};
+
+export const ROBOT_CONTROL_SCREEN_realtimeData = {
+  mode: "ROBOT_CONTROL_SCREEN_realtimeData_mode",
+  count: "ROBOT_CONTROL_SCREEN_realtimeData_count",
+};
+
 // orderList
 export const ORDER_LIST = {
   request: "ORDER_LIST_REQUEST",

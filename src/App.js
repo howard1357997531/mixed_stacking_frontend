@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./component/nav/Navbar";
 import HomeScreen from "./screen/HomeScreen";
@@ -5,8 +6,49 @@ import OrderScreen from "./screen/OrderScreen";
 import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 import ControlRobotScreen_socket from "./component/screen/ControlRobotScreen_socket";
 import RobotControlScreen from "./screen/RobotControlScreen";
+import { useDispatch } from "react-redux";
+import { ROBOT_CONTROL_SCREEN_realtimeData } from "./redux/constants";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const socket = new WebSocket(
+      "ws://127.0.0.1:8000/ws/RobotControlConsumers/"
+    );
+
+    socket.onopen = () => {
+      console.log("webSocket connect");
+    };
+
+    socket.onmessage = (event) => {
+      const realtimeData = JSON.parse(event.data);
+
+      console.log(event);
+      if (realtimeData.count) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN_realtimeData.count,
+          payload: realtimeData.count,
+        });
+      }
+
+      if (realtimeData.mode) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN_realtimeData.mode,
+          payload: realtimeData.mode,
+        });
+      }
+    };
+
+    socket.onclose = (event) => {
+      console.log("webSocket close: ", event);
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, []);
+
   return (
     <Router>
       <Navbar />
