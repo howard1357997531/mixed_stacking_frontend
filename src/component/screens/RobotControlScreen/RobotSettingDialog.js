@@ -149,7 +149,7 @@ function RobotSettingDialog({
 
   const dispatch = useDispatch();
   const { pause, reset, speed } = useSelector(
-    (state) => state.robotControlScreen_robotSetting
+    (state) => state.robotControlScreen_robotState
   );
 
   const handleClose = () => {

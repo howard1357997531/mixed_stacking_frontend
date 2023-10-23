@@ -4,12 +4,12 @@ import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
 import { Box, Typography, styled } from "@mui/material";
 import { brown, grey, orange, teal, yellow } from "@mui/material/colors";
-import "./css/OrderListDialog.css";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import { OrderListContentMsg } from "../../../styles/OrderScreen";
-import { ROBOT_CONTROL_SCREEN_orderList } from "../../../redux/constants";
+import { orderlistSelectAction } from "../../../redux/actions/RobotControlScreenAction";
+import "./css/OrderListDialog.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -75,11 +75,11 @@ function OrderListDialog({ orderListDialogOpen, onOrderListDialoggOpen }) {
   const handleClose = () => {
     onOrderListDialoggOpen(false);
   };
-  const orderListHandler = (id) => {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_orderList.selectId,
-      payload: id,
-    });
+  const orderListHandler = (orderId) => {
+    const [selectOrderList] = orderListData.filter(
+      (order) => order.id === orderId
+    );
+    dispatch(orderlistSelectAction(selectOrderList));
     onOrderListDialoggOpen(false);
   };
 

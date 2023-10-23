@@ -13,11 +13,13 @@ import RobotSettingDialog from "./RobotSettingDialog";
 
 function OperationInterfaceBox2() {
   const dispatch = useDispatch();
-  const { orderListId } = useSelector(
+  const { detail } = useSelector(
     (state) => state.robotControlScreen_orderSelect
   );
+  const { mode } = useSelector((state) => state.robotControlScreen_robotState);
+
   const executeRobotHandler = () => {
-    dispatch(executeRobotAction(orderListId));
+    dispatch(executeRobotAction(mode, detail));
   };
 
   // dialog

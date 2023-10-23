@@ -1,0 +1,17 @@
+.orderlist img {
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.orderlist::-webkit-scrollbar {
+    width: 10px
+}
+
+.orderlist::-webkit-scrollbar-track{
+    background-color: #a1887f;
+}
+
+.orderlist::-webkit-scrollbar-thumb{
+    background-color: #795548;
+}
+

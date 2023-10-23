@@ -1,19 +1,37 @@
 import {
   ROBOT_CONTROL_SCREEN_executeRobot,
+  ROBOT_CONTROL_SCREEN_informationArea,
   ROBOT_CONTROL_SCREEN_orderList,
   ROBOT_CONTROL_SCREEN_realtimeData,
   ROBOT_CONTROL_SCREEN_robotSetting,
+  ROBOT_CONTROL_SCREEN_robotState,
 } from "../constants";
 
 export const robotControlScreen_orderSelectReducer = (
-  state = { orderListId: null },
+  state = { detail: [] },
   action
 ) => {
   switch (action.type) {
-    case ROBOT_CONTROL_SCREEN_orderList.selectId:
+    case ROBOT_CONTROL_SCREEN_orderList.select:
       return {
         ...state,
-        orderListId: action.payload,
+        detail: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const robotControlScreen_informationAreaReducer = (
+  state = { mode: "initial" },
+  action
+) => {
+  switch (action.type) {
+    case ROBOT_CONTROL_SCREEN_informationArea.mode:
+      return {
+        ...state,
+        mode: action.payload,
       };
 
     default:
@@ -50,11 +68,23 @@ export const robotControlScreen_executeRobotReducer = (
   }
 };
 
-export const robotControlScreen_robotSettingReducer = (
-  state = { data: [], pause: false, reset: false, speed: 50 },
+export const robotControlScreen_robotStateReducer = (
+  state = {
+    mode: "inactivate",
+    data: [],
+    pause: false,
+    reset: false,
+    speed: 50,
+  },
   action
 ) => {
   switch (action.type) {
+    case ROBOT_CONTROL_SCREEN_robotState.mode:
+      return {
+        ...state,
+        mode: action.payload,
+      };
+
     case ROBOT_CONTROL_SCREEN_robotSetting.request:
       return {
         ...state,

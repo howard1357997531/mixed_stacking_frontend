@@ -7,7 +7,10 @@ import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 import ControlRobotScreen_socket from "./component/screen/ControlRobotScreen_socket";
 import RobotControlScreen from "./screen/RobotControlScreen";
 import { useDispatch } from "react-redux";
-import { ROBOT_CONTROL_SCREEN_realtimeData } from "./redux/constants";
+import {
+  ROBOT_CONTROL_SCREEN_realtimeData,
+  ROBOT_CONTROL_SCREEN_robotState,
+} from "./redux/constants";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +36,10 @@ function App() {
       }
 
       if (realtimeData.mode) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN_robotState.mode,
+          payload: realtimeData.mode,
+        });
         dispatch({
           type: ROBOT_CONTROL_SCREEN_realtimeData.mode,
           payload: realtimeData.mode,

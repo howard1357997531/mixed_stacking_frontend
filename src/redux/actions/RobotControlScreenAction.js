@@ -1,57 +1,110 @@
 import Swal from "sweetalert2";
 import {
   ROBOT_CONTROL_SCREEN_executeRobot,
+  ROBOT_CONTROL_SCREEN_informationArea,
+  ROBOT_CONTROL_SCREEN_orderList,
   ROBOT_CONTROL_SCREEN_realtimeData,
   ROBOT_CONTROL_SCREEN_robotSetting,
+  ROBOT_CONTROL_SCREEN_robotState,
 } from "../constants";
 import axios from "axios";
 import { brown } from "@mui/material/colors";
 
-export const executeRobotAction = (orderId) => async (dispatch) => {
-  try {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_executeRobot.request,
-    });
+export const orderlistSelectAction = (selectOrderList) => (dispatch) => {
+  dispatch({
+    type: ROBOT_CONTROL_SCREEN_orderList.select,
+    payload: selectOrderList,
+  });
 
-    const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/executeRobot/",
-      { orderId }
-    );
-
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_executeRobot.success,
-      payload: data,
-    });
-
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_realtimeData.mode,
-      payload: null,
-    });
-
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_realtimeData.count,
-      payload: null,
-    });
-  } catch (error) {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_executeRobot.fail,
-      payload: error.response.data.error_msg,
-    });
-
-    Swal.fire({
-      position: "center",
-      width: "16em",
-      icon: "warning",
-      title: error.response.data.error_msg,
-      background: brown[400],
-      showConfirmButton: false,
-      timer: 2000,
-    });
-  }
+  dispatch({
+    type: ROBOT_CONTROL_SCREEN_informationArea.mode,
+    payload: "order",
+  });
 };
 
+export const executeRobotAction =
+  (robotStateMode, orderSelectDetail) => async (dispatch) => {
+    if (orderSelectDetail.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "請選擇工單",
+        background: "#a1887f",
+      });
+      return;
+    }
+    const orderId = orderSelectDetail.id;
+
+    try {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_robotState.mode,
+        payload: "activate",
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_informationArea.mode,
+        payload: "picture",
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_executeRobot.request,
+      });
+
+      const { data } = await axios.post(
+        "http://127.0.0.1:8000/api/executeRobot/",
+        { orderId }
+      );
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_executeRobot.success,
+        payload: data,
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_robotState.mode,
+        payload: "inactivate",
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_informationArea.mode,
+        payload: "order",
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_realtimeData.mode,
+        payload: null,
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_realtimeData.count,
+        payload: null,
+      });
+    } catch (error) {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_executeRobot.fail,
+        payload: error.response.data.error_msg,
+      });
+
+      Swal.fire({
+        position: "center",
+        width: "16em",
+        icon: "warning",
+        title: error.response.data.error_msg,
+        background: brown[400],
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
+
 export const robotSettingAction = (mode, speed) => async (dispatch) => {
-  dispatch({ type: ROBOT_CONTROL_SCREEN_robotSetting[mode] });
+  dispatch({
+    type: ROBOT_CONTROL_SCREEN_robotState.mode,
+    payload: mode,
+  });
+
+  dispatch({
+    type: ROBOT_CONTROL_SCREEN_robotSetting[mode],
+  });
 
   try {
     dispatch({

@@ -1,5 +1,5 @@
-import { Box, Stack, Typography, styled } from "@mui/material";
-import { red } from "@mui/material/colors";
+import { Box, Button, Stack, Typography, styled } from "@mui/material";
+import { blueGrey, red } from "@mui/material/colors";
 import { Colors } from "../theme";
 
 export const RobotControlContainer = styled(Stack)(({ theme }) => ({
@@ -111,7 +111,7 @@ export const TextShowBoardTextBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "90%",
+  width: "100%",
   gap: "5px",
   zIndex: "3",
 }));
@@ -120,8 +120,6 @@ export const TextShowBoardText = styled(Typography)(({ theme }) => ({
   textAlign: "center",
   fontSize: "45px",
   fontWeight: 600,
-  width: "100%",
-  color: Colors.geryText,
 }));
 
 export const StyleDotBox = styled(Box)(({ theme }) => ({
@@ -157,20 +155,22 @@ export const InformationAreaBox = styled(Box)(({ theme }) => ({
 }));
 
 export const InformationAreaTitleBox = styled(Box)(({ theme }) => ({
+  position: "relative",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   height: "10%",
+  width: "100%",
 }));
 
-export const InformationAreaContentBox = styled(Box)(({ theme }) => ({
+export const InformationAreaContentBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "hasOrderList",
+})(({ theme, hasOrderList }) => ({
   position: "relative",
   width: "80%",
   height: "80%",
-  // border: `1px ${
-  //   currentState === "No order selected yet" ? "dashed" : "solid"
-  // } ${brown[500]}`,
-  border: `1px dashed ${Colors.geryText}`,
+  border: `1px ${hasOrderList ? "solid" : "dashed"} ${Colors.geryText}`,
+  // border: `1px dashed ${Colors.geryText}`,
 }));
 
 export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
@@ -181,4 +181,57 @@ export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
   color: Colors.geryText,
   fontWeight: 600,
   fontSize: "26px",
+}));
+
+export const OrderListBox = styled(Box)(({ theme }) => ({
+  width: "100%",
+  height: "100%",
+  overflowY: "hidden",
+}));
+
+export const OrderListTitleButton = styled(Button)(({ theme }) => ({
+  position: "absolute",
+  top: "60%",
+  left: "10%",
+  transform: "translateY(-50%)",
+  minWidth: "40px",
+  fontWeight: 600,
+  color: "#fff",
+  backgroundColor: Colors.brown,
+  "&:hover": {
+    transition: "scale 0.3s ease-in-out",
+    transform: "scale(1.05), translateY(-50%)",
+    cursor: "pointer",
+    backgroundColor: Colors.brownHover,
+  },
+  "&:active": {
+    transform: "scale(0.95), translateY(-50%)",
+  },
+}));
+
+export const OrderListTitle = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+  height: "8%",
+  backgroundColor: blueGrey[500],
+}));
+
+export const OrderListContent = styled(Box)(({ theme }) => ({
+  width: "100%",
+  height: "92%",
+  overflowY: "auto",
+}));
+
+export const OrderListContentBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  width: "100%",
+  height: "60px",
+}));
+
+export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100%",
 }));

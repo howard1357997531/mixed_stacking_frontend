@@ -23,13 +23,21 @@ export const ORDER_SCREEN_orderList = {
 
 // RobotControlScreen
 export const ROBOT_CONTROL_SCREEN_orderList = {
-  selectId: "ROBOT_CONTROL_SCREEN_orderList_selectId",
+  select: "ROBOT_CONTROL_SCREEN_orderList_select",
+};
+
+export const ROBOT_CONTROL_SCREEN_informationArea = {
+  mode: "ROBOT_CONTROL_SCREEN_informationArea_mode",
 };
 
 export const ROBOT_CONTROL_SCREEN_executeRobot = {
   request: "ROBOT_CONTROL_SCREEN_executeRobot_request",
   success: "ROBOT_CONTROL_SCREEN_executeRobot_success",
   fail: "ROBOT_CONTROL_SCREEN_executeRobot_fail",
+};
+
+export const ROBOT_CONTROL_SCREEN_robotState = {
+  mode: "ROBOT_CONTROL_SCREEN_robotState_mode",
 };
 
 export const ROBOT_CONTROL_SCREEN_robotSetting = {

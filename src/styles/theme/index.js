@@ -6,6 +6,7 @@ import {
   grey,
   pink,
   teal,
+  yellow,
 } from "@mui/material/colors";
 
 export const Colors = {
@@ -40,6 +41,9 @@ export const Colors = {
   red: "#FF494B",
   black: "#303030",
   purple: deepPurple[300],
+  yellow: yellow[500],
+  brown: brown[300],
+  brownHover: brown[400],
 };
 
 const theme = createTheme({

@@ -290,11 +290,6 @@ function ControlRobotScreen_socket({ qrCodeId, onExecuteOtherQRcode }) {
 
   const controlRobotHandler = () => {
     if (currentState === "No order selected yet") {
-      Swal.fire({
-        icon: "warning",
-        title: "請選擇工單",
-        background: "#a1887f",
-      });
     } else {
       if (!robotOpen || currentState === "reset") {
         setCurrentState("Start robot");
