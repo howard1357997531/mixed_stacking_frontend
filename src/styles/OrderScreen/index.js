@@ -97,7 +97,7 @@ export const OrderListContentBox = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "90%",
   overflowY: "auto",
-  border: `1px solid ${Colors.grey}`,
+  border: `1px solid ${Colors.greyBorder}`,
 }));
 
 export const OrderListContentErrorMsgBox = styled(Box)(({ theme }) => ({
@@ -124,27 +124,33 @@ export const OrderListDetial = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "60px",
-  backgroundColor: itemSelect ? brown[200] : null,
+  backgroundColor: itemSelect ? Colors.greyHover : null,
   "&:hover": {
-    backgroundColor: itemSelect ? brown[200] : Colors.lightOrangeHover,
+    backgroundColor: itemSelect ? Colors.greyHover : Colors.lightOrangeHover,
     cursor: "pointer",
   },
 }));
 
-export const OrderListName = styled(Box)(({ theme }) => ({
+export const OrderListName = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "33%",
   height: "100%",
+  color: itemSelect ? "#fff" : Colors.greyText,
 }));
 
-export const OrderListDate = styled(Box)(({ theme }) => ({
+export const OrderListDate = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "33%",
   height: "100%",
+  color: itemSelect ? "#fff" : Colors.greyText,
 }));
 
 export const OrderListState = styled(Box)(({ theme }) => ({
@@ -225,7 +231,7 @@ export const FunctionAreaContentBox = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "90%",
   overflowY: "auto",
-  border: `1px solid ${Colors.grey}`,
+  border: `1px solid ${Colors.greyBorder}`,
   boxSizing: "border-box",
   // padding: functionBoxMode === "order" ? 10 : 0,
   padding: 10,
@@ -233,7 +239,7 @@ export const FunctionAreaContentBox = styled(Box)(({ theme }) => ({
 
 export const AiIsTraingGifText = styled(Typography)({
   position: "absolute",
-  top: "55%",
+  top: "57%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   color: Colors.blue,

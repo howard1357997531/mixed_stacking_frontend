@@ -71,6 +71,7 @@ export const robotControlScreen_executeRobotReducer = (
 export const robotControlScreen_robotStateReducer = (
   state = {
     mode: "inactivate",
+    text: "已選擇工單",
     data: [],
     pause: false,
     reset: false,
@@ -83,6 +84,12 @@ export const robotControlScreen_robotStateReducer = (
       return {
         ...state,
         mode: action.payload,
+      };
+
+    case ROBOT_CONTROL_SCREEN_robotState.text:
+      return {
+        ...state,
+        text: action.payload,
       };
 
     case ROBOT_CONTROL_SCREEN_robotSetting.request:

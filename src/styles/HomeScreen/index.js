@@ -59,7 +59,7 @@ export const HomeContentButton = styled(Button)(({ theme }) => ({
 export const HomeDescription = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
-  color: Colors.grey,
+  color: Colors.greyText,
   fontSize: "26px",
 
   [theme.breakpoints.up("md")]: {

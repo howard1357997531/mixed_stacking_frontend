@@ -8,13 +8,14 @@ import "./css/OperationInterface.css";
 import { useSelector } from "react-redux";
 import { Colors } from "../../../styles/theme";
 import Dot from "../../../tool/Dot";
+import { operateShowBoardTextAnimation } from "../../../animation";
 
 function OperationInterfaceBox3() {
   const { detail } = useSelector(
     (state) => state.robotControlScreen_orderSelect
   );
 
-  const { mode: robotStateMode } = useSelector(
+  const { mode: robotStateMode, text: robotStateText } = useSelector(
     (state) => state.robotControlScreen_robotState
   );
 
@@ -27,15 +28,15 @@ function OperationInterfaceBox3() {
       <img src="board.png" alt="board.png"></img>
       <TextShowBoardTextBox>
         {detail.length === 0 && (
-          <TextShowBoardText sx={{ color: Colors.geryText }}>
+          <TextShowBoardText sx={{ color: Colors.greyTextBlood }}>
             尚未選擇工單
           </TextShowBoardText>
         )}
 
         {detail.length !== 0 && robotStateMode === "inactivate" && (
           <>
-            <TextShowBoardText sx={{ color: Colors.geryText }}>
-              已選擇工單
+            <TextShowBoardText sx={{ color: Colors.greyTextBlood }}>
+              {robotStateText}
             </TextShowBoardText>
           </>
         )}
@@ -49,6 +50,17 @@ function OperationInterfaceBox3() {
           </>
         )}
 
+        {realtimeDataMode &&
+          realtimeDataMode !== "prepare" &&
+          realtimeDataMode !== "operate" && (
+            <>
+              <TextShowBoardText sx={{ color: Colors.blue }}>
+                {realtimeDataMode}
+              </TextShowBoardText>
+              <Dot dotColor={Colors.blue} />
+            </>
+          )}
+
         {realtimeDataMode && realtimeDataMode === "prepare" && (
           <>
             <TextShowBoardText
@@ -60,7 +72,10 @@ function OperationInterfaceBox3() {
 
         {realtimeDataMode && realtimeDataMode === "operate" && (
           <TextShowBoardText
-            sx={{ color: Colors.yellow }}
+            sx={{
+              color: Colors.yellow,
+              animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
+            }}
           >{`正在操作第${count}個物件`}</TextShowBoardText>
         )}
       </TextShowBoardTextBox>

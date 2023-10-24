@@ -93,7 +93,14 @@ export const aiTrainingAction =
         showConfirmButton: false,
         timer: 2000,
       }).then(() => {
-        window.location.reload();
+        axios
+          .post("http://127.0.0.1:8000/api/aiTraining/", {
+            orderId,
+            mode: "error",
+          })
+          .then(() => {
+            window.location.reload();
+          });
       });
     }
   };

@@ -46,37 +46,54 @@ function OrderListContent({ orderListId }) {
             }}
             itemSelect={order.id === orderListId}
           >
-            <OrderListName>{order.name}</OrderListName>
-            <OrderListDate>{order.modifiedAt}</OrderListDate>
+            <OrderListName itemSelect={order.id === orderListId}>
+              {order.name}
+            </OrderListName>
+
+            <OrderListDate itemSelect={order.id === orderListId}>
+              {order.modifiedAt}
+            </OrderListDate>
+
             <OrderListState>
               {order.aiTraining_state === "no_training" && (
                 <OrderListStateText
                   sx={{
                     color: Colors.purple,
-                    border: `2px solid ${Colors.purple}`,
-                    borderRadius: "20px",
                   }}
                 >
                   尚未訓練
                 </OrderListStateText>
+                // <OrderListStateText>
+                //   <TextEffect
+                //     text={"AI演算中"}
+                //     textColor={
+                //       order.id === orderListId ? "#fff" : Colors.greyBorder
+                //     }
+                //   />
+                // </OrderListStateText>
               )}
+
               {order.aiTraining_state === "is_training" && (
-                <OrderListStateText>
-                  <TextEffect text={"AI演算中"} textColor={Colors.grey} />
-                </OrderListStateText>
+                <TextEffect
+                  text={"AI演算中"}
+                  textColor={
+                    order.id === orderListId ? "#fff" : Colors.greyBorder
+                  }
+                />
               )}
+
               {order.aiTraining_state === "finish_training" && (
                 <OrderListStateText
                   sx={{
-                    color: Colors.grey,
-                    border: `2px solid ${Colors.grey}`,
+                    color:
+                      order.id === orderListId ? "#fff" : Colors.greyBorder,
+                    border: `2px solid ${
+                      order.id === orderListId ? "#fff" : Colors.greyBorder
+                    }`,
                   }}
                 >
                   已訓練
                 </OrderListStateText>
-                // <OrderListStateText>
-                //   <TextEffect text={"AI演算中"} textColor={Colors.grey} />
-                // </OrderListStateText>
               )}
             </OrderListState>
           </OrderListDetial>

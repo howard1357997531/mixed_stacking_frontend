@@ -19,8 +19,17 @@ function InformationAreaTitle() {
   const { detail: orderList } = useSelector(
     (state) => state.robotControlScreen_orderSelect
   );
-  const { mode } = useSelector(
+
+  const { mode: robotStateMode } = useSelector(
+    (state) => state.robotControlScreen_robotState
+  );
+
+  const { mode: informationAreaMode } = useSelector(
     (state) => state.robotControlScreen_informationArea
+  );
+
+  const { mode: realtimeDataMode } = useSelector(
+    (state) => state.robotControlScreen_realtimeData
   );
 
   const changeModeHandler = (mode) => {
@@ -31,16 +40,19 @@ function InformationAreaTitle() {
   };
   return (
     <InformationAreaTitleBox>
-      {mode === "order" && (
+      {informationAreaMode === "order" && (
         <>
-          <OrderListTitleButton onClick={() => changeModeHandler("picture")}>
-            圖片
-          </OrderListTitleButton>
+          {realtimeDataMode && (
+            <OrderListTitleButton onClick={() => changeModeHandler("picture")}>
+              圖片
+            </OrderListTitleButton>
+          )}
+
           <Title>{orderList.name}</Title>
         </>
       )}
 
-      {mode === "picture" && (
+      {informationAreaMode === "picture" && robotStateMode !== "activate" && (
         <OrderListTitleButton onClick={() => changeModeHandler("order")}>
           清單
         </OrderListTitleButton>

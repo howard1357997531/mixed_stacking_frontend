@@ -93,7 +93,7 @@ export const OperationInterButtonText = styled(Typography)(({ theme }) => ({
   transform: "translate(-50%, -50%)",
   fontSize: "24px",
   fontWeight: 600,
-  color: Colors.geryText,
+  color: Colors.greyTextBlood,
 }));
 
 export const TextShowBoard = styled(Box)(({ theme }) => ({
@@ -169,8 +169,7 @@ export const InformationAreaContentBox = styled(Box, {
   position: "relative",
   width: "80%",
   height: "80%",
-  border: `1px ${hasOrderList ? "solid" : "dashed"} ${Colors.geryText}`,
-  // border: `1px dashed ${Colors.geryText}`,
+  border: `1px ${hasOrderList ? "solid" : "dashed"} ${Colors.greyText}`,
 }));
 
 export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
@@ -178,7 +177,7 @@ export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  color: Colors.geryText,
+  color: Colors.greyText,
   fontWeight: 600,
   fontSize: "26px",
 }));
@@ -195,6 +194,7 @@ export const OrderListTitleButton = styled(Button)(({ theme }) => ({
   left: "10%",
   transform: "translateY(-50%)",
   minWidth: "40px",
+  height: "60%",
   fontWeight: 600,
   color: "#fff",
   backgroundColor: Colors.brown,

@@ -36,7 +36,9 @@ export const Colors = {
   darkPinkHover: pink[200],
   grey: "#E2DCD0",
   greyHover: grey[400],
-  geryText: grey[800],
+  greyBorder: grey[500],
+  greyText: grey[700],
+  greyTextBlood: grey[800],
   blue: blue[700],
   red: "#FF494B",
   black: "#303030",
@@ -44,6 +46,7 @@ export const Colors = {
   yellow: yellow[500],
   brown: brown[300],
   brownHover: brown[400],
+  brownText: brown[600],
 };
 
 const theme = createTheme({

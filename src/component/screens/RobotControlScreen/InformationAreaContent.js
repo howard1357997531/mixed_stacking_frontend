@@ -108,11 +108,11 @@ function InformationAreaContent() {
         </OrderListBox>
       )}
 
-      {/* {!realtimeDataMode && robotStateMode === "activate" && (
+      {!realtimeDataMode && robotStateMode === "activate" && (
         <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
-      )} */}
+      )}
 
-      {informationAreaMode === "picture" && (
+      {realtimeDataMode && informationAreaMode === "picture" && (
         <img
           src={`http://127.0.0.1:8000/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}
           alt={`http://127.0.0.1:8000/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}

@@ -20,6 +20,11 @@ export const orderlistSelectAction = (selectOrderList) => (dispatch) => {
     type: ROBOT_CONTROL_SCREEN_informationArea.mode,
     payload: "order",
   });
+
+  dispatch({
+    type: ROBOT_CONTROL_SCREEN_robotState.text,
+    payload: "已選擇工單",
+  });
 };
 
 export const executeRobotAction =
@@ -62,6 +67,11 @@ export const executeRobotAction =
       dispatch({
         type: ROBOT_CONTROL_SCREEN_robotState.mode,
         payload: "inactivate",
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_robotState.text,
+        payload: "已結束",
       });
 
       dispatch({

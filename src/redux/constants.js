@@ -38,6 +38,7 @@ export const ROBOT_CONTROL_SCREEN_executeRobot = {
 
 export const ROBOT_CONTROL_SCREEN_robotState = {
   mode: "ROBOT_CONTROL_SCREEN_robotState_mode",
+  text: "ROBOT_CONTROL_SCREEN_robotState_text",
 };
 
 export const ROBOT_CONTROL_SCREEN_robotSetting = {
