@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ORDER_LIST } from "../constants";
+import { domain } from "../../env";
 
 export const orderListAction = () => async (dispatch) => {
   try {
@@ -7,7 +8,7 @@ export const orderListAction = () => async (dispatch) => {
       type: ORDER_LIST.request,
     });
 
-    const { data } = await axios.get("http://127.0.0.1:8000/api/getOrderData/");
+    const { data } = await axios.get(`${domain}/api/getOrderData/`);
 
     dispatch({
       type: ORDER_LIST.success,

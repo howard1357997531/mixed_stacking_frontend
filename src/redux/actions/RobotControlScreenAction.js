@@ -9,6 +9,7 @@ import {
 } from "../constants";
 import axios from "axios";
 import { brown } from "@mui/material/colors";
+import { domain } from "../../env";
 
 export const orderlistSelectAction = (selectOrderList) => (dispatch) => {
   dispatch({
@@ -54,10 +55,9 @@ export const executeRobotAction =
         type: ROBOT_CONTROL_SCREEN_executeRobot.request,
       });
 
-      const { data } = await axios.post(
-        "http://127.0.0.1:8000/api/executeRobot/",
-        { orderId }
-      );
+      const { data } = await axios.post(`${domain}/api/executeRobot/`, {
+        orderId,
+      });
 
       dispatch({
         type: ROBOT_CONTROL_SCREEN_executeRobot.success,
@@ -121,13 +121,10 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
       type: ROBOT_CONTROL_SCREEN_robotSetting.request,
     });
 
-    const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/robotSetting/",
-      {
-        mode,
-        speed,
-      }
-    );
+    const { data } = await axios.post(`${domain}/api/robotSetting/`, {
+      mode,
+      speed,
+    });
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN_robotSetting.success,

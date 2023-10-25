@@ -79,14 +79,14 @@ export const SixtyRadioWidthButton = styled(Box, {
   },
 }));
 
-export const OperationInterButtonLogo = styled(Box)(({ theme }) => ({
+export const OperationInterfaceButtonLogo = styled(Box)(({ theme }) => ({
   position: "absolute",
   top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
 }));
 
-export const OperationInterButtonText = styled(Typography)(({ theme }) => ({
+export const OperationInterfaceButtonText = styled(Typography)(({ theme }) => ({
   position: "absolute",
   top: "75%",
   left: "50%",
@@ -94,6 +94,29 @@ export const OperationInterButtonText = styled(Typography)(({ theme }) => ({
   fontSize: "24px",
   fontWeight: 600,
   color: Colors.greyTextBlood,
+}));
+
+export const VisualIdentityBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  height: "100%",
+}));
+
+export const VisualIdentityState = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "50%",
+}));
+
+export const VisualIdentityObject = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "50%",
 }));
 
 export const TextShowBoard = styled(Box)(({ theme }) => ({

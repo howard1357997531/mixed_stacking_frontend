@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import {
   FortyRadioHeightBox,
   FortyRadioWidthButton,
-  OperationInterButtonLogo,
-  OperationInterButtonText,
+  OperationInterfaceButtonLogo,
+  OperationInterfaceButtonText,
   SixtyRadioWidthButton,
 } from "../../../styles/RobotControlScreen";
 import { Colors } from "../../../styles/theme";
@@ -34,22 +34,22 @@ function OperationInterfaceBox2() {
         customColor={[Colors.grey, Colors.greyHover]}
         onClick={executeRobotHandler}
       >
-        <OperationInterButtonLogo>
+        <OperationInterfaceButtonLogo>
           <img src="start.png" alt="start.png"></img>
-        </OperationInterButtonLogo>
+        </OperationInterfaceButtonLogo>
 
-        <OperationInterButtonText>執行</OperationInterButtonText>
+        <OperationInterfaceButtonText>執行</OperationInterfaceButtonText>
       </SixtyRadioWidthButton>
 
       <FortyRadioWidthButton
         customColor={[Colors.darkGreen, Colors.darkGreenHover]}
         onClick={() => setRobotSettingDialogOpen(true)}
       >
-        <OperationInterButtonLogo>
+        <OperationInterfaceButtonLogo>
           <img src="control.png" alt="control.png"></img>
-        </OperationInterButtonLogo>
+        </OperationInterfaceButtonLogo>
 
-        <OperationInterButtonText>操作面板</OperationInterButtonText>
+        <OperationInterfaceButtonText>操作面板</OperationInterfaceButtonText>
       </FortyRadioWidthButton>
 
       <RobotSettingDialog

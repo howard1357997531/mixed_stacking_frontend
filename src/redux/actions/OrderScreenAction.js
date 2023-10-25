@@ -2,6 +2,7 @@ import axios from "axios";
 import { ORDER_LIST, ORDER_SCREEN_orderList } from "../constants";
 import Swal from "sweetalert2";
 import { brown } from "@mui/material/colors";
+import { domain } from "../../env";
 
 export const orderlistSelectAction =
   (orderId, orderListData, aiTraining_state) => (dispatch) => {
@@ -53,10 +54,9 @@ export const aiTrainingAction =
         payload: { orderId, aiTrainingState },
       });
 
-      const { data } = await axios.post(
-        "http://127.0.0.1:8000/api/aiTraining/",
-        { orderId }
-      );
+      const { data } = await axios.post(`${domain}/api/aiTraining/`, {
+        orderId,
+      });
 
       dispatch({
         type: ORDER_LIST.aiTrainingOrderAdd,
@@ -94,7 +94,7 @@ export const aiTrainingAction =
         timer: 2000,
       }).then(() => {
         axios
-          .post("http://127.0.0.1:8000/api/aiTraining/", {
+          .post(`${domain}/api/aiTraining/`, {
             orderId,
             mode: "error",
           })
