@@ -28,8 +28,8 @@ function InformationAreaTitle() {
     (state) => state.robotControlScreen_informationArea
   );
 
-  const { mode: realtimeDataMode } = useSelector(
-    (state) => state.robotControlScreen_realtimeData
+  const { mode: realtimeRobotMode } = useSelector(
+    (state) => state.robotControlScreen_realtimeRobot
   );
 
   const changeModeHandler = (mode) => {
@@ -42,7 +42,7 @@ function InformationAreaTitle() {
     <InformationAreaTitleBox>
       {informationAreaMode === "order" && (
         <>
-          {realtimeDataMode && (
+          {realtimeRobotMode && (
             <OrderListTitleButton onClick={() => changeModeHandler("picture")}>
               圖片
             </OrderListTitleButton>

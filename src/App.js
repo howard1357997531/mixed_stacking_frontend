@@ -8,7 +8,8 @@ import ControlRobotScreen_socket from "./component/screen/ControlRobotScreen_soc
 import RobotControlScreen from "./screen/RobotControlScreen";
 import { useDispatch } from "react-redux";
 import {
-  ROBOT_CONTROL_SCREEN_realtimeData,
+  ROBOT_CONTROL_SCREEN_realtimeRobot,
+  ROBOT_CONTROL_SCREEN_realtimeVisual,
   ROBOT_CONTROL_SCREEN_robotState,
 } from "./redux/constants";
 
@@ -30,20 +31,30 @@ function App() {
       console.log(event);
       if (realtimeData.count) {
         dispatch({
-          type: ROBOT_CONTROL_SCREEN_realtimeData.count,
+          type: ROBOT_CONTROL_SCREEN_realtimeRobot.count,
           payload: realtimeData.count,
         });
       }
 
       if (realtimeData.mode) {
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN_robotState.mode,
-          payload: realtimeData.mode,
-        });
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN_realtimeData.mode,
-          payload: realtimeData.mode,
-        });
+        if (
+          realtimeData.mode === "prepare" ||
+          realtimeData.mode === "operate"
+        ) {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN_robotState.mode,
+            payload: realtimeData.mode,
+          });
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN_realtimeRobot.mode,
+            payload: realtimeData.mode,
+          });
+        } else {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN_realtimeVisual.mode,
+            payload: realtimeData.mode,
+          });
+        }
       }
     };
 

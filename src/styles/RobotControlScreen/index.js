@@ -99,8 +99,64 @@ export const OperationInterfaceButtonText = styled(Typography)(({ theme }) => ({
 export const VisualIdentityBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
+  alignItems: "center",
   width: "100%",
   height: "100%",
+}));
+
+export const VisualIdentityTitle = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "20%",
+  color: Colors.greyTextBlood,
+  fontWeight: 600,
+  fontSize: 20,
+}));
+
+export const VisualIdentityObject = styled(Box)(({ theme }) => ({
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  minWidth: "70%",
+  height: "50%",
+  fontSize: 32,
+  border: "2px solid #000",
+}));
+
+export const VisualIdentityNextObjectBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  bottom: 0,
+  right: 0,
+  display: "flex",
+  justifyContent: "right",
+  alignItems: "center",
+  width: "100%",
+  height: "20%",
+  fontSize: 26,
+}));
+
+export const VisualIdentityNextObjectTitle = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginRight: 5,
+  fontSize: 16,
+  fontWeight: 600,
+}));
+
+export const VisualIdentityNextObject = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
+  justifyContent: "center",
+  alignItems: "center",
+  minWidth: "20%",
+  height: "100%",
+  padding: "0px 5px",
+  fontSize: 16,
+  borderLeft: "2px solid #000",
+  borderTop: "2px solid #000",
 }));
 
 export const VisualIdentityState = styled(Box)(({ theme }) => ({
@@ -108,15 +164,12 @@ export const VisualIdentityState = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  height: "50%",
+  height: "30%",
 }));
 
-export const VisualIdentityObject = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "50%",
+export const VisualIdentityStateText = styled(Typography)(({ theme }) => ({
+  fontSize: "24px",
+  fontWeight: 600,
 }));
 
 export const TextShowBoard = styled(Box)(({ theme }) => ({

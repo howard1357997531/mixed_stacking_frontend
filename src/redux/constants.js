@@ -52,9 +52,13 @@ export const ROBOT_CONTROL_SCREEN_robotSetting = {
   speedDown: "ROBOT_CONTROL_SCREEN_robotSetting_slowDown",
 };
 
-export const ROBOT_CONTROL_SCREEN_realtimeData = {
-  mode: "ROBOT_CONTROL_SCREEN_realtimeData_mode",
-  count: "ROBOT_CONTROL_SCREEN_realtimeData_count",
+export const ROBOT_CONTROL_SCREEN_realtimeRobot = {
+  mode: "ROBOT_CONTROL_SCREEN_realtimeRobot_mode",
+  count: "ROBOT_CONTROL_SCREEN_realtimeRobot_count",
+};
+
+export const ROBOT_CONTROL_SCREEN_realtimeVisual = {
+  mode: "ROBOT_CONTROL_SCREEN_realtimeVisual_mode",
 };
 
 // orderList

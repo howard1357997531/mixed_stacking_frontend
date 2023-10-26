@@ -19,8 +19,8 @@ function OperationInterfaceBox3() {
     (state) => state.robotControlScreen_robotState
   );
 
-  const { mode: realtimeDataMode, count } = useSelector(
-    (state) => state.robotControlScreen_realtimeData
+  const { mode: realtimeRobotMode, count } = useSelector(
+    (state) => state.robotControlScreen_realtimeRobot
   );
 
   const boxText = {
@@ -54,7 +54,7 @@ function OperationInterfaceBox3() {
           </>
         )}
 
-        {!realtimeDataMode && robotStateMode === "activate" && (
+        {!realtimeRobotMode && robotStateMode === "activate" && (
           <>
             <TextShowBoardText sx={{ color: Colors.blue }}>
               啟動手臂中
@@ -63,40 +63,23 @@ function OperationInterfaceBox3() {
           </>
         )}
 
-        {realtimeDataMode &&
-          realtimeDataMode !== "prepare" &&
-          realtimeDataMode !== "operate" && (
-            <>
-              <TextShowBoardText
-                sx={{ color: boxText[realtimeDataMode]["color"] }}
-              >
-                {boxText[realtimeDataMode]["text"]}
-              </TextShowBoardText>
-              {realtimeDataMode === "detect" && (
-                <Dot dotColor={boxText[realtimeDataMode]["color"]} />
-              )}
-            </>
-          )}
-
-        {realtimeDataMode &&
-          (realtimeDataMode === "prepare" ||
-            realtimeDataMode === "operate") && (
-            <>
-              <TextShowBoardText
-                sx={{
-                  color: boxText[realtimeDataMode]["color"],
-                  animation: boxText[realtimeDataMode]["animation"]
-                    ? boxText[realtimeDataMode]["animation"]
-                    : "none",
-                }}
-              >
-                {boxText[realtimeDataMode]["text"]}
-              </TextShowBoardText>
-              {realtimeDataMode === "prepare" && (
-                <Dot dotColor={boxText[realtimeDataMode]["color"]} />
-              )}
-            </>
-          )}
+        {realtimeRobotMode && (
+          <>
+            <TextShowBoardText
+              sx={{
+                color: boxText[realtimeRobotMode]["color"],
+                animation: boxText[realtimeRobotMode]["animation"]
+                  ? boxText[realtimeRobotMode]["animation"]
+                  : "none",
+              }}
+            >
+              {boxText[realtimeRobotMode]["text"]}
+            </TextShowBoardText>
+            {realtimeRobotMode === "prepare" && (
+              <Dot dotColor={boxText[realtimeRobotMode]["color"]} />
+            )}
+          </>
+        )}
       </TextShowBoardTextBox>
     </TextShowBoard>
   );

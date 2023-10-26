@@ -6,8 +6,9 @@ import {
   robotControlScreen_robotStateReducer,
   robotControlScreen_executeRobotReducer,
   robotControlScreen_orderSelectReducer,
-  robotControlScreen_realtimeDataReducer,
   robotControlScreen_informationAreaReducer,
+  robotControlScreen_realtimeRobotReducer,
+  robotControlScreen_realtimeVisualReducer,
 } from "./reducers/RobotControlScreenReducer";
 
 const reducer = {
@@ -15,10 +16,11 @@ const reducer = {
   orderList: OrderListReducer,
   orderScreen_orderSelect: orderScreen_orderSelectReducer,
   robotControlScreen_orderSelect: robotControlScreen_orderSelectReducer,
+  robotControlScreen_informationArea: robotControlScreen_informationAreaReducer,
   robotControlScreen_executeRobot: robotControlScreen_executeRobotReducer,
   robotControlScreen_robotState: robotControlScreen_robotStateReducer,
-  robotControlScreen_realtimeData: robotControlScreen_realtimeDataReducer,
-  robotControlScreen_informationArea: robotControlScreen_informationAreaReducer,
+  robotControlScreen_realtimeRobot: robotControlScreen_realtimeRobotReducer,
+  robotControlScreen_realtimeVisual: robotControlScreen_realtimeVisualReducer,
 };
 
 const preloadedState = {};

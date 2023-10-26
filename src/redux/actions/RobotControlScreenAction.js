@@ -3,7 +3,8 @@ import {
   ROBOT_CONTROL_SCREEN_executeRobot,
   ROBOT_CONTROL_SCREEN_informationArea,
   ROBOT_CONTROL_SCREEN_orderList,
-  ROBOT_CONTROL_SCREEN_realtimeData,
+  ROBOT_CONTROL_SCREEN_realtimeRobot,
+  ROBOT_CONTROL_SCREEN_realtimeVisual,
   ROBOT_CONTROL_SCREEN_robotSetting,
   ROBOT_CONTROL_SCREEN_robotState,
 } from "../constants";
@@ -80,12 +81,17 @@ export const executeRobotAction =
       });
 
       dispatch({
-        type: ROBOT_CONTROL_SCREEN_realtimeData.mode,
+        type: ROBOT_CONTROL_SCREEN_realtimeRobot.mode,
         payload: null,
       });
 
       dispatch({
-        type: ROBOT_CONTROL_SCREEN_realtimeData.count,
+        type: ROBOT_CONTROL_SCREEN_realtimeRobot.count,
+        payload: null,
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_realtimeVisual.mode,
         payload: null,
       });
     } catch (error) {

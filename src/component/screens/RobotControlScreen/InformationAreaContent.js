@@ -11,6 +11,7 @@ import {
 import { useSelector } from "react-redux";
 import { Avatar, Typography } from "@mui/material";
 import "./css/InformationAreaContent.css";
+import { Colors } from "../../../styles/theme";
 
 function InformationAreaContent() {
   const { detail: orderList } = useSelector(
@@ -25,8 +26,8 @@ function InformationAreaContent() {
     (state) => state.robotControlScreen_informationArea
   );
 
-  const { mode: realtimeDataMode, count } = useSelector(
-    (state) => state.robotControlScreen_realtimeData
+  const { mode: realtimeRobotMode, count } = useSelector(
+    (state) => state.robotControlScreen_realtimeRobot
   );
 
   const itemSize = {
@@ -85,7 +86,13 @@ function InformationAreaContent() {
 
           <OrderListContent className="orderlist">
             {orderList.aiTraining_order.split(",").map((order, index) => (
-              <OrderListContentBox key={index}>
+              <OrderListContentBox
+                key={index}
+                sx={{
+                  backgroundColor:
+                    count === index + 1 ? Colors.brown : "transparent",
+                }}
+              >
                 <OrderListContentSmBox width="25%">
                   <Avatar>{index + 1}</Avatar>
                 </OrderListContentSmBox>
@@ -108,11 +115,11 @@ function InformationAreaContent() {
         </OrderListBox>
       )}
 
-      {!realtimeDataMode && robotStateMode === "activate" && (
+      {!realtimeRobotMode && robotStateMode === "activate" && (
         <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
       )}
 
-      {realtimeDataMode && informationAreaMode === "picture" && (
+      {realtimeRobotMode && informationAreaMode === "picture" && (
         <img
           src={`http://127.0.0.1:8000/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}
           alt={`http://127.0.0.1:8000/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}

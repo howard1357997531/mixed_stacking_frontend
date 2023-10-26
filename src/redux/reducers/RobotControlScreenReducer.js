@@ -3,6 +3,8 @@ import {
   ROBOT_CONTROL_SCREEN_informationArea,
   ROBOT_CONTROL_SCREEN_orderList,
   ROBOT_CONTROL_SCREEN_realtimeData,
+  ROBOT_CONTROL_SCREEN_realtimeRobot,
+  ROBOT_CONTROL_SCREEN_realtimeVisual,
   ROBOT_CONTROL_SCREEN_robotSetting,
   ROBOT_CONTROL_SCREEN_robotState,
 } from "../constants";
@@ -134,16 +136,29 @@ export const robotControlScreen_robotStateReducer = (
   }
 };
 
-export const robotControlScreen_realtimeDataReducer = (
+export const robotControlScreen_realtimeRobotReducer = (
   state = { mode: null, count: null },
   action
 ) => {
   switch (action.type) {
-    case ROBOT_CONTROL_SCREEN_realtimeData.mode:
+    case ROBOT_CONTROL_SCREEN_realtimeRobot.mode:
       return { ...state, mode: action.payload };
 
-    case ROBOT_CONTROL_SCREEN_realtimeData.count:
+    case ROBOT_CONTROL_SCREEN_realtimeRobot.count:
       return { ...state, count: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const robotControlScreen_realtimeVisualReducer = (
+  state = { mode: null },
+  action
+) => {
+  switch (action.type) {
+    case ROBOT_CONTROL_SCREEN_realtimeVisual.mode:
+      return { ...state, mode: action.payload };
 
     default:
       return state;

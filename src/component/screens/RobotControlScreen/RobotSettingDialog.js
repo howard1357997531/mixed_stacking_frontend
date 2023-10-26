@@ -20,6 +20,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { robotSettingAction } from "../../../redux/actions/RobotControlScreenAction";
 import { ROBOT_CONTROL_SCREEN_robotSetting } from "../../../redux/constants";
+import { Colors } from "../../../styles/theme";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -177,10 +178,12 @@ function RobotSettingDialog({
             <StyleSmallBox>
               <StylePauseButton
                 sx={{
-                  backgroundColor: pause ? lightGreen[300] : red[500],
+                  backgroundColor: pause ? lightGreen[300] : Colors.darkred,
                   borderRadius: pause ? "50%" : "5px",
                   "&:hover": {
-                    backgroundColor: pause ? lightGreen[400] : red[600],
+                    backgroundColor: pause
+                      ? lightGreen[400]
+                      : Colors.darkredHover,
                   },
                 }}
                 onClick={() =>
