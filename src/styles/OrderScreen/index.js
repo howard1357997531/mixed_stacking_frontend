@@ -173,9 +173,9 @@ export const OrderListStateText = styled(Box)(({ theme }) => ({
 
 // functionArea
 export const FunctionAreaBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "orderListMode",
-})(({ theme, orderListMode }) => ({
-  display: orderListMode !== "close" ? "flex" : "none",
+  shouldForwardProp: (prop) => prop !== "orderSelectMode",
+})(({ theme, orderSelectMode }) => ({
+  display: orderSelectMode !== "close" ? "flex" : "none",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",

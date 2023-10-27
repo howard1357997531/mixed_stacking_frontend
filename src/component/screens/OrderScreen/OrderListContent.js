@@ -17,7 +17,7 @@ import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import { orderlistSelectAction } from "../../../redux/actions/OrderScreenAction";
 
-function OrderListContent({ orderListId }) {
+function OrderListContent({ orderSelectId }) {
   const dispatch = useDispatch();
   const {
     loading: orderListLoading,
@@ -27,6 +27,9 @@ function OrderListContent({ orderListId }) {
 
   const orderListModeHandler = (orderId, aiTraining_state) => {
     dispatch(orderlistSelectAction(orderId, orderListData, aiTraining_state));
+    // if (mode === "multipleOrder"){
+
+    // }
   };
 
   return (
@@ -44,13 +47,13 @@ function OrderListContent({ orderListId }) {
             onClick={() => {
               orderListModeHandler(order.id, order.aiTraining_state);
             }}
-            itemSelect={order.id === orderListId}
+            itemSelect={order.id === orderSelectId}
           >
-            <OrderListName itemSelect={order.id === orderListId}>
+            <OrderListName itemSelect={order.id === orderSelectId}>
               {order.name}
             </OrderListName>
 
-            <OrderListDate itemSelect={order.id === orderListId}>
+            <OrderListDate itemSelect={order.id === orderSelectId}>
               {order.modifiedAt}
             </OrderListDate>
 
@@ -67,7 +70,7 @@ function OrderListContent({ orderListId }) {
                 //   <TextEffect
                 //     text={"AI演算中"}
                 //     textColor={
-                //       order.id === orderListId ? "#fff" : Colors.greyBorder
+                //       order.id === orderSelectId ? "#fff" : Colors.greyBorder
                 //     }
                 //   />
                 // </OrderListStateText>
@@ -77,7 +80,7 @@ function OrderListContent({ orderListId }) {
                 <TextEffect
                   text={"AI演算中"}
                   textColor={
-                    order.id === orderListId ? "#fff" : Colors.greyBorder
+                    order.id === orderSelectId ? "#fff" : Colors.greyBorder
                   }
                 />
               )}
@@ -86,9 +89,9 @@ function OrderListContent({ orderListId }) {
                 <OrderListStateText
                   sx={{
                     color:
-                      order.id === orderListId ? "#fff" : Colors.greyBorder,
+                      order.id === orderSelectId ? "#fff" : Colors.greyBorder,
                     border: `2px solid ${
-                      order.id === orderListId ? "#fff" : Colors.greyBorder
+                      order.id === orderSelectId ? "#fff" : Colors.greyBorder
                     }`,
                   }}
                 >

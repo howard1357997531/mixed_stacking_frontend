@@ -94,6 +94,13 @@ export const executeRobotAction =
         type: ROBOT_CONTROL_SCREEN_realtimeVisual.mode,
         payload: null,
       });
+
+      setTimeout(() => {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
+          payload: null,
+        });
+      }, 1500);
     } catch (error) {
       dispatch({
         type: ROBOT_CONTROL_SCREEN_executeRobot.fail,

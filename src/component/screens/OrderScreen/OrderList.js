@@ -12,18 +12,23 @@ import OrderListDropdownMenu from "./OrderListDropdownMenu";
 import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
 import "./css/OrderList.css";
 import OrderListContent from "./OrderListContent";
+import { useDispatch } from "react-redux";
+import { ORDER_SCREEN_orderList } from "../../../redux/constants";
 
-function OrderList({ orderListMode, orderListId }) {
-  const [functionBoxMode, setFunctionBoxMode] = useState("");
+function OrderList({ orderSelectMode, orderSelectId }) {
+  const dispatch = useDispatch();
 
   const onFunctionMenuValueHandler = (mode) => {
     if (mode !== null) {
-      if (mode !== functionBoxMode) {
-        // setFunctionBoxData([]);
+      if (mode !== orderSelectMode) {
+        dispatch({
+          type: ORDER_SCREEN_orderList.mode,
+          payload: mode,
+        });
       }
       //   setOrderSelectId([]);
       //   setFunctionBoxOpen(true);
-      setFunctionBoxMode(mode);
+      // setFunctionBoxMode(mode);
     }
   };
 
@@ -47,7 +52,7 @@ function OrderList({ orderListMode, orderListId }) {
         </OrderListUploadFile>
       </OrderListNav>
 
-      <OrderListContent orderListId={orderListId} />
+      <OrderListContent orderSelectId={orderSelectId} />
     </OrderListBox>
   );
 }

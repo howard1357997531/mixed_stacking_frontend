@@ -51,6 +51,33 @@ function FunctionAreaNavButton() {
           清單
         </FunctionAreaNavBtn>
       );
+    } else if (mode === "multipleOrder") {
+      return (
+        <FunctionAreaNavBtn
+          variant="contained"
+          onClick={() => buttonHandler("orderDetail", null)}
+        >
+          清單
+        </FunctionAreaNavBtn>
+      );
+    } else if (mode === "edit") {
+      return (
+        <FunctionAreaNavBtn
+          variant="contained"
+          onClick={() => buttonHandler("orderDetail", null)}
+        >
+          清單
+        </FunctionAreaNavBtn>
+      );
+    } else if (mode === "delete") {
+      return (
+        <FunctionAreaNavBtn
+          variant="contained"
+          onClick={() => buttonHandler("orderDetail", null)}
+        >
+          清單
+        </FunctionAreaNavBtn>
+      );
     }
     return null;
   };

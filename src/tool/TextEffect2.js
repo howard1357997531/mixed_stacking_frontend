@@ -1,14 +1,16 @@
 import React from "react";
 import "./css/TextEffect2.css";
 
-function TextEffect2() {
+function TextEffect2({ texts, mode }) {
+  const effectClassName = `text-effect2 ${
+    mode === "effect" ? "hasEffect" : "noEffect"
+  }`;
+
   return (
-    <div className="text-effect2">
-      <span>物</span>
-      <span>件</span>
-      <span>偵</span>
-      <span>測</span>
-      <span>中</span>
+    <div className={effectClassName}>
+      {texts.split("").map((text, index) => (
+        <span key={index}>{text}</span>
+      ))}
     </div>
   );
 }

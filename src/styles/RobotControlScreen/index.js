@@ -124,6 +124,7 @@ export const VisualIdentityObject = styled(Box)(({ theme }) => ({
   height: "50%",
   fontSize: 32,
   border: "2px solid #000",
+  overflow: "hidden",
 }));
 
 export const VisualIdentityNextObjectBox = styled(Box)(({ theme }) => ({
@@ -157,6 +158,7 @@ export const VisualIdentityNextObject = styled(Box)(({ theme }) => ({
   fontSize: 16,
   borderLeft: "2px solid #000",
   borderTop: "2px solid #000",
+  overflow: "hidden",
 }));
 
 export const VisualIdentityState = styled(Box)(({ theme }) => ({

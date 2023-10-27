@@ -12,11 +12,11 @@ import InformationAreaTitle from "./InformationAreaTitle";
 import InformationAreaContent from "./InformationAreaContent";
 import "./css/OperationInterface.css";
 
-function RobotControlDesktop() {
+function RobotControlDesktop(props) {
   return (
     <RobotControlContainer>
       <OperationInterface className="operation-interface">
-        <OperationInterfaceBox1 />
+        <OperationInterfaceBox1 {...props} />
 
         <OperationInterfaceBox2 />
 

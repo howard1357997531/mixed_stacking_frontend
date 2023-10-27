@@ -4,16 +4,15 @@ import OrderList from "./OrderList";
 import FunctionArea from "./FunctionArea";
 import { useSelector } from "react-redux";
 
-function OrderDesktop() {
-  const { mode: orderListMode, orderId: orderListId } = useSelector(
-    (state) => state.orderScreen_orderSelect
-  );
-
+function OrderDesktop({ orderSelectMode, orderSelectId }) {
   return (
     <OrderContainer>
       <OrderBox>
-        <OrderList orderListMode={orderListMode} orderListId={orderListId} />
-        <FunctionArea orderListMode={orderListMode} />
+        <OrderList
+          orderSelectMode={orderSelectMode}
+          orderSelectId={orderSelectId}
+        />
+        <FunctionArea orderSelectMode={orderSelectMode} />
       </OrderBox>
     </OrderContainer>
   );

@@ -4,7 +4,7 @@ import RobotControlDesktop from "../component/screens/RobotControlScreen/RobotCo
 import { useDispatch } from "react-redux";
 import { orderListAction } from "../redux/actions/OrderActions";
 
-function RobotControlScreen() {
+function RobotControlScreen(props) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -16,9 +16,9 @@ function RobotControlScreen() {
   return (
     <>
       {matches ? (
-        <RobotControlDesktop matches={matches} />
+        <RobotControlDesktop matches={matches} {...props} />
       ) : (
-        <RobotControlDesktop matches={matches} />
+        <RobotControlDesktop matches={matches} {...props} />
       )}
     </>
   );

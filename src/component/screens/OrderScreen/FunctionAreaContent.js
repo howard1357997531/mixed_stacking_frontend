@@ -120,6 +120,12 @@ function FunctionAreaContent() {
           ))}
         </AiResultBox>
       );
+    } else if (mode === "multipleOrder") {
+      return <p>multipleOrder</p>;
+    } else if (mode === "edit") {
+      return <p>edit</p>;
+    } else if (mode === "delete") {
+      return <p>delete</p>;
     }
   };
 

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FortyRadioHeightBox,
   FortyRadioWidthButton,
   OperationInterfaceButtonLogo,
   OperationInterfaceButtonText,
   SixtyRadioWidthButton,
-  TextShowBoardText,
   VisualIdentityBox,
   VisualIdentityNextObject,
   VisualIdentityNextObjectBox,
@@ -15,44 +14,38 @@ import {
   VisualIdentityStateText,
   VisualIdentityTitle,
 } from "../../../styles/RobotControlScreen";
-import { orange, pink } from "@mui/material/colors";
+import { orange, red } from "@mui/material/colors";
 import { Colors } from "../../../styles/theme";
 import OrderListDialog from "./OrderListDialog";
-import { useSelector } from "react-redux";
-import Dot from "../../../tool/Dot";
 import { operateShowBoardTextAnimation } from "../../../animation";
 import TextEffect2 from "../../../tool/TextEffect2";
+import { Box, Slide } from "@mui/material";
 
-function OperationInterfaceBox1() {
+function OperationInterfaceBox1({
+  orderSelectDetail,
+  robotStateMode,
+  realtimeRobotMode,
+  realtimeRobotCount,
+  realtimeVisualMode,
+  objectName,
+  objectNextName,
+}) {
   const [orderListDialogOpen, setOrderListDialogOpen] = useState(false);
   const onOrderListDialoggOpen = (state) => {
     setOrderListDialogOpen(state);
   };
 
-  const { detail: orderSelectDetail } = useSelector(
-    (state) => state.robotControlScreen_orderSelect
-  );
-
-  const { mode: robotStateMode } = useSelector(
-    (state) => state.robotControlScreen_robotState
-  );
-
-  const { mode: realtimeRobotMode, count } = useSelector(
-    (state) => state.robotControlScreen_realtimeRobot
-  );
-
-  const { mode: realtimeVisualMode } = useSelector(
-    (state) => state.robotControlScreen_realtimeVisual
-  );
-
   const realtimeAllText = {
     detect: { text: "物件偵測中", color: Colors.greyTextBlood },
     correct: { text: "偵測正確", color: Colors.darkGreenHover },
-    error: { text: "偵測錯誤", color: pink[900] },
+    error: { text: "偵測錯誤", color: red[100] },
     reset: { text: "重置", color: Colors.orange },
-    prepare: { text: `準備操作第${count}個物件`, color: Colors.purple },
+    prepare: {
+      text: `準備操作第${realtimeRobotCount}個物件`,
+      color: Colors.purple,
+    },
     operate: {
-      text: `正在操作第${count}個物件`,
+      text: `正在操作第${realtimeRobotCount}個物件`,
       color: Colors.yellow,
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
@@ -66,21 +59,40 @@ function OperationInterfaceBox1() {
     var VisualIdentityBoxHoverColor = Colors.darkPinkHover;
   }
 
+  var visualTitle = "";
+  var objectNextTitle = "";
+
   if (orderSelectDetail.length !== 0) {
-    const temp = orderSelectDetail.aiTraining_order.split(",");
     const orderTotal = orderSelectDetail.aiTraining_order.split(",").length;
 
-    var ObjectName = temp[count - 1];
-    var ObjectNextTitle =
-      count + 1 < orderTotal
-        ? "下一個"
-        : count !== orderTotal
-        ? "最後一個"
-        : "";
-    var ObjectNextName = temp[count] ? temp[count] : "";
+    if (!realtimeRobotMode && robotStateMode === "activate") {
+      visualTitle = "請放料";
+      objectNextTitle = "下一個";
+    } else {
+      visualTitle = realtimeRobotCount < orderTotal ? "請放料" : "最後料";
+
+      objectNextTitle =
+        realtimeRobotCount + 1 < orderTotal
+          ? "下一個"
+          : realtimeRobotCount !== orderTotal
+          ? "最後一個"
+          : "";
+    }
   }
 
-  // console.log(orderTotal);
+  // slide
+  const objectNameRef = useRef();
+  const [slideShow, setSlideShow] = useState(true);
+
+  useEffect(() => {
+    if (realtimeRobotCount !== 1) {
+      setSlideShow(false);
+    }
+
+    setTimeout(() => {
+      setSlideShow(true);
+    }, 600);
+  }, [realtimeRobotCount]);
 
   return (
     <FortyRadioHeightBox>
@@ -111,34 +123,50 @@ function OperationInterfaceBox1() {
         )}
 
         <VisualIdentityBox>
-          {!realtimeRobotMode && robotStateMode === "activate" && (
+          {robotStateMode !== "inactivate" && (
             <>
-              <VisualIdentityTitle>請放料</VisualIdentityTitle>
-              <VisualIdentityObject>
-                {orderSelectDetail.aiTraining_order.split(",")[0]}
-                <VisualIdentityNextObjectBox>
-                  <VisualIdentityNextObjectTitle>
-                    下一個
-                  </VisualIdentityNextObjectTitle>
-                  <VisualIdentityNextObject>
-                    {orderSelectDetail.aiTraining_order.split(",")[1]}
-                  </VisualIdentityNextObject>
-                </VisualIdentityNextObjectBox>
-              </VisualIdentityObject>
-            </>
-          )}
+              <VisualIdentityTitle>{visualTitle}</VisualIdentityTitle>
+              <VisualIdentityObject ref={objectNameRef}>
+                <Slide
+                  direction={slideShow ? "left" : "right"} //從哪邊來或是哪邊離開
+                  in={slideShow}
+                  container={objectNameRef.current}
+                  timeout={{
+                    enter: 500,
+                    exit: 300,
+                  }}
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    {objectName}
+                  </Box>
+                </Slide>
 
-          {realtimeRobotMode && (
-            <>
-              <VisualIdentityTitle>請放料</VisualIdentityTitle>
-              <VisualIdentityObject>
-                {ObjectName}
                 <VisualIdentityNextObjectBox>
                   <VisualIdentityNextObjectTitle>
-                    {ObjectNextTitle}
+                    {objectNextTitle}
                   </VisualIdentityNextObjectTitle>
-                  <VisualIdentityNextObject>
-                    {ObjectNextName}
+                  <VisualIdentityNextObject ref={objectNameRef}>
+                    <Slide
+                      direction={slideShow ? "down" : "up"} //從哪邊來或是哪邊離開
+                      in={slideShow}
+                      container={objectNameRef.current}
+                      timeout={{
+                        enter: 1500,
+                        exit: 400,
+                      }}
+                    >
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        {objectNextName}
+                      </Box>
+                    </Slide>
                   </VisualIdentityNextObject>
                 </VisualIdentityNextObjectBox>
               </VisualIdentityObject>
@@ -147,10 +175,9 @@ function OperationInterfaceBox1() {
 
           <VisualIdentityState>
             {!realtimeVisualMode && robotStateMode === "activate" && (
-              // <VisualIdentityStateText sx={{ color: Colors.greyTextBlood }}>
-              //   物件偵測中
-              // </VisualIdentityStateText>
-              <TextEffect2 />
+              <VisualIdentityStateText sx={{ color: "#999999" }}>
+                <TextEffect2 texts={"準備偵測"} mode={"no effect"} />
+              </VisualIdentityStateText>
             )}
 
             {realtimeVisualMode && (
@@ -158,7 +185,7 @@ function OperationInterfaceBox1() {
                 sx={{ color: realtimeAllText[realtimeVisualMode]["color"] }}
               >
                 {realtimeVisualMode === "detect" ? (
-                  <TextEffect2 />
+                  <TextEffect2 texts={"物件偵測中"} mode={"effect"} />
                 ) : (
                   realtimeAllText[realtimeVisualMode]["text"]
                 )}

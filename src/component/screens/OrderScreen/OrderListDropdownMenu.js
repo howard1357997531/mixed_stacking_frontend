@@ -60,11 +60,11 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={() => handleClose("qrcode")}>
-          Download QR code
+        <MenuItem onClick={() => handleClose("multipleOrder")}>
+          多單執行
         </MenuItem>
-        <MenuItem onClick={() => handleClose("edit")}>Edit</MenuItem>
-        <MenuItem onClick={() => handleClose("delete")}>Delete</MenuItem>
+        <MenuItem onClick={() => handleClose("edit")}>修改</MenuItem>
+        <MenuItem onClick={() => handleClose("delete")}>刪除</MenuItem>
       </Menu>
     </div>
   );

@@ -11,7 +11,7 @@ import { ORDER_SCREEN_orderList } from "../../../redux/constants";
 import FunctionAreaNavButton from "./FunctionAreaNavButton";
 import FunctionAreaContent from "./FunctionAreaContent";
 
-function FunctionArea({ orderListMode }) {
+function FunctionArea({ orderSelectMode }) {
   const dispatch = useDispatch();
 
   const closeBoxHandler = () => {
@@ -20,13 +20,13 @@ function FunctionArea({ orderListMode }) {
   };
 
   return (
-    <FunctionAreaBox orderListMode={orderListMode}>
+    <FunctionAreaBox orderSelectMode={orderSelectMode}>
       <FunctionAreaNav>
         <CloseIconButton onClick={closeBoxHandler}>
           <CloseIcon />
         </CloseIconButton>
 
-        <FunctionAreaNavTitle orderListMode={orderListMode} />
+        <FunctionAreaNavTitle orderSelectMode={orderSelectMode} />
 
         <FunctionAreaNavButton />
       </FunctionAreaNav>

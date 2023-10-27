@@ -3,7 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
 import { Box, Typography, styled } from "@mui/material";
-import { brown, grey, orange, teal, yellow } from "@mui/material/colors";
+import { brown, grey, orange } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";

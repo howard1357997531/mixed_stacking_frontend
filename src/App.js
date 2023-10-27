@@ -6,7 +6,7 @@ import OrderScreen from "./screen/OrderScreen";
 import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 import ControlRobotScreen_socket from "./component/screen/ControlRobotScreen_socket";
 import RobotControlScreen from "./screen/RobotControlScreen";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ROBOT_CONTROL_SCREEN_realtimeRobot,
   ROBOT_CONTROL_SCREEN_realtimeVisual,
@@ -15,6 +15,50 @@ import {
 
 function App() {
   const dispatch = useDispatch();
+  const { detail: orderSelectDetail } = useSelector(
+    (state) => state.robotControlScreen_orderSelect
+  );
+
+  const { mode: robotStateMode } = useSelector(
+    (state) => state.robotControlScreen_robotState
+  );
+
+  const { mode: realtimeRobotMode, count: realtimeRobotCount } = useSelector(
+    (state) => state.robotControlScreen_realtimeRobot
+  );
+
+  const {
+    mode: realtimeVisualMode,
+    name: objectName,
+    nextName: objectNextName,
+  } = useSelector((state) => state.robotControlScreen_realtimeVisual);
+
+  useEffect(() => {
+    if (orderSelectDetail.length !== 0) {
+      const orderList = orderSelectDetail.aiTraining_order.split(",");
+      if (!realtimeRobotCount) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
+          payload: orderList[0],
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN_realtimeVisual.nextName,
+          payload: orderList[1],
+        });
+      }
+    }
+  }, [dispatch, orderSelectDetail, realtimeRobotCount]);
+
+  const reduxData = {
+    orderSelectDetail,
+    robotStateMode,
+    realtimeRobotMode,
+    realtimeRobotCount,
+    realtimeVisualMode,
+    objectName,
+    objectNextName,
+  };
 
   useEffect(() => {
     const socket = new WebSocket(
@@ -35,6 +79,29 @@ function App() {
           payload: realtimeData.count,
         });
       }
+
+      if (realtimeData.name) {
+        setTimeout(() => {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
+            payload: realtimeData.name,
+          });
+
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN_realtimeVisual.nextName,
+            payload: realtimeData.nextName,
+          });
+        }, 600);
+      }
+
+      // if (realtimeData.nextName) {
+      //   setTimeout(() => {
+      //     dispatch({
+      //       type: ROBOT_CONTROL_SCREEN_realtimeVisual.nextName,
+      //       payload: realtimeData.nextName,
+      //     });
+      //   }, 600);
+      // }
 
       if (realtimeData.mode) {
         if (
@@ -65,7 +132,7 @@ function App() {
     return () => {
       socket.close();
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <Router>
@@ -74,7 +141,10 @@ function App() {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/order" element={<OrderScreen />} />
         <Route path="/create-orderlist" element={<CreateOrderListScreen />} />
-        <Route path="/robot-control" element={<RobotControlScreen />} />
+        <Route
+          path="/robot-control"
+          element={<RobotControlScreen {...reduxData} />}
+        />
         <Route
           path="/control-robot-socket"
           element={<ControlRobotScreen_socket />}

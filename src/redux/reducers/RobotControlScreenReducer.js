@@ -153,12 +153,18 @@ export const robotControlScreen_realtimeRobotReducer = (
 };
 
 export const robotControlScreen_realtimeVisualReducer = (
-  state = { mode: null },
+  state = { mode: null, name: null, nextName: null },
   action
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN_realtimeVisual.mode:
       return { ...state, mode: action.payload };
+
+    case ROBOT_CONTROL_SCREEN_realtimeVisual.name:
+      return { ...state, name: action.payload };
+
+    case ROBOT_CONTROL_SCREEN_realtimeVisual.nextName:
+      return { ...state, nextName: action.payload };
 
     default:
       return state;

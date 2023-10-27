@@ -6,9 +6,14 @@
     color: #999999
 }
 
-.text-effect2 span {
+.text-effect2.hasEffect span {
     display: inline-block;
-    animation: color 2s ease-in-out infinite;
+    animation: hasEffect 2s ease-in-out infinite;
+}
+
+.text-effect2.noEffect span {
+    display: inline-block;
+    animation: noEffect 2s ease-in-out infinite;
 }
 
 .text-effect2 span:nth-child(1){
@@ -31,17 +36,32 @@
     animation-delay: 1s;
 }
 
-@keyframes color {
+@keyframes hasEffect {
     0% {
-        color: #484848;
+        color: #424242;
         text-shadow: none;
     }
     90% {
-        color: #484848;
+        color: #424242;
         text-shadow: none;
     }
     100%{
-        color: #ff9100;
-        text-shadow: 0 0 4px #ff9100;
+        color: #FFDDB0;
+        text-shadow: 0 0 2px #FFDDB0;
+    }
+}
+
+@keyframes noEffect {
+    0% {
+        color: #424242;
+        text-shadow: none;
+    }
+    90% {
+        color: #424242;
+        text-shadow: none;
+    }
+    100%{
+        color: #999999;
+        text-shadow: 0 0 2px #999999;
     }
 }
