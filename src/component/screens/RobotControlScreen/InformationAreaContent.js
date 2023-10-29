@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { Avatar, Typography } from "@mui/material";
 import "./css/InformationAreaContent.css";
 import { Colors } from "../../../styles/theme";
+import { domain } from "../../../env";
 
 function InformationAreaContent() {
   const { detail: orderList } = useSelector(
@@ -94,7 +95,15 @@ function InformationAreaContent() {
                 }}
               >
                 <OrderListContentSmBox width="25%">
-                  <Avatar>{index + 1}</Avatar>
+                  <Avatar
+                    sx={{
+                      backgroundColor:
+                        count === index + 1 && Colors.lightYellow,
+                      color: count === index + 1 && Colors.brown,
+                    }}
+                  >
+                    {index + 1}
+                  </Avatar>
                 </OrderListContentSmBox>
 
                 <OrderListContentSmBox width="35%">
@@ -121,8 +130,8 @@ function InformationAreaContent() {
 
       {realtimeRobotMode && informationAreaMode === "picture" && (
         <img
-          src={`http://127.0.0.1:8000/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}
-          alt={`http://127.0.0.1:8000/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}
+          src={`${domain}/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}
+          alt={`${domain}/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}
           className="item-realtime-photo"
         ></img>
       )}

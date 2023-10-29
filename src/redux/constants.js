@@ -17,7 +17,7 @@ export const ORDER_SCREEN_orderList = {
   aiTrainingState: "ORDER_SCREEN_orderList_aiTrainingState",
   orderCurrentData: "ORDER_SCREEN_orderList_orderCurrentData",
   aiCurrentData: "ORDER_SCREEN_orderList_aiCurrentData",
-  multipleOrderId: "ORDER_SCREEN_orderList_multipleOrderIdd",
+  multipleOrderId: "ORDER_SCREEN_orderList_multipleOrderId",
   edit: "ORDER_SCREEN_orderList_edit",
   delete: "ORDER_SCREEN_orderList_delete",
 };

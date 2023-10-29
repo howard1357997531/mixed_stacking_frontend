@@ -185,7 +185,7 @@ function Navbar({ onQRcodeNavId }) {
           </StyleSecondStack>
 
           <StyleSideStack className="linkBox-img">
-            {window.location.pathname === "/control-robot2" ||
+            {window.location.pathname === "/control-robot" ||
             window.location.pathname === "/control-robot-socket" ||
             window.location.pathname === "/create-orderlist" ? (
               <StyleLinkImageBox onClick={qrCodeDialogOpenHandler}>
@@ -205,25 +205,25 @@ function Navbar({ onQRcodeNavId }) {
             ></QRcodeDialog>
             {/* 工單設定 工單查詢 */}
             <StyleLinkImageBox>
-              <Link to={"/control-robot2"}>
+              <Link to={"/robot-control"}>
                 <StyleLinkImageSmallBox>
                   <img
                     src={"workListSetting.png"}
                     alt={"workListSetting.png"}
                   ></img>
-                  <StyleLinkImageBoxText>Robot</StyleLinkImageBoxText>
+                  <StyleLinkImageBoxText>控制台</StyleLinkImageBoxText>
                 </StyleLinkImageSmallBox>
               </Link>
             </StyleLinkImageBox>
 
             <StyleLinkImageBox>
-              <Link to={"/ai-training"}>
+              <Link to={"/order"}>
                 <StyleLinkImageSmallBox>
                   <img
                     src={"workListSearch.png"}
                     alt={"workListSearch.png"}
                   ></img>
-                  <StyleLinkImageBoxText>Search</StyleLinkImageBoxText>
+                  <StyleLinkImageBoxText>工單</StyleLinkImageBoxText>
                 </StyleLinkImageSmallBox>
               </Link>
             </StyleLinkImageBox>

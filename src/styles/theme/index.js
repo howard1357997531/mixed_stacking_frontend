@@ -49,10 +49,10 @@ export const Colors = {
   blue: blue[700],
   lightBlue: lightBlue[400],
   lightBlueHover: lightBlue[500],
-
   black: "#303030",
   purple: deepPurple[300],
   yellow: yellow[500],
+  lightYellow: yellow[300],
   brown: brown[300],
   brownHover: brown[400],
   brownText: brown[600],

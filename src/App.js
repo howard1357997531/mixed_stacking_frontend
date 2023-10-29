@@ -12,6 +12,7 @@ import {
   ROBOT_CONTROL_SCREEN_realtimeVisual,
   ROBOT_CONTROL_SCREEN_robotState,
 } from "./redux/constants";
+import { webSocketDomain } from "./env";
 
 function App() {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ function App() {
 
   useEffect(() => {
     const socket = new WebSocket(
-      "ws://127.0.0.1:8000/ws/RobotControlConsumers/"
+      `ws://${webSocketDomain}/ws/RobotControlConsumers/`
     );
 
     socket.onopen = () => {
