@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { OrderContainer, StyleBox } from "../styles/OrderScreen";
 import { useMediaQuery, useTheme } from "@mui/material";
 import OrderDesktop from "../component/screens/OrderScreen/OrderDesktop";
 import OrderMobile from "../component/screens/OrderScreen/OrderMobile";
@@ -15,7 +14,7 @@ function OrderScreen() {
     (state) => state.orderScreen_orderSelect
   );
 
-  const data = {
+  const propsData = {
     matches,
     orderSelectMode,
     orderSelectId,
@@ -25,7 +24,13 @@ function OrderScreen() {
     dispatch(orderListAction());
   }, [dispatch]);
   return (
-    <>{matches ? <OrderDesktop {...data} /> : <OrderMobile {...data} />}</>
+    <>
+      {matches ? (
+        <OrderDesktop {...propsData} />
+      ) : (
+        <OrderMobile {...propsData} />
+      )}
+    </>
   );
 }
 

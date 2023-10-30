@@ -226,15 +226,16 @@ export const FunctionAreaNavBtn = styled(Button)(({ theme }) => ({
   //   functionBoxData.aiTraining_state === "is_training" ? "none" : "block",
 }));
 
-export const FunctionAreaContentBox = styled(Box)(({ theme }) => ({
+export const FunctionAreaContentBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "orderSelectMode",
+})(({ theme, orderSelectMode }) => ({
   position: "relative",
   width: "100%",
   height: "90%",
   overflowY: "auto",
   border: `1px solid ${Colors.greyBorder}`,
   boxSizing: "border-box",
-  // padding: functionBoxMode === "order" ? 10 : 0,
-  padding: 10,
+  padding: orderSelectMode === "orderDetail" ? 10 : 0,
 }));
 
 export const AiIsTraingGifText = styled(Typography)({
@@ -296,4 +297,24 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   //   backgroundColor: yellow[300],
   //   cursor: "pointer",
   // },
+}));
+
+export const MenuFunctionBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  width: "100%",
+  height: "60px",
+  // "&:hover": {
+  //   color: deepPurple[500],
+  //   backgroundColor: brown[300],
+  //   cursor: "pointer",
+  // },
+}));
+
+export const MenuFunctionTitle = styled(Typography)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "50%",
+  height: "inherit",
+  backgroundColor: "#ddd",
 }));

@@ -5,6 +5,8 @@ import {
   AiResultBox,
   AiResultSmallBox,
   FunctionAreaContentBox,
+  MenuFunctionBox,
+  MenuFunctionTitle,
   OrderListDetailBox,
   OrderListDetailSmallBox,
 } from "../../../styles/OrderScreen";
@@ -21,15 +23,16 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 
-function FunctionAreaContent() {
+function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
   const {
     loading: orderListLoading,
     error: orderListError,
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { mode, orderId, aiTrainingState, orderCurrentData, aiCurrentData } =
-    useSelector((state) => state.orderScreen_orderSelect);
+  const { aiTrainingState, orderCurrentData, aiCurrentData } = useSelector(
+    (state) => state.orderScreen_orderSelect
+  );
 
   const AiResultAvatarBgcolor = (number) => {
     if (number > 10 && number <= 20) {
@@ -45,8 +48,13 @@ function FunctionAreaContent() {
     }
   };
 
+  const multipleOrderSelectData = (orderId) => {
+    let [filterData] = orderListData.filter((order) => order.id === orderId);
+    return filterData;
+  };
+
   const Content = () => {
-    if (mode === "orderDetail") {
+    if (orderSelectMode === "orderDetail") {
       if (aiTrainingState === "is_training") {
         return (
           <>
@@ -101,7 +109,7 @@ function FunctionAreaContent() {
           </>
         );
       }
-    } else if (mode === "aiResult") {
+    } else if (orderSelectMode === "aiResult") {
       return (
         <AiResultBox>
           {aiCurrentData.split(",").map((aiData, index) => (
@@ -120,17 +128,29 @@ function FunctionAreaContent() {
           ))}
         </AiResultBox>
       );
-    } else if (mode === "multipleOrder") {
-      return <p>multipleOrder</p>;
-    } else if (mode === "edit") {
+    } else if (orderSelectMode === "multipleOrder") {
+      return orderSelectId.map((orderId) => (
+        <MenuFunctionBox key={orderId}>
+          <MenuFunctionTitle>
+            {multipleOrderSelectData(orderId).name}
+          </MenuFunctionTitle>
+          <MenuFunctionTitle>
+            {multipleOrderSelectData(orderId).createdAt}
+          </MenuFunctionTitle>
+        </MenuFunctionBox>
+      ));
+    } else if (orderSelectMode === "edit") {
       return <p>edit</p>;
-    } else if (mode === "delete") {
+    } else if (orderSelectMode === "delete") {
       return <p>delete</p>;
     }
   };
 
   return (
-    <FunctionAreaContentBox className="worklist-box">
+    <FunctionAreaContentBox
+      orderSelectMode={orderSelectMode}
+      className="worklist-box"
+    >
       {orderListLoading ? (
         <CircularProgress />
       ) : orderListError ? (

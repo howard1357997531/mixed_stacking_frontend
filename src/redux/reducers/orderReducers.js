@@ -1,6 +1,6 @@
-import { ORDER_LIST } from "../constants";
+import { MULTIPLE_ORDER_LIST, ORDER_LIST } from "../constants";
 
-export const OrderListReducer = (state = { data: [] }, action) => {
+export const orderListReducer = (state = { data: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST.request:
       return {
@@ -47,6 +47,32 @@ export const OrderListReducer = (state = { data: [] }, action) => {
       return {
         ...state,
         data: orderData,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const multipleOrderListReducer = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case MULTIPLE_ORDER_LIST.request:
+      return {
+        loading: true,
+        data: [],
+      };
+
+    case MULTIPLE_ORDER_LIST.success:
+      return {
+        loading: false,
+        success: true,
+        data: action.payload,
+      };
+
+    case MULTIPLE_ORDER_LIST.fail:
+      return {
+        loading: false,
+        error: action.payload,
       };
 
     default:

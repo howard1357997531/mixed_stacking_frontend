@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   CloseIconButton,
   FunctionAreaBox,
@@ -11,27 +11,27 @@ import { ORDER_SCREEN_orderList } from "../../../redux/constants";
 import FunctionAreaNavButton from "./FunctionAreaNavButton";
 import FunctionAreaContent from "./FunctionAreaContent";
 
-function FunctionArea({ orderSelectMode }) {
+function FunctionArea(props) {
   const dispatch = useDispatch();
 
   const closeBoxHandler = () => {
     dispatch({ type: ORDER_SCREEN_orderList.mode, payload: "close" });
-    dispatch({ type: ORDER_SCREEN_orderList.orderId, payload: null });
+    dispatch({ type: ORDER_SCREEN_orderList.orderId, payload: [] });
   };
 
   return (
-    <FunctionAreaBox orderSelectMode={orderSelectMode}>
+    <FunctionAreaBox orderSelectMode={props.orderSelectMode}>
       <FunctionAreaNav>
         <CloseIconButton onClick={closeBoxHandler}>
           <CloseIcon />
         </CloseIconButton>
 
-        <FunctionAreaNavTitle orderSelectMode={orderSelectMode} />
+        <FunctionAreaNavTitle {...props} />
 
-        <FunctionAreaNavButton />
+        <FunctionAreaNavButton {...props} />
       </FunctionAreaNav>
 
-      <FunctionAreaContent />
+      <FunctionAreaContent {...props} />
     </FunctionAreaBox>
   );
 }

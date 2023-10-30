@@ -2,27 +2,34 @@ import React from "react";
 import { FunctionAreaNavBtn } from "../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { ORDER_SCREEN_orderList } from "../../../redux/constants";
-import { aiTrainingAction } from "../../../redux/actions/OrderScreenAction";
+import {
+  aiTrainingAction,
+  functionAreaNavButtonAction,
+} from "../../../redux/actions/OrderScreenAction";
 
-function FunctionAreaNavButton() {
+function FunctionAreaNavButton({ orderSelectMode, orderSelectId }) {
   const dispatch = useDispatch();
-  const { mode, orderId, aiTrainingState } = useSelector(
+
+  const { aiTrainingState } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
   const buttonHandler = (mode, aiTraining_state) => {
-    dispatch({
-      type: ORDER_SCREEN_orderList.mode,
-      payload: mode,
-    });
+    dispatch(
+      functionAreaNavButtonAction(mode, orderSelectId, aiTraining_state)
+    );
+    // dispatch({
+    //   type: ORDER_SCREEN_orderList.mode,
+    //   payload: mode,
+    // });
 
-    if (aiTraining_state === "is_training") {
-      dispatch(aiTrainingAction(orderId, aiTraining_state));
-    }
+    // if (aiTraining_state === "is_training") {
+    //   dispatch(aiTrainingAction(orderSelectId, aiTraining_state));
+    // }
   };
 
   const NavButton = () => {
-    if (mode === "orderDetail") {
+    if (orderSelectMode === "orderDetail") {
       if (aiTrainingState === "no_training") {
         return (
           <FunctionAreaNavBtn
@@ -42,7 +49,7 @@ function FunctionAreaNavButton() {
           </FunctionAreaNavBtn>
         );
       }
-    } else if (mode === "aiResult") {
+    } else if (orderSelectMode === "aiResult") {
       return (
         <FunctionAreaNavBtn
           variant="contained"
@@ -51,29 +58,29 @@ function FunctionAreaNavButton() {
           清單
         </FunctionAreaNavBtn>
       );
-    } else if (mode === "multipleOrder") {
+    } else if (orderSelectMode === "multipleOrder") {
       return (
         <FunctionAreaNavBtn
           variant="contained"
-          onClick={() => buttonHandler("orderDetail", null)}
+          onClick={() => buttonHandler("multipleOrder", null)}
+        >
+          建立
+        </FunctionAreaNavBtn>
+      );
+    } else if (orderSelectMode === "edit") {
+      return (
+        <FunctionAreaNavBtn
+          variant="contained"
+          onClick={() => buttonHandler("edit", null)}
         >
           清單
         </FunctionAreaNavBtn>
       );
-    } else if (mode === "edit") {
+    } else if (orderSelectMode === "delete") {
       return (
         <FunctionAreaNavBtn
           variant="contained"
-          onClick={() => buttonHandler("orderDetail", null)}
-        >
-          清單
-        </FunctionAreaNavBtn>
-      );
-    } else if (mode === "delete") {
-      return (
-        <FunctionAreaNavBtn
-          variant="contained"
-          onClick={() => buttonHandler("orderDetail", null)}
+          onClick={() => buttonHandler("delete", null)}
         >
           清單
         </FunctionAreaNavBtn>

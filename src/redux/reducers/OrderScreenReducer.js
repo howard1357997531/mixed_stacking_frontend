@@ -3,11 +3,10 @@ import { ORDER_SCREEN_orderList } from "../constants";
 export const orderScreen_orderSelectReducer = (
   state = {
     mode: "close",
-    orderId: null,
+    orderId: [],
     aiTrainingState: null,
     orderCurrentData: {},
     aiCurrentData: "",
-    multipleOrderId: [],
     edit: [],
     delete: [],
   },
@@ -38,6 +37,23 @@ export const orderScreen_orderSelectReducer = (
         var temp = [...state.item, action.payload];
       }
       return { ...state, item: temp };
+
+    case ORDER_SCREEN_orderList.multipleData:
+      if (action.mode === "orderDetail") {
+        return { ...state, ...action.payload };
+      } else if (action.mode === "multipleOrder") {
+        if (state.orderId.includes(action.payload.orderId)) {
+          var newData = state.orderId.filter(
+            (order) => order !== action.payload.orderId
+          );
+        } else {
+          var newData = [...state.orderId, action.payload.orderId];
+        }
+        return {
+          ...state,
+          orderId: newData,
+        };
+      }
 
     default:
       return state;

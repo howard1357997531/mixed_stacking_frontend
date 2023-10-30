@@ -1,3 +1,19 @@
+// orderList
+export const ORDER_LIST = {
+  request: "ORDER_LIST_REQUEST",
+  success: "ORDER_LIST_SUCCESS",
+  fail: "ORDER_LIST_FAIL",
+  aiTrainingStateChange: "ORDER_LIST_aiTrainingStateChange",
+  aiTrainingOrderAdd: "ORDER_LIST_aiTrainingOrderAdd",
+};
+
+// multipleOrderList
+export const MULTIPLE_ORDER_LIST = {
+  request: "MULTIPLE_ORDER_LIST_REQUEST",
+  success: "MULTIPLE_ORDER_LIST_SUCCESS",
+  fail: "MULTIPLE_ORDER_LIST_FAIL",
+};
+
 // homeScreen
 export const HOME_BUTTON = {
   createNewOrder: {
@@ -17,9 +33,9 @@ export const ORDER_SCREEN_orderList = {
   aiTrainingState: "ORDER_SCREEN_orderList_aiTrainingState",
   orderCurrentData: "ORDER_SCREEN_orderList_orderCurrentData",
   aiCurrentData: "ORDER_SCREEN_orderList_aiCurrentData",
-  multipleOrderId: "ORDER_SCREEN_orderList_multipleOrderId",
   edit: "ORDER_SCREEN_orderList_edit",
   delete: "ORDER_SCREEN_orderList_delete",
+  multipleData: "ORDER_SCREEN_orderList_multipleData",
 };
 
 // RobotControlScreen
@@ -62,15 +78,6 @@ export const ROBOT_CONTROL_SCREEN_realtimeVisual = {
   mode: "ROBOT_CONTROL_SCREEN_realtimeVisual_mode",
   name: "ROBOT_CONTROL_SCREEN_realtimeVisual_name",
   nextName: "ROBOT_CONTROL_SCREEN_realtimeVisual_nextName",
-};
-
-// orderList
-export const ORDER_LIST = {
-  request: "ORDER_LIST_REQUEST",
-  success: "ORDER_LIST_SUCCESS",
-  fail: "ORDER_LIST_FAIL",
-  aiTrainingStateChange: "ORDER_LIST_aiTrainingStateChange",
-  aiTrainingOrderAdd: "ORDER_LIST_aiTrainingOrderAdd",
 };
 
 // export const ORDER_SCREEN_orderList = {

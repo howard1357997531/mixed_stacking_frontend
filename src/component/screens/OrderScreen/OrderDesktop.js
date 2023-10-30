@@ -2,17 +2,13 @@ import React from "react";
 import { OrderBox, OrderContainer } from "../../../styles/OrderScreen";
 import OrderList from "./OrderList";
 import FunctionArea from "./FunctionArea";
-import { useSelector } from "react-redux";
 
-function OrderDesktop({ orderSelectMode, orderSelectId }) {
+function OrderDesktop(props) {
   return (
     <OrderContainer>
       <OrderBox>
-        <OrderList
-          orderSelectMode={orderSelectMode}
-          orderSelectId={orderSelectId}
-        />
-        <FunctionArea orderSelectMode={orderSelectMode} />
+        <OrderList {...props} />
+        <FunctionArea {...props} />
       </OrderBox>
     </OrderContainer>
   );
