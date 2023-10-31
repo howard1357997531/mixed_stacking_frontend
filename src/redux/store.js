@@ -1,5 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { OrderListReducer } from "./reducers/orderReducers";
+import {
+  multipleOrderListReducer,
+  orderListReducer,
+} from "./reducers/orderReducers";
 import { HomeButtonHoverReducer } from "./reducers/homeScreenReducer";
 import { orderScreen_orderSelectReducer } from "./reducers/OrderScreenReducer";
 import {
@@ -13,7 +16,8 @@ import {
 
 const reducer = {
   HomeButtonHover: HomeButtonHoverReducer,
-  orderList: OrderListReducer,
+  orderList: orderListReducer,
+  multipleOrderList: multipleOrderListReducer,
   orderScreen_orderSelect: orderScreen_orderSelectReducer,
   robotControlScreen_orderSelect: robotControlScreen_orderSelectReducer,
   robotControlScreen_informationArea: robotControlScreen_informationAreaReducer,

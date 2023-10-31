@@ -41,7 +41,7 @@ export const orderScreen_orderSelectReducer = (
     case ORDER_SCREEN_orderList.multipleData:
       if (action.mode === "orderDetail") {
         return { ...state, ...action.payload };
-      } else if (action.mode === "multipleOrder") {
+      } else if (action.mode === "multipleOrderCreate") {
         if (state.orderId.includes(action.payload.orderId)) {
           var newData = state.orderId.filter(
             (order) => order !== action.payload.orderId

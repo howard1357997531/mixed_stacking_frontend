@@ -6,7 +6,7 @@ import CachedIcon from "@mui/icons-material/Cached";
 function ErrorMsgBox() {
   return (
     <ErrorMsg>
-      <Typography variant="h5" color={Colors.grey}>
+      <Typography variant="h5" color={Colors.greyText}>
         資料讀取失敗
       </Typography>
       <Box>
@@ -15,7 +15,7 @@ function ErrorMsgBox() {
             window.location.reload();
           }}
         >
-          <CachedIcon />
+          <CachedIcon sx={{ color: Colors.greyText }} />
         </ErrorMsgIconButton>
       </Box>
     </ErrorMsg>

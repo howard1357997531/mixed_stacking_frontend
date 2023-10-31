@@ -85,14 +85,22 @@ function HomeDesktop({ matches }) {
 
       <HomeDescription>
         {createNewOrder && (
-          <Typography data-aos="fade-right" data-aos-duration="1000">
+          <Typography
+            variant="h5"
+            data-aos="fade-right"
+            data-aos-duration="1000"
+          >
             {/* The order has not been created yet, please go to create one. */}
             尚未建立工單，請前往去建立
           </Typography>
         )}
 
         {robotConsole && (
-          <Typography data-aos="fade-left" data-aos-duration="1000">
+          <Typography
+            variant="h5"
+            data-aos="fade-left"
+            data-aos-duration="1000"
+          >
             {/* Already used AI to calculate orders and went to control the arm. */}
             已使用過AI演算過工單，前去操控手臂
           </Typography>

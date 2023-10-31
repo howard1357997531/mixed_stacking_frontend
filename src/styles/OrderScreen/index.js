@@ -114,7 +114,7 @@ export const OrderListContentMsg = styled(Typography)(({ theme }) => ({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  color: Colors.grey,
+  color: Colors.greyText,
 }));
 
 export const OrderListDetial = styled(Box, {
@@ -169,6 +169,48 @@ export const OrderListStateText = styled(Box)(({ theme }) => ({
   padding: "6px 0px",
   fontSize: "16px",
   fontWeight: 600,
+}));
+
+export const MultipleOrderBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+  height: "60px",
+  backgroundColor: itemSelect ? Colors.greyHover : null,
+  "&:hover": {
+    backgroundColor: itemSelect ? Colors.greyHover : Colors.lightOrangeHover,
+    cursor: "pointer",
+  },
+}));
+
+export const MultipleOrderName = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "50%",
+  height: "100%",
+  color: itemSelect ? "#fff" : Colors.greyText,
+}));
+
+export const MultipleOrderDate = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "50%",
+  height: "100%",
+  color: itemSelect ? "#fff" : Colors.greyText,
+}));
+
+export const MultipleOrderContentTitle = styled(Typography)(({ theme }) => ({
+  margin: "10px 0px",
+  textAlign: "center",
+  color: Colors.brownHover,
 }));
 
 // functionArea
@@ -235,7 +277,7 @@ export const FunctionAreaContentBox = styled(Box, {
   overflowY: "auto",
   border: `1px solid ${Colors.greyBorder}`,
   boxSizing: "border-box",
-  padding: orderSelectMode === "orderDetail" ? 10 : 0,
+  padding: ["orderDetail", "multipleOrder"].includes(orderSelectMode) ? 10 : 0,
 }));
 
 export const AiIsTraingGifText = styled(Typography)({

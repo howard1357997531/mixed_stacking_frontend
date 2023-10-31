@@ -7,6 +7,7 @@ import {
   FunctionAreaContentBox,
   MenuFunctionBox,
   MenuFunctionTitle,
+  OrderListContentMsg,
   OrderListDetailBox,
   OrderListDetailSmallBox,
 } from "../../../styles/OrderScreen";
@@ -22,6 +23,9 @@ import {
 } from "@mui/material/colors";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
+import LoadingCircle from "../../../tool/LoadingCircle";
+import FunctionAreaMultipleOrderContent from "./FunctionAreaMultipleOrderContent";
+import CenterText from "../../../tool/CenterText";
 
 function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
   const {
@@ -33,6 +37,13 @@ function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
   const { aiTrainingState, orderCurrentData, aiCurrentData } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
+
+  const {
+    loading: multipleOrderLoading,
+    error: multipleOrderError,
+    data: multipleOrderData,
+    orderId: multipleOrderSelectId,
+  } = useSelector((state) => state.multipleOrderList);
 
   const AiResultAvatarBgcolor = (number) => {
     if (number > 10 && number <= 20) {
@@ -48,7 +59,7 @@ function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
     }
   };
 
-  const multipleOrderSelectData = (orderId) => {
+  const createMultipleOrderSelectData = (orderId) => {
     let [filterData] = orderListData.filter((order) => order.id === orderId);
     return filterData;
   };
@@ -129,16 +140,32 @@ function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
         </AiResultBox>
       );
     } else if (orderSelectMode === "multipleOrder") {
-      return orderSelectId.map((orderId) => (
-        <MenuFunctionBox key={orderId}>
-          <MenuFunctionTitle>
-            {multipleOrderSelectData(orderId).name}
-          </MenuFunctionTitle>
-          <MenuFunctionTitle>
-            {multipleOrderSelectData(orderId).createdAt}
-          </MenuFunctionTitle>
-        </MenuFunctionBox>
-      ));
+      return multipleOrderLoading ? (
+        <LoadingCircle />
+      ) : multipleOrderError ? (
+        <ErrorMsgBox />
+      ) : multipleOrderData.length === 0 ? (
+        <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
+      ) : !multipleOrderSelectId ? (
+        <FunctionAreaMultipleOrderContent hasSelect={false} />
+      ) : (
+        <FunctionAreaMultipleOrderContent hasSelect={true} />
+      );
+    } else if (orderSelectMode === "multipleOrderCreate") {
+      return orderSelectId.length === 0 ? (
+        <CenterText text={"尚未選擇工單"} />
+      ) : (
+        orderSelectId.map((orderId) => (
+          <MenuFunctionBox key={orderId}>
+            <MenuFunctionTitle>
+              {createMultipleOrderSelectData(orderId).name}
+            </MenuFunctionTitle>
+            <MenuFunctionTitle>
+              {createMultipleOrderSelectData(orderId).createdAt}
+            </MenuFunctionTitle>
+          </MenuFunctionBox>
+        ))
+      );
     } else if (orderSelectMode === "edit") {
       return <p>edit</p>;
     } else if (orderSelectMode === "delete") {

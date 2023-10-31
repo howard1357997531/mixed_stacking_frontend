@@ -28,6 +28,22 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectId }) {
     // }
   };
 
+  const changeMode = {
+    aiResult: "orderDetail",
+    multipleOrder: "multipleOrderCreate",
+    multipleOrderCreate: "multipleOrder",
+    edit: "edit",
+    delete: "delete",
+  };
+
+  const btnName = {
+    aiResult: "清單",
+    multipleOrder: "建立",
+    multipleOrderCreate: "創建",
+    edit: "修改",
+    delete: "刪除",
+  };
+
   const NavButton = () => {
     if (orderSelectMode === "orderDetail") {
       if (aiTrainingState === "no_training") {
@@ -49,40 +65,21 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectId }) {
           </FunctionAreaNavBtn>
         );
       }
-    } else if (orderSelectMode === "aiResult") {
+    } else if (
+      [
+        "aiResult",
+        "multipleOrder",
+        "multipleOrderCreate",
+        "edit",
+        "delete",
+      ].includes(orderSelectMode)
+    ) {
       return (
         <FunctionAreaNavBtn
           variant="contained"
-          onClick={() => buttonHandler("orderDetail", null)}
+          onClick={() => buttonHandler(changeMode[orderSelectMode], null)}
         >
-          清單
-        </FunctionAreaNavBtn>
-      );
-    } else if (orderSelectMode === "multipleOrder") {
-      return (
-        <FunctionAreaNavBtn
-          variant="contained"
-          onClick={() => buttonHandler("multipleOrder", null)}
-        >
-          建立
-        </FunctionAreaNavBtn>
-      );
-    } else if (orderSelectMode === "edit") {
-      return (
-        <FunctionAreaNavBtn
-          variant="contained"
-          onClick={() => buttonHandler("edit", null)}
-        >
-          清單
-        </FunctionAreaNavBtn>
-      );
-    } else if (orderSelectMode === "delete") {
-      return (
-        <FunctionAreaNavBtn
-          variant="contained"
-          onClick={() => buttonHandler("delete", null)}
-        >
-          清單
+          {btnName[orderSelectMode]}
         </FunctionAreaNavBtn>
       );
     }

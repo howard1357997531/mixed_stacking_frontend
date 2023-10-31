@@ -3,7 +3,10 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import OrderDesktop from "../component/screens/OrderScreen/OrderDesktop";
 import OrderMobile from "../component/screens/OrderScreen/OrderMobile";
 import { useDispatch, useSelector } from "react-redux";
-import { orderListAction } from "../redux/actions/OrderActions";
+import {
+  multipleOrderListAction,
+  orderListAction,
+} from "../redux/actions/OrderActions";
 
 function OrderScreen() {
   const dispatch = useDispatch();
@@ -22,6 +25,7 @@ function OrderScreen() {
 
   useEffect(() => {
     dispatch(orderListAction());
+    dispatch(multipleOrderListAction());
   }, [dispatch]);
   return (
     <>

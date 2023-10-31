@@ -1,5 +1,9 @@
 import axios from "axios";
-import { ORDER_LIST, ORDER_SCREEN_orderList } from "../constants";
+import {
+  MULTIPLE_ORDER_LIST,
+  ORDER_LIST,
+  ORDER_SCREEN_orderList,
+} from "../constants";
 import Swal from "sweetalert2";
 import { brown } from "@mui/material/colors";
 import { domain } from "../../env";
@@ -7,7 +11,7 @@ import { Colors } from "../../styles/theme";
 
 export const orderlistSelectAction =
   (mode, orderId, aiTrainingState, orderListData) => (dispatch) => {
-    if (mode === "close" || mode === "orderDetail") {
+    if (["close", "orderDetail", "aiResult"].includes(mode)) {
       const [OrderData] = orderListData.filter((order) => order.id === orderId);
 
       dispatch({
@@ -28,7 +32,7 @@ export const orderlistSelectAction =
           },
         },
       });
-    } else if (mode === "multipleOrder") {
+    } else if (mode === "multipleOrderCreate") {
       dispatch({
         type: ORDER_SCREEN_orderList.multipleData,
         mode,
@@ -39,6 +43,13 @@ export const orderlistSelectAction =
       });
     }
   };
+
+export const multipleOrderListSelectAction = (orderId) => (dispatch) => {
+  dispatch({
+    type: MULTIPLE_ORDER_LIST.orderId,
+    payload: orderId,
+  });
+};
 
 export const aiTrainingAction =
   (orderId, aiTrainingState) => async (dispatch) => {
@@ -82,7 +93,6 @@ export const aiTrainingAction =
         payload: data.aiResult_str,
       });
     } catch (error) {
-      // console.log(error.response.data); // request fail
       Swal.fire({
         position: "center",
         width: "16em",
@@ -120,10 +130,12 @@ export const functionAreaModeAction = (mode) => (dispatch) => {
 
 export const functionAreaNavButtonAction =
   (mode, orderSelectId, aiTrainingState) => (dispatch) => {
-    dispatch({
-      type: ORDER_SCREEN_orderList.mode,
-      payload: mode,
-    });
+    if (mode !== "multipleOrder") {
+      dispatch({
+        type: ORDER_SCREEN_orderList.mode,
+        payload: mode,
+      });
+    }
 
     if (aiTrainingState === "is_training") {
       dispatch(aiTrainingAction(orderSelectId, aiTrainingState));
@@ -165,6 +177,11 @@ export const functionAreaNavButtonAction =
             background: Colors.greyHover,
             showConfirmButton: false,
             timer: 2000,
+          }).then(() => {
+            dispatch({
+              type: ORDER_SCREEN_orderList.mode,
+              payload: mode,
+            });
           });
         }
       });

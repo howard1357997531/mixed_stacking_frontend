@@ -1,17 +1,18 @@
 // orderList
 export const ORDER_LIST = {
-  request: "ORDER_LIST_REQUEST",
-  success: "ORDER_LIST_SUCCESS",
-  fail: "ORDER_LIST_FAIL",
+  request: "ORDER_LIST_request",
+  success: "ORDER_LIST_success",
+  fail: "ORDER_LIST_fail",
   aiTrainingStateChange: "ORDER_LIST_aiTrainingStateChange",
   aiTrainingOrderAdd: "ORDER_LIST_aiTrainingOrderAdd",
 };
 
 // multipleOrderList
 export const MULTIPLE_ORDER_LIST = {
-  request: "MULTIPLE_ORDER_LIST_REQUEST",
-  success: "MULTIPLE_ORDER_LIST_SUCCESS",
-  fail: "MULTIPLE_ORDER_LIST_FAIL",
+  request: "MULTIPLE_ORDER_LIST_request",
+  success: "MULTIPLE_ORDER_LIST_success",
+  fail: "MULTIPLE_ORDER_LIST_fail",
+  orderId: "MULTIPLE_ORDER_LIST_orderId",
 };
 
 // homeScreen

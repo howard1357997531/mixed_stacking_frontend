@@ -54,16 +54,21 @@ export const orderListReducer = (state = { data: [] }, action) => {
   }
 };
 
-export const multipleOrderListReducer = (state = { data: [] }, action) => {
+export const multipleOrderListReducer = (
+  state = { data: [], orderId: "" },
+  action
+) => {
   switch (action.type) {
     case MULTIPLE_ORDER_LIST.request:
       return {
+        ...state,
         loading: true,
         data: [],
       };
 
     case MULTIPLE_ORDER_LIST.success:
       return {
+        ...state,
         loading: false,
         success: true,
         data: action.payload,
@@ -71,8 +76,15 @@ export const multipleOrderListReducer = (state = { data: [] }, action) => {
 
     case MULTIPLE_ORDER_LIST.fail:
       return {
+        ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case MULTIPLE_ORDER_LIST.orderId:
+      return {
+        ...state,
+        orderId: action.payload,
       };
 
     default:

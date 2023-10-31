@@ -28,7 +28,7 @@ export const multipleOrderListAction = () => async (dispatch) => {
       type: MULTIPLE_ORDER_LIST.request,
     });
 
-    const { data } = await axios.get(`${domain}/api/getOrderData/`);
+    const { data } = await axios.get(`${domain}/api/getMultipleOrderData/`);
 
     dispatch({
       type: MULTIPLE_ORDER_LIST.success,

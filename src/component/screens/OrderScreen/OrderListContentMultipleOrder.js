@@ -1,14 +1,48 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { multipleOrderListAction } from "../../../redux/actions/OrderActions";
+import LoadingCircle from "../../../tool/LoadingCircle";
+import ErrorMsgBox from "../../../tool/ErrorMsgBox";
+import {
+  MultipleOrderBox,
+  MultipleOrderDate,
+  MultipleOrderName,
+  OrderListContentMsg,
+} from "../../../styles/OrderScreen";
+import { multipleOrderListSelectAction } from "../../../redux/actions/OrderScreenAction";
 
 function OrderListContentMultipleOrder() {
   const dispatch = useDispatch();
+  const {
+    loading: multipleOrderLoading,
+    error: multipleOrderError,
+    data: multipleOrderData,
+  } = useSelector((state) => state.multipleOrderList);
 
-  useEffect(() => {
-    dispatch(multipleOrderListAction());
-  }, []);
-  return <div>asdasdasd</div>;
+  const multipleOrderHandler = (orderId) => {
+    dispatch(multipleOrderListSelectAction(orderId));
+  };
+
+  return multipleOrderLoading ? (
+    <LoadingCircle />
+  ) : multipleOrderError ? (
+    <ErrorMsgBox />
+  ) : multipleOrderData.length === 0 ? (
+    <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
+  ) : (
+    multipleOrderData.map((order) => (
+      <MultipleOrderBox
+        key={order.id}
+        onClick={() => multipleOrderHandler(order.id)}
+      >
+        <MultipleOrderName>{order.name}</MultipleOrderName>
+
+        <MultipleOrderDate>
+          {order.orderSelectId_str.split(",").length}
+        </MultipleOrderDate>
+      </MultipleOrderBox>
+    ))
+  );
 }
 
 export default OrderListContentMultipleOrder;

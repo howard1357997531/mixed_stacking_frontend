@@ -7,7 +7,9 @@ import OrderListContentMultipleOrder from "./OrderListContentMultipleOrder";
 function OrderListContent(props) {
   return (
     <OrderListContentBox className="worklist-box">
-      {["close", "orderDetail"].includes(props.orderSelectMode) ? (
+      {["close", "orderDetail", "aiResult", "multipleOrderCreate"].includes(
+        props.orderSelectMode
+      ) ? (
         <OrderListContentSingleOrder {...props} />
       ) : null}
 
