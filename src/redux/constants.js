@@ -13,6 +13,7 @@ export const MULTIPLE_ORDER_LIST = {
   success: "MULTIPLE_ORDER_LIST_success",
   fail: "MULTIPLE_ORDER_LIST_fail",
   orderId: "MULTIPLE_ORDER_LIST_orderId",
+  addData: "MULTIPLE_ORDER_LIST_addData",
 };
 
 // homeScreen
@@ -37,6 +38,7 @@ export const ORDER_SCREEN_orderList = {
   edit: "ORDER_SCREEN_orderList_edit",
   delete: "ORDER_SCREEN_orderList_delete",
   multipleData: "ORDER_SCREEN_orderList_multipleData",
+  currentPageCheck: "ORDER_SCREEN_orderList_currentPageCheck",
 };
 
 // RobotControlScreen

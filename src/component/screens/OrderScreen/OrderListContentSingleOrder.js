@@ -14,7 +14,7 @@ import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import { orderlistSelectAction } from "../../../redux/actions/OrderScreenAction";
 
-function OrderListContentSingleOrder({ orderSelectMode, orderSelectId }) {
+function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
   const dispatch = useDispatch();
   const {
     loading: orderListLoading,
@@ -48,13 +48,13 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectId }) {
             onClick={() => {
               orderListModeHandler(order.id, order.aiTraining_state);
             }}
-            itemSelect={orderSelectId.includes(order.id)}
+            itemSelect={orderSelectIdArray.includes(order.id)}
           >
-            <OrderListName itemSelect={orderSelectId.includes(order.id)}>
+            <OrderListName itemSelect={orderSelectIdArray.includes(order.id)}>
               {order.name}
             </OrderListName>
 
-            <OrderListDate itemSelect={orderSelectId.includes(order.id)}>
+            <OrderListDate itemSelect={orderSelectIdArray.includes(order.id)}>
               {order.modifiedAt}
             </OrderListDate>
 
@@ -71,7 +71,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectId }) {
                 //   <TextEffect
                 //     text={"AI演算中"}
                 //     textColor={
-                //       orderSelectId.includes(order.id) ? "#fff" : Colors.greyBorder
+                //       orderSelectIdArray.includes(order.id) ? "#fff" : Colors.greyBorder
                 //     }
                 //   />
                 // </OrderListStateText>
@@ -81,7 +81,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectId }) {
                 <TextEffect
                   text={"AI演算中"}
                   textColor={
-                    orderSelectId.includes(order.id)
+                    orderSelectIdArray.includes(order.id)
                       ? "#fff"
                       : Colors.greyBorder
                   }
@@ -91,11 +91,11 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectId }) {
               {order.aiTraining_state === "finish_training" && (
                 <OrderListStateText
                   sx={{
-                    color: orderSelectId.includes(order.id)
+                    color: orderSelectIdArray.includes(order.id)
                       ? "#fff"
                       : Colors.greyBorder,
                     border: `2px solid ${
-                      orderSelectId.includes(order.id)
+                      orderSelectIdArray.includes(order.id)
                         ? "#fff"
                         : Colors.greyBorder
                     }`,

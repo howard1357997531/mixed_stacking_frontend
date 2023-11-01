@@ -290,18 +290,20 @@ export const AiIsTraingGifText = styled(Typography)({
   fontWeight: 600,
 });
 
-export const OrderListDetailBox = styled(Box)(({ theme }) => ({
+export const OrderListDetailBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isTitle",
+})(({ theme, isTitle }) => ({
   display: "flex",
   alignItems: "center",
   width: "100%",
-  height: "50px",
+  height: "40px",
   borderBottom: `1px solid ${blueGrey[100]}`,
   "&:hover": {
-    color: deepPurple[500],
-    fontSize: "24px",
-    fontWeight: 600,
-    backgroundColor: grey[300],
-    cursor: "pointer",
+    color: !isTitle && deepPurple[500],
+    fontSize: !isTitle && "24px",
+    fontWeight: !isTitle && 600,
+    backgroundColor: !isTitle && grey[300],
+    cursor: !isTitle && "pointer",
   },
 }));
 
@@ -345,18 +347,13 @@ export const MenuFunctionBox = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "100%",
   height: "60px",
-  // "&:hover": {
-  //   color: deepPurple[500],
-  //   backgroundColor: brown[300],
-  //   cursor: "pointer",
-  // },
+  borderBottom: `1px solid ${Colors.grey}`,
 }));
 
 export const MenuFunctionTitle = styled(Typography)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "50%",
+  width: "100%",
   height: "inherit",
-  backgroundColor: "#ddd",
 }));

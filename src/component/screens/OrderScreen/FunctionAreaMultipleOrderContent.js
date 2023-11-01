@@ -50,11 +50,13 @@ function FunctionAreaMultipleOrderContent({ hasSelect }) {
       {multipleOrderData[0].multipleOrder.map((mutiOrder) => (
         <>
           <Accordion
+            key={mutiOrder.order.id}
             expanded={expanded === `panel${mutiOrder.order.id}`}
             onChange={handleChange(`panel${mutiOrder.order.id}`)}
             sx={{
               backgroundColor: Colors.brown,
               borderRadius: "0px !important",
+              marginBottom: "3px",
             }}
           >
             <AccordionSummary
@@ -67,8 +69,13 @@ function FunctionAreaMultipleOrderContent({ hasSelect }) {
               </Typography>
             </AccordionSummary>
 
-            <AccordionDetails sx={{ backgroundColor: Colors.grey }}>
-              <OrderListDetailBox>
+            <AccordionDetails
+              sx={{
+                backgroundColor: Colors.grey,
+                padding: 0,
+              }}
+            >
+              <OrderListDetailBox isTitle={true}>
                 <OrderListDetailSmallBox>名稱</OrderListDetailSmallBox>
                 <OrderListDetailSmallBox>寬度</OrderListDetailSmallBox>
                 <OrderListDetailSmallBox>長度</OrderListDetailSmallBox>
@@ -77,7 +84,7 @@ function FunctionAreaMultipleOrderContent({ hasSelect }) {
               </OrderListDetailBox>
 
               {mutiOrder.order.orderItem.map((order, index) => (
-                <OrderListDetailBox key={index}>
+                <OrderListDetailBox key={index} isTitle={false}>
                   <OrderListDetailSmallBox>
                     {order.name}
                   </OrderListDetailSmallBox>
@@ -108,11 +115,13 @@ function FunctionAreaMultipleOrderContent({ hasSelect }) {
           ? mutiOrderData.multipleOrder.map((mutiOrder) => (
               <>
                 <Accordion
+                  key={mutiOrder.order.id}
                   expanded={expanded === `panel${mutiOrder.order.id}`}
                   onChange={handleChange(`panel${mutiOrder.order.id}`)}
                   sx={{
                     backgroundColor: Colors.brown,
                     borderRadius: "0px !important",
+                    marginBottom: "3px",
                   }}
                 >
                   <AccordionSummary
@@ -125,8 +134,10 @@ function FunctionAreaMultipleOrderContent({ hasSelect }) {
                     </Typography>
                   </AccordionSummary>
 
-                  <AccordionDetails sx={{ backgroundColor: Colors.grey }}>
-                    <OrderListDetailBox>
+                  <AccordionDetails
+                    sx={{ backgroundColor: Colors.grey, padding: 0 }}
+                  >
+                    <OrderListDetailBox isTitle={true}>
                       <OrderListDetailSmallBox>名稱</OrderListDetailSmallBox>
                       <OrderListDetailSmallBox>寬度</OrderListDetailSmallBox>
                       <OrderListDetailSmallBox>長度</OrderListDetailSmallBox>
@@ -135,7 +146,7 @@ function FunctionAreaMultipleOrderContent({ hasSelect }) {
                     </OrderListDetailBox>
 
                     {mutiOrder.order.orderItem.map((order, index) => (
-                      <OrderListDetailBox key={index}>
+                      <OrderListDetailBox key={index} isTitle={false}>
                         <OrderListDetailSmallBox>
                           {order.name}
                         </OrderListDetailSmallBox>

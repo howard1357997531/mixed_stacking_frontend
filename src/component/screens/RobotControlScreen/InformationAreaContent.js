@@ -124,6 +124,8 @@ function InformationAreaContent() {
         </OrderListBox>
       )}
 
+      {informationAreaMode === "multipleOrder" ? "asd" : null}
+
       {!realtimeRobotMode && robotStateMode === "activate" && (
         <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
       )}

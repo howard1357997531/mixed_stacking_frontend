@@ -55,6 +55,11 @@ export const orderScreen_orderSelectReducer = (
         };
       }
 
+    case ORDER_SCREEN_orderList.currentPageCheck:
+      if (state.mode === "orderDetail") {
+        return { ...state, mode: "aiResult" };
+      }
+
     default:
       return state;
   }

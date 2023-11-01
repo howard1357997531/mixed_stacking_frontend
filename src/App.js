@@ -13,11 +13,19 @@ import {
   ROBOT_CONTROL_SCREEN_robotState,
 } from "./redux/constants";
 import { webSocketDomain } from "./env";
+import {
+  multipleOrderListAction,
+  orderListAction,
+} from "./redux/actions/OrderActions";
 
 function App() {
   const dispatch = useDispatch();
   const { detail: orderSelectDetail } = useSelector(
     (state) => state.robotControlScreen_orderSelect
+  );
+
+  const { mode: informationAreaMode } = useSelector(
+    (state) => state.robotControlScreen_informationArea
   );
 
   const { mode: robotStateMode } = useSelector(
@@ -53,6 +61,7 @@ function App() {
 
   const reduxData = {
     orderSelectDetail,
+    informationAreaMode,
     robotStateMode,
     realtimeRobotMode,
     realtimeRobotCount,
@@ -61,6 +70,7 @@ function App() {
     objectNextName,
   };
 
+  // webSocket
   useEffect(() => {
     const socket = new WebSocket(
       `ws://${webSocketDomain}/ws/RobotControlConsumers/`
@@ -133,6 +143,11 @@ function App() {
     return () => {
       socket.close();
     };
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(orderListAction());
+    dispatch(multipleOrderListAction());
   }, [dispatch]);
 
   return (

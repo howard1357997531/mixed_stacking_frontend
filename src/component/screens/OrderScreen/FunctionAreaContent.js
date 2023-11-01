@@ -27,7 +27,7 @@ import LoadingCircle from "../../../tool/LoadingCircle";
 import FunctionAreaMultipleOrderContent from "./FunctionAreaMultipleOrderContent";
 import CenterText from "../../../tool/CenterText";
 
-function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
+function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
   const {
     loading: orderListLoading,
     error: orderListError,
@@ -96,7 +96,7 @@ function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
               清單
             </Typography>
 
-            <OrderListDetailBox>
+            <OrderListDetailBox isTitle={true}>
               <OrderListDetailSmallBox>名稱</OrderListDetailSmallBox>
               <OrderListDetailSmallBox>寬度</OrderListDetailSmallBox>
               <OrderListDetailSmallBox>長度</OrderListDetailSmallBox>
@@ -105,7 +105,7 @@ function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
             </OrderListDetailBox>
 
             {orderCurrentData.orderItem.map((order, index) => (
-              <OrderListDetailBox key={index}>
+              <OrderListDetailBox key={index} isTitle={false}>
                 <OrderListDetailSmallBox>{order.name}</OrderListDetailSmallBox>
                 <OrderListDetailSmallBox>{order.width}</OrderListDetailSmallBox>
                 <OrderListDetailSmallBox>
@@ -146,22 +146,19 @@ function FunctionAreaContent({ orderSelectMode, orderSelectId }) {
         <ErrorMsgBox />
       ) : multipleOrderData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
-      ) : !multipleOrderSelectId ? (
-        <FunctionAreaMultipleOrderContent hasSelect={false} />
       ) : (
-        <FunctionAreaMultipleOrderContent hasSelect={true} />
+        <FunctionAreaMultipleOrderContent
+          hasSelect={multipleOrderSelectId !== ""}
+        />
       );
     } else if (orderSelectMode === "multipleOrderCreate") {
-      return orderSelectId.length === 0 ? (
+      return orderSelectIdArray.length === 0 ? (
         <CenterText text={"尚未選擇工單"} />
       ) : (
-        orderSelectId.map((orderId) => (
+        orderSelectIdArray.map((orderId) => (
           <MenuFunctionBox key={orderId}>
             <MenuFunctionTitle>
               {createMultipleOrderSelectData(orderId).name}
-            </MenuFunctionTitle>
-            <MenuFunctionTitle>
-              {createMultipleOrderSelectData(orderId).createdAt}
             </MenuFunctionTitle>
           </MenuFunctionBox>
         ))

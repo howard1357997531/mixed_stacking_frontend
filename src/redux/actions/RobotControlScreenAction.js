@@ -12,10 +12,10 @@ import axios from "axios";
 import { brown } from "@mui/material/colors";
 import { domain } from "../../env";
 
-export const orderlistSelectAction = (selectOrderList) => (dispatch) => {
+export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
   dispatch({
     type: ROBOT_CONTROL_SCREEN_orderList.select,
-    payload: selectOrderList,
+    payload: selectOrderObject,
   });
 
   dispatch({
@@ -28,6 +28,27 @@ export const orderlistSelectAction = (selectOrderList) => (dispatch) => {
     payload: "已選擇工單",
   });
 };
+
+export const multipleOrderlistSelectAction =
+  (selectOrderObject) => (dispatch) => {
+    console.log(selectOrderObject);
+    const firstOrderId = selectOrderObject.orderSelectId_str.split(",")[0];
+    const firstOrder = selectOrderObject.multipleOrder[0].order;
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN_orderList.select,
+      payload: firstOrder,
+    });
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN_informationArea.mode,
+      payload: "multipleOrder",
+    });
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN_robotState.text,
+      payload: "已選擇工單",
+    });
+  };
 
 export const executeRobotAction =
   (robotStateMode, orderSelectDetail) => async (dispatch) => {

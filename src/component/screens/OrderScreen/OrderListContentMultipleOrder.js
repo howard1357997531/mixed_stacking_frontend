@@ -17,11 +17,15 @@ function OrderListContentMultipleOrder() {
     loading: multipleOrderLoading,
     error: multipleOrderError,
     data: multipleOrderData,
+    orderId: multipleOrderId,
   } = useSelector((state) => state.multipleOrderList);
 
   const multipleOrderHandler = (orderId) => {
     dispatch(multipleOrderListSelectAction(orderId));
   };
+
+  const itemSelectId =
+    multipleOrderId === "" ? multipleOrderData[0].id : multipleOrderId;
 
   return multipleOrderLoading ? (
     <LoadingCircle />
@@ -33,6 +37,7 @@ function OrderListContentMultipleOrder() {
     multipleOrderData.map((order) => (
       <MultipleOrderBox
         key={order.id}
+        itemSelect={order.id === itemSelectId}
         onClick={() => multipleOrderHandler(order.id)}
       >
         <MultipleOrderName>{order.name}</MultipleOrderName>

@@ -9,9 +9,9 @@ function RobotControlScreen(props) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
-  useEffect(() => {
-    dispatch(orderListAction());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(orderListAction());
+  // }, [dispatch]);
 
   return (
     <>

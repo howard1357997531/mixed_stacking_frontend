@@ -11,6 +11,22 @@ import { Colors } from "../../styles/theme";
 
 export const orderlistSelectAction =
   (mode, orderId, aiTrainingState, orderListData) => (dispatch) => {
+    if (
+      mode === "multipleOrderCreate" &&
+      aiTrainingState !== "finish_training"
+    ) {
+      Swal.fire({
+        position: "center",
+        width: "16em",
+        icon: "warning",
+        title: "只能選擇已訓練工單",
+        background: brown[400],
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+
     if (["close", "orderDetail", "aiResult"].includes(mode)) {
       const [OrderData] = orderListData.filter((order) => order.id === orderId);
 
@@ -51,46 +67,22 @@ export const multipleOrderListSelectAction = (orderId) => (dispatch) => {
   });
 };
 
+// 寫如果不是在orderDetail 不會強制顯示ai結算畫面
 export const aiTrainingAction =
-  (orderId, aiTrainingState) => async (dispatch) => {
+  (mode, orderId, aiTrainingState) => async (dispatch) => {
+    dispatch({
+      type: ORDER_SCREEN_orderList.aiTrainingState,
+      payload: aiTrainingState,
+    });
+
+    dispatch({
+      type: ORDER_LIST.aiTrainingStateChange,
+      payload: { orderId, aiTrainingState },
+    });
+
     try {
-      dispatch({
-        type: ORDER_SCREEN_orderList.aiTrainingState,
-        payload: aiTrainingState,
-      });
-
-      dispatch({
-        type: ORDER_LIST.aiTrainingStateChange,
-        payload: { orderId, aiTrainingState },
-      });
-
-      const { data } = await axios.post(`${domain}/api/aiTraining/`, {
+      var { data } = await axios.post(`${domain}/api/aiTraining/`, {
         orderId,
-      });
-
-      dispatch({
-        type: ORDER_LIST.aiTrainingOrderAdd,
-        payload: { orderId, data: data.aiResult_str },
-      });
-
-      dispatch({
-        type: ORDER_LIST.aiTrainingStateChange,
-        payload: { orderId, aiTrainingState: "finish_training" },
-      });
-
-      dispatch({
-        type: ORDER_SCREEN_orderList.mode,
-        payload: "aiResult",
-      });
-
-      dispatch({
-        type: ORDER_SCREEN_orderList.aiTrainingState,
-        payload: "finish_training",
-      });
-
-      dispatch({
-        type: ORDER_SCREEN_orderList.aiCurrentData,
-        payload: data.aiResult_str,
       });
     } catch (error) {
       Swal.fire({
@@ -112,6 +104,30 @@ export const aiTrainingAction =
           });
       });
     }
+
+    dispatch({
+      type: ORDER_LIST.aiTrainingOrderAdd,
+      payload: { orderId, data: data.aiResult_str },
+    });
+
+    dispatch({
+      type: ORDER_LIST.aiTrainingStateChange,
+      payload: { orderId, aiTrainingState: "finish_training" },
+    });
+
+    dispatch({
+      type: ORDER_SCREEN_orderList.aiTrainingState,
+      payload: "finish_training",
+    });
+
+    dispatch({
+      type: ORDER_SCREEN_orderList.aiCurrentData,
+      payload: data.aiResult_str,
+    });
+
+    dispatch({
+      type: ORDER_SCREEN_orderList.currentPageCheck,
+    });
   };
 
 export const functionAreaModeAction = (mode) => (dispatch) => {
@@ -129,22 +145,36 @@ export const functionAreaModeAction = (mode) => (dispatch) => {
 };
 
 export const functionAreaNavButtonAction =
-  (mode, orderSelectId, aiTrainingState) => (dispatch) => {
+  (mode, orderSelectIdArray, aiTrainingState) => (dispatch) => {
     if (mode !== "multipleOrder") {
       dispatch({
         type: ORDER_SCREEN_orderList.mode,
         payload: mode,
       });
+    } else {
+      if (orderSelectIdArray.length === 0) {
+        Swal.fire({
+          position: "center",
+          width: "16em",
+          icon: "warning",
+          title: "尚未選擇工單",
+          background: Colors.brownHover,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
     }
 
     if (aiTrainingState === "is_training") {
-      dispatch(aiTrainingAction(orderSelectId, aiTrainingState));
+      dispatch(aiTrainingAction(mode, orderSelectIdArray[0], aiTrainingState));
     }
 
     if (mode === "multipleOrder") {
       Swal.fire({
         title: "請輸入多單名稱",
         input: "text",
+        background: Colors.brown,
         inputAttributes: {
           autocapitalize: "off",
         },
@@ -159,9 +189,13 @@ export const functionAreaNavButtonAction =
           try {
             const { data } = await axios.post(
               `${domain}/api/createMultipleOrder/`,
-              { orderSelectId, inputText }
+              { orderSelectIdArray, inputText }
             );
-            return data;
+
+            dispatch({
+              type: MULTIPLE_ORDER_LIST.addData,
+              payload: data,
+            });
           } catch (error) {
             Swal.showValidationMessage(`${error.response.data.error_msg}`);
           }
@@ -178,6 +212,11 @@ export const functionAreaNavButtonAction =
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
+            dispatch({
+              type: ORDER_SCREEN_orderList.orderId,
+              payload: [],
+            });
+
             dispatch({
               type: ORDER_SCREEN_orderList.mode,
               payload: mode,

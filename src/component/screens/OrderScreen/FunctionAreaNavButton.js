@@ -7,7 +7,7 @@ import {
   functionAreaNavButtonAction,
 } from "../../../redux/actions/OrderScreenAction";
 
-function FunctionAreaNavButton({ orderSelectMode, orderSelectId }) {
+function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
   const dispatch = useDispatch();
 
   const { aiTrainingState } = useSelector(
@@ -16,16 +16,8 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectId }) {
 
   const buttonHandler = (mode, aiTraining_state) => {
     dispatch(
-      functionAreaNavButtonAction(mode, orderSelectId, aiTraining_state)
+      functionAreaNavButtonAction(mode, orderSelectIdArray, aiTraining_state)
     );
-    // dispatch({
-    //   type: ORDER_SCREEN_orderList.mode,
-    //   payload: mode,
-    // });
-
-    // if (aiTraining_state === "is_training") {
-    //   dispatch(aiTrainingAction(orderSelectId, aiTraining_state));
-    // }
   };
 
   const changeMode = {

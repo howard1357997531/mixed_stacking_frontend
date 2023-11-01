@@ -13,7 +13,6 @@ import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
 import "./css/OrderList.css";
 import OrderListContent from "./OrderListContent";
 import { useDispatch } from "react-redux";
-import { ORDER_SCREEN_orderList } from "../../../redux/constants";
 import { functionAreaModeAction } from "../../../redux/actions/OrderScreenAction";
 
 function OrderList(props) {

@@ -34,7 +34,6 @@ export const multipleOrderListAction = () => async (dispatch) => {
       type: MULTIPLE_ORDER_LIST.success,
       payload: data,
     });
-    console.log(data);
   } catch (error) {
     dispatch({
       type: MULTIPLE_ORDER_LIST.fail,

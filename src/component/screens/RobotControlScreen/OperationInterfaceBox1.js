@@ -23,6 +23,7 @@ import { Box, Slide } from "@mui/material";
 
 function OperationInterfaceBox1({
   orderSelectDetail,
+  informationAreaMode,
   robotStateMode,
   realtimeRobotMode,
   realtimeRobotCount,
@@ -63,20 +64,22 @@ function OperationInterfaceBox1({
   var objectNextTitle = "";
 
   if (orderSelectDetail.length !== 0) {
-    const orderTotal = orderSelectDetail.aiTraining_order.split(",").length;
+    if (informationAreaMode === "order") {
+      const orderTotal = orderSelectDetail.aiTraining_order.split(",").length;
 
-    if (!realtimeRobotMode && robotStateMode === "activate") {
-      visualTitle = "請放料";
-      objectNextTitle = "下一個";
-    } else {
-      visualTitle = realtimeRobotCount < orderTotal ? "請放料" : "最後料";
+      if (!realtimeRobotMode && robotStateMode === "activate") {
+        visualTitle = "請放料";
+        objectNextTitle = "下一個";
+      } else {
+        visualTitle = realtimeRobotCount < orderTotal ? "請放料" : "最後料";
 
-      objectNextTitle =
-        realtimeRobotCount + 1 < orderTotal
-          ? "下一個"
-          : realtimeRobotCount !== orderTotal
-          ? "最後一個"
-          : "";
+        objectNextTitle =
+          realtimeRobotCount + 1 < orderTotal
+            ? "下一個"
+            : realtimeRobotCount !== orderTotal
+            ? "最後一個"
+            : "";
+      }
     }
   }
 
@@ -123,7 +126,7 @@ function OperationInterfaceBox1({
         )}
 
         <VisualIdentityBox>
-          {robotStateMode !== "inactivate" && (
+          {robotStateMode !== "inactivate" ? (
             <>
               <VisualIdentityTitle>{visualTitle}</VisualIdentityTitle>
               <VisualIdentityObject ref={objectNameRef}>
@@ -171,7 +174,7 @@ function OperationInterfaceBox1({
                 </VisualIdentityNextObjectBox>
               </VisualIdentityObject>
             </>
-          )}
+          ) : null}
 
           <VisualIdentityState>
             {!realtimeVisualMode && robotStateMode === "activate" && (

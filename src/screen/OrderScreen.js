@@ -13,20 +13,20 @@ function OrderScreen() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
-  const { mode: orderSelectMode, orderId: orderSelectId } = useSelector(
+  const { mode: orderSelectMode, orderId: orderSelectIdArray } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
   const propsData = {
     matches,
     orderSelectMode,
-    orderSelectId,
+    orderSelectIdArray,
   };
 
-  useEffect(() => {
-    dispatch(orderListAction());
-    dispatch(multipleOrderListAction());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(orderListAction());
+  //   dispatch(multipleOrderListAction());
+  // }, [dispatch]);
   return (
     <>
       {matches ? (

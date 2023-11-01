@@ -87,6 +87,12 @@ export const multipleOrderListReducer = (
         orderId: action.payload,
       };
 
+    case MULTIPLE_ORDER_LIST.addData:
+      return {
+        ...state,
+        data: [action.payload, ...state.data],
+      };
+
     default:
       return state;
   }
