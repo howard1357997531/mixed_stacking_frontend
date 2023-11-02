@@ -12,6 +12,8 @@ import {
   robotControlScreen_informationAreaReducer,
   robotControlScreen_realtimeRobotReducer,
   robotControlScreen_realtimeVisualReducer,
+  robotControlScreen_multipleOrderSelectReducer,
+  robotControlScreen_robotExecutionListReducer,
 } from "./reducers/RobotControlScreenReducer";
 
 const reducer = {
@@ -20,8 +22,12 @@ const reducer = {
   multipleOrderList: multipleOrderListReducer,
   orderScreen_orderSelect: orderScreen_orderSelectReducer,
   robotControlScreen_orderSelect: robotControlScreen_orderSelectReducer,
+  robotControlScreen_multipleOrderSelect:
+    robotControlScreen_multipleOrderSelectReducer,
   robotControlScreen_informationArea: robotControlScreen_informationAreaReducer,
   robotControlScreen_executeRobot: robotControlScreen_executeRobotReducer,
+  robotControlScreen_robotExecutionList:
+    robotControlScreen_robotExecutionListReducer,
   robotControlScreen_robotState: robotControlScreen_robotStateReducer,
   robotControlScreen_realtimeRobot: robotControlScreen_realtimeRobotReducer,
   robotControlScreen_realtimeVisual: robotControlScreen_realtimeVisualReducer,

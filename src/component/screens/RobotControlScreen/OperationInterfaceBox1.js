@@ -16,7 +16,7 @@ import {
 } from "../../../styles/RobotControlScreen";
 import { orange, red } from "@mui/material/colors";
 import { Colors } from "../../../styles/theme";
-import OrderListDialog from "./OrderListDialog";
+import OrderListDialog from "./dialog/OrderListDialog";
 import { operateShowBoardTextAnimation } from "../../../animation";
 import TextEffect2 from "../../../tool/TextEffect2";
 import { Box, Slide } from "@mui/material";

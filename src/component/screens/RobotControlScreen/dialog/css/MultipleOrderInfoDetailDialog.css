@@ -1,0 +1,7 @@
+.multipleOrderInfoDetail::-webkit-scrollbar{
+    width: 10px
+}
+
+.multipleOrderInfoDetail::-webkit-scrollbar-thumb{
+    background-color: #8d6e63;
+}

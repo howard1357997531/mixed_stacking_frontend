@@ -20,6 +20,10 @@ function InformationAreaTitle() {
     (state) => state.robotControlScreen_orderSelect
   );
 
+  const { detail: multipleOrderList } = useSelector(
+    (state) => state.robotControlScreen_multipleOrderSelect
+  );
+
   const { mode: robotStateMode } = useSelector(
     (state) => state.robotControlScreen_robotState
   );
@@ -51,6 +55,10 @@ function InformationAreaTitle() {
           <Title>{orderList.name}</Title>
         </>
       )}
+
+      {informationAreaMode === "multipleOrder" ? (
+        <Title>{multipleOrderList.name}</Title>
+      ) : null}
 
       {informationAreaMode === "picture" && robotStateMode !== "activate" && (
         <OrderListTitleButton onClick={() => changeModeHandler("order")}>

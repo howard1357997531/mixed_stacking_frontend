@@ -336,11 +336,6 @@ export const AiResultSmallBox = styled(Box)(({ theme }) => ({
 
 export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   marginLeft: "20px",
-  // "&:hover": {
-  //   color: brown[300],
-  //   backgroundColor: yellow[300],
-  //   cursor: "pointer",
-  // },
 }));
 
 export const MenuFunctionBox = styled(Box)(({ theme }) => ({

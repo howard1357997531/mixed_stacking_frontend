@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, styled } from "@mui/material";
-import LoadingCircle from "../../../tool/LoadingCircle";
-import ErrorMsgBox from "../../../tool/ErrorMsgBox";
-import { OrderListContentMsg } from "../../../styles/OrderScreen";
-import { brown, grey, orange } from "@mui/material/colors";
+import LoadingCircle from "../../../../tool/LoadingCircle";
+import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
+import { OrderListContentMsg } from "../../../../styles/OrderScreen";
+import { brown, grey } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { Colors } from "../../../styles/theme";
-import { multipleOrderlistSelectAction } from "../../../redux/actions/RobotControlScreenAction";
+import { Colors } from "../../../../styles/theme";
+import { multipleOrderlistSelectAction } from "../../../../redux/actions/RobotControlScreenAction";
 
 function OrderListDialogTabsMultipleOrder({ onOrderListDialoggOpen }) {
   const StyleBox = styled(Box)(({ theme }) => ({
@@ -22,11 +22,11 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialoggOpen }) {
     height: "60px",
     borderBottom: `1px solid ${Colors.brownHover}`,
     "&:hover": {
-      backgroundColor: brown[500],
+      backgroundColor: Colors.brownHover,
       cursor: "pointer",
     },
     "&:active": {
-      backgroundColor: brown[700],
+      backgroundColor: brown[500],
     },
   }));
   const StyleInnerSmallBox = styled(Box)(({ theme }) => ({
@@ -37,12 +37,6 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialoggOpen }) {
     height: "50px",
     color: grey[900],
     fontWeight: 600,
-    "&:hover": {
-      backgroundColor: brown[500],
-    },
-    "&:active": {
-      backgroundColor: brown[700],
-    },
   }));
 
   const dispatch = useDispatch();

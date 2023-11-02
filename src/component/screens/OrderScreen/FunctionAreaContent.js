@@ -13,19 +13,13 @@ import {
 } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
-import {
-  blueGrey,
-  brown,
-  deepPurple,
-  orange,
-  red,
-  teal,
-} from "@mui/material/colors";
+import { blueGrey } from "@mui/material/colors";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import FunctionAreaMultipleOrderContent from "./FunctionAreaMultipleOrderContent";
 import CenterText from "../../../tool/CenterText";
+import { AiResultAvatarBgcolor } from "../../../tool/func";
 
 function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
   const {
@@ -44,20 +38,6 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
     data: multipleOrderData,
     orderId: multipleOrderSelectId,
   } = useSelector((state) => state.multipleOrderList);
-
-  const AiResultAvatarBgcolor = (number) => {
-    if (number > 10 && number <= 20) {
-      return teal[200];
-    } else if (number > 20 && number <= 30) {
-      return deepPurple[200];
-    } else if (number > 30 && number <= 40) {
-      return red[300];
-    } else if (number > 40 && number <= 50) {
-      return orange[300];
-    } else if (number > 50 && number <= 60) {
-      return brown[300];
-    }
-  };
 
   const createMultipleOrderSelectData = (orderId) => {
     let [filterData] = orderListData.filter((order) => order.id === orderId);

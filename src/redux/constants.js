@@ -46,14 +46,24 @@ export const ROBOT_CONTROL_SCREEN_orderList = {
   select: "ROBOT_CONTROL_SCREEN_orderList_select",
 };
 
+export const ROBOT_CONTROL_SCREEN_multipleOrderList = {
+  select: "ROBOT_CONTROL_SCREEN_multipleOrderList_select",
+};
+
 export const ROBOT_CONTROL_SCREEN_informationArea = {
   mode: "ROBOT_CONTROL_SCREEN_informationArea_mode",
+  multipleOrderId: "ROBOT_CONTROL_SCREEN_informationArea_multipleOrderId",
 };
 
 export const ROBOT_CONTROL_SCREEN_executeRobot = {
   request: "ROBOT_CONTROL_SCREEN_executeRobot_request",
   success: "ROBOT_CONTROL_SCREEN_executeRobot_success",
   fail: "ROBOT_CONTROL_SCREEN_executeRobot_fail",
+};
+
+export const ROBOT_CONTROL_SCREEN_robotExecutionList = {
+  executeOrderId: "ROBOT_CONTROL_SCREEN_robotExecutionList_executeOrderId",
+  name: "ROBOT_CONTROL_SCREEN_robotExecutionList_name",
 };
 
 export const ROBOT_CONTROL_SCREEN_robotState = {

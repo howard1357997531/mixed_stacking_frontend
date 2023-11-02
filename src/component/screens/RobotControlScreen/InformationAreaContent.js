@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   InformationAreaContentBox,
+  MultipleOrderListBox,
+  MultipleOrderListDetailBox,
+  MultipleOrderListDetailInfo,
+  MultipleOrderListDetailName,
+  MultipleOrderListDetailOrder,
   NoSelectOrderText,
   OrderListBox,
   OrderListContent,
@@ -8,15 +13,23 @@ import {
   OrderListContentSmBox,
   OrderListTitle,
 } from "../../../styles/RobotControlScreen";
-import { useSelector } from "react-redux";
-import { Avatar, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Button, Typography } from "@mui/material";
 import "./css/InformationAreaContent.css";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
+import MultipleOrderInfoDetailDialog from "./dialog/MultipleOrderInfoDetailDialog";
+import { ROBOT_CONTROL_SCREEN_informationArea } from "../../../redux/constants";
+import { blueGrey } from "@mui/material/colors";
 
 function InformationAreaContent() {
+  const dispatch = useDispatch();
   const { detail: orderList } = useSelector(
     (state) => state.robotControlScreen_orderSelect
+  );
+
+  const { detail: multipleOrderList } = useSelector(
+    (state) => state.robotControlScreen_multipleOrderSelect
   );
 
   const { mode: robotStateMode } = useSelector(
@@ -45,6 +58,22 @@ function InformationAreaContent() {
     35: "204 * 92 * 36 (mm)",
   };
 
+  const [
+    multipleOrderInfoDetailDialogOpen,
+    setMultipleOrderInfoDetailDialogOpen,
+  ] = useState(false);
+
+  const onMultipleOrderInfoDetailDialogOpen = (state) => {
+    setMultipleOrderInfoDetailDialogOpen(state);
+  };
+
+  const multipleOrderDetailHandler = (orderId) => {
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN_informationArea.multipleOrderId,
+      payload: orderId,
+    });
+    setMultipleOrderInfoDetailDialogOpen(true);
+  };
   return (
     <InformationAreaContentBox hasOrderList={orderList.length !== 0}>
       {informationAreaMode === "initial" && (
@@ -124,7 +153,37 @@ function InformationAreaContent() {
         </OrderListBox>
       )}
 
-      {informationAreaMode === "multipleOrder" ? "asd" : null}
+      {informationAreaMode === "multipleOrder" ? (
+        <MultipleOrderListBox>
+          {multipleOrderList.multipleOrder.map((order, index) => (
+            <MultipleOrderListDetailBox key={order.order.id}>
+              <MultipleOrderListDetailOrder>
+                <Avatar sx={{ backgroundColor: blueGrey[300] }}>
+                  {index + 1}
+                </Avatar>
+              </MultipleOrderListDetailOrder>
+              <MultipleOrderListDetailName>
+                {order.order.name}
+              </MultipleOrderListDetailName>
+              <MultipleOrderListDetailInfo>
+                <Button
+                  variant="contained"
+                  onClick={() => multipleOrderDetailHandler(order.order.id)}
+                >
+                  詳細資料
+                </Button>
+              </MultipleOrderListDetailInfo>
+            </MultipleOrderListDetailBox>
+          ))}
+        </MultipleOrderListBox>
+      ) : null}
+
+      <MultipleOrderInfoDetailDialog
+        multipleOrderInfoDetailDialogOpen={multipleOrderInfoDetailDialogOpen}
+        onMultipleOrderInfoDetailDialogOpen={
+          onMultipleOrderInfoDetailDialogOpen
+        }
+      />
 
       {!realtimeRobotMode && robotStateMode === "activate" && (
         <NoSelectOrderText>啟動手臂中</NoSelectOrderText>

@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography, styled } from "@mui/material";
-import { blueGrey, red } from "@mui/material/colors";
+import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
 import { Colors } from "../theme";
 
 export const RobotControlContainer = styled(Stack)(({ theme }) => ({
@@ -260,12 +260,6 @@ export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
   fontSize: "26px",
 }));
 
-export const OrderListBox = styled(Box)(({ theme }) => ({
-  width: "100%",
-  height: "100%",
-  overflowY: "hidden",
-}));
-
 export const OrderListTitleButton = styled(Button)(({ theme }) => ({
   position: "absolute",
   top: "60%",
@@ -285,6 +279,11 @@ export const OrderListTitleButton = styled(Button)(({ theme }) => ({
   "&:active": {
     transform: "scale(0.95), translateY(-50%)",
   },
+}));
+
+export const OrderListBox = styled(Box)(({ theme }) => ({
+  width: "100%",
+  height: "100%",
 }));
 
 export const OrderListTitle = styled(Box)(({ theme }) => ({
@@ -311,5 +310,100 @@ export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  height: "100%",
+}));
+
+export const MultipleOrderListBox = styled(Box)(({ theme }) => ({
+  width: "100%",
+  height: "100%",
+  overflowY: "auto",
+}));
+
+export const MultipleOrderListDetailBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  width: "100%",
+  height: "60px",
+}));
+
+export const MultipleOrderListDetailOrder = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "25%",
+  height: "100%",
+}));
+
+export const MultipleOrderListDetailName = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "50%",
+  height: "100%",
+}));
+
+export const MultipleOrderListDetailInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "25%",
+  height: "100%",
+}));
+
+export const MultipleOrderInfoDialogBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isTitle",
+})(({ theme, isTitle }) => ({
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+  height: "40px",
+  borderBottom: `1px solid ${Colors.brownHover}`,
+  "&:hover": {
+    color: !isTitle && deepPurple[500],
+    height: !isTitle && "60px",
+    fontSize: !isTitle && "24px",
+    fontWeight: !isTitle && 600,
+    backgroundColor: !isTitle && Colors.brownHover,
+    cursor: !isTitle && "pointer",
+  },
+}));
+
+export const MultipleOrderInfoDialogSmBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "20%",
+  height: "100%",
+}));
+
+export const MultipleOrderInfoDialogAiResultBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isTitle",
+})(({ theme, isTitle }) => ({
+  display: "flex",
+  alignItems: "center",
+  width: "33.33%",
+  height: "70px",
+  // borderBottom: `1px solid ${brown[400]}`,
+  // backgroundColor: Colors.yellow,
+}));
+
+export const MultipleOrderInfoDialogAiResultOrder = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isTitle",
+})(({ theme, isTitle }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "35%",
+  height: "100%",
+
+  // backgroundColor: Colors.darkGreen,
+}));
+
+export const MultipleOrderInfoDialogAiResultName = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isTitle",
+})(({ theme, isTitle }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "65%",
   height: "100%",
 }));
