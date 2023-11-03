@@ -64,7 +64,7 @@ function OperationInterfaceBox1({
   var objectNextTitle = "";
 
   if (orderSelectDetail.length !== 0) {
-    if (informationAreaMode === "order") {
+    if (["order", "picture"].includes(informationAreaMode)) {
       const orderTotal = orderSelectDetail.aiTraining_order.split(",").length;
 
       if (!realtimeRobotMode && robotStateMode === "activate") {

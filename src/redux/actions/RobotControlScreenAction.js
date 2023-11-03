@@ -1,12 +1,12 @@
 import Swal from "sweetalert2";
 import {
+  ROBOT_CONTROL_SCREEN,
   ROBOT_CONTROL_SCREEN_executeRobot,
   ROBOT_CONTROL_SCREEN_informationArea,
   ROBOT_CONTROL_SCREEN_multipleOrderList,
   ROBOT_CONTROL_SCREEN_orderList,
   ROBOT_CONTROL_SCREEN_realtimeRobot,
   ROBOT_CONTROL_SCREEN_realtimeVisual,
-  ROBOT_CONTROL_SCREEN_robotExecutionList,
   ROBOT_CONTROL_SCREEN_robotSetting,
   ROBOT_CONTROL_SCREEN_robotState,
 } from "../constants";
@@ -31,7 +31,7 @@ export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
   });
 
   dispatch({
-    type: ROBOT_CONTROL_SCREEN_robotExecutionList.executeOrderId,
+    type: ROBOT_CONTROL_SCREEN,
     payload: [selectOrderObject.id],
   });
 };
@@ -68,13 +68,21 @@ export const executeRobotAction =
         background: "#a1887f",
       });
       return;
+    } else if (robotStateMode !== "inactivate") {
+      Swal.fire({
+        icon: "warning",
+        title: "手臂執行中",
+        background: "#a1887f",
+      });
+      return;
     } else {
       Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        title: "確定執行?",
+        text: `${orderSelectDetail.name}`,
         icon: "warning",
+        background: "#a1887f",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#7066e0",
         cancelButtonColor: "#d33",
         confirmButtonText: "確定",
         cancelButtonText: "返回",
@@ -137,12 +145,12 @@ export const executeRobotAction =
                   payload: null,
                 });
 
-                setTimeout(() => {
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
-                    payload: null,
-                  });
-                }, 1500);
+                // setTimeout(() => {
+                //   dispatch({
+                //     type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
+                //     payload: null,
+                //   });
+                // }, 1500);
               });
           } catch (error) {
             dispatch({

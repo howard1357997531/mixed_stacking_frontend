@@ -1,12 +1,11 @@
 import {
+  ROBOT_CONTROL_SCREEN,
   ROBOT_CONTROL_SCREEN_executeRobot,
   ROBOT_CONTROL_SCREEN_informationArea,
   ROBOT_CONTROL_SCREEN_multipleOrderList,
   ROBOT_CONTROL_SCREEN_orderList,
-  ROBOT_CONTROL_SCREEN_realtimeData,
   ROBOT_CONTROL_SCREEN_realtimeRobot,
   ROBOT_CONTROL_SCREEN_realtimeVisual,
-  ROBOT_CONTROL_SCREEN_robotExecutionList,
   ROBOT_CONTROL_SCREEN_robotSetting,
   ROBOT_CONTROL_SCREEN_robotState,
 } from "../constants";
@@ -99,16 +98,10 @@ export const robotControlScreen_robotExecutionListReducer = (
   action
 ) => {
   switch (action.type) {
-    case ROBOT_CONTROL_SCREEN_robotExecutionList.executeOrderId:
+    case ROBOT_CONTROL_SCREEN.robotExecutionList:
       return {
         ...state,
         executeOrderId: action.payload,
-      };
-
-    case ROBOT_CONTROL_SCREEN_robotExecutionList.name:
-      return {
-        ...state,
-        name: action.patload,
       };
 
     default:

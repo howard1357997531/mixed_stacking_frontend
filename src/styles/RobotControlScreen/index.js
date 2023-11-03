@@ -169,7 +169,7 @@ export const VisualIdentityState = styled(Box)(({ theme }) => ({
   height: "30%",
 }));
 
-export const VisualIdentityStateText = styled(Typography)(({ theme }) => ({
+export const VisualIdentityStateText = styled(Box)(({ theme }) => ({
   fontSize: "24px",
   fontWeight: 600,
 }));

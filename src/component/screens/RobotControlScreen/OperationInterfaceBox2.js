@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FortyRadioHeightBox,
   FortyRadioWidthButton,
@@ -22,6 +22,18 @@ function OperationInterfaceBox2() {
     dispatch(executeRobotAction(mode, detail));
   };
 
+  const robotSettingHandler = () => {
+    if (mode !== "inactivate") {
+      setRobotSettingDialogOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    if (mode === "inactivate") {
+      setRobotSettingDialogOpen(false);
+    }
+  }, [mode]);
+
   // dialog
   const [robotSettingDialogOpen, setRobotSettingDialogOpen] = useState(false);
 
@@ -38,18 +50,20 @@ function OperationInterfaceBox2() {
           <img src="start.png" alt="start.png"></img>
         </OperationInterfaceButtonLogo>
 
-        <OperationInterfaceButtonText>執行</OperationInterfaceButtonText>
+        <OperationInterfaceButtonText>
+          {mode === "inactivate" ? "執行" : "手臂執行中"}
+        </OperationInterfaceButtonText>
       </SixtyRadioWidthButton>
 
       <FortyRadioWidthButton
         customColor={[Colors.darkGreen, Colors.darkGreenHover]}
-        onClick={() => setRobotSettingDialogOpen(true)}
+        onClick={robotSettingHandler}
       >
         <OperationInterfaceButtonLogo>
           <img src="control.png" alt="control.png"></img>
         </OperationInterfaceButtonLogo>
 
-        <OperationInterfaceButtonText>操作面板</OperationInterfaceButtonText>
+        <OperationInterfaceButtonText>操控板</OperationInterfaceButtonText>
       </FortyRadioWidthButton>
 
       <RobotSettingDialog

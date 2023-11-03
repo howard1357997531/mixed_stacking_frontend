@@ -61,9 +61,8 @@ export const ROBOT_CONTROL_SCREEN_executeRobot = {
   fail: "ROBOT_CONTROL_SCREEN_executeRobot_fail",
 };
 
-export const ROBOT_CONTROL_SCREEN_robotExecutionList = {
-  executeOrderId: "ROBOT_CONTROL_SCREEN_robotExecutionList_executeOrderId",
-  name: "ROBOT_CONTROL_SCREEN_robotExecutionList_name",
+export const ROBOT_CONTROL_SCREEN = {
+  robotExecutionList: "ROBOT_CONTROL_SCREEN_robotExecutionList",
 };
 
 export const ROBOT_CONTROL_SCREEN_robotState = {
