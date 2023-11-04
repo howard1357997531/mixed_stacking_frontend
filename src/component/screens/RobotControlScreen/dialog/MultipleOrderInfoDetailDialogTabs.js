@@ -47,7 +47,7 @@ function MultipleOrderInfoDetailDialogTabs(props) {
     setValue(newValue);
   };
 
-  const { detail } = useSelector(
+  const { data } = useSelector(
     (state) => state.robotControlScreen_multipleOrderSelect
   );
 
@@ -56,12 +56,12 @@ function MultipleOrderInfoDetailDialogTabs(props) {
   );
 
   if (multipleOrderId) {
-    var [multipleOrderData] = detail.multipleOrder.filter(
+    var [multipleOrderData] = data.multipleOrder.filter(
       (order) => order.order.id === multipleOrderId
     );
   }
 
-  const addProps = { ...props, detail, multipleOrderId, multipleOrderData };
+  const addProps = { ...props, data, multipleOrderId, multipleOrderData };
 
   return (
     <Box sx={{ width: "100%" }}>

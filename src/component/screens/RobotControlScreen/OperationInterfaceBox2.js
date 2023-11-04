@@ -18,8 +18,12 @@ function OperationInterfaceBox2() {
   );
   const { mode } = useSelector((state) => state.robotControlScreen_robotState);
 
+  const robotExecutionData = useSelector(
+    (state) => state.robotControlScreen_robotExecutionList
+  );
+
   const executeRobotHandler = () => {
-    dispatch(executeRobotAction(mode, detail));
+    dispatch(executeRobotAction(mode, robotExecutionData));
   };
 
   const robotSettingHandler = () => {

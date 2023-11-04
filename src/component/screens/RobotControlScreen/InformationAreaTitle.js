@@ -3,12 +3,17 @@ import {
   InformationAreaTitleBox,
   OrderListTitleButton,
 } from "../../../styles/RobotControlScreen";
-import { Box, Typography, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { useDispatch, useSelector } from "react-redux";
-import { ROBOT_CONTROL_SCREEN_informationArea } from "../../../redux/constants";
+import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
 
-function InformationAreaTitle() {
+function InformationAreaTitle({
+  orderSelectData,
+  informationAreaMode,
+  robotStateMode,
+  realtimeRobotMode,
+}) {
   const Title = styled(Box)(({ theme }) => ({
     fontWeight: 600,
     fontSize: "24px",
@@ -16,30 +21,15 @@ function InformationAreaTitle() {
   }));
 
   const dispatch = useDispatch();
-  const { detail: orderList } = useSelector(
-    (state) => state.robotControlScreen_orderSelect
-  );
 
-  const { detail: multipleOrderList } = useSelector(
+  const { data: multipleOrderSelectData } = useSelector(
     (state) => state.robotControlScreen_multipleOrderSelect
-  );
-
-  const { mode: robotStateMode } = useSelector(
-    (state) => state.robotControlScreen_robotState
-  );
-
-  const { mode: informationAreaMode } = useSelector(
-    (state) => state.robotControlScreen_informationArea
-  );
-
-  const { mode: realtimeRobotMode } = useSelector(
-    (state) => state.robotControlScreen_realtimeRobot
   );
 
   const changeModeHandler = (mode) => {
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_informationArea.mode,
-      payload: mode,
+      type: ROBOT_CONTROL_SCREEN.informationArea,
+      payload: { mode },
     });
   };
   return (
@@ -52,12 +42,12 @@ function InformationAreaTitle() {
             </OrderListTitleButton>
           )}
 
-          <Title>{orderList.name}</Title>
+          <Title>{orderSelectData.name}</Title>
         </>
       )}
 
       {informationAreaMode === "multipleOrder" ? (
-        <Title>{multipleOrderList.name}</Title>
+        <Title>{multipleOrderSelectData.name}</Title>
       ) : null}
 
       {informationAreaMode === "picture" && robotStateMode !== "activate" && (

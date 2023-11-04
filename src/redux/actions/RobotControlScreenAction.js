@@ -1,172 +1,144 @@
-import Swal from "sweetalert2";
 import {
   ROBOT_CONTROL_SCREEN,
-  ROBOT_CONTROL_SCREEN_executeRobot,
-  ROBOT_CONTROL_SCREEN_informationArea,
-  ROBOT_CONTROL_SCREEN_multipleOrderList,
-  ROBOT_CONTROL_SCREEN_orderList,
-  ROBOT_CONTROL_SCREEN_realtimeRobot,
-  ROBOT_CONTROL_SCREEN_realtimeVisual,
+  ROBOT_CONTROL_SCREEN_API_executeRobot,
   ROBOT_CONTROL_SCREEN_robotSetting,
   ROBOT_CONTROL_SCREEN_robotState,
 } from "../constants";
+import {
+  basicSwal,
+  confirmSwal,
+  timerSwal,
+} from "./swal/RobotControlScreenActionSwal";
+import { Colors } from "../../styles/theme";
 import axios from "axios";
-import { brown } from "@mui/material/colors";
 import { domain } from "../../env";
 
 export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
   dispatch({
-    type: ROBOT_CONTROL_SCREEN_orderList.select,
-    payload: selectOrderObject,
+    type: ROBOT_CONTROL_SCREEN.robotState,
+    payload: { text: "已選擇工單" },
   });
 
   dispatch({
-    type: ROBOT_CONTROL_SCREEN_informationArea.mode,
-    payload: "order",
+    type: ROBOT_CONTROL_SCREEN.informationArea,
+    payload: { mode: "order" },
   });
 
   dispatch({
-    type: ROBOT_CONTROL_SCREEN_robotState.text,
-    payload: "已選擇工單",
+    type: ROBOT_CONTROL_SCREEN.orderSelect,
+    payload: { data: selectOrderObject },
   });
 
   dispatch({
-    type: ROBOT_CONTROL_SCREEN,
-    payload: [selectOrderObject.id],
+    type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+    payload: {
+      executeOrderId: [selectOrderObject.id],
+      name: [selectOrderObject.name],
+    },
   });
 };
 
 export const multipleOrderlistSelectAction =
   (multipleOrderSelectObject) => (dispatch) => {
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_multipleOrderList.select,
-      payload: multipleOrderSelectObject,
+      type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
+      payload: { data: multipleOrderSelectObject },
     });
 
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_orderList.select,
-      payload: multipleOrderSelectObject.multipleOrder[0].order,
+      type: ROBOT_CONTROL_SCREEN.robotState,
+      payload: { text: "已選擇工單" },
     });
 
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_informationArea.mode,
-      payload: "multipleOrder",
+      type: ROBOT_CONTROL_SCREEN.informationArea,
+      payload: { mode: "multipleOrder" },
+    });
+
+    const executeOrderId = multipleOrderSelectObject.orderSelectId_str
+      .split(",")
+      .map((order) => parseInt(order));
+
+    const name = multipleOrderSelectObject.multipleOrder.map((order) => {
+      return order.order.name;
     });
 
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_robotState.text,
-      payload: "已選擇工單",
+      type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+      payload: { executeOrderId, name },
     });
   };
 
 export const executeRobotAction =
-  (robotStateMode, orderSelectDetail) => (dispatch) => {
-    if (orderSelectDetail.length === 0) {
-      Swal.fire({
-        icon: "warning",
-        title: "請選擇工單",
-        background: "#a1887f",
-      });
+  (robotStateMode, robotExecutionData) => (dispatch) => {
+    const { executeOrderId, name, queue } = robotExecutionData;
+    if (executeOrderId.length === 0) {
+      basicSwal("warning", "請選擇工單", "#a1887f");
       return;
     } else if (robotStateMode !== "inactivate") {
-      Swal.fire({
-        icon: "warning",
-        title: "手臂執行中",
-        background: "#a1887f",
-      });
+      basicSwal("warning", "手臂執行中", "#a1887f");
       return;
     } else {
-      Swal.fire({
-        title: "確定執行?",
-        text: `${orderSelectDetail.name}`,
-        icon: "warning",
-        background: "#a1887f",
-        showCancelButton: true,
-        confirmButtonColor: "#7066e0",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "確定",
-        cancelButtonText: "返回",
-      }).then((result) => {
+      confirmSwal(
+        "確定執行?",
+        `${name.at(queue - 1)}`,
+        "warning",
+        "#a1887f"
+      ).then((result) => {
         if (result.isConfirmed) {
-          const orderId = orderSelectDetail.id;
+          const orderId = executeOrderId.at(queue - 1);
 
           try {
             dispatch({
-              type: ROBOT_CONTROL_SCREEN_robotState.mode,
-              payload: "activate",
+              type: ROBOT_CONTROL_SCREEN.robotState,
+              payload: { mode: "activate" },
             });
 
             dispatch({
-              type: ROBOT_CONTROL_SCREEN_informationArea.mode,
-              payload: "picture",
+              type: ROBOT_CONTROL_SCREEN.informationArea,
+              payload: { mode: "picture" },
             });
 
             dispatch({
-              type: ROBOT_CONTROL_SCREEN_executeRobot.request,
+              type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
             });
 
             axios
-              .post(`${domain}/api/executeRobot/`, {
-                orderId,
-              })
+              .post(`${domain}/api/executeRobot/`, { orderId })
               .then((res) => {
                 dispatch({
-                  type: ROBOT_CONTROL_SCREEN_executeRobot.success,
+                  type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
                   payload: res.data,
                 });
 
                 dispatch({
-                  type: ROBOT_CONTROL_SCREEN_robotState.mode,
-                  payload: "inactivate",
+                  type: ROBOT_CONTROL_SCREEN.robotState,
+                  payload: { mode: "inactivate", text: "已結束" },
                 });
 
                 dispatch({
-                  type: ROBOT_CONTROL_SCREEN_robotState.text,
-                  payload: "已結束",
+                  type: ROBOT_CONTROL_SCREEN.informationArea,
+                  payload: { mode: "order" },
                 });
 
                 dispatch({
-                  type: ROBOT_CONTROL_SCREEN_informationArea.mode,
-                  payload: "order",
+                  type: ROBOT_CONTROL_SCREEN.realtimeRobot,
+                  payload: { mode: null, count: null },
                 });
 
                 dispatch({
-                  type: ROBOT_CONTROL_SCREEN_realtimeRobot.mode,
-                  payload: null,
+                  type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+                  payload: { mode: null },
                 });
-
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN_realtimeRobot.count,
-                  payload: null,
-                });
-
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN_realtimeVisual.mode,
-                  payload: null,
-                });
-
-                // setTimeout(() => {
-                //   dispatch({
-                //     type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
-                //     payload: null,
-                //   });
-                // }, 1500);
               });
           } catch (error) {
+            const err_msg = error.response.data.error_msg;
             dispatch({
-              type: ROBOT_CONTROL_SCREEN_executeRobot.fail,
-              payload: error.response.data.error_msg,
+              type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
+              payload: err_msg,
             });
 
-            Swal.fire({
-              position: "center",
-              width: "16em",
-              icon: "warning",
-              title: error.response.data.error_msg,
-              background: brown[400],
-              showConfirmButton: false,
-              timer: 2000,
-            });
+            timerSwal("warning", err_msg, Colors.brownHover, 2000);
           }
         }
       });

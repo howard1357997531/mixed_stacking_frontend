@@ -19,29 +19,20 @@ import "./css/InformationAreaContent.css";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import MultipleOrderInfoDetailDialog from "./dialog/MultipleOrderInfoDetailDialog";
-import { ROBOT_CONTROL_SCREEN_informationArea } from "../../../redux/constants";
+import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
 import { blueGrey } from "@mui/material/colors";
 
-function InformationAreaContent() {
+function InformationAreaContent({
+  orderSelectData,
+  informationAreaMode,
+  robotStateMode,
+  realtimeRobotMode,
+  realtimeRobotCount,
+}) {
   const dispatch = useDispatch();
-  const { detail: orderList } = useSelector(
-    (state) => state.robotControlScreen_orderSelect
-  );
 
-  const { detail: multipleOrderList } = useSelector(
+  const { data: multipleOrderSelectData } = useSelector(
     (state) => state.robotControlScreen_multipleOrderSelect
-  );
-
-  const { mode: robotStateMode } = useSelector(
-    (state) => state.robotControlScreen_robotState
-  );
-
-  const { mode: informationAreaMode } = useSelector(
-    (state) => state.robotControlScreen_informationArea
-  );
-
-  const { mode: realtimeRobotMode, count } = useSelector(
-    (state) => state.robotControlScreen_realtimeRobot
   );
 
   const itemSize = {
@@ -67,15 +58,15 @@ function InformationAreaContent() {
     setMultipleOrderInfoDetailDialogOpen(state);
   };
 
-  const multipleOrderDetailHandler = (orderId) => {
+  const multipleOrderDetailHandler = (multipleOrderId) => {
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_informationArea.multipleOrderId,
-      payload: orderId,
+      type: ROBOT_CONTROL_SCREEN.informationArea,
+      payload: { multipleOrderId },
     });
     setMultipleOrderInfoDetailDialogOpen(true);
   };
   return (
-    <InformationAreaContentBox hasOrderList={orderList.length !== 0}>
+    <InformationAreaContentBox hasOrderList={orderSelectData.length !== 0}>
       {informationAreaMode === "initial" && (
         <NoSelectOrderText>尚未選擇工單</NoSelectOrderText>
       )}
@@ -115,20 +106,22 @@ function InformationAreaContent() {
           </OrderListTitle>
 
           <OrderListContent className="orderlist">
-            {orderList.aiTraining_order.split(",").map((order, index) => (
+            {orderSelectData.aiTraining_order.split(",").map((order, index) => (
               <OrderListContentBox
                 key={index}
                 sx={{
                   backgroundColor:
-                    count === index + 1 ? Colors.brown : "transparent",
+                    realtimeRobotCount === index + 1
+                      ? Colors.brown
+                      : "transparent",
                 }}
               >
                 <OrderListContentSmBox width="25%">
                   <Avatar
                     sx={{
                       backgroundColor:
-                        count === index + 1 && Colors.lightYellow,
-                      color: count === index + 1 && Colors.brown,
+                        realtimeRobotCount === index + 1 && Colors.lightYellow,
+                      color: realtimeRobotCount === index + 1 && Colors.brown,
                     }}
                   >
                     {index + 1}
@@ -155,7 +148,7 @@ function InformationAreaContent() {
 
       {informationAreaMode === "multipleOrder" ? (
         <MultipleOrderListBox>
-          {multipleOrderList.multipleOrder.map((order, index) => (
+          {multipleOrderSelectData.multipleOrder.map((order, index) => (
             <MultipleOrderListDetailBox key={order.order.id}>
               <MultipleOrderListDetailOrder>
                 <Avatar sx={{ backgroundColor: blueGrey[300] }}>
@@ -191,8 +184,8 @@ function InformationAreaContent() {
 
       {realtimeRobotMode && informationAreaMode === "picture" && (
         <img
-          src={`${domain}/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}
-          alt={`${domain}/static/media/Figures_step2_${orderList.id}/box_${count}_bin_1.png`}
+          src={`${domain}/static/media/Figures_step2_${orderSelectData.id}/box_${realtimeRobotCount}_bin_1.png`}
+          alt={`${domain}/static/media/Figures_step2_${orderSelectData.id}/box_${realtimeRobotCount}_bin_1.png`}
           className="item-realtime-photo"
         ></img>
       )}

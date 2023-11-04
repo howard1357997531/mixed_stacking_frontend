@@ -20,7 +20,7 @@ import {
 
 function App() {
   const dispatch = useDispatch();
-  const { detail: orderSelectDetail } = useSelector(
+  const { data: orderSelectData } = useSelector(
     (state) => state.robotControlScreen_orderSelect
   );
 
@@ -43,8 +43,8 @@ function App() {
   } = useSelector((state) => state.robotControlScreen_realtimeVisual);
 
   useEffect(() => {
-    if (orderSelectDetail.length !== 0) {
-      const orderList = orderSelectDetail.aiTraining_order.split(",");
+    if (orderSelectData.length !== 0) {
+      const orderList = orderSelectData.aiTraining_order.split(",");
       if (!realtimeRobotCount) {
         dispatch({
           type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
@@ -57,10 +57,10 @@ function App() {
         });
       }
     }
-  }, [dispatch, orderSelectDetail, realtimeRobotCount]);
+  }, [dispatch, orderSelectData, realtimeRobotCount]);
 
   const reduxData = {
-    orderSelectDetail,
+    orderSelectData,
     informationAreaMode,
     robotStateMode,
     realtimeRobotMode,

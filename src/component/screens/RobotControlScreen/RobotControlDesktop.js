@@ -20,14 +20,14 @@ function RobotControlDesktop(props) {
 
         <OperationInterfaceBox2 />
 
-        <OperationInterfaceBox3 />
+        <OperationInterfaceBox3 {...props} />
       </OperationInterface>
 
       <InformationArea>
         <InformationAreaBox>
-          <InformationAreaTitle />
+          <InformationAreaTitle {...props} />
 
-          <InformationAreaContent />
+          <InformationAreaContent {...props} />
         </InformationAreaBox>
       </InformationArea>
     </RobotControlContainer>

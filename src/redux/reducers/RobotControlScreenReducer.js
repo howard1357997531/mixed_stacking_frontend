@@ -1,6 +1,6 @@
 import {
   ROBOT_CONTROL_SCREEN,
-  ROBOT_CONTROL_SCREEN_executeRobot,
+  ROBOT_CONTROL_SCREEN_API_executeRobot,
   ROBOT_CONTROL_SCREEN_informationArea,
   ROBOT_CONTROL_SCREEN_multipleOrderList,
   ROBOT_CONTROL_SCREEN_orderList,
@@ -11,10 +11,12 @@ import {
 } from "../constants";
 
 export const robotControlScreen_orderSelectReducer = (
-  state = { detail: [] },
+  state = { data: [] },
   action
 ) => {
   switch (action.type) {
+    case ROBOT_CONTROL_SCREEN.orderSelect:
+      return { ...state, ...action.payload };
     case ROBOT_CONTROL_SCREEN_orderList.select:
       return {
         ...state,
@@ -27,15 +29,12 @@ export const robotControlScreen_orderSelectReducer = (
 };
 
 export const robotControlScreen_multipleOrderSelectReducer = (
-  state = { detail: [] },
+  state = { data: [] },
   action
 ) => {
   switch (action.type) {
-    case ROBOT_CONTROL_SCREEN_multipleOrderList.select:
-      return {
-        ...state,
-        detail: action.payload,
-      };
+    case ROBOT_CONTROL_SCREEN.multipleOrderSelect:
+      return { ...state, ...action.payload };
 
     default:
       return state;
@@ -47,6 +46,8 @@ export const robotControlScreen_informationAreaReducer = (
   action
 ) => {
   switch (action.type) {
+    case ROBOT_CONTROL_SCREEN.informationArea:
+      return { ...state, ...action.payload };
     case ROBOT_CONTROL_SCREEN_informationArea.mode:
       return {
         ...state,
@@ -64,25 +65,25 @@ export const robotControlScreen_informationAreaReducer = (
   }
 };
 
-export const robotControlScreen_executeRobotReducer = (
+export const robotControlScreen_API_executeRobotReducer = (
   state = { data: [] },
   action
 ) => {
   switch (action.type) {
-    case ROBOT_CONTROL_SCREEN_executeRobot.request:
+    case ROBOT_CONTROL_SCREEN_API_executeRobot.request:
       return {
         loading: true,
         data: [],
       };
 
-    case ROBOT_CONTROL_SCREEN_executeRobot.success:
+    case ROBOT_CONTROL_SCREEN_API_executeRobot.success:
       return {
         loading: false,
         success: true,
         data: action.patload,
       };
 
-    case ROBOT_CONTROL_SCREEN_executeRobot.fail:
+    case ROBOT_CONTROL_SCREEN_API_executeRobot.fail:
       return {
         loading: false,
         error: action.payload,
@@ -94,15 +95,12 @@ export const robotControlScreen_executeRobotReducer = (
 };
 
 export const robotControlScreen_robotExecutionListReducer = (
-  state = { executeOrderId: [], name: [] },
+  state = { executeOrderId: [], name: [], queue: 1 },
   action
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.robotExecutionList:
-      return {
-        ...state,
-        executeOrderId: action.payload,
-      };
+      return { ...state, ...action.payload };
 
     default:
       return state;
@@ -121,6 +119,8 @@ export const robotControlScreen_robotStateReducer = (
   action
 ) => {
   switch (action.type) {
+    case ROBOT_CONTROL_SCREEN.robotState:
+      return { ...state, ...action.payload };
     case ROBOT_CONTROL_SCREEN_robotState.mode:
       return {
         ...state,
@@ -180,6 +180,8 @@ export const robotControlScreen_realtimeRobotReducer = (
   action
 ) => {
   switch (action.type) {
+    case ROBOT_CONTROL_SCREEN.realtimeRobot:
+      return { ...state, ...action.payload };
     case ROBOT_CONTROL_SCREEN_realtimeRobot.mode:
       return { ...state, mode: action.payload };
 
@@ -196,6 +198,8 @@ export const robotControlScreen_realtimeVisualReducer = (
   action
 ) => {
   switch (action.type) {
+    case ROBOT_CONTROL_SCREEN.realtimeVisual:
+      return { ...state, ...action.payload };
     case ROBOT_CONTROL_SCREEN_realtimeVisual.mode:
       return { ...state, mode: action.payload };
 

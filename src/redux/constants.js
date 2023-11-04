@@ -42,6 +42,19 @@ export const ORDER_SCREEN_orderList = {
 };
 
 // RobotControlScreen
+export const ROBOT_CONTROL_SCREEN = {
+  orderSelect: "ROBOT_CONTROL_SCREEN_orderSelect",
+  multipleOrderSelect: "ROBOT_CONTROL_SCREEN_multipleOrderSelect",
+  informationArea: "ROBOT_CONTROL_SCREEN_informationArea",
+  robotExecutionList: "ROBOT_CONTROL_SCREEN_robotExecutionList",
+  robotState: "ROBOT_CONTROL_SCREEN_robotState",
+  robotSetting: "ROBOT_CONTROL_SCREEN_robotSetting",
+  realtimeRobot: "ROBOT_CONTROL_SCREEN_realtimeRobot",
+  realtimeVisual: "ROBOT_CONTROL_SCREEN_realtimeVisual",
+  // api
+  executeRobot: "ROBOT_CONTROL_SCREEN_executeRobot",
+};
+
 export const ROBOT_CONTROL_SCREEN_orderList = {
   select: "ROBOT_CONTROL_SCREEN_orderList_select",
 };
@@ -53,16 +66,6 @@ export const ROBOT_CONTROL_SCREEN_multipleOrderList = {
 export const ROBOT_CONTROL_SCREEN_informationArea = {
   mode: "ROBOT_CONTROL_SCREEN_informationArea_mode",
   multipleOrderId: "ROBOT_CONTROL_SCREEN_informationArea_multipleOrderId",
-};
-
-export const ROBOT_CONTROL_SCREEN_executeRobot = {
-  request: "ROBOT_CONTROL_SCREEN_executeRobot_request",
-  success: "ROBOT_CONTROL_SCREEN_executeRobot_success",
-  fail: "ROBOT_CONTROL_SCREEN_executeRobot_fail",
-};
-
-export const ROBOT_CONTROL_SCREEN = {
-  robotExecutionList: "ROBOT_CONTROL_SCREEN_robotExecutionList",
 };
 
 export const ROBOT_CONTROL_SCREEN_robotState = {
@@ -90,6 +93,12 @@ export const ROBOT_CONTROL_SCREEN_realtimeVisual = {
   mode: "ROBOT_CONTROL_SCREEN_realtimeVisual_mode",
   name: "ROBOT_CONTROL_SCREEN_realtimeVisual_name",
   nextName: "ROBOT_CONTROL_SCREEN_realtimeVisual_nextName",
+};
+
+export const ROBOT_CONTROL_SCREEN_API_executeRobot = {
+  request: "ROBOT_CONTROL_SCREEN_API_executeRobot_request",
+  success: "ROBOT_CONTROL_SCREEN_API_executeRobot_success",
+  fail: "ROBOT_CONTROL_SCREEN_API_executeRobot_fail",
 };
 
 // export const ORDER_SCREEN_orderList = {

@@ -22,7 +22,7 @@ import TextEffect2 from "../../../tool/TextEffect2";
 import { Box, Slide } from "@mui/material";
 
 function OperationInterfaceBox1({
-  orderSelectDetail,
+  orderSelectData,
   informationAreaMode,
   robotStateMode,
   realtimeRobotMode,
@@ -63,9 +63,9 @@ function OperationInterfaceBox1({
   var visualTitle = "";
   var objectNextTitle = "";
 
-  if (orderSelectDetail.length !== 0) {
+  if (orderSelectData.length !== 0) {
     if (["order", "picture"].includes(informationAreaMode)) {
-      const orderTotal = orderSelectDetail.aiTraining_order.split(",").length;
+      const orderTotal = orderSelectData.aiTraining_order.split(",").length;
 
       if (!realtimeRobotMode && robotStateMode === "activate") {
         visualTitle = "請放料";
