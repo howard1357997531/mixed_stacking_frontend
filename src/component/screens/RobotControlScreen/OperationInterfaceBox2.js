@@ -30,6 +30,7 @@ function OperationInterfaceBox2() {
     if (mode !== "inactivate") {
       setRobotSettingDialogOpen(true);
     }
+    // setRobotSettingDialogOpen(true);
   };
 
   useEffect(() => {

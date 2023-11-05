@@ -11,26 +11,31 @@ import Dot from "../../../tool/Dot";
 import { operateShowBoardTextAnimation } from "../../../animation";
 
 function OperationInterfaceBox3({
-  orderSelectData,
   robotStateMode,
-  realtimeRobotMode,
-  realtimeRobotCount,
+  realtimeItemMode,
+  realtimeItemCount,
 }) {
-  const { text: robotStateText } = useSelector(
+  const { text: robotStateText, pause: robotStatePause } = useSelector(
     (state) => state.robotControlScreen_robotState
   );
 
+  const { executeOrderId: executeOrderIdArray } = useSelector(
+    (state) => state.robotControlScreen_robotExecutionList
+  );
+
   const boxText = {
+    // realtimeVisual
     detect: { text: "物件偵測中", color: Colors.darkGreenHover },
     correct: { text: "偵測正確", color: Colors.darkGreen },
     error: { text: "偵測錯誤", color: Colors.red },
-    reset: { text: "重置", color: Colors.orange },
+    // robotState
+    reset: { text: "已重置", color: Colors.orange },
     prepare: {
-      text: `準備操作第${realtimeRobotCount}個物件`,
+      text: `準備操作第${realtimeItemCount}個物件`,
       color: Colors.purple,
     },
     operate: {
-      text: `正在操作第${realtimeRobotCount}個物件`,
+      text: `正在操作第${realtimeItemCount}個物件`,
       color: Colors.yellow,
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
@@ -40,43 +45,51 @@ function OperationInterfaceBox3({
     <TextShowBoard className="board">
       <img src="board.png" alt="board.png"></img>
       <TextShowBoardTextBox>
-        {orderSelectData.length === 0 && (
+        {executeOrderIdArray.length === 0 && (
           <TextShowBoardText sx={{ color: Colors.greyTextBlood }}>
             尚未選擇工單
           </TextShowBoardText>
         )}
 
-        {orderSelectData.length !== 0 && robotStateMode === "inactivate" && (
-          <>
-            <TextShowBoardText sx={{ color: Colors.greyTextBlood }}>
-              {robotStateText}
-            </TextShowBoardText>
-          </>
-        )}
+        {executeOrderIdArray.length !== 0 &&
+          robotStateMode === "inactivate" && (
+            <>
+              <TextShowBoardText sx={{ color: Colors.greyTextBlood }}>
+                {robotStateText}
+              </TextShowBoardText>
+            </>
+          )}
 
-        {!realtimeRobotMode && robotStateMode === "activate" && (
-          <>
-            <TextShowBoardText sx={{ color: Colors.blue }}>
-              啟動手臂中
-            </TextShowBoardText>
-            <Dot dotColor={Colors.blue} />
-          </>
-        )}
-
-        {realtimeRobotMode && (
+        {!realtimeItemMode && ["activate", "reset"].includes(robotStateMode) ? (
           <>
             <TextShowBoardText
               sx={{
-                color: boxText[realtimeRobotMode]["color"],
-                animation: boxText[realtimeRobotMode]["animation"]
-                  ? boxText[realtimeRobotMode]["animation"]
+                color:
+                  robotStateMode === "activate" ? Colors.blue : Colors.orange,
+              }}
+            >
+              {robotStateMode === "activate" ? "啟動手臂中" : "已重置"}
+            </TextShowBoardText>
+            {robotStateMode === "activate" ? (
+              <Dot dotColor={Colors.blue} />
+            ) : null}
+          </>
+        ) : null}
+
+        {realtimeItemMode && (
+          <>
+            <TextShowBoardText
+              sx={{
+                color: boxText[robotStateMode]["color"],
+                animation: boxText[robotStateMode]["animation"]
+                  ? boxText[robotStateMode]["animation"]
                   : "none",
               }}
             >
-              {boxText[realtimeRobotMode]["text"]}
+              {robotStatePause ? "暫停" : boxText[robotStateMode]["text"]}
             </TextShowBoardText>
-            {realtimeRobotMode === "prepare" && (
-              <Dot dotColor={boxText[realtimeRobotMode]["color"]} />
+            {robotStateMode === "prepare" && (
+              <Dot dotColor={boxText[robotStateMode]["color"]} />
             )}
           </>
         )}

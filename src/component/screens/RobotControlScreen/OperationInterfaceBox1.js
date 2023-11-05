@@ -25,8 +25,8 @@ function OperationInterfaceBox1({
   orderSelectData,
   informationAreaMode,
   robotStateMode,
-  realtimeRobotMode,
-  realtimeRobotCount,
+  realtimeItemMode,
+  realtimeItemCount,
   realtimeVisualMode,
   objectName,
   objectNextName,
@@ -42,11 +42,11 @@ function OperationInterfaceBox1({
     error: { text: "偵測錯誤", color: red[100] },
     reset: { text: "重置", color: Colors.orange },
     prepare: {
-      text: `準備操作第${realtimeRobotCount}個物件`,
+      text: `準備操作第${realtimeItemCount}個物件`,
       color: Colors.purple,
     },
     operate: {
-      text: `正在操作第${realtimeRobotCount}個物件`,
+      text: `正在操作第${realtimeItemCount}個物件`,
       color: Colors.yellow,
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
@@ -67,16 +67,16 @@ function OperationInterfaceBox1({
     if (["order", "picture"].includes(informationAreaMode)) {
       const orderTotal = orderSelectData.aiTraining_order.split(",").length;
 
-      if (!realtimeRobotMode && robotStateMode === "activate") {
+      if (!realtimeItemMode && robotStateMode === "activate") {
         visualTitle = "請放料";
         objectNextTitle = "下一個";
       } else {
-        visualTitle = realtimeRobotCount < orderTotal ? "請放料" : "最後料";
+        visualTitle = realtimeItemCount < orderTotal ? "請放料" : "最後料";
 
         objectNextTitle =
-          realtimeRobotCount + 1 < orderTotal
+          realtimeItemCount + 1 < orderTotal
             ? "下一個"
-            : realtimeRobotCount !== orderTotal
+            : realtimeItemCount !== orderTotal
             ? "最後一個"
             : "";
       }
@@ -88,14 +88,14 @@ function OperationInterfaceBox1({
   const [slideShow, setSlideShow] = useState(true);
 
   useEffect(() => {
-    if (realtimeRobotCount !== 1) {
+    if (realtimeItemCount !== 1) {
       setSlideShow(false);
     }
 
     setTimeout(() => {
       setSlideShow(true);
     }, 600);
-  }, [realtimeRobotCount]);
+  }, [realtimeItemCount]);
 
   return (
     <FortyRadioHeightBox>

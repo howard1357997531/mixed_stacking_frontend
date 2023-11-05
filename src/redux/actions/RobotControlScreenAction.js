@@ -1,8 +1,7 @@
 import {
   ROBOT_CONTROL_SCREEN,
   ROBOT_CONTROL_SCREEN_API_executeRobot,
-  ROBOT_CONTROL_SCREEN_robotSetting,
-  ROBOT_CONTROL_SCREEN_robotState,
+  ROBOT_CONTROL_SCREEN_API_robotSetting,
 } from "../constants";
 import {
   basicSwal,
@@ -113,7 +112,7 @@ export const executeRobotAction =
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.robotState,
-                  payload: { mode: "inactivate", text: "已結束" },
+                  payload: { mode: "inactivate", text: "已結束", speed: 50 },
                 });
 
                 dispatch({
@@ -122,7 +121,7 @@ export const executeRobotAction =
                 });
 
                 dispatch({
-                  type: ROBOT_CONTROL_SCREEN.realtimeRobot,
+                  type: ROBOT_CONTROL_SCREEN.realtimeItem,
                   payload: { mode: null, count: null },
                 });
 
@@ -146,18 +145,28 @@ export const executeRobotAction =
   };
 
 export const robotSettingAction = (mode, speed) => async (dispatch) => {
-  dispatch({
-    type: ROBOT_CONTROL_SCREEN_robotState.mode,
-    payload: mode,
-  });
+  if (["reset"].includes(mode)) {
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.robotState,
+      payload: { mode, text: "已重置" },
+    });
+  }
+  const robotSettingData = {
+    pause: { pause: true },
+    unPause: { pause: false },
+    reset: { reset: true },
+    speedUp: { speed: speed + 10 },
+    speedDown: { speed: speed - 10 },
+  };
 
   dispatch({
-    type: ROBOT_CONTROL_SCREEN_robotSetting[mode],
+    type: ROBOT_CONTROL_SCREEN.robotState,
+    payload: robotSettingData[mode],
   });
 
   try {
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_robotSetting.request,
+      type: ROBOT_CONTROL_SCREEN_API_robotSetting.request,
     });
 
     const { data } = await axios.post(`${domain}/api/robotSetting/`, {
@@ -166,12 +175,12 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
     });
 
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_robotSetting.success,
+      type: ROBOT_CONTROL_SCREEN_API_robotSetting.success,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: ROBOT_CONTROL_SCREEN_robotSetting.fail,
+      type: ROBOT_CONTROL_SCREEN_API_robotSetting.fail,
       payload: error.message.data.error_msg,
     });
   }

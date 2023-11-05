@@ -7,13 +7,14 @@ import { HomeButtonHoverReducer } from "./reducers/homeScreenReducer";
 import { orderScreen_orderSelectReducer } from "./reducers/OrderScreenReducer";
 import {
   robotControlScreen_robotStateReducer,
-  robotControlScreen_API_executeRobotReducer,
   robotControlScreen_orderSelectReducer,
   robotControlScreen_informationAreaReducer,
-  robotControlScreen_realtimeRobotReducer,
   robotControlScreen_realtimeVisualReducer,
   robotControlScreen_multipleOrderSelectReducer,
   robotControlScreen_robotExecutionListReducer,
+  robotControlScreen_realtimeItemReducer,
+  robotControlScreen_API_robotSettingReducer,
+  robotControlScreen_API_executeRobotReducer,
 } from "./reducers/RobotControlScreenReducer";
 
 const reducer = {
@@ -28,10 +29,12 @@ const reducer = {
   robotControlScreen_robotExecutionList:
     robotControlScreen_robotExecutionListReducer,
   robotControlScreen_robotState: robotControlScreen_robotStateReducer,
-  robotControlScreen_realtimeRobot: robotControlScreen_realtimeRobotReducer,
+  robotControlScreen_realtimeItem: robotControlScreen_realtimeItemReducer,
   robotControlScreen_realtimeVisual: robotControlScreen_realtimeVisualReducer,
   robotControlScreen_API_executeRobot:
     robotControlScreen_API_executeRobotReducer,
+  robotControlScreen_API_robotSetting:
+    robotControlScreen_API_robotSettingReducer,
 };
 
 const preloadedState = {};

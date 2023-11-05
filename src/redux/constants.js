@@ -49,10 +49,11 @@ export const ROBOT_CONTROL_SCREEN = {
   robotExecutionList: "ROBOT_CONTROL_SCREEN_robotExecutionList",
   robotState: "ROBOT_CONTROL_SCREEN_robotState",
   robotSetting: "ROBOT_CONTROL_SCREEN_robotSetting",
-  realtimeRobot: "ROBOT_CONTROL_SCREEN_realtimeRobot",
+  realtimeItem: "ROBOT_CONTROL_SCREEN_realtimeItem",
   realtimeVisual: "ROBOT_CONTROL_SCREEN_realtimeVisual",
   // api
   executeRobot: "ROBOT_CONTROL_SCREEN_executeRobot",
+  robotSetting: "ROBOT_CONTROL_SCREEN_robotSetting",
 };
 
 export const ROBOT_CONTROL_SCREEN_orderList = {
@@ -99,6 +100,12 @@ export const ROBOT_CONTROL_SCREEN_API_executeRobot = {
   request: "ROBOT_CONTROL_SCREEN_API_executeRobot_request",
   success: "ROBOT_CONTROL_SCREEN_API_executeRobot_success",
   fail: "ROBOT_CONTROL_SCREEN_API_executeRobot_fail",
+};
+
+export const ROBOT_CONTROL_SCREEN_API_robotSetting = {
+  request: "ROBOT_CONTROL_SCREEN_API_robotSetting_request",
+  success: "ROBOT_CONTROL_SCREEN_API_robotSetting_success",
+  fail: "ROBOT_CONTROL_SCREEN_API_robotSetting_fail",
 };
 
 // export const ORDER_SCREEN_orderList = {

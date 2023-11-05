@@ -26,8 +26,8 @@ function InformationAreaContent({
   orderSelectData,
   informationAreaMode,
   robotStateMode,
-  realtimeRobotMode,
-  realtimeRobotCount,
+  realtimeItemMode,
+  realtimeItemCount,
 }) {
   const dispatch = useDispatch();
 
@@ -111,7 +111,7 @@ function InformationAreaContent({
                 key={index}
                 sx={{
                   backgroundColor:
-                    realtimeRobotCount === index + 1
+                    realtimeItemCount === index + 1
                       ? Colors.brown
                       : "transparent",
                 }}
@@ -120,8 +120,8 @@ function InformationAreaContent({
                   <Avatar
                     sx={{
                       backgroundColor:
-                        realtimeRobotCount === index + 1 && Colors.lightYellow,
-                      color: realtimeRobotCount === index + 1 && Colors.brown,
+                        realtimeItemCount === index + 1 && Colors.lightYellow,
+                      color: realtimeItemCount === index + 1 && Colors.brown,
                     }}
                   >
                     {index + 1}
@@ -178,14 +178,14 @@ function InformationAreaContent({
         }
       />
 
-      {!realtimeRobotMode && robotStateMode === "activate" && (
+      {!realtimeItemMode && robotStateMode === "activate" && (
         <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
       )}
 
-      {realtimeRobotMode && informationAreaMode === "picture" && (
+      {realtimeItemMode && informationAreaMode === "picture" && (
         <img
-          src={`${domain}/static/media/Figures_step2_${orderSelectData.id}/box_${realtimeRobotCount}_bin_1.png`}
-          alt={`${domain}/static/media/Figures_step2_${orderSelectData.id}/box_${realtimeRobotCount}_bin_1.png`}
+          src={`${domain}/static/media/Figures_step2_${orderSelectData.id}/box_${realtimeItemCount}_bin_1.png`}
+          alt={`${domain}/static/media/Figures_step2_${orderSelectData.id}/box_${realtimeItemCount}_bin_1.png`}
           className="item-realtime-photo"
         ></img>
       )}

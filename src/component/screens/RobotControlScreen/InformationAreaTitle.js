@@ -12,7 +12,7 @@ function InformationAreaTitle({
   orderSelectData,
   informationAreaMode,
   robotStateMode,
-  realtimeRobotMode,
+  realtimeItemMode,
 }) {
   const Title = styled(Box)(({ theme }) => ({
     fontWeight: 600,
@@ -36,7 +36,7 @@ function InformationAreaTitle({
     <InformationAreaTitleBox>
       {informationAreaMode === "order" && (
         <>
-          {realtimeRobotMode && (
+          {realtimeItemMode && (
             <OrderListTitleButton onClick={() => changeModeHandler("picture")}>
               圖片
             </OrderListTitleButton>

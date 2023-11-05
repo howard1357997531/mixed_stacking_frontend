@@ -7,11 +7,7 @@ import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 import ControlRobotScreen_socket from "./component/screen/ControlRobotScreen_socket";
 import RobotControlScreen from "./screen/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ROBOT_CONTROL_SCREEN_realtimeRobot,
-  ROBOT_CONTROL_SCREEN_realtimeVisual,
-  ROBOT_CONTROL_SCREEN_robotState,
-} from "./redux/constants";
+import { ROBOT_CONTROL_SCREEN } from "./redux/constants";
 import { webSocketDomain } from "./env";
 import {
   multipleOrderListAction,
@@ -32,8 +28,8 @@ function App() {
     (state) => state.robotControlScreen_robotState
   );
 
-  const { mode: realtimeRobotMode, count: realtimeRobotCount } = useSelector(
-    (state) => state.robotControlScreen_realtimeRobot
+  const { mode: realtimeItemMode, count: realtimeItemCount } = useSelector(
+    (state) => state.robotControlScreen_realtimeItem
   );
 
   const {
@@ -45,30 +41,14 @@ function App() {
   useEffect(() => {
     if (orderSelectData.length !== 0) {
       const orderList = orderSelectData.aiTraining_order.split(",");
-      if (!realtimeRobotCount) {
+      if (!realtimeItemCount) {
         dispatch({
-          type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
-          payload: orderList[0],
-        });
-
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN_realtimeVisual.nextName,
-          payload: orderList[1],
+          type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+          payload: { name: orderList[0], nextName: orderList[1] },
         });
       }
     }
-  }, [dispatch, orderSelectData, realtimeRobotCount]);
-
-  const reduxData = {
-    orderSelectData,
-    informationAreaMode,
-    robotStateMode,
-    realtimeRobotMode,
-    realtimeRobotCount,
-    realtimeVisualMode,
-    objectName,
-    objectNextName,
-  };
+  }, [dispatch, orderSelectData, realtimeItemCount]);
 
   // webSocket
   useEffect(() => {
@@ -86,51 +66,38 @@ function App() {
       console.log(event);
       if (realtimeData.count) {
         dispatch({
-          type: ROBOT_CONTROL_SCREEN_realtimeRobot.count,
-          payload: realtimeData.count,
+          type: ROBOT_CONTROL_SCREEN.realtimeItem,
+          payload: { count: realtimeData.count },
         });
       }
 
       if (realtimeData.name) {
         setTimeout(() => {
           dispatch({
-            type: ROBOT_CONTROL_SCREEN_realtimeVisual.name,
-            payload: realtimeData.name,
-          });
-
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN_realtimeVisual.nextName,
-            payload: realtimeData.nextName,
+            type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+            payload: {
+              name: realtimeData.name,
+              nextName: realtimeData.nextName,
+            },
           });
         }, 600);
       }
 
-      // if (realtimeData.nextName) {
-      //   setTimeout(() => {
-      //     dispatch({
-      //       type: ROBOT_CONTROL_SCREEN_realtimeVisual.nextName,
-      //       payload: realtimeData.nextName,
-      //     });
-      //   }, 600);
-      // }
-
       if (realtimeData.mode) {
-        if (
-          realtimeData.mode === "prepare" ||
-          realtimeData.mode === "operate"
-        ) {
+        if (["prepare", "operate"].includes(realtimeData.mode)) {
           dispatch({
-            type: ROBOT_CONTROL_SCREEN_robotState.mode,
-            payload: realtimeData.mode,
+            type: ROBOT_CONTROL_SCREEN.robotState,
+            payload: { mode: realtimeData.mode },
           });
+
           dispatch({
-            type: ROBOT_CONTROL_SCREEN_realtimeRobot.mode,
-            payload: realtimeData.mode,
+            type: ROBOT_CONTROL_SCREEN.realtimeItem,
+            payload: { mode: realtimeData.mode },
           });
         } else {
           dispatch({
-            type: ROBOT_CONTROL_SCREEN_realtimeVisual.mode,
-            payload: realtimeData.mode,
+            type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+            payload: { mode: realtimeData.mode },
           });
         }
       }
@@ -149,6 +116,17 @@ function App() {
     dispatch(orderListAction());
     dispatch(multipleOrderListAction());
   }, [dispatch]);
+
+  const reduxData = {
+    orderSelectData,
+    informationAreaMode,
+    robotStateMode,
+    realtimeItemMode,
+    realtimeItemCount,
+    realtimeVisualMode,
+    objectName,
+    objectNextName,
+  };
 
   return (
     <Router>
