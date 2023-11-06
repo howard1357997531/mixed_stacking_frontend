@@ -15,7 +15,7 @@ import { domain } from "../../env";
 export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
   dispatch({
     type: ROBOT_CONTROL_SCREEN.robotState,
-    payload: { text: "已選擇工單" },
+    payload: { mode: "inactivate", text: "已選擇工單" },
   });
 
   dispatch({
@@ -39,6 +39,12 @@ export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
 
 export const multipleOrderlistSelectAction =
   (multipleOrderSelectObject) => (dispatch) => {
+    const orderSelectData = multipleOrderSelectObject.multipleOrder.at(0).order;
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.orderSelect,
+      payload: { data: orderSelectData },
+    });
+
     dispatch({
       type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
       payload: { data: multipleOrderSelectObject },
@@ -46,7 +52,7 @@ export const multipleOrderlistSelectAction =
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.robotState,
-      payload: { text: "已選擇工單" },
+      payload: { mode: "inactivate", text: "已選擇工單" },
     });
 
     dispatch({
@@ -69,7 +75,8 @@ export const multipleOrderlistSelectAction =
   };
 
 export const executeRobotAction =
-  (robotStateMode, robotExecutionData) => (dispatch) => {
+  (robotStateMode, multipleOrderSelectData, robotExecutionData) =>
+  (dispatch) => {
     const { executeOrderId, name, queue } = robotExecutionData;
     if (executeOrderId.length === 0) {
       basicSwal("warning", "請選擇工單", "#a1887f");
@@ -78,15 +85,9 @@ export const executeRobotAction =
       basicSwal("warning", "手臂執行中", "#a1887f");
       return;
     } else {
-      confirmSwal(
-        "確定執行?",
-        `${name.at(queue - 1)}`,
-        "warning",
-        "#a1887f"
-      ).then((result) => {
+      confirmSwal("確定執行?", `${name.at(queue - 1)}`).then((result) => {
         if (result.isConfirmed) {
           const orderId = executeOrderId.at(queue - 1);
-
           try {
             dispatch({
               type: ROBOT_CONTROL_SCREEN.robotState,
@@ -105,19 +106,34 @@ export const executeRobotAction =
             axios
               .post(`${domain}/api/executeRobot/`, { orderId })
               .then((res) => {
+                const state = res.data.robot_state;
+                const mode = state === "finish" ? "inactivate" : "reset";
+                const text = state === "finish" ? "已結束" : "已重置";
+
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
                   payload: res.data,
                 });
 
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN.robotState,
-                  payload: { mode: "inactivate", text: "已結束", speed: 50 },
-                });
+                if (multipleOrderSelectData.length !== 0) {
+                  const orderSelectData =
+                    multipleOrderSelectData.multipleOrder.filter(
+                      (order) => order.order.id === executeOrderId.at(queue)
+                    );
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.orderSelect,
+                    payload: orderSelectData,
+                  });
+                }
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.informationArea,
-                  payload: { mode: "order" },
+                  payload: { mode: "success" },
+                });
+
+                dispatch({
+                  type: ROBOT_CONTROL_SCREEN.robotState,
+                  payload: { mode, text, speed: 50 },
                 });
 
                 dispatch({
@@ -128,6 +144,16 @@ export const executeRobotAction =
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.realtimeVisual,
                   payload: { mode: null },
+                });
+
+                const robotExecutionCheck =
+                  executeOrderId.length > queue
+                    ? { queue: queue + 1 }
+                    : { executeOrderId: [], name: [], queue: 1 };
+
+                dispatch({
+                  type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+                  payload: robotExecutionCheck,
                 });
               });
           } catch (error) {
@@ -185,3 +211,22 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
     });
   }
 };
+
+export const robotExecutionAlertAction =
+  (multipleOrderSelectData, robotExecutionData) => (dispatch) => {
+    const { name, queue } = robotExecutionData;
+    confirmSwal(
+      `確定執行? (${queue} / ${name.length})`,
+      `${name.at(queue - 1)}`
+    ).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(
+          executeRobotAction(
+            "inactivate",
+            multipleOrderSelectData,
+            robotExecutionData
+          )
+        );
+      }
+    });
+  };

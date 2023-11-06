@@ -13,8 +13,8 @@ import RobotSettingDialog from "./RobotSettingDialog";
 
 function OperationInterfaceBox2() {
   const dispatch = useDispatch();
-  const { detail } = useSelector(
-    (state) => state.robotControlScreen_orderSelect
+  const { data: multipleOrderSelectData } = useSelector(
+    (state) => state.robotControlScreen_multipleOrderSelect
   );
   const { mode } = useSelector((state) => state.robotControlScreen_robotState);
 
@@ -23,14 +23,15 @@ function OperationInterfaceBox2() {
   );
 
   const executeRobotHandler = () => {
-    dispatch(executeRobotAction(mode, robotExecutionData));
+    dispatch(
+      executeRobotAction(mode, multipleOrderSelectData, robotExecutionData)
+    );
   };
 
   const robotSettingHandler = () => {
-    if (mode !== "inactivate") {
+    if (!["inactivate", "reset"].includes(mode)) {
       setRobotSettingDialogOpen(true);
     }
-    // setRobotSettingDialogOpen(true);
   };
 
   useEffect(() => {

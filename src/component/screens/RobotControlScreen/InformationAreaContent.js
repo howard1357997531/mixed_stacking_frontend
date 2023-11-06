@@ -12,6 +12,9 @@ import {
   OrderListContentBox,
   OrderListContentSmBox,
   OrderListTitle,
+  RobotSuccessBox,
+  RobotSuccessSubTitle,
+  RobotSuccessTitle,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Button, Typography } from "@mui/material";
@@ -33,6 +36,10 @@ function InformationAreaContent({
 
   const { data: multipleOrderSelectData } = useSelector(
     (state) => state.robotControlScreen_multipleOrderSelect
+  );
+
+  const { executeOrderId: executeOrderIdArray, queue } = useSelector(
+    (state) => state.robotControlScreen_robotExecutionList
   );
 
   const itemSize = {
@@ -66,12 +73,19 @@ function InformationAreaContent({
     setMultipleOrderInfoDetailDialogOpen(true);
   };
   return (
-    <InformationAreaContentBox hasOrderList={orderSelectData.length !== 0}>
-      {informationAreaMode === "initial" && (
+    <InformationAreaContentBox hasOrderList={executeOrderIdArray.length !== 0}>
+      {informationAreaMode === "initial" ? (
         <NoSelectOrderText>尚未選擇工單</NoSelectOrderText>
-      )}
+      ) : null}
 
-      {informationAreaMode === "order" && (
+      {informationAreaMode === "success" ? (
+        <RobotSuccessBox>
+          <RobotSuccessTitle>執行成功</RobotSuccessTitle>
+          <RobotSuccessSubTitle>請選下張工單</RobotSuccessSubTitle>
+        </RobotSuccessBox>
+      ) : null}
+
+      {informationAreaMode === "order" ? (
         <OrderListBox>
           <OrderListTitle>
             <Typography
@@ -144,7 +158,7 @@ function InformationAreaContent({
             ))}
           </OrderListContent>
         </OrderListBox>
-      )}
+      ) : null}
 
       {informationAreaMode === "multipleOrder" ? (
         <MultipleOrderListBox>
@@ -184,8 +198,12 @@ function InformationAreaContent({
 
       {realtimeItemMode && informationAreaMode === "picture" && (
         <img
-          src={`${domain}/static/media/Figures_step2_${orderSelectData.id}/box_${realtimeItemCount}_bin_1.png`}
-          alt={`${domain}/static/media/Figures_step2_${orderSelectData.id}/box_${realtimeItemCount}_bin_1.png`}
+          src={`${domain}/static/media/Figures_step2_${
+            executeOrderIdArray[queue - 1]
+          }/box_${realtimeItemCount}_bin_1.png`}
+          alt={`${domain}/static/media/Figures_step2_${
+            executeOrderIdArray[queue - 1]
+          }/box_${realtimeItemCount}_bin_1.png`}
           className="item-realtime-photo"
         ></img>
       )}

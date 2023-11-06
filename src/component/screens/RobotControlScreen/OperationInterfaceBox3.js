@@ -24,11 +24,7 @@ function OperationInterfaceBox3({
   );
 
   const boxText = {
-    // realtimeVisual
-    detect: { text: "物件偵測中", color: Colors.darkGreenHover },
-    correct: { text: "偵測正確", color: Colors.darkGreen },
-    error: { text: "偵測錯誤", color: Colors.red },
-    // robotState
+    inactivate: { text: "已選擇工單", color: Colors.greyTextBlood },
     reset: { text: "已重置", color: Colors.orange },
     prepare: {
       text: `準備操作第${realtimeItemCount}個物件`,
@@ -39,6 +35,7 @@ function OperationInterfaceBox3({
       color: Colors.yellow,
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
+    finish: { text: "已結束", color: Colors.greyTextBlood },
   };
 
   return (
@@ -52,23 +49,24 @@ function OperationInterfaceBox3({
         )}
 
         {executeOrderIdArray.length !== 0 &&
-          robotStateMode === "inactivate" && (
+          ["inactivate", "reset"].includes(robotStateMode) && (
             <>
-              <TextShowBoardText sx={{ color: Colors.greyTextBlood }}>
+              <TextShowBoardText
+                sx={{ color: boxText[robotStateMode]["color"] }}
+              >
                 {robotStateText}
               </TextShowBoardText>
             </>
           )}
 
-        {!realtimeItemMode && ["activate", "reset"].includes(robotStateMode) ? (
+        {!realtimeItemMode && ["activate"].includes(robotStateMode) ? (
           <>
             <TextShowBoardText
               sx={{
-                color:
-                  robotStateMode === "activate" ? Colors.blue : Colors.orange,
+                color: Colors.blue,
               }}
             >
-              {robotStateMode === "activate" ? "啟動手臂中" : "已重置"}
+              {"啟動手臂中"}
             </TextShowBoardText>
             {robotStateMode === "activate" ? (
               <Dot dotColor={Colors.blue} />

@@ -13,6 +13,8 @@ import {
   multipleOrderListAction,
   orderListAction,
 } from "./redux/actions/OrderActions";
+import { confirmSwal } from "./redux/actions/swal/RobotControlScreenActionSwal";
+import { robotExecutionAlertAction } from "./redux/actions/RobotControlScreenAction";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,8 +22,16 @@ function App() {
     (state) => state.robotControlScreen_orderSelect
   );
 
+  const { data: multipleOrderSelectData } = useSelector(
+    (state) => state.robotControlScreen_multipleOrderSelect
+  );
+
   const { mode: informationAreaMode } = useSelector(
     (state) => state.robotControlScreen_informationArea
+  );
+
+  const robotExecutionData = useSelector(
+    (state) => state.robotControlScreen_robotExecutionList
   );
 
   const { mode: robotStateMode } = useSelector(
@@ -84,7 +94,9 @@ function App() {
       }
 
       if (realtimeData.mode) {
-        if (["prepare", "operate"].includes(realtimeData.mode)) {
+        if (
+          ["prepare", "operate", "reset", "finish"].includes(realtimeData.mode)
+        ) {
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotState,
             payload: { mode: realtimeData.mode },
@@ -116,6 +128,17 @@ function App() {
     dispatch(orderListAction());
     dispatch(multipleOrderListAction());
   }, [dispatch]);
+
+  // robotExecutionAlert
+  useEffect(() => {
+    if (robotExecutionData.name.length !== 0) {
+      setTimeout(() => {
+        dispatch(
+          robotExecutionAlertAction(multipleOrderSelectData, robotExecutionData)
+        );
+      }, 1000);
+    }
+  }, [robotExecutionData.queue]);
 
   const reduxData = {
     orderSelectData,

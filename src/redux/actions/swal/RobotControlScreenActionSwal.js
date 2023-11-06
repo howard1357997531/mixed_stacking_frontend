@@ -8,12 +8,12 @@ export const basicSwal = (icon, title, background) => {
   });
 };
 
-export const confirmSwal = (title, text, icon, background) => {
+export const confirmSwal = (title, text) => {
   return Swal.fire({
     title: title,
     text: text,
-    icon: icon,
-    background: background,
+    icon: "warning",
+    background: "#a1887f",
     showCancelButton: true,
     confirmButtonColor: "#7066e0",
     cancelButtonColor: "#d33",

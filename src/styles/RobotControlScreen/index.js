@@ -260,6 +260,40 @@ export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
   fontSize: "26px",
 }));
 
+export const RobotSuccessBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "100%",
+  height: "100px",
+}));
+
+export const RobotSuccessTitle = styled(Typography)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "50%",
+  color: Colors.darkGreenHover,
+  fontWeight: 600,
+  fontSize: "36px",
+}));
+
+export const RobotSuccessSubTitle = styled(Typography)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  height: "50%",
+  color: Colors.greyText,
+  fontWeight: 600,
+  fontSize: "14px",
+  marginTop: 2,
+}));
+
 export const OrderListTitleButton = styled(Button)(({ theme }) => ({
   position: "absolute",
   top: "60%",

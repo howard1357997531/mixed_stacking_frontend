@@ -17,7 +17,6 @@ import {
 import { orange, red } from "@mui/material/colors";
 import { Colors } from "../../../styles/theme";
 import OrderListDialog from "./dialog/OrderListDialog";
-import { operateShowBoardTextAnimation } from "../../../animation";
 import TextEffect2 from "../../../tool/TextEffect2";
 import { Box, Slide } from "@mui/material";
 
@@ -41,15 +40,6 @@ function OperationInterfaceBox1({
     correct: { text: "偵測正確", color: Colors.darkGreenHover },
     error: { text: "偵測錯誤", color: red[100] },
     reset: { text: "重置", color: Colors.orange },
-    prepare: {
-      text: `準備操作第${realtimeItemCount}個物件`,
-      color: Colors.purple,
-    },
-    operate: {
-      text: `正在操作第${realtimeItemCount}個物件`,
-      color: Colors.yellow,
-      animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
-    },
   };
 
   if (realtimeVisualMode === "error") {
@@ -60,20 +50,16 @@ function OperationInterfaceBox1({
     var VisualIdentityBoxHoverColor = Colors.darkPinkHover;
   }
 
-  var visualTitle = "";
-  var objectNextTitle = "";
-
   if (orderSelectData.length !== 0) {
     if (["order", "picture"].includes(informationAreaMode)) {
       const orderTotal = orderSelectData.aiTraining_order.split(",").length;
 
       if (!realtimeItemMode && robotStateMode === "activate") {
-        visualTitle = "請放料";
-        objectNextTitle = "下一個";
+        var visualTitle = "請放料";
+        var objectNextTitle = "下一個";
       } else {
-        visualTitle = realtimeItemCount < orderTotal ? "請放料" : "最後料";
-
-        objectNextTitle =
+        var visualTitle = realtimeItemCount < orderTotal ? "請放料" : "最後料";
+        var objectNextTitle =
           realtimeItemCount + 1 < orderTotal
             ? "下一個"
             : realtimeItemCount !== orderTotal
@@ -113,7 +99,7 @@ function OperationInterfaceBox1({
       <SixtyRadioWidthButton
         customColor={[VisualIdentityBoxColor, VisualIdentityBoxHoverColor]}
       >
-        {robotStateMode === "inactivate" && (
+        {["inactivate", "reset"].includes(robotStateMode) ? (
           <>
             <OperationInterfaceButtonLogo>
               <img src="visual.png" alt="visual.png"></img>
@@ -123,10 +109,10 @@ function OperationInterfaceBox1({
               視覺辨識
             </OperationInterfaceButtonText>
           </>
-        )}
+        ) : null}
 
         <VisualIdentityBox>
-          {robotStateMode !== "inactivate" ? (
+          {!["inactivate", "reset"].includes(robotStateMode) ? (
             <>
               <VisualIdentityTitle>{visualTitle}</VisualIdentityTitle>
               <VisualIdentityObject ref={objectNameRef}>
