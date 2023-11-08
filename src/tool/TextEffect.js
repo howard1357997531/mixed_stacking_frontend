@@ -1,10 +1,15 @@
 import React from "react";
 import "./css/TextEffect.css";
+import { Colors } from "../styles/theme";
 
 function TextEffect({ text, textColor, textCoverColor }) {
-  console.log(textCoverColor);
+  if (textCoverColor === Colors.darkGreenHover) {
+    var className = `text-effect text-effect2`;
+  } else {
+    var className = "text-effect text-effect1";
+  }
   return (
-    <p className="text-effect" data-text={text} style={{ color: textColor }}>
+    <p className={className} data-text={text} style={{ color: textColor }}>
       {text}
     </p>
   );

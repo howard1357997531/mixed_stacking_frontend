@@ -2,8 +2,10 @@ import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
-import { brown } from "@mui/material/colors";
 import OrderListDialogTabs from "./OrderListDialogTabs";
+import OrderListDialogExecutionList from "./OrderListDialogExecutionList";
+import { useSelector } from "react-redux";
+import { brown } from "@mui/material/colors";
 import "./css/OrderListDialog.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -11,9 +13,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function OrderListDialog(props) {
+  const { executeOrderId, queue } = props.robotExecutionData;
+
   const handleClose = () => {
     props.onOrderListDialoggOpen(false);
   };
+
+  React.useEffect(() => {
+    if (props.orderListDialogOpen) {
+      if (executeOrderId.length == 0 && queue == 1) {
+        props.onOrderListDialoggOpen(false);
+      }
+    }
+  }, [executeOrderId, queue]);
 
   return (
     <div>
@@ -28,7 +40,12 @@ function OrderListDialog(props) {
         <DialogContent
           sx={{ backgroundColor: brown[300], padding: 0, width: "400px" }}
         >
-          <OrderListDialogTabs {...props} />
+          {["inactivate", "reset"].includes(props.robotStateMode) &&
+          queue === 1 ? (
+            <OrderListDialogTabs {...props} />
+          ) : (
+            <OrderListDialogExecutionList {...props} />
+          )}
         </DialogContent>
       </Dialog>
     </div>

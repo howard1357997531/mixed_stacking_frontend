@@ -29,6 +29,7 @@ function OperationInterfaceBox1({
   realtimeVisualMode,
   objectName,
   objectNextName,
+  robotExecutionData,
 }) {
   const [orderListDialogOpen, setOrderListDialogOpen] = useState(false);
   const onOrderListDialoggOpen = (state) => {
@@ -187,6 +188,8 @@ function OperationInterfaceBox1({
       <OrderListDialog
         orderListDialogOpen={orderListDialogOpen}
         onOrderListDialoggOpen={onOrderListDialoggOpen}
+        robotStateMode={robotStateMode}
+        robotExecutionData={robotExecutionData}
       />
     </FortyRadioHeightBox>
   );

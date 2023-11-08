@@ -1,13 +1,15 @@
 :root {
-    --purple: #9575cd
+    --purple: #9575cd;
+    --darkGreenHover: #009688
 }
 
 .text-effect {
     position: relative;
     font-size: 16px;
+    font-weight: 600;
 }
 
-.text-effect::after {
+.text-effect1::after {
     content: attr(data-text);
     color: var(--purple);
     border-right: 2px solid var(--purple);
@@ -17,6 +19,19 @@
     position: absolute;
     left: 0;
     text-shadow: 0 0 1.5px var(--purple);
+    animation: text-effect 1.5s linear infinite alternate;
+}
+
+.text-effect2::after {
+    content: attr(data-text);
+    color: var(--darkGreenHover);
+    border-right: 2px solid var(--darkGreenHover);
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    left: 0;
+    text-shadow: 0 0 1.5px var(--darkGreenHover);
     animation: text-effect 1.5s linear infinite alternate;
 }
 

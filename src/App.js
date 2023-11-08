@@ -107,6 +107,8 @@ function App() {
             payload: { mode: realtimeData.mode },
           });
         } else {
+          // 當 count=最後數時不顯示mode="detect"
+
           dispatch({
             type: ROBOT_CONTROL_SCREEN.realtimeVisual,
             payload: { mode: realtimeData.mode },
@@ -149,6 +151,7 @@ function App() {
     realtimeVisualMode,
     objectName,
     objectNextName,
+    robotExecutionData,
   };
 
   return (

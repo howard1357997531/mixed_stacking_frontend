@@ -6,8 +6,6 @@ import {
   ROBOT_CONTROL_SCREEN_orderList,
   ROBOT_CONTROL_SCREEN_realtimeRobot,
   ROBOT_CONTROL_SCREEN_realtimeVisual,
-  ROBOT_CONTROL_SCREEN_robotSetting,
-  ROBOT_CONTROL_SCREEN_robotState,
 } from "../constants";
 
 export const robotControlScreen_orderSelectReducer = (
@@ -66,7 +64,7 @@ export const robotControlScreen_informationAreaReducer = (
 };
 
 export const robotControlScreen_robotExecutionListReducer = (
-  state = { executeOrderId: [], name: [], queue: 1 },
+  state = { executeOrderId: [], name: [], queue: 1, swiperCurrentCount: 1 },
   action
 ) => {
   switch (action.type) {

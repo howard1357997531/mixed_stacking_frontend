@@ -81,7 +81,12 @@ function InformationAreaContent({
       {informationAreaMode === "success" ? (
         <RobotSuccessBox>
           <RobotSuccessTitle>執行成功</RobotSuccessTitle>
-          <RobotSuccessSubTitle>請選下張工單</RobotSuccessSubTitle>
+
+          <RobotSuccessSubTitle>
+            {executeOrderIdArray.length === 0
+              ? "請重新選擇工單"
+              : `待執行進度 (${queue}/${executeOrderIdArray.length})`}
+          </RobotSuccessSubTitle>
         </RobotSuccessBox>
       ) : null}
 

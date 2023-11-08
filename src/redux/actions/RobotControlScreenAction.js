@@ -9,8 +9,8 @@ import {
   timerSwal,
 } from "./swal/RobotControlScreenActionSwal";
 import { Colors } from "../../styles/theme";
-import axios from "axios";
 import { domain } from "../../env";
+import axios from "axios";
 
 export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
   dispatch({
@@ -78,95 +78,112 @@ export const executeRobotAction =
   (robotStateMode, multipleOrderSelectData, robotExecutionData) =>
   (dispatch) => {
     const { executeOrderId, name, queue } = robotExecutionData;
-    if (executeOrderId.length === 0) {
+    const executeLength = executeOrderId.length;
+    if (executeLength === 0) {
       basicSwal("warning", "請選擇工單", "#a1887f");
       return;
     } else if (robotStateMode !== "inactivate") {
       basicSwal("warning", "手臂執行中", "#a1887f");
       return;
     } else {
-      confirmSwal("確定執行?", `${name.at(queue - 1)}`).then((result) => {
-        if (result.isConfirmed) {
-          const orderId = executeOrderId.at(queue - 1);
-          try {
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotState,
-              payload: { mode: "activate" },
-            });
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.informationArea,
-              payload: { mode: "picture" },
-            });
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
-            });
-
-            axios
-              .post(`${domain}/api/executeRobot/`, { orderId })
-              .then((res) => {
-                const state = res.data.robot_state;
-                const mode = state === "finish" ? "inactivate" : "reset";
-                const text = state === "finish" ? "已結束" : "已重置";
-
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
-                  payload: res.data,
-                });
-
-                if (multipleOrderSelectData.length !== 0) {
-                  const orderSelectData =
-                    multipleOrderSelectData.multipleOrder.filter(
-                      (order) => order.order.id === executeOrderId.at(queue)
-                    );
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN.orderSelect,
-                    payload: orderSelectData,
-                  });
-                }
-
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN.informationArea,
-                  payload: { mode: "success" },
-                });
-
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN.robotState,
-                  payload: { mode, text, speed: 50 },
-                });
-
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN.realtimeItem,
-                  payload: { mode: null, count: null },
-                });
-
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN.realtimeVisual,
-                  payload: { mode: null },
-                });
-
-                const robotExecutionCheck =
-                  executeOrderId.length > queue
-                    ? { queue: queue + 1 }
-                    : { executeOrderId: [], name: [], queue: 1 };
-
+      const orderQueue =
+        executeLength !== 1 ? `(${queue}/${executeLength})` : "";
+      confirmSwal("確定執行?", `${name.at(queue - 1)} ${orderQueue}`).then(
+        (result) => {
+          if (result.isConfirmed) {
+            const orderId = executeOrderId.at(queue - 1);
+            try {
+              if (multipleOrderSelectData.length !== 0 && queue !== 1) {
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-                  payload: robotExecutionCheck,
+                  payload: { swiperCurrentCount: queue },
                 });
-              });
-          } catch (error) {
-            const err_msg = error.response.data.error_msg;
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
-              payload: err_msg,
-            });
+              }
 
-            timerSwal("warning", err_msg, Colors.brownHover, 2000);
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.robotState,
+                payload: { mode: "activate" },
+              });
+
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.informationArea,
+                payload: { mode: "picture" },
+              });
+
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
+              });
+
+              axios
+                .post(`${domain}/api/executeRobot/`, { orderId })
+                .then((res) => {
+                  const state = res.data.robot_state;
+                  const mode = state === "finish" ? "inactivate" : "reset";
+                  const text = state === "finish" ? "已結束" : "已重置";
+
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
+                    payload: res.data,
+                  });
+
+                  if (multipleOrderSelectData.length !== 0 && queue !== 1) {
+                    const [orderSelectData] =
+                      multipleOrderSelectData.multipleOrder.filter(
+                        (order) => order.order.id === executeOrderId.at(queue)
+                      );
+                    dispatch({
+                      type: ROBOT_CONTROL_SCREEN.orderSelect,
+                      payload: orderSelectData,
+                    });
+                  }
+
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.informationArea,
+                    payload: { mode: "success" },
+                  });
+
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.robotState,
+                    payload: { mode, text, speed: 50 },
+                  });
+
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.realtimeItem,
+                    payload: { mode: null, count: null },
+                  });
+
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+                    payload: { mode: null },
+                  });
+
+                  const robotExecutionCheck =
+                    executeLength > queue
+                      ? { queue: queue + 1 }
+                      : {
+                          executeOrderId: [],
+                          name: [],
+                          queue: 1,
+                          swiperCurrentCount: 1,
+                        };
+
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+                    payload: robotExecutionCheck,
+                  });
+                });
+            } catch (error) {
+              const err_msg = error.response.data.error_msg;
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
+                payload: err_msg,
+              });
+
+              timerSwal("warning", err_msg, Colors.brownHover, 2000);
+            }
           }
         }
-      });
+      );
     }
   };
 
@@ -214,19 +231,108 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
 
 export const robotExecutionAlertAction =
   (multipleOrderSelectData, robotExecutionData) => (dispatch) => {
-    const { name, queue } = robotExecutionData;
+    const { executeOrderId, name, queue } = robotExecutionData;
     confirmSwal(
-      `確定執行? (${queue} / ${name.length})`,
-      `${name.at(queue - 1)}`
+      `確定執行?`,
+      `${name.at(queue - 1)} (${queue}/${name.length})`
     ).then((result) => {
       if (result.isConfirmed) {
-        dispatch(
-          executeRobotAction(
-            "inactivate",
-            multipleOrderSelectData,
-            robotExecutionData
-          )
-        );
+        const orderId = executeOrderId.at(queue - 1);
+        try {
+          if (multipleOrderSelectData.length !== 0) {
+            const [orderSelectData] =
+              multipleOrderSelectData.multipleOrder.filter(
+                (order) => order.order.id === executeOrderId.at(queue - 1)
+              );
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.orderSelect,
+              payload: { data: orderSelectData.order },
+            });
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+              payload: { swiperCurrentCount: queue },
+            });
+          }
+
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotState,
+            payload: { mode: "activate" },
+          });
+
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.informationArea,
+            payload: { mode: "picture" },
+          });
+
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
+          });
+
+          axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
+            const state = res.data.robot_state;
+            const mode = state === "finish" ? "inactivate" : "reset";
+            const text = state === "finish" ? "已結束" : "已重置";
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
+              payload: res.data,
+            });
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.informationArea,
+              payload: { mode: "success" },
+            });
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotState,
+              payload: { mode, text, speed: 50 },
+            });
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.realtimeItem,
+              payload: { mode: null, count: null },
+            });
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+              payload: { mode: null },
+            });
+
+            const robotExecutionCheck =
+              executeOrderId.length > queue
+                ? { queue: queue + 1 }
+                : {
+                    executeOrderId: [],
+                    name: [],
+                    queue: 1,
+                    swiperCurrentCount: 1,
+                  };
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+              payload: robotExecutionCheck,
+            });
+          });
+        } catch (error) {
+          const err_msg = error.response.data.error_msg;
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
+            payload: err_msg,
+          });
+
+          timerSwal("warning", err_msg, Colors.brownHover, 2000);
+        }
       }
     });
   };
+
+export const swiperChangeAction = (mode, CurrentIndex) => (dispatch) => {
+  const swiperCurrentCount =
+    mode === "prev" ? CurrentIndex - 1 : CurrentIndex + 1;
+
+  dispatch({
+    type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+    payload: { swiperCurrentCount },
+  });
+};
