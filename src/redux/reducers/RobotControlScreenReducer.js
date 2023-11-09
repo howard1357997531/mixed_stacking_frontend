@@ -64,7 +64,14 @@ export const robotControlScreen_informationAreaReducer = (
 };
 
 export const robotControlScreen_robotExecutionListReducer = (
-  state = { executeOrderId: [], name: [], queue: 1, swiperCurrentCount: 1 },
+  state = {
+    executeOrderId: [],
+    name: [],
+    queue: 1,
+    insertOrderOpen: false,
+    insertOrderDetailOpen: false,
+    insertOrderDetailId: null,
+  },
   action
 ) => {
   switch (action.type) {

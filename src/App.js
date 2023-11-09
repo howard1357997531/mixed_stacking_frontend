@@ -138,7 +138,7 @@ function App() {
         dispatch(
           robotExecutionAlertAction(multipleOrderSelectData, robotExecutionData)
         );
-      }, 1000);
+      }, 10000);
     }
   }, [robotExecutionData.queue]);
 

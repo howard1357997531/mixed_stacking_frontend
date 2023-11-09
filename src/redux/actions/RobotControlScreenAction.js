@@ -327,6 +327,14 @@ export const robotExecutionAlertAction =
     });
   };
 
+export const insertOrderAction = (index) => (dispatch) => {
+  dispatch({
+    type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+    payload: { insertOrderOpen: true },
+  });
+  console.log(index);
+};
+
 export const swiperChangeAction = (mode, CurrentIndex) => (dispatch) => {
   const swiperCurrentCount =
     mode === "prev" ? CurrentIndex - 1 : CurrentIndex + 1;

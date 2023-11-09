@@ -16,3 +16,25 @@ export const operateShowBoardTextAnimation = keyframes`
   50% { transform : scale(1.1) }
   100% { transform : scale(1) }
 `;
+
+export const OrderListExeListCheckAnimation = keyframes`
+  0% {
+    -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+  }
+  100% {
+    -webkit-transform: rotateY(-1080deg);
+            transform: rotateY(-1080deg);
+  }
+`;
+
+export const OrderListExeListDeleteAnimation = keyframes`
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+  }
+`;

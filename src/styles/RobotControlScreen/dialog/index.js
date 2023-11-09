@@ -1,9 +1,16 @@
-import { Box, styled } from "@mui/material";
+import { Box, IconButton, styled } from "@mui/material";
 import { Colors } from "../../theme";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { errorMsgIconButtonAnimation } from "../../../animation";
+import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
+import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+
+import {
+  OrderListExeListCheckAnimation,
+  OrderListExeListDeleteAnimation,
+  errorMsgIconButtonAnimation,
+} from "../../../animation";
 
 export const OrderListExeListBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
@@ -13,18 +20,34 @@ export const OrderListExeListBox = styled(Box)(({ theme }) => ({
   height: "500px",
 }));
 
-export const OrderListExeListTitle = styled(Box)(({ theme }) => ({
+export const OrderListExeListTitleBox = styled(Box)(({ theme }) => ({
+  position: "relative",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
   height: "8%",
+  borderBottom: `1px solid ${Colors.brownHover}`,
+}));
+
+export const IconButtonBack = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "10px",
+  transform: "translateY(-50%)",
+  padding: "6px",
+}));
+
+export const IconButtonSearch = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  right: "10px",
+  transform: "translateY(-50%)",
+  padding: "6px",
 }));
 
 export const OrderListExeListNameBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
+  boxSizing: "border-box",
   width: "100%",
   height: "92%",
   overflow: "auto",
@@ -36,17 +59,47 @@ export const OrderListExeListName = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  height: "50px",
+  height: "60px",
   borderTop: `1px solid ${Colors.brownHover}`,
-  borderBottom: `1px solid ${Colors.brownHover}`,
 }));
 
-export const OrderListExeListCheck = styled(CheckCircleIcon)(({ theme }) => ({
+export const OrderListExeListInsertName = styled(Box)(({ theme }) => ({
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "60px",
+  borderBottom: `1px solid ${Colors.brownHover}`,
+  "&:hover": {
+    color: Colors.brown200,
+    backgroundColor: Colors.brownHover,
+    cursor: "pointer",
+  },
+}));
+
+export const IconButtonHelp = styled(IconButton)(({ theme }) => ({
   position: "absolute",
   top: "50%",
   right: "10px",
   transform: "translateY(-50%)",
-  color: Colors.darkGreenHover,
+  padding: "10px",
+  "&:hover": {
+    backgroundColor: "#00968733",
+  },
+}));
+
+export const StyleHelpRoundedIcon = styled(HelpRoundedIcon)(({ theme }) => ({
+  fontSize: 16,
+}));
+
+export const OrderListExeListCheck = styled(CheckCircleIcon)(({ theme }) => ({
+  position: "absolute",
+  top: "calc(50% - 15px)",
+  right: "10px",
+  fontSize: "26px",
+  color: Colors.green600,
+  animation: `${OrderListExeListCheckAnimation} 1s ease`,
 }));
 
 export const OrderListExeListInProgress = styled(Box)(({ theme }) => ({
@@ -56,20 +109,28 @@ export const OrderListExeListInProgress = styled(Box)(({ theme }) => ({
   transform: "translateY(-50%)",
 }));
 
-export const OrderListExeListDelete = styled(HighlightOffIcon)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  right: "10px",
-  transform: "translateY(-50%)",
-  color: Colors.red,
-  fontSize: "30px",
-  "&:hover": {
-    transform: "scale(1.1)",
-    animation: `${errorMsgIconButtonAnimation} .5s`,
-  },
-  "&:active": {
-    transform: "scale(0.95)",
-  },
+export const OrderListExeListDelete = styled(DisabledByDefaultRoundedIcon)(
+  ({ theme }) => ({
+    position: "absolute",
+    top: "calc(50% - 15px)",
+    right: "10px",
+    color: Colors.red800,
+    fontSize: "26px",
+    "&:hover": {
+      cursor: "pointer",
+      color: Colors.red900,
+      animation: `${OrderListExeListDeleteAnimation} .3s`,
+    },
+    "&:active": {
+      transform: "scale(0.8)",
+    },
+  })
+);
+
+export const IconButtonAdd = styled(IconButton)(({ theme }) => ({
+  marginLeft: "50%",
+  padding: "3px",
+  transform: "translate(-50%)",
 }));
 
 export const OrderListExeListAdd = styled(AddCircleIcon)(({ theme }) => ({
