@@ -10,6 +10,7 @@ import OperationInterfaceBox2 from "./OperationInterfaceBox2";
 import OperationInterfaceBox3 from "./OperationInterfaceBox3";
 import InformationAreaTitle from "./InformationAreaTitle";
 import InformationAreaContent from "./InformationAreaContent";
+import InformationAreaBottom from "./InformationAreaBottom";
 import "./css/OperationInterface.css";
 
 function RobotControlDesktop(props) {
@@ -28,6 +29,8 @@ function RobotControlDesktop(props) {
           <InformationAreaTitle {...props} />
 
           <InformationAreaContent {...props} />
+
+          <InformationAreaBottom {...props} />
         </InformationAreaBox>
       </InformationArea>
     </RobotControlContainer>

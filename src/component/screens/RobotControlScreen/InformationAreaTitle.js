@@ -55,6 +55,12 @@ function InformationAreaTitle({
           清單
         </OrderListTitleButton>
       )}
+
+      {informationAreaMode === "success" && (
+        <OrderListTitleButton onClick={() => changeModeHandler("order")}>
+          待執行工單
+        </OrderListTitleButton>
+      )}
     </InformationAreaTitleBox>
   );
 }

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import {
+  ConfirmBox,
   IconButtonBack,
   IconButtonHelp,
   IconButtonSearch,
@@ -9,7 +10,7 @@ import {
   OrderListExeListTitleBox,
   StyleHelpRoundedIcon,
 } from "../../../../styles/RobotControlScreen/dialog";
-import { Typography } from "@mui/material";
+import { Button, Collapse, Tooltip, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -17,14 +18,20 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import LoadingCircle from "../../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
 import { OrderListContentMsg } from "../../../../styles/OrderScreen";
+import { Colors } from "../../../../styles/theme";
+import { selectInsertOrderAction } from "../../../../redux/actions/RobotControlScreenAction";
 
-function OrderListDialogExecutionListInsert() {
+function OrderListDialogExecutionListInsert(props) {
+  const [insertCkeck, setInsertCheck] = useState(false);
+  const [insertId, setInsertId] = useState(null);
   const dispatch = useDispatch();
   const {
     loading: orderListLoading,
     error: orderListError,
     data: orderListData,
   } = useSelector((state) => state.orderList);
+
+  const { insertIndex } = props.robotExecutionData;
 
   const backHandler = () => {
     dispatch({
@@ -33,12 +40,22 @@ function OrderListDialogExecutionListInsert() {
     });
   };
 
-  const selectInsertOrder = (id) => {
-    console.log(id);
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-      payload: { insertOrderOpen: false },
-    });
+  const selectInsertOrderHandler = (order) => {
+    dispatch(selectInsertOrderAction(order, props.robotExecutionData));
+  };
+
+  const confirmHandler = (id) => {
+    if (id === insertId || !insertId) {
+      setInsertCheck((prev) => !prev);
+    } else if (id !== insertId) {
+      setInsertCheck(true);
+    }
+    setInsertId(id);
+  };
+
+  const confirmCancelHandler = () => {
+    setInsertCheck(false);
+    setInsertId(null);
   };
 
   const orderDetailHandler = (e, id) => {
@@ -75,20 +92,45 @@ function OrderListDialogExecutionListInsert() {
         ) : orderListData.length === 0 ? (
           <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
         ) : (
-          orderListData.map((order) => (
-            <OrderListExeListInsertName
-              onClick={() => selectInsertOrder(order.id)}
-            >
-              <Typography>{order.name}</Typography>
+          orderListData.map((order) =>
+            order.aiTraining_order ? (
+              <Fragment key={order.id}>
+                <OrderListExeListInsertName
+                  sx={{
+                    borderTop:
+                      insertCkeck && insertId === order.id + 1
+                        ? `1px solid ${Colors.brownHover}`
+                        : "none",
+                  }}
+                  onClick={() => confirmHandler(order.id)}
+                >
+                  <Typography>{order.name}</Typography>
 
-              <IconButtonHelp
-                className="iconBtn-help"
-                onClick={(e) => orderDetailHandler(e, order.id)}
-              >
-                <StyleHelpRoundedIcon className="icon-help" />
-              </IconButtonHelp>
-            </OrderListExeListInsertName>
-          ))
+                  <Tooltip title="詳細資料" placement="left" arrow>
+                    <IconButtonHelp
+                      className="iconBtn-help"
+                      onClick={(e) => orderDetailHandler(e, order.id)}
+                    >
+                      <StyleHelpRoundedIcon className="icon-help" />
+                    </IconButtonHelp>
+                  </Tooltip>
+                </OrderListExeListInsertName>
+                <Collapse in={insertCkeck && insertId === order.id}>
+                  <ConfirmBox>
+                    <Button
+                      variant="outlined"
+                      onClick={() => selectInsertOrderHandler(order)}
+                    >
+                      確定
+                    </Button>
+                    <Button variant="outlined" onClick={confirmCancelHandler}>
+                      取消
+                    </Button>
+                  </ConfirmBox>
+                </Collapse>
+              </Fragment>
+            ) : null
+          )
         )}
       </OrderListExeListNameBox>
     </OrderListExeListBox>

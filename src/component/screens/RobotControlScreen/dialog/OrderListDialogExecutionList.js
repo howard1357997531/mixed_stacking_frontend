@@ -29,13 +29,15 @@ function OrderListDialogExecutionList(props) {
     insertOrderDetailOpen,
   } = props.robotExecutionData;
 
-  const insertOrderHandler = (index) => {
-    dispatch(insertOrderAction(index));
+  const insertOrderHandler = (insertIndex) => {
+    dispatch(insertOrderAction(insertIndex));
   };
 
   return (
     <>
-      {insertOrderOpen ? <OrderListDialogExecutionListInsert /> : null}
+      {insertOrderOpen ? (
+        <OrderListDialogExecutionListInsert {...props} />
+      ) : null}
 
       {insertOrderDetailOpen ? (
         <OrderListDialogExecutionListInsertDetail {...props} />

@@ -250,6 +250,15 @@ export const InformationAreaContentBox = styled(Box, {
   border: `1px ${hasOrderList ? "solid" : "dashed"} ${Colors.greyText}`,
 }));
 
+export const InformationAreaBottomBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "10%",
+  width: "100%",
+}));
+
 export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
   position: "absolute",
   top: "50%",

@@ -78,6 +78,14 @@ export const OrderListExeListInsertName = styled(Box)(({ theme }) => ({
   },
 }));
 
+export const ConfirmBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "space-evenly",
+  width: "397px",
+  padding: "10px 0px",
+}));
+
 export const IconButtonHelp = styled(IconButton)(({ theme }) => ({
   position: "absolute",
   top: "50%",

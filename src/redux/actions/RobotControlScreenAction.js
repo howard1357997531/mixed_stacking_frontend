@@ -33,6 +33,7 @@ export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
     payload: {
       executeOrderId: [selectOrderObject.id],
       name: [selectOrderObject.name],
+      allData: [selectOrderObject],
     },
   });
 };
@@ -64,20 +65,24 @@ export const multipleOrderlistSelectAction =
       .split(",")
       .map((order) => parseInt(order));
 
-    const name = multipleOrderSelectObject.multipleOrder.map((order) => {
-      return order.order.name;
-    });
+    const name = multipleOrderSelectObject.multipleOrder.map(
+      (order) => order.order.name
+    );
+
+    const allData = multipleOrderSelectObject.multipleOrder.map(
+      (order) => order.order
+    );
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-      payload: { executeOrderId, name },
+      payload: { executeOrderId, name, allData },
     });
   };
 
 export const executeRobotAction =
   (robotStateMode, multipleOrderSelectData, robotExecutionData) =>
   (dispatch) => {
-    const { executeOrderId, name, queue } = robotExecutionData;
+    const { executeOrderId, name, queue, allData } = robotExecutionData;
     const executeLength = executeOrderId.length;
     if (executeLength === 0) {
       basicSwal("warning", "請選擇工單", "#a1887f");
@@ -93,13 +98,6 @@ export const executeRobotAction =
           if (result.isConfirmed) {
             const orderId = executeOrderId.at(queue - 1);
             try {
-              if (multipleOrderSelectData.length !== 0 && queue !== 1) {
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-                  payload: { swiperCurrentCount: queue },
-                });
-              }
-
               dispatch({
                 type: ROBOT_CONTROL_SCREEN.robotState,
                 payload: { mode: "activate" },
@@ -126,14 +124,10 @@ export const executeRobotAction =
                     payload: res.data,
                   });
 
-                  if (multipleOrderSelectData.length !== 0 && queue !== 1) {
-                    const [orderSelectData] =
-                      multipleOrderSelectData.multipleOrder.filter(
-                        (order) => order.order.id === executeOrderId.at(queue)
-                      );
+                  if (allData.length > 1) {
                     dispatch({
                       type: ROBOT_CONTROL_SCREEN.orderSelect,
-                      payload: orderSelectData,
+                      payload: { data: allData[queue] },
                     });
                   }
 
@@ -164,7 +158,6 @@ export const executeRobotAction =
                           executeOrderId: [],
                           name: [],
                           queue: 1,
-                          swiperCurrentCount: 1,
                         };
 
                   dispatch({
@@ -231,7 +224,7 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
 
 export const robotExecutionAlertAction =
   (multipleOrderSelectData, robotExecutionData) => (dispatch) => {
-    const { executeOrderId, name, queue } = robotExecutionData;
+    const { executeOrderId, name, queue, allData } = robotExecutionData;
     confirmSwal(
       `確定執行?`,
       `${name.at(queue - 1)} (${queue}/${name.length})`
@@ -239,22 +232,6 @@ export const robotExecutionAlertAction =
       if (result.isConfirmed) {
         const orderId = executeOrderId.at(queue - 1);
         try {
-          if (multipleOrderSelectData.length !== 0) {
-            const [orderSelectData] =
-              multipleOrderSelectData.multipleOrder.filter(
-                (order) => order.order.id === executeOrderId.at(queue - 1)
-              );
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.orderSelect,
-              payload: { data: orderSelectData.order },
-            });
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-              payload: { swiperCurrentCount: queue },
-            });
-          }
-
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotState,
             payload: { mode: "activate" },
@@ -299,6 +276,11 @@ export const robotExecutionAlertAction =
               payload: { mode: null },
             });
 
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.orderSelect,
+              payload: { data: allData[queue] },
+            });
+
             const robotExecutionCheck =
               executeOrderId.length > queue
                 ? { queue: queue + 1 }
@@ -306,7 +288,6 @@ export const robotExecutionAlertAction =
                     executeOrderId: [],
                     name: [],
                     queue: 1,
-                    swiperCurrentCount: 1,
                   };
 
             dispatch({
@@ -327,14 +308,43 @@ export const robotExecutionAlertAction =
     });
   };
 
-export const insertOrderAction = (index) => (dispatch) => {
+export const insertOrderAction = (insertIndex) => (dispatch) => {
   dispatch({
     type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-    payload: { insertOrderOpen: true },
+    payload: { insertIndex, insertOrderOpen: true },
   });
-  console.log(index);
 };
 
+export const selectInsertOrderAction =
+  (order, robotExecutionData) => (dispatch) => {
+    const { insertIndex } = robotExecutionData;
+    // 不知為何不能直接使用 { executeOrderId } = robotExecutionData; 裡面的 executeOrderId
+    // 去做 executeOrderId.splice(insertIndex, 0, order.id); 會error
+    // 但是複製過後就可以 ...??
+    const executeOrderId = [...robotExecutionData.executeOrderId];
+    const name = [...robotExecutionData.name];
+    const allData = [...robotExecutionData.allData];
+
+    executeOrderId.splice(insertIndex, 0, order.id);
+    name.splice(insertIndex, 0, order.name);
+    allData.splice(insertIndex, 0, order);
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.orderSelect,
+      payload: { data: order },
+    });
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+      payload: { executeOrderId, name, allData, insertOrderOpen: false },
+    });
+
+    console.log("asd", insertIndex);
+    console.log(order);
+    console.log(executeOrderId);
+    console.log(name);
+    console.log(allData);
+  };
 export const swiperChangeAction = (mode, CurrentIndex) => (dispatch) => {
   const swiperCurrentCount =
     mode === "prev" ? CurrentIndex - 1 : CurrentIndex + 1;

@@ -68,6 +68,8 @@ export const robotControlScreen_robotExecutionListReducer = (
     executeOrderId: [],
     name: [],
     queue: 1,
+    allData: [],
+    insertIndex: null,
     insertOrderOpen: false,
     insertOrderDetailOpen: false,
     insertOrderDetailId: null,
