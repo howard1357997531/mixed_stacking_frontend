@@ -3,7 +3,7 @@ import "./css/TextEffect.css";
 import { Colors } from "../styles/theme";
 
 function TextEffect({ text, textColor, textCoverColor }) {
-  if (textCoverColor === Colors.darkGreenHover) {
+  if (textCoverColor === Colors.purple400) {
     var className = `text-effect text-effect2`;
   } else {
     var className = "text-effect text-effect1";

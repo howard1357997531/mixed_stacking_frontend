@@ -38,3 +38,18 @@ export const OrderListExeListDeleteAnimation = keyframes`
             transform: rotate(-180deg);
   }
 `;
+
+export const OrderListExeListWaitToExecuteAnimation = keyframes`
+  0% {
+    -webkit-transform : scale(1);
+            transform : scale(1);
+  }
+  50% {
+    -webkit-transform : scale(1.1);
+            transform : scale(1.1);
+  }
+  100% {
+    -webkit-transform : scale(1);
+            transform : scale(1);
+  }
+`;

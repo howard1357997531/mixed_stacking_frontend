@@ -2,6 +2,10 @@ import React, { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import {
   IconButtonAdd,
+  IconButtonHelp,
+  IndexText,
+  InsertNowText,
+  InsertText,
   OrderListExeListAdd,
   OrderListExeListBox,
   OrderListExeListCheck,
@@ -10,13 +14,19 @@ import {
   OrderListExeListName,
   OrderListExeListNameBox,
   OrderListExeListTitleBox,
+  OrderText,
+  StyleHelpRoundedIcon,
+  WaitToExecuteText,
 } from "../../../../styles/RobotControlScreen/dialog";
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import TextEffect from "../../../../tool/TextEffect";
 import { Colors } from "../../../../styles/theme";
 import "./css/OrderListDialogExecutionList.css";
 import OrderListDialogExecutionListInsert from "./OrderListDialogExecutionListInsert";
-import { insertOrderAction } from "../../../../redux/actions/RobotControlScreenAction";
+import {
+  deleteExecutionListAction,
+  insertOrderAction,
+} from "../../../../redux/actions/RobotControlScreenAction";
 import OrderListDialogExecutionListInsertDetail from "./OrderListDialogExecutionListInsertDetail";
 
 function OrderListDialogExecutionList(props) {
@@ -33,6 +43,17 @@ function OrderListDialogExecutionList(props) {
     dispatch(insertOrderAction(insertIndex));
   };
 
+  const deleteOrderHandler = (index, name) => {
+    const replaceName = replaceInsertName(name);
+    dispatch(
+      deleteExecutionListAction(index, replaceName, props.robotExecutionData)
+    );
+  };
+
+  const replaceInsertName = (name) => {
+    return name.endsWith("_insert") ? name.replace("_insert", "") : name;
+  };
+
   return (
     <>
       {insertOrderOpen ? (
@@ -45,7 +66,9 @@ function OrderListDialogExecutionList(props) {
 
       {!insertOrderOpen && !insertOrderDetailOpen ? (
         <OrderListExeListBox>
-          <OrderListExeListTitleBox>{`(${queue}/${executeOrderIdArray.length})`}</OrderListExeListTitleBox>
+          <OrderListExeListTitleBox>
+            執行清單 {`(${queue}/${executeOrderIdArray.length})`}
+          </OrderListExeListTitleBox>
 
           <OrderListExeListNameBox className="dialogExecutionList">
             {executeOrderNameArray.map((name, index) => (
@@ -53,28 +76,27 @@ function OrderListDialogExecutionList(props) {
                 <OrderListExeListName
                   sx={{
                     backgroundColor:
-                      index + 1 < queue ? "#61d1c68b" : "transparent",
+                      index + 1 < queue ? Colors.softGreen : "transparent",
                     borderTop:
                       index === 0 ? "none" : `1px solid ${Colors.brownHover}`,
                   }}
                 >
-                  <Typography
-                    sx={{
-                      color:
-                        index + 1 < queue
-                          ? Colors.green800
-                          : Colors.greyTextBlood,
-                    }}
-                  >
-                    {name}
-                  </Typography>
+                  <IndexText finish={index + 1 < queue}>{index + 1}</IndexText>
+
+                  {name.endsWith("_insert") ? (
+                    <InsertText>插單</InsertText>
+                  ) : null}
+
+                  <OrderText finish={index + 1 < queue}>
+                    {replaceInsertName(name)}
+                  </OrderText>
+
                   {index + 1 < queue ? <OrderListExeListCheck /> : null}
+
                   {index + 1 == queue ? (
                     <OrderListExeListInProgress>
                       {props.robotStateMode === "inactivate" ? (
-                        <Typography color={Colors.purple} fontWeight={600}>
-                          待執行
-                        </Typography>
+                        <WaitToExecuteText>待執行</WaitToExecuteText>
                       ) : null}
 
                       {props.robotStateMode === "pause" ? (
@@ -89,32 +111,46 @@ function OrderListDialogExecutionList(props) {
                         <TextEffect
                           text={"進行中"}
                           textColor={Colors.greyTextBlood}
-                          textCoverColor={Colors.darkGreenHover}
+                          textCoverColor={Colors.purple400}
                         />
                       ) : null}
                     </OrderListExeListInProgress>
                   ) : null}
-                  {index + 1 > queue ? <OrderListExeListDelete /> : null}
+
+                  {index + 1 > queue ? (
+                    <OrderListExeListDelete
+                      onClick={() => deleteOrderHandler(index, name)}
+                    />
+                  ) : null}
                 </OrderListExeListName>
 
                 {/* 可以在待執行單前面插單 */}
                 {index + 2 == queue && props.robotStateMode === "inactivate" ? (
                   <Box sx={{ borderTop: `1px solid ${Colors.brownHover}` }}>
-                    <IconButtonAdd
+                    <InsertNowText
                       onClick={() => insertOrderHandler(index + 1)}
                     >
-                      <OrderListExeListAdd />
-                    </IconButtonAdd>
+                      即刻插單
+                    </InsertNowText>
+                    {/* <IconButtonAdd
+                      className="iconBtn-add"
+                      
+                    >
+                      <OrderListExeListAdd className="icon-add" />
+                    </IconButtonAdd> */}
                   </Box>
                 ) : null}
 
                 {index + 1 >= queue ? (
                   <Box sx={{ borderTop: `1px solid ${Colors.brownHover}` }}>
-                    <IconButtonAdd
-                      onClick={() => insertOrderHandler(index + 1)}
-                    >
-                      <OrderListExeListAdd />
-                    </IconButtonAdd>
+                    <Tooltip title="插單" placement="right" arrow>
+                      <IconButtonAdd
+                        className="iconBtn-add"
+                        onClick={() => insertOrderHandler(index + 1)}
+                      >
+                        <OrderListExeListAdd className="icon-add" />
+                      </IconButtonAdd>
+                    </Tooltip>
                   </Box>
                 ) : null}
               </Fragment>

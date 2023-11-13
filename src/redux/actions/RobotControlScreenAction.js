@@ -316,8 +316,8 @@ export const insertOrderAction = (insertIndex) => (dispatch) => {
 };
 
 export const selectInsertOrderAction =
-  (order, robotExecutionData) => (dispatch) => {
-    const { insertIndex } = robotExecutionData;
+  (order, robotExecutionData) => async (dispatch) => {
+    const { insertIndex, queue } = robotExecutionData;
     // 不知為何不能直接使用 { executeOrderId } = robotExecutionData; 裡面的 executeOrderId
     // 去做 executeOrderId.splice(insertIndex, 0, order.id); 會error
     // 但是複製過後就可以 ...??
@@ -326,25 +326,55 @@ export const selectInsertOrderAction =
     const allData = [...robotExecutionData.allData];
 
     executeOrderId.splice(insertIndex, 0, order.id);
-    name.splice(insertIndex, 0, order.name);
+    name.splice(insertIndex, 0, order.name + "_insert");
     allData.splice(insertIndex, 0, order);
 
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.orderSelect,
-      payload: { data: order },
-    });
+    if (insertIndex + 1 === queue) {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.orderSelect,
+        payload: { data: order },
+      });
+    }
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.robotExecutionList,
       payload: { executeOrderId, name, allData, insertOrderOpen: false },
     });
 
-    console.log("asd", insertIndex);
-    console.log(order);
+    try {
+      const { data } = await axios.post(`${domain}/api/executingOrder/`, {
+        insertIndex,
+        executeOrderId,
+        name,
+      });
+    } catch (error) {
+      console.log(error.message.data.error_msg);
+    }
+  };
+
+export const deleteExecutionListAction =
+  (index, deleteName, robotExecutionData) => (dispatch) => {
+    const executeOrderId = [...robotExecutionData.executeOrderId];
+    const name = [...robotExecutionData.name];
+    const allData = [...robotExecutionData.allData];
+
+    executeOrderId.splice(index, 1);
+    name.splice(index, 1);
+    allData.splice(index, 1);
+
+    confirmSwal("確定刪除?", deleteName).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+          payload: { executeOrderId, name, allData },
+        });
+      }
+    });
     console.log(executeOrderId);
     console.log(name);
     console.log(allData);
   };
+
 export const swiperChangeAction = (mode, CurrentIndex) => (dispatch) => {
   const swiperCurrentCount =
     mode === "prev" ? CurrentIndex - 1 : CurrentIndex + 1;

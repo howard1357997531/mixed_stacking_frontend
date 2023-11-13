@@ -1,5 +1,6 @@
 .dialogExecutionList::-webkit-scrollbar{
-    width: 3px
+    width: 3px;
+    color: #6ce7db8b;
 }
 
 .dialogExecutionList::-webkit-scrollbar-thumb{
@@ -8,5 +9,9 @@
 }
 
 .iconBtn-help:hover .icon-help{
-    color: #009688
+    color: #009688;
+}
+
+.iconBtn-add:hover .icon-add{
+    color: #fff176;
 }

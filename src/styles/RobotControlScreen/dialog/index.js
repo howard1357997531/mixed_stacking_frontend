@@ -1,15 +1,14 @@
-import { Box, IconButton, styled } from "@mui/material";
+import { Avatar, Box, IconButton, Typography, styled } from "@mui/material";
 import { Colors } from "../../theme";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
-
+import AddIcon from "@mui/icons-material/Add";
 import {
   OrderListExeListCheckAnimation,
   OrderListExeListDeleteAnimation,
-  errorMsgIconButtonAnimation,
+  OrderListExeListWaitToExecuteAnimation,
 } from "../../../animation";
 
 export const OrderListExeListBox = styled(Box)(({ theme }) => ({
@@ -61,6 +60,65 @@ export const OrderListExeListName = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "60px",
   borderTop: `1px solid ${Colors.brownHover}`,
+}));
+
+export const IndexText = styled(Avatar, {
+  shouldForwardProp: (prop) => prop !== "finish",
+})(({ theme, finish }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "10px",
+  transform: "translateY(-50%)",
+  width: "24px",
+  height: "24px",
+  fontSize: "16px",
+  fontWeight: 600,
+  color: Colors.brown,
+  backgroundColor: finish ? Colors.greyTextBlood : Colors.greyTextBlood,
+  // border: `1px solid ${finish ? Colors.green800 : Colors.greyTextBlood}`,
+}));
+
+export const InsertText = styled(Typography)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "44px",
+  transform: "translateY(-50%)",
+  padding: "1px 3px 0px",
+  color: Colors.brown,
+  backgroundColor: Colors.lightYellow,
+  // border: `1px solid ${Colors.lightYellow}`,
+}));
+
+export const OrderText = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== "finish",
+})(({ theme, finish }) => ({
+  color: finish ? Colors.green800 : Colors.greyTextBlood,
+}));
+
+export const WaitToExecuteText = styled(Typography)(({ theme }) => ({
+  color: Colors.brown,
+  backgroundColor: Colors.purple400,
+  fontWeight: 600,
+  padding: "1px 3px 0px",
+  border: `2px solid ${Colors.purple400}`,
+  animation: `${OrderListExeListWaitToExecuteAnimation} 1s ease-in-out infinite`,
+}));
+
+export const InsertNowText = styled(Typography)(({ theme }) => ({
+  display: "inline-block",
+  margin: "10px 0px",
+  marginLeft: "50%",
+  transform: "translateX(-50%)",
+  color: Colors.lightYellow,
+  // fontWeight: 600,
+  padding: "2px 4px 0px",
+  border: `1px solid ${Colors.lightYellow}`,
+  "&:hover": {
+    color: Colors.brown,
+    backgroundColor: Colors.lightYellow,
+    cursor: "pointer",
+  },
+  // animation: `${OrderListExeListWaitToExecuteAnimation} 1s ease-in-out infinite`,
 }));
 
 export const OrderListExeListInsertName = styled(Box)(({ theme }) => ({
@@ -137,19 +195,18 @@ export const OrderListExeListDelete = styled(DisabledByDefaultRoundedIcon)(
 
 export const IconButtonAdd = styled(IconButton)(({ theme }) => ({
   marginLeft: "50%",
-  padding: "3px",
+  marginTop: "5px",
+  marginBottom: "5px",
+  padding: "10px",
   transform: "translate(-50%)",
+  "&:hover": {
+    backgroundColor: "#fff17644",
+  },
 }));
 
-export const OrderListExeListAdd = styled(AddCircleIcon)(({ theme }) => ({
+export const OrderListExeListAdd = styled(AddIcon)(({ theme }) => ({
   color: Colors.greyText,
-  fontSize: "30px",
-  "&:hover": {
-    transform: "scale(1.3)",
-  },
-  "&:active": {
-    transform: "scale(0.95)",
-  },
+  fontSize: "20px",
 }));
 
 export const OrderListExeListButton = styled(Box, {
