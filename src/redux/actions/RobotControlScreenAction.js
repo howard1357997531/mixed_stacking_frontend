@@ -6,6 +6,7 @@ import {
 import {
   basicSwal,
   confirmSwal,
+  confirmSwal2,
   timerSwal,
 } from "./swal/RobotControlScreenActionSwal";
 import { Colors } from "../../styles/theme";
@@ -79,6 +80,10 @@ export const multipleOrderlistSelectAction =
     });
   };
 
+const replaceInsertName = (name) => {
+  return name.endsWith("_insert") ? name.replace("_insert", "") : name;
+};
+
 export const executeRobotAction =
   (robotStateMode, multipleOrderSelectData, robotExecutionData) =>
   (dispatch) => {
@@ -93,90 +98,91 @@ export const executeRobotAction =
     } else {
       const orderQueue =
         executeLength !== 1 ? `(${queue}/${executeLength})` : "";
-      confirmSwal("確定執行?", `${name.at(queue - 1)} ${orderQueue}`).then(
-        (result) => {
-          if (result.isConfirmed) {
-            const orderId = executeOrderId.at(queue - 1);
-            try {
-              dispatch({
-                type: ROBOT_CONTROL_SCREEN.robotState,
-                payload: { mode: "activate" },
-              });
+      confirmSwal(
+        "確定執行?",
+        `${replaceInsertName(name.at(queue - 1))} ${orderQueue}`
+      ).then((result) => {
+        if (result.isConfirmed) {
+          const orderId = executeOrderId.at(queue - 1);
+          try {
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotState,
+              payload: { mode: "activate" },
+            });
 
-              dispatch({
-                type: ROBOT_CONTROL_SCREEN.informationArea,
-                payload: { mode: "picture" },
-              });
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.informationArea,
+              payload: { mode: "picture" },
+            });
 
-              dispatch({
-                type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
-              });
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
+            });
 
-              axios
-                .post(`${domain}/api/executeRobot/`, { orderId })
-                .then((res) => {
-                  const state = res.data.robot_state;
-                  const mode = state === "finish" ? "inactivate" : "reset";
-                  const text = state === "finish" ? "已結束" : "已重置";
+            axios
+              .post(`${domain}/api/executeRobot/`, { orderId })
+              .then((res) => {
+                const state = res.data.robot_state;
+                const mode = state === "finish" ? "inactivate" : "reset";
+                const text = state === "finish" ? "已結束" : "已重置";
 
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
-                    payload: res.data,
-                  });
-
-                  if (allData.length > 1) {
-                    dispatch({
-                      type: ROBOT_CONTROL_SCREEN.orderSelect,
-                      payload: { data: allData[queue] },
-                    });
-                  }
-
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN.informationArea,
-                    payload: { mode: "success" },
-                  });
-
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN.robotState,
-                    payload: { mode, text, speed: 50 },
-                  });
-
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN.realtimeItem,
-                    payload: { mode: null, count: null },
-                  });
-
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN.realtimeVisual,
-                    payload: { mode: null },
-                  });
-
-                  const robotExecutionCheck =
-                    executeLength > queue
-                      ? { queue: queue + 1 }
-                      : {
-                          executeOrderId: [],
-                          name: [],
-                          queue: 1,
-                        };
-
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-                    payload: robotExecutionCheck,
-                  });
+                dispatch({
+                  type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
+                  payload: res.data,
                 });
-            } catch (error) {
-              const err_msg = error.response.data.error_msg;
-              dispatch({
-                type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
-                payload: err_msg,
-              });
 
-              timerSwal("warning", err_msg, Colors.brownHover, 2000);
-            }
+                if (allData.length > 1) {
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.orderSelect,
+                    payload: { data: allData[queue] },
+                  });
+                }
+
+                dispatch({
+                  type: ROBOT_CONTROL_SCREEN.informationArea,
+                  payload: { mode: "success" },
+                });
+
+                dispatch({
+                  type: ROBOT_CONTROL_SCREEN.robotState,
+                  payload: { mode, text, speed: 50 },
+                });
+
+                dispatch({
+                  type: ROBOT_CONTROL_SCREEN.realtimeItem,
+                  payload: { mode: null, count: null },
+                });
+
+                dispatch({
+                  type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+                  payload: { mode: null },
+                });
+
+                const robotExecutionCheck =
+                  executeLength > queue
+                    ? { queue: queue + 1 }
+                    : {
+                        executeOrderId: [],
+                        name: [],
+                        queue: 1,
+                      };
+
+                dispatch({
+                  type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+                  payload: robotExecutionCheck,
+                });
+              });
+          } catch (error) {
+            const err_msg = error.response.data.error_msg;
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
+              payload: err_msg,
+            });
+
+            timerSwal("warning", err_msg, Colors.brownHover, 2000);
           }
         }
-      );
+      });
     }
   };
 
@@ -225,9 +231,9 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
 export const robotExecutionAlertAction =
   (multipleOrderSelectData, robotExecutionData) => (dispatch) => {
     const { executeOrderId, name, queue, allData } = robotExecutionData;
-    confirmSwal(
+    confirmSwal2(
       `確定執行?`,
-      `${name.at(queue - 1)} (${queue}/${name.length})`
+      `${replaceInsertName(name.at(queue - 1))} (${queue}/${name.length})`
     ).then((result) => {
       if (result.isConfirmed) {
         const orderId = executeOrderId.at(queue - 1);

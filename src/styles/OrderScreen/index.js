@@ -138,10 +138,11 @@ export const OrderListName = styled(Box, {
   display: "flex",
   justifyContent: "left",
   alignItems: "center",
-  paddingLeft: "5%",
+  paddingLeft: "8%",
   width: "66.6%",
   height: "100%",
-  color: itemSelect ? "#fff" : Colors.greyText,
+  color: itemSelect ? Colors.grey100 : Colors.greyText,
+  fontWeight: itemSelect ? 600 : "initial",
 }));
 
 export const OrderListDate = styled(Box, {
@@ -167,7 +168,7 @@ export const OrderListStateText = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "60%",
+  width: "40%",
   padding: "6px 0px",
   fontSize: "16px",
   fontWeight: 600,
@@ -193,9 +194,9 @@ export const MultipleOrderName = styled(Box, {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "50%",
+  width: "100%",
   height: "100%",
-  color: itemSelect ? "#fff" : Colors.greyText,
+  color: itemSelect ? Colors.grey100 : Colors.greyText,
 }));
 
 export const MultipleOrderDate = styled(Box, {
@@ -291,7 +292,8 @@ export const FunctionAreaContentBox = styled(Box, {
 export const FunctionAreaContentTitle = styled(Typography)(({ theme }) => ({
   margin: "10px 0px",
   textAlign: "center",
-  color: Colors.greyText,
+  fontWeight: 600,
+  color: Colors.brownHover,
 }));
 
 export const AiIsTraingGifText = styled(Typography)({
@@ -312,10 +314,11 @@ export const OrderListDetailBox = styled(Box, {
   width: "100%",
   height: "40px",
   borderBottom: `1px solid ${Colors.brown200}`,
-  color: isTitle ? Colors.brown : Colors.greyText,
+  color: isTitle ? Colors.brownHover : Colors.greyText,
   fontWeight: 600,
   "&:hover": {
-    color: !isTitle && Colors.brown,
+    height: !isTitle && "50px",
+    color: !isTitle && Colors.brownHover,
     fontSize: !isTitle && "24px",
     fontWeight: !isTitle && 600,
     backgroundColor: !isTitle && Colors.lightOrangeHover,
@@ -359,7 +362,7 @@ export const MenuFunctionBox = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "100%",
   height: "60px",
-  borderBottom: `1px solid ${Colors.greyHover}`,
+  borderBottom: `1px solid ${Colors.greyBorder}`,
 }));
 
 export const MenuFunctionTitle = styled(Typography)(({ theme }) => ({
@@ -368,4 +371,5 @@ export const MenuFunctionTitle = styled(Typography)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "inherit",
+  color: Colors.greyText,
 }));

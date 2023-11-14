@@ -55,8 +55,8 @@ function OrderListDialogTabs(props) {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="工單" {...a11yProps(0)} />
-          <Tab label="多執行工單" {...a11yProps(1)} />
+          <Tab label="工單" sx={{ fontWeight: 600 }} {...a11yProps(0)} />
+          <Tab label="組合單" sx={{ fontWeight: 600 }} {...a11yProps(1)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

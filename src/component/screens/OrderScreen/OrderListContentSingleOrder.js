@@ -50,9 +50,17 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
               onClick={() => {
                 orderListModeHandler(order.id, order.aiTraining_state);
               }}
-              itemSelect={orderSelectIdArray.includes(order.id)}
+              itemSelect={
+                orderSelectIdArray.includes(order.id) &&
+                orderSelectMode !== "multipleOrderCreate"
+              }
             >
-              <OrderListName itemSelect={orderSelectIdArray.includes(order.id)}>
+              <OrderListName
+                itemSelect={
+                  orderSelectIdArray.includes(order.id) &&
+                  orderSelectMode !== "multipleOrderCreate"
+                }
+              >
                 {order.name}
               </OrderListName>
 
@@ -76,7 +84,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                     text={"AI演算中"}
                     textColor={
                       orderSelectIdArray.includes(order.id)
-                        ? "#fff"
+                        ? Colors.grey100
                         : Colors.greyBorder
                     }
                   />
@@ -85,12 +93,16 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                 {order.aiTraining_state === "finish_training" && (
                   <OrderListStateText
                     sx={{
-                      color: orderSelectIdArray.includes(order.id)
-                        ? "#fff"
-                        : Colors.greyBorder,
+                      color: Colors.greyBorder,
+                      backgroundColor:
+                        orderSelectIdArray.includes(order.id) &&
+                        orderSelectMode !== "multipleOrderCreate"
+                          ? Colors.grey100
+                          : "transparent",
                       border: `2px solid ${
-                        orderSelectIdArray.includes(order.id)
-                          ? "#fff"
+                        orderSelectIdArray.includes(order.id) &&
+                        orderSelectMode !== "multipleOrderCreate"
+                          ? Colors.grey100
                           : Colors.greyBorder
                       }`,
                     }}

@@ -94,7 +94,12 @@ function OperationInterfaceBox1({
           <img src="list.png" alt="list.png"></img>
         </OperationInterfaceButtonLogo>
 
-        <OperationInterfaceButtonText>工單</OperationInterfaceButtonText>
+        <OperationInterfaceButtonText>
+          {["inactivate", "reset"].includes(robotStateMode) &&
+          robotExecutionData.queue === 1
+            ? "工單"
+            : "刪 / 插單"}
+        </OperationInterfaceButtonText>
       </FortyRadioWidthButton>
 
       <SixtyRadioWidthButton

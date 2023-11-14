@@ -17,13 +17,18 @@ import {
   RobotSuccessTitle,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Button, Typography } from "@mui/material";
+import { Avatar, Button, IconButton, Tooltip, Typography } from "@mui/material";
 import "./css/InformationAreaContent.css";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import MultipleOrderInfoDetailDialog from "./dialog/MultipleOrderInfoDetailDialog";
 import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
 import { blueGrey } from "@mui/material/colors";
+import {
+  IconButtonHelp,
+  StyleHelpRoundedIcon,
+} from "../../../styles/RobotControlScreen/dialog";
+import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 
 function InformationAreaContent({
   orderSelectData,
@@ -170,20 +175,30 @@ function InformationAreaContent({
           {multipleOrderSelectData.multipleOrder.map((order, index) => (
             <MultipleOrderListDetailBox key={order.order.id}>
               <MultipleOrderListDetailOrder>
-                <Avatar sx={{ backgroundColor: blueGrey[300] }}>
+                <Avatar
+                  sx={{
+                    backgroundColor: blueGrey[300],
+                    width: "33px",
+                    height: "33px",
+                    // backgroundColor: Colors.greyTextBlood,
+                  }}
+                >
                   {index + 1}
                 </Avatar>
               </MultipleOrderListDetailOrder>
+
               <MultipleOrderListDetailName>
                 {order.order.name}
               </MultipleOrderListDetailName>
+
               <MultipleOrderListDetailInfo>
-                <Button
-                  variant="contained"
-                  onClick={() => multipleOrderDetailHandler(order.order.id)}
-                >
-                  詳細資料
-                </Button>
+                <Tooltip title="詳細資料" placement="left" arrow>
+                  <IconButton
+                    onClick={() => multipleOrderDetailHandler(order.order.id)}
+                  >
+                    <HelpRoundedIcon />
+                  </IconButton>
+                </Tooltip>
               </MultipleOrderListDetailInfo>
             </MultipleOrderListDetailBox>
           ))}

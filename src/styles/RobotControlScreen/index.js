@@ -369,9 +369,10 @@ export const MultipleOrderListDetailBox = styled(Box)(({ theme }) => ({
 }));
 
 export const MultipleOrderListDetailOrder = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
   display: "flex",
-  justifyContent: "center",
   alignItems: "center",
+  paddingLeft: "20px",
   width: "25%",
   height: "100%",
 }));
@@ -382,12 +383,16 @@ export const MultipleOrderListDetailName = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "50%",
   height: "100%",
+  color: Colors.greyText,
+  fontWeight: 600,
 }));
 
 export const MultipleOrderListDetailInfo = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "right",
   alignItems: "center",
+  paddingRight: "10px",
   width: "25%",
   height: "100%",
 }));

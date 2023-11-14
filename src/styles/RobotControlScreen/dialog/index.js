@@ -93,6 +93,7 @@ export const OrderText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "finish",
 })(({ theme, finish }) => ({
   color: finish ? Colors.green800 : Colors.greyTextBlood,
+  fontWeight: 600,
 }));
 
 export const WaitToExecuteText = styled(Typography)(({ theme }) => ({

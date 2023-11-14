@@ -1,5 +1,5 @@
 .useAfter::after {
-    content: "Allow upload formats : .csv";
+    content: "允許格式 : .csv";
     position: absolute;
     top: 80%;
     width: 100%;

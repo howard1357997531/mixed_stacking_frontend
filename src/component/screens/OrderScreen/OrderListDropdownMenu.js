@@ -7,7 +7,7 @@ import { Colors } from "../../../styles/theme";
 
 function OrderListDropdownMenu({ onFunctionMenuValue }) {
   const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
-    width: "135px",
+    width: "108px",
     justifyContent: "center",
   }));
 

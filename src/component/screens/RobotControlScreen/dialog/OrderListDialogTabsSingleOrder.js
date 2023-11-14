@@ -62,14 +62,16 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialoggOpen }) {
       ) : orderListData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
       ) : (
-        orderListData.map((order) => (
-          <StyleInnerBox
-            key={order.id}
-            onClick={() => orderListHandler(order.id)}
-          >
-            <StyleInnerSmallBox>{order.name}</StyleInnerSmallBox>
-          </StyleInnerBox>
-        ))
+        orderListData.map((order) =>
+          order.aiTraining_state === "finish_training" ? (
+            <StyleInnerBox
+              key={order.id}
+              onClick={() => orderListHandler(order.id)}
+            >
+              <StyleInnerSmallBox>{order.name}</StyleInnerSmallBox>
+            </StyleInnerBox>
+          ) : null
+        )
       )}
     </StyleBox>
   );

@@ -21,6 +21,7 @@ import {
   OrderListDetailBox,
   OrderListDetailSmallBox,
 } from "../../../../styles/OrderScreen";
+import { Colors } from "../../../../styles/theme";
 
 function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
   const dispatch = useDispatch();
@@ -70,32 +71,54 @@ function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
             <Typography variant="h6" align="center">
               {orderDetail.name}
             </Typography>
-            <Typography>{orderDetail.createdAt}</Typography>
-            <Typography>
+
+            <Typography textAlign="right" fontSize="14px">
               數量: {orderDetail.aiTraining_order.split(",").length}
             </Typography>
 
+            <Typography textAlign="right" fontSize="14px">
+              創建時間: {orderDetail.createdAt}
+            </Typography>
+
             <OrderListDetailBox isTitle={true}>
-              <OrderListDetailSmallBox>名稱</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>寬度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>長度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>高度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>數量</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox color={Colors.brownText}>
+                名稱
+              </OrderListDetailSmallBox>
+              <OrderListDetailSmallBox color={Colors.brownText}>
+                寬度
+              </OrderListDetailSmallBox>
+              <OrderListDetailSmallBox color={Colors.brownText}>
+                長度
+              </OrderListDetailSmallBox>
+              <OrderListDetailSmallBox color={Colors.brownText}>
+                高度
+              </OrderListDetailSmallBox>
+              <OrderListDetailSmallBox color={Colors.brownText}>
+                數量
+              </OrderListDetailSmallBox>
             </OrderListDetailBox>
 
-            {orderDetail.orderItem.map((order, index) => (
-              <OrderListDetailBox key={index} isTitle={false}>
-                <OrderListDetailSmallBox>{order.name}</OrderListDetailSmallBox>
-                <OrderListDetailSmallBox>{order.width}</OrderListDetailSmallBox>
-                <OrderListDetailSmallBox>
-                  {order.height}
-                </OrderListDetailSmallBox>
-                <OrderListDetailSmallBox>{order.depth}</OrderListDetailSmallBox>
-                <OrderListDetailSmallBox>
-                  {order.quantity}
-                </OrderListDetailSmallBox>
-              </OrderListDetailBox>
-            ))}
+            {orderDetail.orderItem.map((order, index) =>
+              order.quantity !== 0 ? (
+                <OrderListDetailBox key={index} isTitle={false}>
+                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                    {order.name}
+                  </OrderListDetailSmallBox>
+                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                    {order.width}
+                  </OrderListDetailSmallBox>
+                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                    {order.height}
+                  </OrderListDetailSmallBox>
+                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                    {order.depth}
+                  </OrderListDetailSmallBox>
+                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                    {order.quantity}
+                  </OrderListDetailSmallBox>
+                </OrderListDetailBox>
+              ) : null
+            )}
           </>
         )}
       </OrderListExeListNameBox>

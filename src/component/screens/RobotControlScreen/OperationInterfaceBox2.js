@@ -57,7 +57,7 @@ function OperationInterfaceBox2() {
         </OperationInterfaceButtonLogo>
 
         <OperationInterfaceButtonText>
-          {mode === "inactivate" ? "執行" : "手臂執行中"}
+          {mode === "inactivate" ? "執行" : "執行中"}
         </OperationInterfaceButtonText>
       </SixtyRadioWidthButton>
 

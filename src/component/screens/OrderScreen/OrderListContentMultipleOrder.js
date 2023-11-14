@@ -40,11 +40,13 @@ function OrderListContentMultipleOrder() {
         itemSelect={order.id === itemSelectId}
         onClick={() => multipleOrderHandler(order.id)}
       >
-        <MultipleOrderName>{order.name}</MultipleOrderName>
+        <MultipleOrderName itemSelect={order.id === itemSelectId}>
+          {order.name}
+        </MultipleOrderName>
 
-        <MultipleOrderDate>
+        {/* <MultipleOrderDate>
           {order.orderSelectId_str.split(",").length}
-        </MultipleOrderDate>
+        </MultipleOrderDate> */}
       </MultipleOrderBox>
     ))
   );

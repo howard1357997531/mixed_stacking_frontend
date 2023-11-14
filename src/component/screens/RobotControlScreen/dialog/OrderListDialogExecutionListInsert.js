@@ -118,12 +118,16 @@ function OrderListDialogExecutionListInsert(props) {
                 <Collapse in={insertCkeck && insertId === order.id}>
                   <ConfirmBox>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       onClick={() => selectInsertOrderHandler(order)}
                     >
                       確定
                     </Button>
-                    <Button variant="outlined" onClick={confirmCancelHandler}>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={confirmCancelHandler}
+                    >
                       取消
                     </Button>
                   </ConfirmBox>

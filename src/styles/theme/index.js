@@ -40,6 +40,7 @@ export const Colors = {
   darkPink: "#DFA9B2",
   darkPinkHover: pink[200],
   grey: "#E2DCD0",
+  grey100: grey[100],
   greyHover: grey[400],
   greyBorder: grey[500],
   grey600: grey[600],

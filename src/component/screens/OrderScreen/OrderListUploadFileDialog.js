@@ -156,10 +156,16 @@ function OrderListUploadFileDialog() {
               style={{ display: "none" }}
               multiple
             />
-            <label htmlFor="file" className="labelStyle">
-              Browse
+            <label
+              htmlFor="file"
+              className="labelStyle"
+              style={{ fontWeight: 600 }}
+            >
+              瀏覽
             </label>
-            <UploadText variant="body1">or drag images here</UploadText>
+            {/* Browse */}
+            {/* or drag images here */}
+            <UploadText variant="body1">或拖曳檔案至此</UploadText>
           </UploadTextBox>
         </StyleDialogContent>
       </BootstrapDialog>

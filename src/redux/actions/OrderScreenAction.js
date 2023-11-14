@@ -172,9 +172,10 @@ export const functionAreaNavButtonAction =
 
     if (mode === "multipleOrder") {
       Swal.fire({
-        title: "請輸入多單名稱",
+        title: "請輸入組合單名稱",
         input: "text",
-        background: Colors.brown,
+        background: Colors.darkGreen,
+        // color: "#fff",
         inputAttributes: {
           autocapitalize: "off",
         },
@@ -208,7 +209,7 @@ export const functionAreaNavButtonAction =
             width: "16em",
             icon: "success",
             title: "建立成功",
-            background: Colors.greyHover,
+            background: Colors.darkGreen,
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {

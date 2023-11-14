@@ -36,10 +36,13 @@ function FunctionAreaMultipleOrderContent({ hasSelect }) {
         <MultipleOrderContentTitle variant="h5">
           {qwe.name}
         </MultipleOrderContentTitle>
-        <Typography>
+        {/* <Typography align="right">
           工單數量: {qwe.orderSelectId_str.split(",").length}
+        </Typography> */}
+
+        <Typography marginBottom={1} align="right" color={Colors.greyText}>
+          創建時間: {qwe.createdAt}
         </Typography>
-        <Typography marginBottom={1}>創建時間: {qwe.createdAt}</Typography>
       </>
     );
   };

@@ -86,9 +86,9 @@ function OperationInterfaceBox3({
             >
               {robotStatePause ? "暫停" : boxText[robotStateMode]["text"]}
             </TextShowBoardText>
-            {robotStateMode === "prepare" && (
+            {robotStateMode === "prepare" && !robotStatePause ? (
               <Dot dotColor={boxText[robotStateMode]["color"]} />
-            )}
+            ) : null}
           </>
         )}
       </TextShowBoardTextBox>

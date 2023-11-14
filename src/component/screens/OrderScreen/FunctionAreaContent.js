@@ -78,7 +78,7 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
               variant="body1"
               align="center"
               sx={{
-                backgroundColor: Colors.brown,
+                backgroundColor: Colors.brownHover,
                 color: "#fff",
                 marginTop: "0px",
                 padding: "5px 0px",
@@ -164,9 +164,9 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
                 transform: "translateY(-50%)",
                 height: "30px",
                 width: "30px",
-                color: Colors.brown,
-                backgroundColor: "transparent",
-                border: `1px solid ${Colors.brown}`,
+                color: Colors.grey100,
+                backgroundColor: Colors.greyBorder,
+                border: `1px solid ${Colors.greyBorder}`,
               }}
             >
               {index + 1}
