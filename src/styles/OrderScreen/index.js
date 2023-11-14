@@ -80,7 +80,7 @@ export const OrderListSearch = styled(Box)(({ theme }) => ({
 }));
 
 export const OrderListDropdown = styled(Box)(({ theme }) => ({
-  width: "30%",
+  width: "25%",
   height: "100%",
 }));
 
@@ -88,7 +88,7 @@ export const OrderListUploadFile = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "right",
   alignItems: "center",
-  width: "30%",
+  width: "25%",
   height: "100%",
 }));
 
@@ -134,10 +134,12 @@ export const OrderListDetial = styled(Box, {
 export const OrderListName = styled(Box, {
   shouldForwardProp: (prop) => prop !== "itemSelect",
 })(({ theme, itemSelect }) => ({
+  boxSizing: "border-box",
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "left",
   alignItems: "center",
-  width: "33%",
+  paddingLeft: "5%",
+  width: "66.6%",
   height: "100%",
   color: itemSelect ? "#fff" : Colors.greyText,
 }));
@@ -157,7 +159,7 @@ export const OrderListState = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "33%",
+  width: "33.3%",
   height: "100%",
 }));
 
@@ -260,12 +262,18 @@ export const CloseIconButton = styled(IconButton)(({ theme }) => ({
   left: 0,
 }));
 
-export const FunctionAreaNavBtn = styled(Button)(({ theme }) => ({
+export const FunctionAreaNavBtn = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "colorData",
+})(({ theme, colorData }) => ({
   position: "absolute",
   right: 0,
+  height: "60%",
+  fontSize: "16px",
   textTransform: "initial",
-  // display:
-  //   functionBoxData.aiTraining_state === "is_training" ? "none" : "block",
+  backgroundColor: colorData[0],
+  "&:hover": {
+    backgroundColor: colorData[1],
+  },
 }));
 
 export const FunctionAreaContentBox = styled(Box, {
@@ -278,6 +286,12 @@ export const FunctionAreaContentBox = styled(Box, {
   border: `1px solid ${Colors.greyBorder}`,
   boxSizing: "border-box",
   padding: ["orderDetail", "multipleOrder"].includes(orderSelectMode) ? 10 : 0,
+}));
+
+export const FunctionAreaContentTitle = styled(Typography)(({ theme }) => ({
+  margin: "10px 0px",
+  textAlign: "center",
+  color: Colors.greyText,
 }));
 
 export const AiIsTraingGifText = styled(Typography)({
@@ -297,12 +311,14 @@ export const OrderListDetailBox = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "40px",
-  borderBottom: `1px solid ${blueGrey[100]}`,
+  borderBottom: `1px solid ${Colors.brown200}`,
+  color: isTitle ? Colors.brown : Colors.greyText,
+  fontWeight: 600,
   "&:hover": {
-    color: !isTitle && deepPurple[500],
+    color: !isTitle && Colors.brown,
     fontSize: !isTitle && "24px",
     fontWeight: !isTitle && 600,
-    backgroundColor: !isTitle && grey[300],
+    backgroundColor: !isTitle && Colors.lightOrangeHover,
     cursor: !isTitle && "pointer",
   },
 }));
@@ -339,10 +355,11 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 export const MenuFunctionBox = styled(Box)(({ theme }) => ({
+  position: "relative",
   display: "flex",
   width: "100%",
   height: "60px",
-  borderBottom: `1px solid ${Colors.grey}`,
+  borderBottom: `1px solid ${Colors.greyHover}`,
 }));
 
 export const MenuFunctionTitle = styled(Typography)(({ theme }) => ({

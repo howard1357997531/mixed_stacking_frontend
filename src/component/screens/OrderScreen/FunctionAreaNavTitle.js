@@ -13,8 +13,8 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
   const titleName = {
     orderDetail: "詳細資訊",
     aiResult: "AI 演算結果",
-    multipleOrder: "多單資料",
-    multipleOrderCreate: "多單建立",
+    multipleOrder: "組合單",
+    multipleOrderCreate: "組合單建立",
     edit: "修改",
     delete: "刪除",
   };

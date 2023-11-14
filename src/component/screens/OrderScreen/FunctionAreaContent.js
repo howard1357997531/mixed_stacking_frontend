@@ -5,6 +5,7 @@ import {
   AiResultBox,
   AiResultSmallBox,
   FunctionAreaContentBox,
+  FunctionAreaContentTitle,
   MenuFunctionBox,
   MenuFunctionTitle,
   OrderListContentMsg,
@@ -12,14 +13,15 @@ import {
   OrderListDetailSmallBox,
 } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
-import { Typography } from "@mui/material";
-import { blueGrey } from "@mui/material/colors";
+import { Avatar, Typography } from "@mui/material";
+import { blueGrey, brown } from "@mui/material/colors";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import FunctionAreaMultipleOrderContent from "./FunctionAreaMultipleOrderContent";
 import CenterText from "../../../tool/CenterText";
 import { AiResultAvatarBgcolor } from "../../../tool/func";
+import { Colors } from "../../../styles/theme";
 
 function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
   const {
@@ -44,6 +46,10 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
     return filterData;
   };
 
+  const trainingText = (text) => {
+    return text === "no_training" ? "尚未演算" : "已演算";
+  };
+
   const Content = () => {
     if (orderSelectMode === "orderDetail") {
       if (aiTrainingState === "is_training") {
@@ -60,16 +66,21 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
       } else {
         return (
           <>
-            <Typography>檔案名稱 : {orderCurrentData.name}</Typography>
-            <Typography>是否演算 : {aiTrainingState}</Typography>
-            <Typography>上傳時間 : {orderCurrentData.createdAt}</Typography>
+            <FunctionAreaContentTitle variant="h5">
+              {orderCurrentData.name}
+            </FunctionAreaContentTitle>
+
+            <Typography textAlign="right" sx={{ color: Colors.greyText }}>
+              上傳時間 : {orderCurrentData.createdAt}
+            </Typography>
+
             <Typography
               variant="body1"
               align="center"
               sx={{
-                backgroundColor: blueGrey[500],
+                backgroundColor: Colors.brown,
                 color: "#fff",
-                marginTop: "10px",
+                marginTop: "0px",
                 padding: "5px 0px",
               }}
             >
@@ -84,19 +95,27 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
               <OrderListDetailSmallBox>數量</OrderListDetailSmallBox>
             </OrderListDetailBox>
 
-            {orderCurrentData.orderItem.map((order, index) => (
-              <OrderListDetailBox key={index} isTitle={false}>
-                <OrderListDetailSmallBox>{order.name}</OrderListDetailSmallBox>
-                <OrderListDetailSmallBox>{order.width}</OrderListDetailSmallBox>
-                <OrderListDetailSmallBox>
-                  {order.height}
-                </OrderListDetailSmallBox>
-                <OrderListDetailSmallBox>{order.depth}</OrderListDetailSmallBox>
-                <OrderListDetailSmallBox>
-                  {order.quantity}
-                </OrderListDetailSmallBox>
-              </OrderListDetailBox>
-            ))}
+            {orderCurrentData.orderItem.map((order, index) =>
+              order.quantity !== 0 ? (
+                <OrderListDetailBox key={index} isTitle={false}>
+                  <OrderListDetailSmallBox>
+                    {order.name}
+                  </OrderListDetailSmallBox>
+                  <OrderListDetailSmallBox>
+                    {order.width}
+                  </OrderListDetailSmallBox>
+                  <OrderListDetailSmallBox>
+                    {order.height}
+                  </OrderListDetailSmallBox>
+                  <OrderListDetailSmallBox>
+                    {order.depth}
+                  </OrderListDetailSmallBox>
+                  <OrderListDetailSmallBox>
+                    {order.quantity}
+                  </OrderListDetailSmallBox>
+                </OrderListDetailBox>
+              ) : null
+            )}
           </>
         );
       }
@@ -135,8 +154,23 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
       return orderSelectIdArray.length === 0 ? (
         <CenterText text={"尚未選擇工單"} />
       ) : (
-        orderSelectIdArray.map((orderId) => (
+        orderSelectIdArray.map((orderId, index) => (
           <MenuFunctionBox key={orderId}>
+            <Avatar
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "15px",
+                transform: "translateY(-50%)",
+                height: "30px",
+                width: "30px",
+                color: Colors.brown,
+                backgroundColor: "transparent",
+                border: `1px solid ${Colors.brown}`,
+              }}
+            >
+              {index + 1}
+            </Avatar>
             <MenuFunctionTitle>
               {createMultipleOrderSelectData(orderId).name}
             </MenuFunctionTitle>

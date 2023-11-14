@@ -42,6 +42,7 @@ export const Colors = {
   grey: "#E2DCD0",
   greyHover: grey[400],
   greyBorder: grey[500],
+  grey600: grey[600],
   greyText: grey[700],
   greyTextBlood: grey[800],
   red: "#FF494B",

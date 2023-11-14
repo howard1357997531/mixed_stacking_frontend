@@ -3,9 +3,14 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material";
-import { brown, grey } from "@mui/material/colors";
+import { Colors } from "../../../styles/theme";
 
 function OrderListDropdownMenu({ onFunctionMenuValue }) {
+  const StyleMenuItem = styled(MenuItem)(({ theme }) => ({
+    width: "135px",
+    justifyContent: "center",
+  }));
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -36,12 +41,13 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
           width: "80%",
           height: "60%",
           color: "#fff",
-          backgroundColor: grey[700],
+          fontSize: "16px",
+          backgroundColor: Colors.grey600,
           textTransform: "capitalize",
           "&:hover": {
             transform: "scale(1.05)",
             transition: "all 0.2s ease-in-out",
-            backgroundColor: grey[800],
+            backgroundColor: Colors.greyText,
             cursor: "pointer",
           },
           "&:active": {
@@ -49,7 +55,7 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
           },
         }}
       >
-        Tool
+        功能
       </Button>
       <Menu
         id="basic-menu"
@@ -60,11 +66,13 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={() => handleClose("multipleOrder")}>
-          多單執行
-        </MenuItem>
-        <MenuItem onClick={() => handleClose("edit")}>修改</MenuItem>
-        <MenuItem onClick={() => handleClose("delete")}>刪除</MenuItem>
+        <StyleMenuItem onClick={() => handleClose("multipleOrder")}>
+          組合單
+        </StyleMenuItem>
+        <StyleMenuItem onClick={() => handleClose("edit")}>修改</StyleMenuItem>
+        <StyleMenuItem onClick={() => handleClose("delete")}>
+          刪除
+        </StyleMenuItem>
       </Menu>
     </div>
   );

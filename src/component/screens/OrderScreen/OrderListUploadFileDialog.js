@@ -13,6 +13,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import "./css/OrderListUploadFileDialog.css";
 import Swal from "sweetalert2";
+import { Colors } from "../../../styles/theme";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -28,12 +29,13 @@ function OrderListUploadFileDialog() {
     width: "80%",
     height: "60%",
     color: "#fff",
-    backgroundColor: brown[500],
+    fontSize: "16px",
+    backgroundColor: Colors.brownHover,
     textTransform: "capitalize",
     "&:hover": {
       transform: "scale(1.05)",
       transition: "all 0.2s ease-in-out",
-      backgroundColor: brown[600],
+      backgroundColor: Colors.brown500,
       cursor: "pointer",
     },
     "&:active": {
@@ -113,7 +115,7 @@ function OrderListUploadFileDialog() {
   return (
     <>
       <WorkListTopUploadFileButton variant="outlined" onClick={handleClickOpen}>
-        Upload
+        上傳
       </WorkListTopUploadFileButton>
       <BootstrapDialog
         maxWidth={false}
@@ -122,7 +124,7 @@ function OrderListUploadFileDialog() {
         open={open}
       >
         <DialogTitle
-          sx={{ m: 0, p: 2, backgroundColor: brown[300] }}
+          sx={{ m: 0, p: 2, backgroundColor: Colors.brown }}
           id="customized-dialog-title"
         ></DialogTitle>
         <IconButton

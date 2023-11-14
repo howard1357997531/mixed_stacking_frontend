@@ -42,71 +42,66 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
       ) : orderListData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
       ) : (
-        orderListData.map((order) => (
-          <OrderListDetial
-            key={order.id}
-            onClick={() => {
-              orderListModeHandler(order.id, order.aiTraining_state);
-            }}
-            itemSelect={orderSelectIdArray.includes(order.id)}
-          >
-            <OrderListName itemSelect={orderSelectIdArray.includes(order.id)}>
-              {order.name}
-            </OrderListName>
+        orderListData.map((order) =>
+          orderSelectMode === "multipleOrderCreate" &&
+          order.aiTraining_state !== "finish_training" ? null : (
+            <OrderListDetial
+              key={order.id}
+              onClick={() => {
+                orderListModeHandler(order.id, order.aiTraining_state);
+              }}
+              itemSelect={orderSelectIdArray.includes(order.id)}
+            >
+              <OrderListName itemSelect={orderSelectIdArray.includes(order.id)}>
+                {order.name}
+              </OrderListName>
 
-            <OrderListDate itemSelect={orderSelectIdArray.includes(order.id)}>
-              {order.modifiedAt}
-            </OrderListDate>
+              {/* <OrderListDate itemSelect={orderSelectIdArray.includes(order.id)}>
+                {order.modifiedAt}
+              </OrderListDate> */}
 
-            <OrderListState>
-              {order.aiTraining_state === "no_training" && (
-                <OrderListStateText
-                  sx={{
-                    color: Colors.purple,
-                  }}
-                >
-                  尚未訓練
-                </OrderListStateText>
-                // <OrderListStateText>
-                //   <TextEffect
-                //     text={"AI演算中"}
-                //     textColor={
-                //       orderSelectIdArray.includes(order.id) ? "#fff" : Colors.greyBorder
-                //     }
-                //   />
-                // </OrderListStateText>
-              )}
+              <OrderListState>
+                {order.aiTraining_state === "no_training" && (
+                  <OrderListStateText
+                    sx={{
+                      color: Colors.purple,
+                    }}
+                  >
+                    尚未演算
+                  </OrderListStateText>
+                )}
 
-              {order.aiTraining_state === "is_training" && (
-                <TextEffect
-                  text={"AI演算中"}
-                  textColor={
-                    orderSelectIdArray.includes(order.id)
-                      ? "#fff"
-                      : Colors.greyBorder
-                  }
-                />
-              )}
-
-              {order.aiTraining_state === "finish_training" && (
-                <OrderListStateText
-                  sx={{
-                    color: orderSelectIdArray.includes(order.id)
-                      ? "#fff"
-                      : Colors.greyBorder,
-                    border: `2px solid ${
+                {order.aiTraining_state === "is_training" && (
+                  <TextEffect
+                    text={"AI演算中"}
+                    textColor={
                       orderSelectIdArray.includes(order.id)
                         ? "#fff"
                         : Colors.greyBorder
-                    }`,
-                  }}
-                >
-                  已訓練
-                </OrderListStateText>
-              )}
-            </OrderListState>
-          </OrderListDetial>
-        ))
+                    }
+                  />
+                )}
+
+                {order.aiTraining_state === "finish_training" && (
+                  <OrderListStateText
+                    sx={{
+                      color: orderSelectIdArray.includes(order.id)
+                        ? "#fff"
+                        : Colors.greyBorder,
+                      border: `2px solid ${
+                        orderSelectIdArray.includes(order.id)
+                          ? "#fff"
+                          : Colors.greyBorder
+                      }`,
+                    }}
+                  >
+                    已演算
+                  </OrderListStateText>
+                )}
+              </OrderListState>
+            </OrderListDetial>
+          )
+        )
       )}
     </>
   );
