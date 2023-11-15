@@ -1,4 +1,4 @@
-.work-list::-webkit-scrollbar {
+/* .work-list::-webkit-scrollbar {
     width: 10px;
 }
 
@@ -8,7 +8,7 @@
 
 .work-list::-webkit-scrollbar-thumb { 
     background-color: #616161;
-}
+} */
 
 .work-list img {
     width: 50px !important;

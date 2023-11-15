@@ -1,8 +1,8 @@
 import React from "react";
 import { OrderListContentBox } from "../../../styles/OrderScreen";
-import "./css/OrderList.css";
 import OrderListContentSingleOrder from "./OrderListContentSingleOrder";
 import OrderListContentMultipleOrder from "./OrderListContentMultipleOrder";
+import "./css/OrderListContent.css";
 
 function OrderListContent(props) {
   const singleOrderNameArray = [
@@ -15,7 +15,7 @@ function OrderListContent(props) {
   ];
 
   return (
-    <OrderListContentBox className="worklist-box">
+    <OrderListContentBox className="order-list">
       {singleOrderNameArray.includes(props.orderSelectMode) ? (
         <OrderListContentSingleOrder {...props} />
       ) : null}

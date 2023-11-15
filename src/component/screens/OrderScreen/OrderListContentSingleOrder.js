@@ -45,73 +45,79 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
         orderListData.map((order) =>
           orderSelectMode === "multipleOrderCreate" &&
           order.aiTraining_state !== "finish_training" ? null : (
-            <OrderListDetial
-              key={order.id}
-              onClick={() => {
-                orderListModeHandler(order.id, order.aiTraining_state);
-              }}
-              itemSelect={
-                orderSelectIdArray.includes(order.id) &&
-                orderSelectMode !== "multipleOrderCreate"
-              }
-            >
-              <OrderListName
+            <>
+              {order.is_today_latest ? (
+                <p>{order.createdAt.slice(0, -7)}</p>
+              ) : null}
+
+              <OrderListDetial
+                key={order.id}
+                onClick={() => {
+                  orderListModeHandler(order.id, order.aiTraining_state);
+                }}
                 itemSelect={
                   orderSelectIdArray.includes(order.id) &&
                   orderSelectMode !== "multipleOrderCreate"
                 }
               >
-                {order.name}
-              </OrderListName>
+                <OrderListName
+                  itemSelect={
+                    orderSelectIdArray.includes(order.id) &&
+                    orderSelectMode !== "multipleOrderCreate"
+                  }
+                >
+                  {order.name}
+                </OrderListName>
 
-              {/* <OrderListDate itemSelect={orderSelectIdArray.includes(order.id)}>
+                {/* <OrderListDate itemSelect={orderSelectIdArray.includes(order.id)}>
                 {order.modifiedAt}
               </OrderListDate> */}
 
-              <OrderListState>
-                {order.aiTraining_state === "no_training" && (
-                  <OrderListStateText
-                    sx={{
-                      color: Colors.purple,
-                    }}
-                  >
-                    尚未演算
-                  </OrderListStateText>
-                )}
+                <OrderListState>
+                  {order.aiTraining_state === "no_training" && (
+                    <OrderListStateText
+                      sx={{
+                        color: Colors.purple,
+                      }}
+                    >
+                      尚未演算
+                    </OrderListStateText>
+                  )}
 
-                {order.aiTraining_state === "is_training" && (
-                  <TextEffect
-                    text={"AI演算中"}
-                    textColor={
-                      orderSelectIdArray.includes(order.id)
-                        ? Colors.grey100
-                        : Colors.greyBorder
-                    }
-                  />
-                )}
-
-                {order.aiTraining_state === "finish_training" && (
-                  <OrderListStateText
-                    sx={{
-                      color: Colors.greyBorder,
-                      backgroundColor:
-                        orderSelectIdArray.includes(order.id) &&
-                        orderSelectMode !== "multipleOrderCreate"
-                          ? Colors.grey100
-                          : "transparent",
-                      border: `2px solid ${
-                        orderSelectIdArray.includes(order.id) &&
-                        orderSelectMode !== "multipleOrderCreate"
+                  {order.aiTraining_state === "is_training" && (
+                    <TextEffect
+                      text={"AI演算中"}
+                      textColor={
+                        orderSelectIdArray.includes(order.id)
                           ? Colors.grey100
                           : Colors.greyBorder
-                      }`,
-                    }}
-                  >
-                    已演算
-                  </OrderListStateText>
-                )}
-              </OrderListState>
-            </OrderListDetial>
+                      }
+                    />
+                  )}
+
+                  {order.aiTraining_state === "finish_training" && (
+                    <OrderListStateText
+                      sx={{
+                        color: Colors.greyBorder,
+                        backgroundColor:
+                          orderSelectIdArray.includes(order.id) &&
+                          orderSelectMode !== "multipleOrderCreate"
+                            ? Colors.grey100
+                            : "transparent",
+                        border: `2px solid ${
+                          orderSelectIdArray.includes(order.id) &&
+                          orderSelectMode !== "multipleOrderCreate"
+                            ? Colors.grey100
+                            : Colors.greyBorder
+                        }`,
+                      }}
+                    >
+                      已演算
+                    </OrderListStateText>
+                  )}
+                </OrderListState>
+              </OrderListDetial>
+            </>
           )
         )
       )}

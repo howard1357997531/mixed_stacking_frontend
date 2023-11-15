@@ -45,17 +45,6 @@
     100% { transform: scale(1);}
 }
 
-/* worklist-box */
-.worklist-box::-webkit-scrollbar {
-    background-color: #e0e0e0;
-    width: 10px
-}
-
-.worklist-box::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #616161;
-}
-
 /* .css-6hp17o-MuiList-root-MuiMenu-list {
     padding: 0px !important;
 } */

@@ -14,7 +14,6 @@ import {
 } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
 import { Avatar, Typography } from "@mui/material";
-import { blueGrey, brown } from "@mui/material/colors";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
@@ -187,7 +186,7 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
   return (
     <FunctionAreaContentBox
       orderSelectMode={orderSelectMode}
-      className="worklist-box"
+      className="order-list"
     >
       {orderListLoading ? (
         <CircularProgress />
