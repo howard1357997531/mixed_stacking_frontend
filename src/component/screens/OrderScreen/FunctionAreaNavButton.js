@@ -15,9 +15,13 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
     (state) => state.orderScreen_orderSelect
   );
 
-  const buttonHandler = (mode, aiTraining_state) => {
+  const buttonHandler = (changeMode, aiTraining_state) => {
     dispatch(
-      functionAreaNavButtonAction(mode, orderSelectIdArray, aiTraining_state)
+      functionAreaNavButtonAction(
+        changeMode,
+        orderSelectIdArray,
+        aiTraining_state
+      )
     );
   };
 
@@ -62,7 +66,7 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
             disableElevation
             variant="contained"
             colorData={[Colors.purple, Colors.purple400]}
-            onClick={() => buttonHandler("orderDetail", "is_training")}
+            onClick={() => buttonHandler("orderDetail", "no_training")}
           >
             AI 演算
           </FunctionAreaNavBtn>

@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { brown } from "@mui/material/colors";
 import { domain } from "../../env";
 import { Colors } from "../../styles/theme";
+import { confirmSwal } from "./swal/RobotControlScreenActionSwal";
 
 export const orderlistSelectAction =
   (mode, orderId, aiTrainingState, orderListData) => (dispatch) => {
@@ -145,11 +146,11 @@ export const functionAreaModeAction = (mode) => (dispatch) => {
 };
 
 export const functionAreaNavButtonAction =
-  (mode, orderSelectIdArray, aiTrainingState) => (dispatch) => {
-    if (mode !== "multipleOrder") {
+  (changeMode, orderSelectIdArray, aiTrainingState) => (dispatch) => {
+    if (changeMode !== "multipleOrder") {
       dispatch({
         type: ORDER_SCREEN_orderList.mode,
-        payload: mode,
+        payload: changeMode,
       });
     } else {
       if (orderSelectIdArray.length === 0) {
@@ -166,11 +167,17 @@ export const functionAreaNavButtonAction =
       }
     }
 
-    if (aiTrainingState === "is_training") {
-      dispatch(aiTrainingAction(mode, orderSelectIdArray[0], aiTrainingState));
+    if (aiTrainingState === "no_training") {
+      confirmSwal("執行 AI 演算?").then((result) => {
+        if (result.isConfirmed) {
+          dispatch(
+            aiTrainingAction(changeMode, orderSelectIdArray[0], aiTrainingState)
+          );
+        }
+      });
     }
 
-    if (mode === "multipleOrder") {
+    if (changeMode === "multipleOrder") {
       Swal.fire({
         title: "請輸入組合單名稱",
         input: "text",
@@ -220,7 +227,7 @@ export const functionAreaNavButtonAction =
 
             dispatch({
               type: ORDER_SCREEN_orderList.mode,
-              payload: mode,
+              payload: changeMode,
             });
           });
         }

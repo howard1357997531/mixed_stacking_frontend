@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Colors } from "../theme";
 import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
+import { OrderListExeListWaitToExecuteAnimation } from "../../animation";
 
 export const OrderContainer = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
@@ -117,6 +118,14 @@ export const OrderListContentMsg = styled(Typography)(({ theme }) => ({
   color: Colors.greyText,
 }));
 
+export const OrderListDate = styled(Typography)(({ theme }) => ({
+  borderTop: `1px solid ${Colors.greyBorder}`,
+  borderBottom: `1px solid ${Colors.greyBorder}`,
+  background: Colors.lightOrangeHover,
+  color: Colors.greyText,
+  padding: "5px 10px",
+}));
+
 export const OrderListDetial = styled(Box, {
   shouldForwardProp: (prop) => prop !== "itemSelect",
 })(({ theme, itemSelect }) => ({
@@ -124,9 +133,11 @@ export const OrderListDetial = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "60px",
-  backgroundColor: itemSelect ? Colors.greyHover : null,
+  backgroundColor: itemSelect ? Colors.lightbrown200 : null,
   "&:hover": {
-    backgroundColor: itemSelect ? Colors.greyHover : Colors.lightOrangeHover,
+    backgroundColor: itemSelect
+      ? Colors.lightbrown200
+      : Colors.lightOrangeHover,
     cursor: "pointer",
   },
 }));
@@ -138,38 +149,24 @@ export const OrderListName = styled(Box, {
   display: "flex",
   justifyContent: "left",
   alignItems: "center",
-  paddingLeft: "8%",
-  width: "66.6%",
+  paddingLeft: "20px",
+  width: "100%",
   height: "100%",
   color: itemSelect ? Colors.grey100 : Colors.greyText,
   fontWeight: itemSelect ? 600 : "initial",
 }));
 
-export const OrderListDate = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "itemSelect",
-})(({ theme, itemSelect }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "33%",
-  height: "100%",
-  color: itemSelect ? "#fff" : Colors.greyText,
-}));
-
 export const OrderListState = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "right",
   alignItems: "center",
-  width: "33.3%",
+  paddingRight: "20px",
+  width: "100%",
   height: "100%",
 }));
 
-export const OrderListStateText = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "40%",
-  padding: "6px 0px",
+export const OrderListStateText = styled(Typography)(({ theme }) => ({
+  display: "inline-block",
   fontSize: "16px",
   fontWeight: 600,
 }));
@@ -272,6 +269,9 @@ export const FunctionAreaNavBtn = styled(Button, {
   fontSize: "16px",
   textTransform: "initial",
   backgroundColor: colorData[0],
+  animation:
+    colorData[0] === Colors.purple &&
+    `${OrderListExeListWaitToExecuteAnimation} 1s infinite`,
   "&:hover": {
     backgroundColor: colorData[1],
   },

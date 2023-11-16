@@ -29,7 +29,7 @@ export const Colors = {
   ///////////////
   bgcolorLightorange: "#FFF7EC",
   lightOrange: "#FFDDB0",
-  lightOrangeHover: "#f3cc99",
+  lightOrangeHover: "#f4d3a8",
   orange: "#FE4A1B",
   lightGreen: "#01FCAC",
   softGreen: "#61d1c68b",
@@ -63,6 +63,7 @@ export const Colors = {
   yellow: yellow[500],
   lightYellow: yellow[300],
   brown200: brown[200],
+  lightbrown200: "#9e9e9e8b",
   brown: brown[300],
   brownHover: brown[400],
   brown500: brown[500],

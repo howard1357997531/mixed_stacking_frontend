@@ -1,7 +1,4 @@
 .order-list::-webkit-scrollbar {
-    width: 5px
+    width: 0px;
 }
 
-.order-list::-webkit-scrollbar-thumb {
-    background-color: #616161;
-}

@@ -9,7 +9,7 @@ export const basicSwal = (icon, title, background) => {
   });
 };
 
-export const confirmSwal = (title, text) => {
+export const confirmSwal = (title, text = "") => {
   return Swal.fire({
     title: title,
     text: text,

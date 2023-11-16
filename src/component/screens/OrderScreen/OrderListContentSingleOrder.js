@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   OrderListContentMsg,
   OrderListDate,
@@ -42,23 +42,24 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
       ) : orderListData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
       ) : (
-        orderListData.map((order) =>
+        orderListData.map((order, index) =>
           orderSelectMode === "multipleOrderCreate" &&
           order.aiTraining_state !== "finish_training" ? null : (
-            <>
+            <Fragment key={order.id}>
               {order.is_today_latest ? (
-                <p>{order.createdAt.slice(0, -7)}</p>
+                <OrderListDate sx={{ borderTop: index === 0 && "none" }}>
+                  {order.createdAt.slice(0, -7)}
+                </OrderListDate>
               ) : null}
 
               <OrderListDetial
-                key={order.id}
-                onClick={() => {
-                  orderListModeHandler(order.id, order.aiTraining_state);
-                }}
                 itemSelect={
                   orderSelectIdArray.includes(order.id) &&
                   orderSelectMode !== "multipleOrderCreate"
                 }
+                onClick={() => {
+                  orderListModeHandler(order.id, order.aiTraining_state);
+                }}
               >
                 <OrderListName
                   itemSelect={
@@ -98,7 +99,8 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                   {order.aiTraining_state === "finish_training" && (
                     <OrderListStateText
                       sx={{
-                        color: Colors.greyBorder,
+                        padding: "4px 6px",
+                        color: Colors.brown200,
                         backgroundColor:
                           orderSelectIdArray.includes(order.id) &&
                           orderSelectMode !== "multipleOrderCreate"
@@ -108,7 +110,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                           orderSelectIdArray.includes(order.id) &&
                           orderSelectMode !== "multipleOrderCreate"
                             ? Colors.grey100
-                            : Colors.greyBorder
+                            : Colors.brown200
                         }`,
                       }}
                     >
@@ -117,7 +119,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                   )}
                 </OrderListState>
               </OrderListDetial>
-            </>
+            </Fragment>
           )
         )
       )}
