@@ -15,6 +15,7 @@ import {
 } from "./redux/actions/OrderActions";
 import { confirmSwal } from "./redux/actions/swal/RobotControlScreenActionSwal";
 import { robotExecutionAlertAction } from "./redux/actions/RobotControlScreenAction";
+import SelectItemScreen from "./component/screen/SelectItemScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -189,6 +190,7 @@ function App() {
           path="/control-robot-socket"
           element={<ControlRobotScreen_socket />}
         />
+        <Route path="demo1-select-item" element={<SelectItemScreen />} />
       </Routes>
     </Router>
   );

@@ -180,14 +180,6 @@ function SelectItemScreen() {
     } else {
       setListDailogOpen(!listDailogOpen);
     }
-
-    // else if (totalCount > 50) {
-    //   Swal.fire({
-    //     title: "數量不能大於 40 個",
-    //     icon: "warning",
-    //     background: indigo[200],
-    //   });
-    // }
   };
 
   const itemTop = [
