@@ -20,6 +20,8 @@ import OrderListDialog from "./dialog/OrderListDialog";
 import TextEffect2 from "../../../tool/TextEffect2";
 import { Box, Slide } from "@mui/material";
 
+// demo1 可能要把 realtimeVisualCount 改成 realtimeItemCount
+// App.js box1 slider useEffect 也要修改
 function OperationInterfaceBox1({
   orderSelectData,
   informationAreaMode,
@@ -27,6 +29,8 @@ function OperationInterfaceBox1({
   realtimeItemMode,
   realtimeItemCount,
   realtimeVisualMode,
+  realtimeVisualResult,
+  realtimeVisualCount,
   objectName,
   objectNextName,
   robotExecutionData,
@@ -35,6 +39,12 @@ function OperationInterfaceBox1({
   const onOrderListDialoggOpen = (state) => {
     setOrderListDialogOpen(state);
   };
+
+  if (orderSelectData.length !== 0) {
+    console.log(orderSelectData.aiTraining_order.split(","));
+    console.log("inner:", realtimeVisualResult);
+    console.log("inner count", realtimeVisualCount);
+  }
 
   const realtimeAllText = {
     detect: { text: "物件偵測中", color: Colors.greyTextBlood },
@@ -59,11 +69,12 @@ function OperationInterfaceBox1({
         var visualTitle = "請放料";
         var objectNextTitle = "下一個";
       } else {
-        var visualTitle = realtimeItemCount < orderTotal ? "請放料" : "最後料";
+        var visualTitle =
+          realtimeVisualCount < orderTotal ? "請放料" : "最後料";
         var objectNextTitle =
-          realtimeItemCount + 1 < orderTotal
+          realtimeVisualCount + 1 < orderTotal
             ? "下一個"
-            : realtimeItemCount !== orderTotal
+            : realtimeVisualCount !== orderTotal
             ? "最後一個"
             : "";
       }
@@ -74,15 +85,16 @@ function OperationInterfaceBox1({
   const objectNameRef = useRef();
   const [slideShow, setSlideShow] = useState(true);
 
+  // 當 realtimeVisualCount 改變時 slider 的特效
   useEffect(() => {
-    if (realtimeItemCount !== 1) {
+    if (realtimeVisualCount !== 1) {
       setSlideShow(false);
     }
 
     setTimeout(() => {
       setSlideShow(true);
     }, 600);
-  }, [realtimeItemCount]);
+  }, [realtimeVisualCount]);
 
   return (
     <FortyRadioHeightBox>

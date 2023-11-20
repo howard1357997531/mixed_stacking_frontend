@@ -46,8 +46,11 @@ function App() {
     mode: realtimeVisualMode,
     name: objectName,
     nextName: objectNextName,
+    visualResult: realtimeVisualResult,
+    visualCount: realtimeVisualCount,
   } = useSelector((state) => state.robotControlScreen_realtimeVisual);
 
+  // box1 slider
   useEffect(() => {
     if (orderSelectData.length !== 0) {
       const orderList = orderSelectData.aiTraining_order.split(",");
@@ -115,6 +118,20 @@ function App() {
           });
         }
       }
+
+      if (realtimeData.visual_result) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+          payload: { visualResult: realtimeData.visual_result },
+        });
+      }
+
+      if (realtimeData.visual_count) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+          payload: { visualCount: realtimeData.visual_count },
+        });
+      }
     };
 
     socket.onclose = (event) => {
@@ -126,6 +143,7 @@ function App() {
     };
   }, [dispatch]);
 
+  // loading orderList and multipleOrderList
   useEffect(() => {
     dispatch(orderListAction());
     dispatch(multipleOrderListAction());
@@ -149,6 +167,8 @@ function App() {
     realtimeItemMode,
     realtimeItemCount,
     realtimeVisualMode,
+    realtimeVisualResult,
+    realtimeVisualCount,
     objectName,
     objectNextName,
     robotExecutionData,

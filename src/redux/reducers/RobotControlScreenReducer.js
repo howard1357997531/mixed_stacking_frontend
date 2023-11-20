@@ -122,8 +122,14 @@ export const robotControlScreen_realtimeItemReducer = (
   }
 };
 
-export const robotControlScreen_realtimeVisualReducer = (
-  state = { mode: null, name: null, nextName: null },
+export const robotControlScree_realtimeVisualReducer = (
+  state = {
+    mode: null,
+    name: null,
+    nextName: null,
+    visualResult: [],
+    visualCount: 1,
+  },
   action
 ) => {
   switch (action.type) {
