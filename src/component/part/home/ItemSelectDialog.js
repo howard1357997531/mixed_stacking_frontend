@@ -98,7 +98,8 @@ function ItemSelectDialog({ listDailogOpen, onListDailogOpen, data, data2 }) {
               icon: "success",
               background: indigo[200],
             }).then((res) => {
-              navigate("/ai-training");
+              navigate("/order");
+              window.location.reload();
             });
           });
       } catch (error) {

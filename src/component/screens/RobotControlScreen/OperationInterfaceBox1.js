@@ -20,7 +20,8 @@ import OrderListDialog from "./dialog/OrderListDialog";
 import TextEffect2 from "../../../tool/TextEffect2";
 import { Box, Slide } from "@mui/material";
 
-// demo1 可能要把 realtimeVisualCount 改成 realtimeItemCount
+// demo1 可能要把 realtime-Visual-Count 改成 realtimeItemCount
+// 視覺辨識區要改 30% 70% fontSize: 26
 // App.js box1 slider useEffect 也要修改
 function OperationInterfaceBox1({
   orderSelectData,
@@ -41,9 +42,9 @@ function OperationInterfaceBox1({
   };
 
   if (orderSelectData.length !== 0) {
-    console.log(orderSelectData.aiTraining_order.split(","));
-    console.log("inner:", realtimeVisualResult);
-    console.log("inner count", realtimeVisualCount);
+    // console.log(orderSelectData.aiTraining_order.split(","));
+    // console.log("inner:", realtimeVisualResult);
+    // console.log("inner count", realtimeVisualCount);
   }
 
   const realtimeAllText = {
@@ -69,6 +70,7 @@ function OperationInterfaceBox1({
         var visualTitle = "請放料";
         var objectNextTitle = "下一個";
       } else {
+        // realtimeItemCount realtimeVisualCount
         var visualTitle =
           realtimeVisualCount < orderTotal ? "請放料" : "最後料";
         var objectNextTitle =
@@ -85,7 +87,7 @@ function OperationInterfaceBox1({
   const objectNameRef = useRef();
   const [slideShow, setSlideShow] = useState(true);
 
-  // 當 realtimeVisualCount 改變時 slider 的特效
+  // 當 realtime-Visual-Count 改變時 slider 的特效
   useEffect(() => {
     if (realtimeVisualCount !== 1) {
       setSlideShow(false);
@@ -131,8 +133,10 @@ function OperationInterfaceBox1({
 
         <VisualIdentityBox>
           {!["inactivate", "reset"].includes(robotStateMode) ? (
+            // 30% 70% fontSize: 26
             <>
               <VisualIdentityTitle>{visualTitle}</VisualIdentityTitle>
+
               <VisualIdentityObject ref={objectNameRef}>
                 <Slide
                   direction={slideShow ? "left" : "right"} //從哪邊來或是哪邊離開

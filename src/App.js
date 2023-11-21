@@ -52,6 +52,10 @@ function App() {
   } = useSelector((state) => state.robotControlScreen_realtimeVisual);
 
   // box1 slider
+  // 為了slider可以穩定輸出
+  // 第一個物件和下一個物件名稱一開始就會顯示(robot_mode=activate && !realtimeItemMode)
+  // 後台不會用websocket回傳第一個物件和第一個物件下一個名稱，會從第二個開始回傳
+
   useEffect(() => {
     if (orderSelectData.length !== 0) {
       const orderList = orderSelectData.aiTraining_order.split(",");

@@ -153,13 +153,14 @@ export const functionAreaNavButtonAction =
         payload: changeMode,
       });
     } else {
+      // 組合單建立
       if (orderSelectIdArray.length === 0) {
         Swal.fire({
           position: "center",
           width: "16em",
           icon: "warning",
-          title: "尚未選擇工單",
-          background: Colors.brownHover,
+          title: "尚未選擇供單",
+          background: Colors.brown,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -171,7 +172,7 @@ export const functionAreaNavButtonAction =
       confirmSwal("執行 AI 演算?").then((result) => {
         if (result.isConfirmed) {
           dispatch(
-            aiTrainingAction(changeMode, orderSelectIdArray[0], aiTrainingState)
+            aiTrainingAction(changeMode, orderSelectIdArray[0], "is_training")
           );
         }
       });

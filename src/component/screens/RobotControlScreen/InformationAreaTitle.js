@@ -13,6 +13,7 @@ function InformationAreaTitle({
   informationAreaMode,
   robotStateMode,
   realtimeItemMode,
+  robotExecutionData,
 }) {
   const Title = styled(Box)(({ theme }) => ({
     fontWeight: 600,
@@ -25,6 +26,8 @@ function InformationAreaTitle({
   const { data: multipleOrderSelectData } = useSelector(
     (state) => state.robotControlScreen_multipleOrderSelect
   );
+
+  const { executeOrderId } = robotExecutionData;
 
   const changeModeHandler = (mode) => {
     dispatch({
@@ -56,11 +59,11 @@ function InformationAreaTitle({
         </OrderListTitleButton>
       )}
 
-      {informationAreaMode === "success" && (
+      {informationAreaMode === "success" && executeOrderId.length !== 0 ? (
         <OrderListTitleButton onClick={() => changeModeHandler("order")}>
           待執行工單
         </OrderListTitleButton>
-      )}
+      ) : null}
     </InformationAreaTitleBox>
   );
 }
