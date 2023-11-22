@@ -4,14 +4,6 @@
 }
 
 .orderlist::-webkit-scrollbar {
-    width: 10px
-}
-
-.orderlist::-webkit-scrollbar-track{
-    background-color: #a1887f;
-}
-
-.orderlist::-webkit-scrollbar-thumb{
-    background-color: #795548;
+    width: 0px
 }
 

@@ -54,7 +54,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialoggOpen }) {
     onOrderListDialoggOpen(false);
   };
   return (
-    <StyleBox className="dialog-box">
+    <StyleBox className="dialog-order-box">
       {orderListLoading ? (
         <LoadingCircle />
       ) : orderListError ? (

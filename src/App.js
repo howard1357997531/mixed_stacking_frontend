@@ -81,7 +81,7 @@ function App() {
     socket.onmessage = (event) => {
       const realtimeData = JSON.parse(event.data);
 
-      console.log(event);
+      // console.log(event);
       if (realtimeData.count) {
         dispatch({
           type: ROBOT_CONTROL_SCREEN.realtimeItem,

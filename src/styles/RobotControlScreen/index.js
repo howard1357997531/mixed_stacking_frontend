@@ -247,7 +247,7 @@ export const InformationAreaContentBox = styled(Box, {
   position: "relative",
   width: "80%",
   height: "80%",
-  border: `1px ${hasOrderList ? "solid" : "dashed"} ${Colors.greyText}`,
+  border: `1px ${hasOrderList ? "solid" : "dashed"} ${Colors.brown}`,
 }));
 
 export const InformationAreaBottomBox = styled(Box)(({ theme }) => ({
@@ -334,7 +334,12 @@ export const OrderListTitle = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "8%",
-  backgroundColor: blueGrey[500],
+  backgroundColor: Colors.brown,
+}));
+
+export const OrderListTitleText = styled(Typography)(({ theme }) => ({
+  textAlign: "center",
+  color: "#fff",
 }));
 
 export const OrderListContent = styled(Box)(({ theme }) => ({
@@ -343,10 +348,13 @@ export const OrderListContent = styled(Box)(({ theme }) => ({
   overflowY: "auto",
 }));
 
-export const OrderListContentBox = styled(Box)(({ theme }) => ({
+export const OrderListContentBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isDoing",
+})(({ theme, isDoing }) => ({
   display: "flex",
   width: "100%",
   height: "60px",
+  backgroundColor: isDoing ? Colors.brown200 : "transparent",
 }));
 
 export const OrderListContentSmBox = styled(Box)(({ theme }) => ({

@@ -41,11 +41,11 @@ function OperationInterfaceBox1({
     setOrderListDialogOpen(state);
   };
 
-  if (orderSelectData.length !== 0) {
-    // console.log(orderSelectData.aiTraining_order.split(","));
-    // console.log("inner:", realtimeVisualResult);
-    // console.log("inner count", realtimeVisualCount);
-  }
+  // if (orderSelectData.length !== 0) {
+  //   console.log(orderSelectData.aiTraining_order.split(","));
+  //   console.log("inner:", realtimeVisualResult);
+  //   console.log("inner count", realtimeVisualCount);
+  // }
 
   const realtimeAllText = {
     detect: { text: "物件偵測中", color: Colors.greyTextBlood },
@@ -133,7 +133,8 @@ function OperationInterfaceBox1({
 
         <VisualIdentityBox>
           {!["inactivate", "reset"].includes(robotStateMode) ? (
-            // 30% 70% fontSize: 26
+            // 20% 50% fontSize: 20
+            // 30% 50% fontSize: 26
             <>
               <VisualIdentityTitle>{visualTitle}</VisualIdentityTitle>
 
@@ -184,6 +185,7 @@ function OperationInterfaceBox1({
             </>
           ) : null}
 
+          {/* demo1 註解 */}
           <VisualIdentityState>
             {!realtimeVisualMode && robotStateMode === "activate" && (
               <VisualIdentityStateText sx={{ color: "#999999" }}>

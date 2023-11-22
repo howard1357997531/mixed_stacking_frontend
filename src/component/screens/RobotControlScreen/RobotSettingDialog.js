@@ -205,7 +205,7 @@ function RobotSettingDialog({
             {/* reset */}
             <StyleSmallBox>
               <StyleButton
-                customColor={[deepOrange[400], deepOrange[500]]}
+                customColor={[Colors.softOrange, Colors.softOrangeHover]}
                 onClick={() => robotSettingHandler("reset")}
               >
                 <StyleButtonLogo>

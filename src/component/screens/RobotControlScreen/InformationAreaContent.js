@@ -12,13 +12,13 @@ import {
   OrderListContentBox,
   OrderListContentSmBox,
   OrderListTitle,
+  OrderListTitleText,
   RobotSuccessBox,
   RobotSuccessSubTitle,
   RobotSuccessTitle,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Button, IconButton, Tooltip, Typography } from "@mui/material";
-import "./css/InformationAreaContent.css";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import MultipleOrderInfoDetailDialog from "./dialog/MultipleOrderInfoDetailDialog";
@@ -29,6 +29,10 @@ import {
   StyleHelpRoundedIcon,
 } from "../../../styles/RobotControlScreen/dialog";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+import CheckIcon from "@mui/icons-material/Check";
+import WarningIcon from "@mui/icons-material/Warning";
+import { OrderListDate } from "../../../styles/OrderScreen";
+import "./css/InformationAreaContent.css";
 
 function InformationAreaContent({
   orderSelectData,
@@ -36,6 +40,8 @@ function InformationAreaContent({
   robotStateMode,
   realtimeItemMode,
   realtimeItemCount,
+  realtimeVisualResult,
+  realtimeVisualCount,
 }) {
   const dispatch = useDispatch();
 
@@ -59,6 +65,46 @@ function InformationAreaContent({
     9: "86 * 64 * 46 (mm)",
     26: "144 * 50 * 40 (mm)",
     35: "204 * 92 * 36 (mm)",
+  };
+
+  if (orderSelectData.length !== 0) {
+    var detectState = orderSelectData.aiTraining_order.split(",");
+    const detectArea = detectState.slice(
+      realtimeVisualCount - 1,
+      realtimeVisualResult.length + realtimeVisualCount - 1
+    );
+    console.log("realtimeVisualCount:", realtimeVisualCount);
+    console.log("result:", realtimeVisualResult);
+    console.log("detectArea:", detectArea);
+    const compare = detectArea.map((detect, index) => {
+      if (detect === realtimeVisualResult[index]) {
+        return detect;
+      } else {
+        return "err";
+      }
+    });
+    console.log("compare:", compare);
+    detectState.splice(
+      realtimeVisualCount - 1,
+      realtimeVisualResult.length,
+      ...compare
+    );
+    console.log("detectState:", detectState);
+  }
+
+  const compareResult = (index) => {
+    if (index + 1 < realtimeVisualCount) {
+      return "";
+    }
+    if (index + 2 > realtimeVisualCount + realtimeVisualResult.length) {
+      return "";
+    }
+    const orderList = orderSelectData.aiTraining_order.split(",");
+    if (detectState[index] === orderList[index]) {
+      return <CheckIcon sx={{ color: Colors.darkGreen }} />;
+    } else {
+      return <WarningIcon sx={{ color: Colors.red800 }} />;
+    }
   };
 
   const [
@@ -95,50 +141,29 @@ function InformationAreaContent({
         </RobotSuccessBox>
       ) : null}
 
+      {informationAreaMode === "reset" ? (
+        <RobotSuccessBox>
+          <RobotSuccessTitle sx={{ color: Colors.softOrange }}>
+            重置成功
+          </RobotSuccessTitle>
+
+          <RobotSuccessSubTitle>請重新選擇工單</RobotSuccessSubTitle>
+        </RobotSuccessBox>
+      ) : null}
+
       {informationAreaMode === "order" ? (
         <OrderListBox>
           <OrderListTitle>
-            <Typography
-              sx={{
-                textAlign: "center",
-                color: "#fff",
-                width: "25%",
-              }}
-            >
-              次序
-            </Typography>
-            <Typography
-              sx={{
-                textAlign: "center",
-                color: "#fff",
-                width: "35%",
-                marginLeft: "15px",
-              }}
-            >
-              名稱
-            </Typography>
-            <Typography
-              sx={{
-                textAlign: "center",
-                color: "#fff",
-                width: "40%",
-                marginRight: "10px",
-              }}
-            >
-              尺寸
-            </Typography>
+            <OrderListTitleText width="25%">次序</OrderListTitleText>
+            <OrderListTitleText width="35%">名稱</OrderListTitleText>
+            <OrderListTitleText width="40%">尺寸</OrderListTitleText>
           </OrderListTitle>
 
           <OrderListContent className="orderlist">
             {orderSelectData.aiTraining_order.split(",").map((order, index) => (
               <OrderListContentBox
                 key={index}
-                sx={{
-                  backgroundColor:
-                    realtimeItemCount === index + 1
-                      ? Colors.brown
-                      : "transparent",
-                }}
+                isDoing={realtimeItemCount === index + 1}
               >
                 <OrderListContentSmBox width="25%">
                   <Avatar
@@ -161,8 +186,14 @@ function InformationAreaContent({
                   {order}
                 </OrderListContentSmBox>
 
-                <OrderListContentSmBox width="40%">
+                {/* <OrderListContentSmBox width="40%">
                   {itemSize[order]}
+                </OrderListContentSmBox> */}
+
+                <OrderListContentSmBox width="40%">
+                  {realtimeVisualResult.length !== 0
+                    ? compareResult(index)
+                    : itemSize[order]}
                 </OrderListContentSmBox>
               </OrderListContentBox>
             ))}

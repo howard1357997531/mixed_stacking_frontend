@@ -125,7 +125,8 @@ export const executeRobotAction =
                 const state = res.data.robot_state;
                 const mode = state === "finish" ? "inactivate" : "reset";
                 const text = state === "finish" ? "已結束" : "已重置";
-
+                const success = state === "finish" ? "success" : "reset";
+                console.log(state);
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
                   payload: res.data,
@@ -140,7 +141,7 @@ export const executeRobotAction =
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.informationArea,
-                  payload: { mode: "success" },
+                  payload: { mode: success },
                 });
 
                 dispatch({
@@ -155,7 +156,7 @@ export const executeRobotAction =
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.realtimeVisual,
-                  payload: { mode: null },
+                  payload: { mode: null, visualResult: [], visualCount: 1 },
                 });
 
                 const robotExecutionCheck =

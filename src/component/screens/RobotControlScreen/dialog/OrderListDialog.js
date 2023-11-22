@@ -7,6 +7,7 @@ import OrderListDialogExecutionList from "./OrderListDialogExecutionList";
 import { useSelector } from "react-redux";
 import { brown } from "@mui/material/colors";
 import "./css/OrderListDialog.css";
+import { Colors } from "../../../../styles/theme";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -38,7 +39,7 @@ function OrderListDialog(props) {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogContent
-          sx={{ backgroundColor: brown[300], padding: 0, width: "400px" }}
+          sx={{ backgroundColor: Colors.brown, padding: 0, width: "400px" }}
         >
           {["inactivate", "reset"].includes(props.robotStateMode) &&
           queue === 1 ? (
