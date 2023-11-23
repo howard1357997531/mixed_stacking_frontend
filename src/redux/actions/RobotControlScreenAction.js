@@ -85,10 +85,17 @@ const replaceInsertName = (name) => {
 };
 
 export const executeRobotAction =
-  (robotStateMode, multipleOrderSelectData, robotExecutionData) =>
-  (dispatch) => {
-    const { executeOrderId, name, queue, allData } = robotExecutionData;
+  (robotStateMode, informationAreaMode, robotExecutionData) => (dispatch) => {
+    const { executeOrderId, name, allData } = robotExecutionData;
     const executeLength = executeOrderId.length;
+    const tempQueue = robotExecutionData.queue;
+
+    if (informationAreaMode === "multipleOrder") {
+      var queue = tempQueue;
+    } else {
+      var queue = executeLength === 1 ? tempQueue : tempQueue + 1;
+    }
+
     if (executeLength === 0) {
       basicSwal("warning", "請選擇工單", "#a1887f");
       return;
@@ -112,8 +119,24 @@ export const executeRobotAction =
 
             dispatch({
               type: ROBOT_CONTROL_SCREEN.informationArea,
-              payload: { mode: "picture" },
+              payload: { mode: "order" },
             });
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+              payload: { isDoing: true },
+            });
+
+            // 此單不是第一次從這進來
+            if (
+              informationAreaMode !== "multipleOrder" &&
+              executeLength !== 1
+            ) {
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+                payload: { queue: tempQueue + 1 },
+              });
+            }
 
             dispatch({
               type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
@@ -125,14 +148,14 @@ export const executeRobotAction =
                 const state = res.data.robot_state;
                 const mode = state === "finish" ? "inactivate" : "reset";
                 const text = state === "finish" ? "已結束" : "已重置";
-                const success = state === "finish" ? "success" : "reset";
-                console.log(state);
+                const is_success = state === "finish" ? "success" : "reset";
+
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
                   payload: res.data,
                 });
 
-                if (allData.length > 1) {
+                if (executeLength > 1 && executeLength > queue) {
                   dispatch({
                     type: ROBOT_CONTROL_SCREEN.orderSelect,
                     payload: { data: allData[queue] },
@@ -141,7 +164,7 @@ export const executeRobotAction =
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.informationArea,
-                  payload: { mode: success },
+                  payload: { mode: is_success },
                 });
 
                 dispatch({
@@ -159,18 +182,23 @@ export const executeRobotAction =
                   payload: { mode: null, visualResult: [], visualCount: 1 },
                 });
 
+                // multipleOrder 只有兩單情況，executeLength = 2 會等於 queue + 1 = 2
                 const robotExecutionCheck =
-                  executeLength > queue
-                    ? { queue: queue + 1 }
+                  informationAreaMode === "multipleOrder"
+                    ? { queue }
+                    : executeLength > queue
+                    ? { queue }
                     : {
+                        isDoing: false,
                         executeOrderId: [],
                         name: [],
                         queue: 1,
+                        allData: [],
                       };
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-                  payload: robotExecutionCheck,
+                  payload: { check: true, ...robotExecutionCheck },
                 });
               });
           } catch (error) {
@@ -179,6 +207,14 @@ export const executeRobotAction =
               type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
               payload: err_msg,
             });
+
+            // 不管單或多單第一次進來都是 queue === 1
+            if (queue === 1) {
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+                payload: { isDoing: false },
+              });
+            }
 
             timerSwal("warning", err_msg, Colors.brownHover, 2000);
           }
@@ -229,91 +265,103 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
   }
 };
 
-export const robotExecutionAlertAction =
-  (multipleOrderSelectData, robotExecutionData) => (dispatch) => {
-    const { executeOrderId, name, queue, allData } = robotExecutionData;
-    confirmSwal2(
-      `確定執行?`,
-      `${replaceInsertName(name.at(queue - 1))} (${queue}/${name.length})`
-    ).then((result) => {
-      if (result.isConfirmed) {
-        const orderId = executeOrderId.at(queue - 1);
-        try {
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN.robotState,
-            payload: { mode: "activate" },
-          });
+export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
+  const { executeOrderId, name, allData } = robotExecutionData;
+  const executeLength = executeOrderId.length;
+  const queue = robotExecutionData.queue + 1;
+
+  confirmSwal2(
+    `確定執行?`,
+    `${replaceInsertName(name.at(queue - 1))} (${queue}/${name.length})`
+  ).then((result) => {
+    if (result.isConfirmed) {
+      const orderId = executeOrderId.at(queue - 1);
+      try {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotState,
+          payload: { mode: "activate" },
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.informationArea,
+          payload: { mode: "order" },
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+          payload: { queue },
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
+        });
+
+        axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
+          const state = res.data.robot_state;
+          const mode = state === "finish" ? "inactivate" : "reset";
+          const text = state === "finish" ? "已結束" : "已重置";
+          const is_success = state === "finish" ? "success" : "reset";
 
           dispatch({
-            type: ROBOT_CONTROL_SCREEN.informationArea,
-            payload: { mode: "picture" },
+            type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
+            payload: res.data,
           });
 
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
-          });
-
-          axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
-            const state = res.data.robot_state;
-            const mode = state === "finish" ? "inactivate" : "reset";
-            const text = state === "finish" ? "已結束" : "已重置";
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
-              payload: res.data,
-            });
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.informationArea,
-              payload: { mode: "success" },
-            });
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotState,
-              payload: { mode, text, speed: 50 },
-            });
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.realtimeItem,
-              payload: { mode: null, count: null },
-            });
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.realtimeVisual,
-              payload: { mode: null },
-            });
-
+          if (executeLength > 1 && executeLength > queue) {
             dispatch({
               type: ROBOT_CONTROL_SCREEN.orderSelect,
               payload: { data: allData[queue] },
             });
+          }
 
-            const robotExecutionCheck =
-              executeOrderId.length > queue
-                ? { queue: queue + 1 }
-                : {
-                    executeOrderId: [],
-                    name: [],
-                    queue: 1,
-                  };
-
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-              payload: robotExecutionCheck,
-            });
-          });
-        } catch (error) {
-          const err_msg = error.response.data.error_msg;
           dispatch({
-            type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
-            payload: err_msg,
+            type: ROBOT_CONTROL_SCREEN.informationArea,
+            payload: { mode: is_success },
           });
 
-          timerSwal("warning", err_msg, Colors.brownHover, 2000);
-        }
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotState,
+            payload: { mode, text, speed: 50 },
+          });
+
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.realtimeItem,
+            payload: { mode: null, count: null },
+          });
+
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+            payload: { mode: null, visualResult: [], visualCount: 1 },
+          });
+
+          const robotExecutionCheck =
+            executeOrderId.length > queue
+              ? { queue }
+              : {
+                  isDoing: false,
+                  executeOrderId: [],
+                  name: [],
+                  queue: 1,
+                  allData: [],
+                };
+
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+            payload: { check: true, ...robotExecutionCheck },
+          });
+        });
+      } catch (error) {
+        const err_msg = error.response.data.error_msg;
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
+          payload: err_msg,
+        });
+
+        timerSwal("warning", err_msg, Colors.brownHover, 2000);
       }
-    });
-  };
+    }
+  });
+};
 
 export const insertOrderAction = (insertIndex) => (dispatch) => {
   dispatch({
@@ -336,7 +384,8 @@ export const selectInsertOrderAction =
     name.splice(insertIndex, 0, order.name + "_insert");
     allData.splice(insertIndex, 0, order);
 
-    if (insertIndex + 1 === queue) {
+    // 若是即刻差單的 order 會加到 orderSelect
+    if (insertIndex === queue) {
       dispatch({
         type: ROBOT_CONTROL_SCREEN.orderSelect,
         payload: { data: order },

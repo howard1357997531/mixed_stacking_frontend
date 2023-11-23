@@ -30,7 +30,7 @@ function RobotControlDesktop(props) {
 
           <InformationAreaContent {...props} />
 
-          <InformationAreaBottom {...props} />
+          {/* <InformationAreaBottom {...props} /> */}
         </InformationAreaBox>
       </InformationArea>
     </RobotControlContainer>

@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function OrderListDialog(props) {
-  const { executeOrderId, queue } = props.robotExecutionData;
+  const { isDoing, executeOrderId, queue } = props.robotExecutionData;
 
   const handleClose = () => {
     props.onOrderListDialoggOpen(false);
@@ -22,11 +22,11 @@ function OrderListDialog(props) {
 
   React.useEffect(() => {
     if (props.orderListDialogOpen) {
-      if (executeOrderId.length == 0 && queue == 1) {
+      if (executeOrderId.length == 0 && !isDoing) {
         props.onOrderListDialoggOpen(false);
       }
     }
-  }, [executeOrderId, queue]);
+  }, [executeOrderId, isDoing]);
 
   return (
     <div>
@@ -42,7 +42,7 @@ function OrderListDialog(props) {
           sx={{ backgroundColor: Colors.brown, padding: 0, width: "400px" }}
         >
           {["inactivate", "reset"].includes(props.robotStateMode) &&
-          queue === 1 ? (
+          !isDoing ? (
             <OrderListDialogTabs {...props} />
           ) : (
             <OrderListDialogExecutionList {...props} />

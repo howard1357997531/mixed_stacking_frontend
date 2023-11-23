@@ -65,6 +65,8 @@ export const robotControlScreen_informationAreaReducer = (
 
 export const robotControlScreen_robotExecutionListReducer = (
   state = {
+    check: false,
+    isDoing: false,
     executeOrderId: [],
     name: [],
     queue: 1,

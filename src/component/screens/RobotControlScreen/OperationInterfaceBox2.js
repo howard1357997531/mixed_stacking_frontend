@@ -13,10 +13,12 @@ import RobotSettingDialog from "./RobotSettingDialog";
 
 function OperationInterfaceBox2() {
   const dispatch = useDispatch();
-  const { data: multipleOrderSelectData } = useSelector(
-    (state) => state.robotControlScreen_multipleOrderSelect
+  const { mode: informationAreaMode } = useSelector(
+    (state) => state.robotControlScreen_informationArea
   );
-  const { mode } = useSelector((state) => state.robotControlScreen_robotState);
+  const { mode: robotStateMode } = useSelector(
+    (state) => state.robotControlScreen_robotState
+  );
 
   const robotExecutionData = useSelector(
     (state) => state.robotControlScreen_robotExecutionList
@@ -24,21 +26,25 @@ function OperationInterfaceBox2() {
 
   const executeRobotHandler = () => {
     dispatch(
-      executeRobotAction(mode, multipleOrderSelectData, robotExecutionData)
+      executeRobotAction(
+        robotStateMode,
+        informationAreaMode,
+        robotExecutionData
+      )
     );
   };
 
   const robotSettingHandler = () => {
-    if (!["inactivate", "reset"].includes(mode)) {
+    if (!["inactivate", "reset"].includes(robotStateMode)) {
       setRobotSettingDialogOpen(true);
     }
   };
 
   useEffect(() => {
-    if (mode === "inactivate") {
+    if (robotStateMode === "inactivate") {
       setRobotSettingDialogOpen(false);
     }
-  }, [mode]);
+  }, [robotStateMode]);
 
   // dialog
   const [robotSettingDialogOpen, setRobotSettingDialogOpen] = useState(false);
@@ -57,7 +63,7 @@ function OperationInterfaceBox2() {
         </OperationInterfaceButtonLogo>
 
         <OperationInterfaceButtonText>
-          {mode === "inactivate" ? "執行" : "執行中"}
+          {robotStateMode === "inactivate" ? "執行" : "執行中"}
         </OperationInterfaceButtonText>
       </SixtyRadioWidthButton>
 

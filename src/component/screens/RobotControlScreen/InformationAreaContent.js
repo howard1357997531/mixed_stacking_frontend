@@ -116,6 +116,13 @@ function InformationAreaContent({
     }
   };
 
+  const pictureIndex =
+    informationAreaMode === "multipleOrder"
+      ? queue
+      : executeOrderIdArray.length === 1
+      ? queue
+      : queue + 1;
+
   const [
     multipleOrderInfoDetailDialogOpen,
     setMultipleOrderInfoDetailDialogOpen,
@@ -150,9 +157,9 @@ function InformationAreaContent({
         <NoSelectOrderText>尚未選擇工單</NoSelectOrderText>
       ) : null}
 
-      {!realtimeVisualMode && robotStateMode === "activate" && (
+      {!realtimeVisualMode && robotStateMode === "activate" ? (
         <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
-      )}
+      ) : null}
 
       {informationAreaMode === "success" ? (
         <RobotSuccessBox>
@@ -161,7 +168,7 @@ function InformationAreaContent({
           <RobotSuccessSubTitle>
             {executeOrderIdArray.length === 0
               ? "請重新選擇工單"
-              : `待執行進度 (${queue}/${executeOrderIdArray.length})`}
+              : `執行進度 (${queue}/${executeOrderIdArray.length})`}
           </RobotSuccessSubTitle>
         </RobotSuccessBox>
       ) : null}
@@ -269,12 +276,8 @@ function InformationAreaContent({
 
       {realtimeVisualMode && informationAreaMode === "picture" && (
         <img
-          src={`${domain}/static/media/Figures_step2_${
-            executeOrderIdArray[queue - 1]
-          }/box_${realtimeItemCount}_bin_1.png`}
-          alt={`${domain}/static/media/Figures_step2_${
-            executeOrderIdArray[queue - 1]
-          }/box_${realtimeItemCount}_bin_1.png`}
+          src={`${domain}/static/media/Figures_step2_${executeOrderIdArray[pictureIndex]}/box_${realtimeItemCount}_bin_1.png`}
+          alt={`${domain}/static/media/Figures_step2_${executeOrderIdArray[pictureIndex]}/box_${realtimeItemCount}_bin_1.png`}
           className="item-realtime-photo"
         ></img>
       )}

@@ -34,7 +34,6 @@ function OrderListDialogExecutionList(props) {
   const {
     executeOrderId: executeOrderIdArray,
     name: executeOrderNameArray,
-    queue,
     insertOrderOpen,
     insertOrderDetailOpen,
   } = props.robotExecutionData;
@@ -54,6 +53,10 @@ function OrderListDialogExecutionList(props) {
     return name.endsWith("_insert") ? name.replace("_insert", "") : name;
   };
 
+  const robotStateMode = props.robotStateMode;
+  const tempQueue = props.robotExecutionData.queue;
+  var queue = robotStateMode === "inactivate" ? tempQueue : tempQueue - 1;
+
   return (
     <>
       {insertOrderOpen ? (
@@ -67,7 +70,7 @@ function OrderListDialogExecutionList(props) {
       {!insertOrderOpen && !insertOrderDetailOpen ? (
         <OrderListExeListBox>
           <OrderListExeListTitleBox>
-            執行清單 {`(${queue}/${executeOrderIdArray.length})`}
+            執行進度 {`(${queue}/${executeOrderIdArray.length})`}
           </OrderListExeListTitleBox>
 
           <OrderListExeListNameBox className="dialogExecutionList">
@@ -76,24 +79,24 @@ function OrderListDialogExecutionList(props) {
                 <OrderListExeListName
                   sx={{
                     backgroundColor:
-                      index + 1 < queue ? Colors.softGreen : "transparent",
+                      index < queue ? Colors.softGreen : "transparent",
                     borderTop:
                       index === 0 ? "none" : `1px solid ${Colors.brownHover}`,
                   }}
                 >
-                  <IndexText finish={index + 1 < queue}>{index + 1}</IndexText>
+                  <IndexText finish={index < queue}>{index + 1}</IndexText>
 
                   {name.endsWith("_insert") ? (
                     <InsertText>插單</InsertText>
                   ) : null}
 
-                  <OrderText finish={index + 1 < queue}>
+                  <OrderText finish={index < queue}>
                     {replaceInsertName(name)}
                   </OrderText>
 
-                  {index + 1 < queue ? <OrderListExeListCheck /> : null}
+                  {index < queue ? <OrderListExeListCheck /> : null}
 
-                  {index + 1 == queue ? (
+                  {index == queue ? (
                     <OrderListExeListInProgress>
                       {props.robotStateMode === "inactivate" ? (
                         <WaitToExecuteText>待執行</WaitToExecuteText>
@@ -117,7 +120,7 @@ function OrderListDialogExecutionList(props) {
                     </OrderListExeListInProgress>
                   ) : null}
 
-                  {index + 1 > queue ? (
+                  {index > queue ? (
                     <OrderListExeListDelete
                       onClick={() => deleteOrderHandler(index, name)}
                     />
@@ -125,23 +128,17 @@ function OrderListDialogExecutionList(props) {
                 </OrderListExeListName>
 
                 {/* 可以在待執行單前面插單 */}
-                {index + 2 == queue && props.robotStateMode === "inactivate" ? (
+                {index + 1 == queue && props.robotStateMode === "inactivate" ? (
                   <Box sx={{ borderTop: `1px solid ${Colors.brownHover}` }}>
                     <InsertNowText
                       onClick={() => insertOrderHandler(index + 1)}
                     >
                       即刻插單
                     </InsertNowText>
-                    {/* <IconButtonAdd
-                      className="iconBtn-add"
-                      
-                    >
-                      <OrderListExeListAdd className="icon-add" />
-                    </IconButtonAdd> */}
                   </Box>
                 ) : null}
 
-                {index + 1 >= queue ? (
+                {index >= queue ? (
                   <Box sx={{ borderTop: `1px solid ${Colors.brownHover}` }}>
                     <Tooltip title="插單" placement="right" arrow>
                       <IconButtonAdd

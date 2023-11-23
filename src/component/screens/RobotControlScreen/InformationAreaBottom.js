@@ -20,7 +20,7 @@ function InformationAreaBottom({ informationAreaMode, robotExecutionData }) {
   return (
     <InformationAreaTitleBox>
       {informationAreaMode === "order" && (
-        <Title>{`執行進度 (${queue} / ${name.length})`}</Title>
+        <Title>{`執行進度 (${queue + 1} / ${name.length})`}</Title>
       )}
     </InformationAreaTitleBox>
   );

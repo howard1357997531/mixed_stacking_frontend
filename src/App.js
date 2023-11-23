@@ -155,15 +155,30 @@ function App() {
   }, [dispatch]);
 
   // robotExecutionAlert
+  // useEffect(() => {
+  //   if (robotExecutionData.name.length !== 0) {
+  //     setTimeout(() => {
+  //       dispatch(
+  //         robotExecutionAlertAction(multipleOrderSelectData, robotExecutionData)
+  //       );
+  //     }, 2000);
+  //   }
+  // }, [robotExecutionData.queue]);
+
   useEffect(() => {
-    if (robotExecutionData.name.length !== 0) {
-      setTimeout(() => {
-        dispatch(
-          robotExecutionAlertAction(multipleOrderSelectData, robotExecutionData)
-        );
-      }, 2000);
+    if (robotExecutionData.check) {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+        payload: { check: false },
+      });
+
+      if (robotExecutionData.name.length !== 0) {
+        setTimeout(() => {
+          dispatch(robotExecutionAlertAction(robotExecutionData));
+        }, 2000);
+      }
     }
-  }, [robotExecutionData.queue]);
+  }, [robotExecutionData.check]);
 
   const reduxData = {
     orderSelectData,
