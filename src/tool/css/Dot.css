@@ -1,13 +1,13 @@
 .pulse-container {
-    width: 70px;
+    width: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   
   .pulse-bubble {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     /* background-color: #1e88e5; */
   }

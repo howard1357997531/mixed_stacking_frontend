@@ -46,21 +46,47 @@ function OperationInterfaceBox1({
   //   console.log("inner:", realtimeVisualResult);
   //   console.log("inner count", realtimeVisualCount);
   // }
+  var compare = [];
+  if (orderSelectData.length !== 0) {
+    const detectState = orderSelectData.aiTraining_order.split(",");
+    const detectArea = detectState.slice(
+      realtimeVisualCount - 1,
+      realtimeVisualResult.length + realtimeVisualCount - 1
+    );
+    var compare = detectArea.map((detect, index) => {
+      if (
+        detect.replace("A", "") === realtimeVisualResult[index].replace("#", "")
+      ) {
+        return detect;
+      } else {
+        return "err";
+      }
+    });
+  }
 
-  const realtimeAllText = {
-    detect: { text: "物件偵測中", color: Colors.greyTextBlood },
-    correct: { text: "偵測正確", color: Colors.darkGreenHover },
-    error: { text: "偵測錯誤", color: red[100] },
-    reset: { text: "重置", color: Colors.orange },
-  };
-
-  if (realtimeVisualMode === "error") {
+  if (compare.at(0) === "err") {
     var VisualIdentityBoxColor = Colors.lightred;
     var VisualIdentityBoxHoverColor = Colors.lightredHover;
   } else {
     var VisualIdentityBoxColor = Colors.darkPink;
     var VisualIdentityBoxHoverColor = Colors.darkPinkHover;
   }
+
+  const realtimeAllText = () => {
+    if (realtimeVisualMode === "detect") {
+      return { text: "物件偵測中", color: Colors.greyTextBlood };
+    } else {
+      if (compare.at(0) === "err") {
+        return { text: "偵測錯誤", color: red[100] };
+      } else {
+        return { text: "偵測正確", color: Colors.darkGreenHover };
+      }
+    }
+    // detect: { text: "物件偵測中", color: Colors.greyTextBlood },
+    // correct: { text: "偵測正確", color: Colors.darkGreenHover },
+    // error: { text: "偵測錯誤", color: red[100] },
+    // reset: { text: "重置", color: Colors.orange },
+  };
 
   if (orderSelectData.length !== 0) {
     if (["order", "picture"].includes(informationAreaMode)) {
@@ -168,7 +194,7 @@ function OperationInterfaceBox1({
                       container={objectNameRef.current}
                       timeout={{
                         enter: 1500,
-                        exit: 400,
+                        exit: 300,
                       }}
                     >
                       <Box
@@ -187,23 +213,23 @@ function OperationInterfaceBox1({
 
           {/* demo1 註解 */}
           <VisualIdentityState>
-            {!realtimeVisualMode && robotStateMode === "activate" && (
+            {!realtimeVisualMode && robotStateMode === "activate" ? (
               <VisualIdentityStateText sx={{ color: "#999999" }}>
                 <TextEffect2 texts={"準備偵測"} mode={"no effect"} />
               </VisualIdentityStateText>
-            )}
+            ) : null}
 
-            {realtimeVisualMode && (
+            {realtimeVisualMode ? (
               <VisualIdentityStateText
-                sx={{ color: realtimeAllText[realtimeVisualMode]["color"] }}
+                sx={{ color: realtimeAllText()["color"] }}
               >
                 {realtimeVisualMode === "detect" ? (
                   <TextEffect2 texts={"物件偵測中"} mode={"effect"} />
                 ) : (
-                  realtimeAllText[realtimeVisualMode]["text"]
+                  realtimeAllText()["text"]
                 )}
               </VisualIdentityStateText>
-            )}
+            ) : null}
           </VisualIdentityState>
         </VisualIdentityBox>
       </SixtyRadioWidthButton>

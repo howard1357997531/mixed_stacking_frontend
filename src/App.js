@@ -81,24 +81,12 @@ function App() {
     socket.onmessage = (event) => {
       const realtimeData = JSON.parse(event.data);
 
-      // console.log(event);
+      console.log("websocket: ", realtimeData.visual_result);
       if (realtimeData.count) {
         dispatch({
           type: ROBOT_CONTROL_SCREEN.realtimeItem,
           payload: { count: realtimeData.count },
         });
-      }
-
-      if (realtimeData.name) {
-        setTimeout(() => {
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN.realtimeVisual,
-            payload: {
-              name: realtimeData.name,
-              nextName: realtimeData.nextName,
-            },
-          });
-        }, 600);
       }
 
       if (realtimeData.mode) {
@@ -136,6 +124,18 @@ function App() {
           type: ROBOT_CONTROL_SCREEN.realtimeVisual,
           payload: { visualCount: realtimeData.visual_count },
         });
+      }
+
+      if (realtimeData.name) {
+        setTimeout(() => {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+            payload: {
+              name: realtimeData.name,
+              nextName: realtimeData.nextName,
+            },
+          });
+        }, 600);
       }
     };
 

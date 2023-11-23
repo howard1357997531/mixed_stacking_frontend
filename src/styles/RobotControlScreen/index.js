@@ -196,7 +196,7 @@ export const TextShowBoardTextBox = styled(Box)(({ theme }) => ({
 
 export const TextShowBoardText = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  fontSize: "45px",
+  fontSize: "36px",
   fontWeight: 600,
 }));
 
@@ -334,7 +334,7 @@ export const OrderListTitle = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "8%",
-  backgroundColor: Colors.brown,
+  backgroundColor: blueGrey[500],
 }));
 
 export const OrderListTitleText = styled(Typography)(({ theme }) => ({
@@ -354,7 +354,7 @@ export const OrderListContentBox = styled(Box, {
   display: "flex",
   width: "100%",
   height: "60px",
-  backgroundColor: isDoing ? Colors.brown200 : "transparent",
+  backgroundColor: isDoing ? Colors.lightbrown300 : "transparent",
 }));
 
 export const OrderListContentSmBox = styled(Box)(({ theme }) => ({

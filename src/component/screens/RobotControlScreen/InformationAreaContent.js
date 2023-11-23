@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   InformationAreaContentBox,
   MultipleOrderListBox,
@@ -24,14 +24,9 @@ import { domain } from "../../../env";
 import MultipleOrderInfoDetailDialog from "./dialog/MultipleOrderInfoDetailDialog";
 import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
 import { blueGrey } from "@mui/material/colors";
-import {
-  IconButtonHelp,
-  StyleHelpRoundedIcon,
-} from "../../../styles/RobotControlScreen/dialog";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import CheckIcon from "@mui/icons-material/Check";
 import WarningIcon from "@mui/icons-material/Warning";
-import { OrderListDate } from "../../../styles/OrderScreen";
 import "./css/InformationAreaContent.css";
 
 function InformationAreaContent({
@@ -40,6 +35,7 @@ function InformationAreaContent({
   robotStateMode,
   realtimeItemMode,
   realtimeItemCount,
+  realtimeVisualMode,
   realtimeVisualResult,
   realtimeVisualCount,
 }) {
@@ -67,6 +63,7 @@ function InformationAreaContent({
     35: "204 * 92 * 36 (mm)",
   };
 
+  var compare = [];
   if (orderSelectData.length !== 0) {
     var detectState = orderSelectData.aiTraining_order.split(",");
     const detectArea = detectState.slice(
@@ -76,21 +73,31 @@ function InformationAreaContent({
     console.log("realtimeVisualCount:", realtimeVisualCount);
     console.log("result:", realtimeVisualResult);
     console.log("detectArea:", detectArea);
-    const compare = detectArea.map((detect, index) => {
-      if (detect === realtimeVisualResult[index]) {
+    var compare = detectArea.map((detect, index) => {
+      if (
+        detect.replace("A", "") === realtimeVisualResult[index].replace("#", "")
+      ) {
         return detect;
       } else {
         return "err";
       }
     });
-    console.log("compare:", compare);
-    detectState.splice(
-      realtimeVisualCount - 1,
-      realtimeVisualResult.length,
-      ...compare
-    );
-    console.log("detectState:", detectState);
+    detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
   }
+
+  // 因相機必須再過sensor時才會照相，所以detect_count + 1時不一定會有物體剛好在sensor感應區
+  // 所以需要在每次detect_count+1時把 compare 第一個移除，這樣比對時才不會比對到舊的值
+  // useEffect(() => {
+  //   console.log("qweqwe");
+  //   if (realtimeVisualCount > 1) {
+  //     console.log("useEffect");
+  //     console.log("inner compare:", compare);
+  //     compare.splice(0, 1);
+  //     detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
+  //   }
+  // }, [realtimeVisualCount]);
+  console.log("compare:", compare);
+  console.log("detectState:", detectState);
 
   const compareResult = (index) => {
     if (index + 1 < realtimeVisualCount) {
@@ -101,9 +108,11 @@ function InformationAreaContent({
     }
     const orderList = orderSelectData.aiTraining_order.split(",");
     if (detectState[index] === orderList[index]) {
-      return <CheckIcon sx={{ color: Colors.darkGreen }} />;
+      return (
+        <CheckIcon sx={{ color: Colors.darkGreenHover, fontSize: "26px" }} />
+      );
     } else {
-      return <WarningIcon sx={{ color: Colors.red800 }} />;
+      return <WarningIcon sx={{ color: Colors.red800, fontSize: "26px" }} />;
     }
   };
 
@@ -123,11 +132,27 @@ function InformationAreaContent({
     });
     setMultipleOrderInfoDetailDialogOpen(true);
   };
+
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [realtimeItemCount]);
+
   return (
     <InformationAreaContentBox hasOrderList={executeOrderIdArray.length !== 0}>
       {informationAreaMode === "initial" ? (
         <NoSelectOrderText>尚未選擇工單</NoSelectOrderText>
       ) : null}
+
+      {!realtimeVisualMode && robotStateMode === "activate" && (
+        <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
+      )}
 
       {informationAreaMode === "success" ? (
         <RobotSuccessBox>
@@ -154,9 +179,9 @@ function InformationAreaContent({
       {informationAreaMode === "order" ? (
         <OrderListBox>
           <OrderListTitle>
-            <OrderListTitleText width="25%">次序</OrderListTitleText>
-            <OrderListTitleText width="35%">名稱</OrderListTitleText>
-            <OrderListTitleText width="40%">尺寸</OrderListTitleText>
+            <OrderListTitleText width="20%">次序</OrderListTitleText>
+            <OrderListTitleText sx={{ flexGrow: 1 }}>名稱</OrderListTitleText>
+            <OrderListTitleText width="25%">辨識</OrderListTitleText>
           </OrderListTitle>
 
           <OrderListContent className="orderlist">
@@ -164,8 +189,9 @@ function InformationAreaContent({
               <OrderListContentBox
                 key={index}
                 isDoing={realtimeItemCount === index + 1}
+                ref={realtimeItemCount === index + 2 ? scrollRef : null}
               >
-                <OrderListContentSmBox width="25%">
+                <OrderListContentSmBox width="20%">
                   <Avatar
                     sx={{
                       backgroundColor:
@@ -177,23 +203,21 @@ function InformationAreaContent({
                   </Avatar>
                 </OrderListContentSmBox>
 
-                <OrderListContentSmBox width="35%">
-                  <img
-                    src={`${order}.png`}
-                    alt={`${order}.png`}
-                    style={{ marginRight: "10px" }}
-                  ></img>
-                  {order}
+                <OrderListContentSmBox
+                  sx={{ flexGrow: 1, paddingRight: "20px" }}
+                >
+                  <img src={`${order}.png`} alt={`${order}.png`}></img>
+                  <Typography sx={{ marginLeft: "5px" }}>{order}</Typography>
                 </OrderListContentSmBox>
 
                 {/* <OrderListContentSmBox width="40%">
                   {itemSize[order]}
                 </OrderListContentSmBox> */}
 
-                <OrderListContentSmBox width="40%">
+                <OrderListContentSmBox width="25%">
                   {realtimeVisualResult.length !== 0
                     ? compareResult(index)
-                    : itemSize[order]}
+                    : null}
                 </OrderListContentSmBox>
               </OrderListContentBox>
             ))}
@@ -243,11 +267,7 @@ function InformationAreaContent({
         }
       />
 
-      {!realtimeItemMode && robotStateMode === "activate" && (
-        <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
-      )}
-
-      {realtimeItemMode && informationAreaMode === "picture" && (
+      {realtimeVisualMode && informationAreaMode === "picture" && (
         <img
           src={`${domain}/static/media/Figures_step2_${
             executeOrderIdArray[queue - 1]

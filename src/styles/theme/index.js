@@ -69,6 +69,7 @@ export const Colors = {
   brown200: brown[200],
   lightbrown200: "#9e9e9e8b",
   brown: brown[300],
+  lightbrown300: "#a1887fa5",
   brownHover: brown[400],
   brown500: brown[500],
   brownText: brown[600],
