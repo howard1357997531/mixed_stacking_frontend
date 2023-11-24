@@ -155,12 +155,12 @@ export const executeRobotAction =
                   payload: res.data,
                 });
 
-                if (executeLength > 1 && executeLength > queue) {
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN.orderSelect,
-                    payload: { data: allData[queue] },
-                  });
-                }
+                // if (executeLength > 1 && executeLength > queue) {
+                //   dispatch({
+                //     type: ROBOT_CONTROL_SCREEN.orderSelect,
+                //     payload: { data: allData[queue] },
+                //   });
+                // }
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.informationArea,
@@ -183,22 +183,22 @@ export const executeRobotAction =
                 });
 
                 // multipleOrder 只有兩單情況，executeLength = 2 會等於 queue + 1 = 2
-                const robotExecutionCheck =
-                  informationAreaMode === "multipleOrder"
-                    ? { queue }
-                    : executeLength > queue
-                    ? { queue }
-                    : {
-                        isDoing: false,
-                        executeOrderId: [],
-                        name: [],
-                        queue: 1,
-                        allData: [],
-                      };
+                // const robotExecutionCheck =
+                //   informationAreaMode === "multipleOrder"
+                //     ? { queue }
+                //     : executeLength > queue
+                //     ? { queue }
+                //     : {
+                //         isDoing: false,
+                //         executeOrderId: [],
+                //         name: [],
+                //         queue: 1,
+                //         allData: [],
+                //       };
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-                  payload: { check: true, ...robotExecutionCheck },
+                  payload: { check: true },
                 });
               });
           } catch (error) {
@@ -307,12 +307,12 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
             payload: res.data,
           });
 
-          if (executeLength > 1 && executeLength > queue) {
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.orderSelect,
-              payload: { data: allData[queue] },
-            });
-          }
+          // if (executeLength > 1 && executeLength > queue) {
+          //   dispatch({
+          //     type: ROBOT_CONTROL_SCREEN.orderSelect,
+          //     payload: { data: allData[queue] },
+          //   });
+          // }
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN.informationArea,
@@ -334,20 +334,20 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
             payload: { mode: null, visualResult: [], visualCount: 1 },
           });
 
-          const robotExecutionCheck =
-            executeOrderId.length > queue
-              ? { queue }
-              : {
-                  isDoing: false,
-                  executeOrderId: [],
-                  name: [],
-                  queue: 1,
-                  allData: [],
-                };
+          // const robotExecutionCheck =
+          //   executeOrderId.length > queue
+          //     ? { queue }
+          //     : {
+          //         isDoing: false,
+          //         executeOrderId: [],
+          //         name: [],
+          //         queue: 1,
+          //         allData: [],
+          //       };
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-            payload: { check: true, ...robotExecutionCheck },
+            payload: { check: true },
           });
         });
       } catch (error) {
@@ -363,6 +363,17 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
   });
 };
 
+// index不對
+export const hasNextExecutionOrderAction =
+  (robotExecutionData) => (dispatch) => {
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.orderSelect,
+      payload: {
+        data: robotExecutionData.allData[robotExecutionData.queue],
+      },
+    });
+  };
+
 export const insertOrderAction = (insertIndex) => (dispatch) => {
   dispatch({
     type: ROBOT_CONTROL_SCREEN.robotExecutionList,
@@ -371,7 +382,7 @@ export const insertOrderAction = (insertIndex) => (dispatch) => {
 };
 
 export const selectInsertOrderAction =
-  (order, robotExecutionData) => async (dispatch) => {
+  (order, robotStateMode, robotExecutionData) => async (dispatch) => {
     const { insertIndex, queue } = robotExecutionData;
     // 不知為何不能直接使用 { executeOrderId } = robotExecutionData; 裡面的 executeOrderId
     // 去做 executeOrderId.splice(insertIndex, 0, order.id); 會error
@@ -385,11 +396,14 @@ export const selectInsertOrderAction =
     allData.splice(insertIndex, 0, order);
 
     // 若是即刻差單的 order 會加到 orderSelect
-    if (insertIndex === queue) {
-      dispatch({
-        type: ROBOT_CONTROL_SCREEN.orderSelect,
-        payload: { data: order },
-      });
+    // 必須是在 robotStateMode === 'inactivate' 才會觸發
+    if (robotStateMode === "inactivate") {
+      if (insertIndex === queue) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.orderSelect,
+          payload: { data: order },
+        });
+      }
     }
 
     dispatch({

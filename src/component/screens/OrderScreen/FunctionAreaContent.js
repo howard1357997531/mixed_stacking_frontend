@@ -186,7 +186,7 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
   return (
     <FunctionAreaContentBox
       orderSelectMode={orderSelectMode}
-      className="order-list"
+      className="functionArea-list"
     >
       {orderListLoading ? (
         <CircularProgress />

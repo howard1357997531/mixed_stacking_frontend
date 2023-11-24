@@ -110,6 +110,10 @@ function Navbar({ onQRcodeNavId }) {
     onQRcodeNavId(id);
   };
 
+  const qwe = () => {
+    window.location.reload();
+  };
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -203,8 +207,8 @@ function Navbar({ onQRcodeNavId }) {
               onQRcodeOpen={onQRcodeOpen}
               onQRcodeId={onQRcodeId}
             ></QRcodeDialog>
-            {/* 工單設定 工單查詢  */}
-            <StyleLinkImageBox>
+            {/* 工單設定 工單查詢 */}
+            <StyleLinkImageBox onClick={qwe}>
               <Link to={"/robot-control"}>
                 <StyleLinkImageSmallBox>
                   <img
@@ -217,7 +221,7 @@ function Navbar({ onQRcodeNavId }) {
             </StyleLinkImageBox>
 
             <StyleLinkImageBox>
-              <Link to={"/demo1-select-item"}>
+              <Link to={"/order"}>
                 <StyleLinkImageSmallBox>
                   <img
                     src={"workListSearch.png"}

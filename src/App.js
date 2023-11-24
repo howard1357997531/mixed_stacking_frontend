@@ -14,7 +14,10 @@ import {
   orderListAction,
 } from "./redux/actions/OrderActions";
 import { confirmSwal } from "./redux/actions/swal/RobotControlScreenActionSwal";
-import { robotExecutionAlertAction } from "./redux/actions/RobotControlScreenAction";
+import {
+  hasNextExecutionOrderAction,
+  robotExecutionAlertAction,
+} from "./redux/actions/RobotControlScreenAction";
 import SelectItemScreen from "./component/screen/SelectItemScreen";
 
 function App() {
@@ -155,16 +158,6 @@ function App() {
   }, [dispatch]);
 
   // robotExecutionAlert
-  // useEffect(() => {
-  //   if (robotExecutionData.name.length !== 0) {
-  //     setTimeout(() => {
-  //       dispatch(
-  //         robotExecutionAlertAction(multipleOrderSelectData, robotExecutionData)
-  //       );
-  //     }, 2000);
-  //   }
-  // }, [robotExecutionData.queue]);
-
   useEffect(() => {
     if (robotExecutionData.check) {
       dispatch({
@@ -172,10 +165,26 @@ function App() {
         payload: { check: false },
       });
 
-      if (robotExecutionData.name.length !== 0) {
+      if (
+        robotExecutionData.name.length > 1 &&
+        robotExecutionData.name.length > robotExecutionData.queue
+      ) {
+        dispatch(hasNextExecutionOrderAction(robotExecutionData));
+
         setTimeout(() => {
           dispatch(robotExecutionAlertAction(robotExecutionData));
         }, 2000);
+      } else {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+          payload: {
+            isDoing: false,
+            executeOrderId: [],
+            name: [],
+            queue: 1,
+            allData: [],
+          },
+        });
       }
     }
   }, [robotExecutionData.check]);

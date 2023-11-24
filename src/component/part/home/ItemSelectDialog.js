@@ -32,7 +32,7 @@ function ItemSelectDialog({ listDailogOpen, onListDailogOpen, data, data2 }) {
   const StyleInnerBox = styled(Box)(({ theme }) => ({
     display: "flex",
     width: "100%",
-    height: "100px",
+    height: "50px",
   }));
   const StyleInnerImageBox = styled(Box)(({ theme }) => ({
     display: "flex",

@@ -32,6 +32,7 @@ function OrderListDialogExecutionListInsert(props) {
   } = useSelector((state) => state.orderList);
 
   const { insertIndex } = props.robotExecutionData;
+  const robotStateMode = props.robotStateMode;
 
   const backHandler = () => {
     dispatch({
@@ -41,7 +42,9 @@ function OrderListDialogExecutionListInsert(props) {
   };
 
   const selectInsertOrderHandler = (order) => {
-    dispatch(selectInsertOrderAction(order, props.robotExecutionData));
+    dispatch(
+      selectInsertOrderAction(order, robotStateMode, props.robotExecutionData)
+    );
   };
 
   const confirmHandler = (id) => {

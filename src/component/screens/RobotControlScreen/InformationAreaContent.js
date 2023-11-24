@@ -18,7 +18,14 @@ import {
   RobotSuccessTitle,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Button, IconButton, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import MultipleOrderInfoDetailDialog from "./dialog/MultipleOrderInfoDetailDialog";
@@ -48,6 +55,8 @@ function InformationAreaContent({
   const { executeOrderId: executeOrderIdArray, queue } = useSelector(
     (state) => state.robotControlScreen_robotExecutionList
   );
+  console.log("asd:", executeOrderIdArray);
+  console.log("asd:", queue - 1);
 
   const itemSize = {
     "16A": "70 * 52 * 32 (mm)",
@@ -70,9 +79,9 @@ function InformationAreaContent({
       realtimeVisualCount - 1,
       realtimeVisualResult.length + realtimeVisualCount - 1
     );
-    console.log("realtimeVisualCount:", realtimeVisualCount);
-    console.log("result:", realtimeVisualResult);
-    console.log("detectArea:", detectArea);
+    // console.log("realtimeVisualCount:", realtimeVisualCount);
+    // console.log("result:", realtimeVisualResult);
+    // console.log("detectArea:", detectArea);
     var compare = detectArea.map((detect, index) => {
       if (
         detect.replace("A", "") === realtimeVisualResult[index].replace("#", "")
@@ -96,8 +105,8 @@ function InformationAreaContent({
   //     detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
   //   }
   // }, [realtimeVisualCount]);
-  console.log("compare:", compare);
-  console.log("detectState:", detectState);
+  // console.log("compare:", compare);
+  // console.log("detectState:", detectState);
 
   const compareResult = (index) => {
     if (index + 1 < realtimeVisualCount) {
@@ -116,12 +125,12 @@ function InformationAreaContent({
     }
   };
 
-  const pictureIndex =
-    informationAreaMode === "multipleOrder"
-      ? queue
-      : executeOrderIdArray.length === 1
-      ? queue
-      : queue + 1;
+  // const pictureIndex =
+  //   informationAreaMode === "multipleOrder"
+  //     ? queue
+  //     : executeOrderIdArray.length === 1
+  //     ? queue
+  //     : queue + 1;
 
   const [
     multipleOrderInfoDetailDialogOpen,
@@ -158,7 +167,18 @@ function InformationAreaContent({
       ) : null}
 
       {!realtimeVisualMode && robotStateMode === "activate" ? (
-        <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
+        <Box
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            // border: `1px solid ${Colors.brown}`,
+            backgroundColor: Colors.lightOrange,
+            zIndex: 2,
+          }}
+        >
+          <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
+        </Box>
       ) : null}
 
       {informationAreaMode === "success" ? (
@@ -276,8 +296,12 @@ function InformationAreaContent({
 
       {realtimeVisualMode && informationAreaMode === "picture" && (
         <img
-          src={`${domain}/static/media/Figures_step2_${executeOrderIdArray[pictureIndex]}/box_${realtimeItemCount}_bin_1.png`}
-          alt={`${domain}/static/media/Figures_step2_${executeOrderIdArray[pictureIndex]}/box_${realtimeItemCount}_bin_1.png`}
+          src={`${domain}/static/media/Figures_step2_${
+            executeOrderIdArray[queue - 1]
+          }/box_${realtimeItemCount}_bin_1.png`}
+          alt={`${domain}/static/media/Figures_step2_${
+            executeOrderIdArray[queue - 1]
+          }/box_${realtimeItemCount}_bin_1.png`}
           className="item-realtime-photo"
         ></img>
       )}
