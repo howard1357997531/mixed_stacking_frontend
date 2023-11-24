@@ -203,7 +203,7 @@ function Navbar({ onQRcodeNavId }) {
               onQRcodeOpen={onQRcodeOpen}
               onQRcodeId={onQRcodeId}
             ></QRcodeDialog>
-            {/* 工單設定 工單查詢 */}
+            {/* 工單設定 工單查詢  */}
             <StyleLinkImageBox>
               <Link to={"/robot-control"}>
                 <StyleLinkImageSmallBox>
