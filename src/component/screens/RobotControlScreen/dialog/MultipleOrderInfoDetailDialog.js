@@ -4,9 +4,16 @@ import DialogContent from "@mui/material/DialogContent";
 import { brown } from "@mui/material/colors";
 import MultipleOrderInfoDetailDialogTabs from "./MultipleOrderInfoDetailDialogTabs";
 import "./css/MultipleOrderInfoDetailDialog.css";
+import { useDispatch } from "react-redux";
+import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 
 function MultipleOrderInfoDetailDialog(props) {
+  const dispatch = useDispatch();
   const handleClose = () => {
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.informationArea,
+      payload: { multipleOrderSelectId: null },
+    });
     props.onMultipleOrderInfoDetailDialogOpen(false);
   };
   return (

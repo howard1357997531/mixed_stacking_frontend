@@ -312,18 +312,19 @@ export const OrderListDetailBox = styled(Box, {
   display: "flex",
   alignItems: "center",
   width: "100%",
-  height: "40px",
+  height: isTitle ? " 30px" : "40px",
   borderBottom: `1px solid ${Colors.brown200}`,
-  color: isTitle ? Colors.brownHover : Colors.greyText,
-  fontWeight: 600,
-  "&:hover": {
-    height: !isTitle && "50px",
-    color: !isTitle && Colors.brownHover,
-    fontSize: !isTitle && "24px",
-    fontWeight: !isTitle && 600,
-    backgroundColor: !isTitle && Colors.lightOrangeHover,
-    cursor: !isTitle && "pointer",
-  },
+  color: isTitle ? Colors.brown100 : Colors.greyTextBlood,
+  backgroundColor: isTitle && Colors.brownHover,
+  fontSize: isTitle && "14px",
+  fontWeight: !isTitle && 600,
+  // "&:hover": {
+  //   height: !isTitle && "50px",
+  //   color: !isTitle && Colors.brownHover,
+  //   fontSize: !isTitle && "24px",
+  //   fontWeight: !isTitle && 600,
+  //   cursor: !isTitle && "pointer",
+  // },
 }));
 
 export const OrderListDetailSmallBox = styled(Box)(({ theme }) => ({

@@ -176,14 +176,7 @@ function App() {
         }, 2000);
       } else {
         dispatch({
-          type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-          payload: {
-            isDoing: false,
-            executeOrderId: [],
-            name: [],
-            queue: 1,
-            allData: [],
-          },
+          type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
         });
       }
     }

@@ -9,27 +9,47 @@ import { Colors } from "../../../../styles/theme";
 
 function MultipleOrderInfoDetailDialogTabsOriginal({
   onMultipleOrderInfoDetailDialog,
-  multipleOrderId,
+  multipleOrderSelectId,
   multipleOrderData,
 }) {
   const StyleBox = styled(Box)(({ theme }) => ({
+    boxSizing: "border-box",
     width: "100%",
     height: "500px",
+    padding: "2px 10px",
     overflowY: "auto",
   }));
 
-  return multipleOrderId ? (
+  return multipleOrderSelectId ? (
     <StyleBox className="multipleOrderInfoDetail">
-      <Typography marginLeft={1} marginTop={"2px"}>
-        總數量: {multipleOrderData.order.aiTraining_order.split(",").length}
-      </Typography>
-      <Typography marginLeft={1}>
-        創建時間: {multipleOrderData.order.createdAt}
-      </Typography>
-      <MultipleOrderInfoDialogBox
-        sx={{ borderTop: `1px solid ${Colors.brownHover}` }}
-        isTitle={true}
+      <Typography
+        variant="h6"
+        align="center"
+        sx={{ color: Colors.greyTextBlood, marginTop: "10px" }}
       >
+        {multipleOrderData.name}
+      </Typography>
+      <Typography
+        textAlign="right"
+        sx={{
+          color: Colors.greyTextBlood,
+          fontWeight: 600,
+          fontSize: "14px",
+        }}
+      >
+        數量: {multipleOrderData.aiTraining_order.split(",").length}
+      </Typography>
+      <Typography
+        textAlign="right"
+        sx={{
+          color: Colors.greyTextBlood,
+          fontWeight: 600,
+          fontSize: "14px",
+        }}
+      >
+        創建時間: {multipleOrderData.createdAt}
+      </Typography>
+      <MultipleOrderInfoDialogBox isTitle={true}>
         <MultipleOrderInfoDialogSmBox>名稱</MultipleOrderInfoDialogSmBox>
         <MultipleOrderInfoDialogSmBox>寬度</MultipleOrderInfoDialogSmBox>
         <MultipleOrderInfoDialogSmBox>長度</MultipleOrderInfoDialogSmBox>
@@ -37,9 +57,11 @@ function MultipleOrderInfoDetailDialogTabsOriginal({
         <MultipleOrderInfoDialogSmBox>數量</MultipleOrderInfoDialogSmBox>
       </MultipleOrderInfoDialogBox>
 
-      {multipleOrderData.order.orderItem.map((order, index) => (
+      {multipleOrderData.orderItem.map((order, index) => (
         <MultipleOrderInfoDialogBox key={index} isTitle={false}>
-          <MultipleOrderInfoDialogSmBox>
+          <MultipleOrderInfoDialogSmBox
+            sx={{ backgroundColor: Colors.blue700, color: Colors.brown100 }}
+          >
             {order.name}
           </MultipleOrderInfoDialogSmBox>
           <MultipleOrderInfoDialogSmBox>

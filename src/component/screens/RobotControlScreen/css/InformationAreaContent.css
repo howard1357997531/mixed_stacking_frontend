@@ -7,3 +7,6 @@
     width: 0px;
 }
 
+.infoAreaMultiIconButton:hover .infoAreaMultiIcon {
+    color: #fff176
+}

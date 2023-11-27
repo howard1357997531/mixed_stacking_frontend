@@ -48,9 +48,7 @@ function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
         <IconButtonBack onClick={backHandler}>
           <ChevronLeftIcon />
         </IconButtonBack>
-
-        <Typography variant="h6">詳細資料</Typography>
-
+        詳細資料
         <IconButtonSearch>
           <SearchRoundedIcon />
         </IconButtonSearch>
@@ -68,52 +66,62 @@ function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
           <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
         ) : (
           <>
-            <Typography variant="h6" align="center">
+            <Typography
+              variant="h6"
+              align="center"
+              sx={{ color: Colors.greyTextBlood, marginTop: "10px" }}
+            >
               {orderDetail.name}
             </Typography>
 
-            <Typography textAlign="right" fontSize="14px">
+            <Typography
+              textAlign="right"
+              sx={{
+                color: Colors.greyTextBlood,
+                fontWeight: 600,
+                fontSize: "14px",
+              }}
+            >
               數量: {orderDetail.aiTraining_order.split(",").length}
             </Typography>
 
-            <Typography textAlign="right" fontSize="14px">
+            <Typography
+              textAlign="right"
+              sx={{
+                color: Colors.greyTextBlood,
+                fontWeight: 600,
+                fontSize: "14px",
+              }}
+            >
               創建時間: {orderDetail.createdAt}
             </Typography>
 
             <OrderListDetailBox isTitle={true}>
-              <OrderListDetailSmallBox color={Colors.brownText}>
-                名稱
-              </OrderListDetailSmallBox>
-              <OrderListDetailSmallBox color={Colors.brownText}>
-                寬度
-              </OrderListDetailSmallBox>
-              <OrderListDetailSmallBox color={Colors.brownText}>
-                長度
-              </OrderListDetailSmallBox>
-              <OrderListDetailSmallBox color={Colors.brownText}>
-                高度
-              </OrderListDetailSmallBox>
-              <OrderListDetailSmallBox color={Colors.brownText}>
-                數量
-              </OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>名稱</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>寬度</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>長度</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>高度</OrderListDetailSmallBox>
+              <OrderListDetailSmallBox>數量</OrderListDetailSmallBox>
             </OrderListDetailBox>
 
             {orderDetail.orderItem.map((order, index) =>
               order.quantity !== 0 ? (
                 <OrderListDetailBox key={index} isTitle={false}>
-                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                  <OrderListDetailSmallBox
+                    sx={{ backgroundColor: Colors.darkGreenHover }}
+                  >
                     {order.name}
                   </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                  <OrderListDetailSmallBox>
                     {order.width}
                   </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                  <OrderListDetailSmallBox>
                     {order.height}
                   </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                  <OrderListDetailSmallBox>
                     {order.depth}
                   </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox color={Colors.greyTextBlood}>
+                  <OrderListDetailSmallBox>
                     {order.quantity}
                   </OrderListDetailSmallBox>
                 </OrderListDetailBox>

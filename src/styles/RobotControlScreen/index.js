@@ -1,4 +1,12 @@
-import { Box, Button, Stack, Typography, styled } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Typography,
+  styled,
+} from "@mui/material";
 import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
 import { Colors } from "../theme";
 
@@ -370,10 +378,14 @@ export const MultipleOrderListBox = styled(Box)(({ theme }) => ({
   overflowY: "auto",
 }));
 
-export const MultipleOrderListDetailBox = styled(Box)(({ theme }) => ({
+export const MultipleOrderListDetailBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isDoing",
+})(({ theme, isDoing }) => ({
   display: "flex",
   width: "100%",
   height: "60px",
+  backgroundColor: isDoing ? Colors.lightbrown300 : "transparent",
+  // borderBottom: `1px solid ${Colors.lightbrown200}`,
 }));
 
 export const MultipleOrderListDetailOrder = styled(Box)(({ theme }) => ({
@@ -385,13 +397,24 @@ export const MultipleOrderListDetailOrder = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
-export const MultipleOrderListDetailName = styled(Box)(({ theme }) => ({
+export const StyleAvatar = styled(Avatar, {
+  shouldForwardProp: (prop) => prop !== "isDoing",
+})(({ theme, isDoing }) => ({
+  color: isDoing && Colors.lightbrown300,
+  backgroundColor: isDoing && Colors.lightYellow,
+  width: "33px",
+  height: "33px",
+}));
+
+export const MultipleOrderListDetailName = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isDoing",
+})(({ theme, isDoing }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "50%",
   height: "100%",
-  color: Colors.greyText,
+  color: isDoing ? Colors.lightYellow : Colors.greyText,
   fontWeight: 600,
 }));
 
@@ -405,22 +428,32 @@ export const MultipleOrderListDetailInfo = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
+export const MultipleOrderListIconButton = styled(IconButton)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: "#fff17644",
+  },
+}));
+
 export const MultipleOrderInfoDialogBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isTitle",
 })(({ theme, isTitle }) => ({
   display: "flex",
   alignItems: "center",
   width: "100%",
-  height: "40px",
-  borderBottom: `1px solid ${Colors.brownHover}`,
-  "&:hover": {
-    color: !isTitle && deepPurple[500],
-    height: !isTitle && "60px",
-    fontSize: !isTitle && "24px",
-    fontWeight: !isTitle && 600,
-    backgroundColor: !isTitle && Colors.brownHover,
-    cursor: !isTitle && "pointer",
-  },
+  height: isTitle ? " 30px" : "40px",
+  borderBottom: `1px solid ${Colors.brown200}`,
+  color: isTitle ? Colors.brown100 : Colors.greyTextBlood,
+  backgroundColor: isTitle && Colors.brownHover,
+  fontSize: isTitle && "14px",
+  fontWeight: !isTitle && 600,
+  // "&:hover": {
+  //   color: !isTitle && deepPurple[500],
+  //   height: !isTitle && "60px",
+  //   fontSize: !isTitle && "24px",
+  //   fontWeight: !isTitle && 600,
+  //   backgroundColor: !isTitle && Colors.brownHover,
+  //   cursor: !isTitle && "pointer",
+  // },
 }));
 
 export const MultipleOrderInfoDialogSmBox = styled(Box)(({ theme }) => ({

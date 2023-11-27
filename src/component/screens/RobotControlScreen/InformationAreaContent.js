@@ -6,6 +6,7 @@ import {
   MultipleOrderListDetailInfo,
   MultipleOrderListDetailName,
   MultipleOrderListDetailOrder,
+  MultipleOrderListIconButton,
   NoSelectOrderText,
   OrderListBox,
   OrderListContent,
@@ -16,6 +17,7 @@ import {
   RobotSuccessBox,
   RobotSuccessSubTitle,
   RobotSuccessTitle,
+  StyleAvatar,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -47,16 +49,15 @@ function InformationAreaContent({
   realtimeVisualCount,
 }) {
   const dispatch = useDispatch();
-
-  const { data: multipleOrderSelectData } = useSelector(
-    (state) => state.robotControlScreen_multipleOrderSelect
-  );
-
-  const { executeOrderId: executeOrderIdArray, queue } = useSelector(
-    (state) => state.robotControlScreen_robotExecutionList
-  );
-  console.log("asd:", executeOrderIdArray);
-  console.log("asd:", queue - 1);
+  const {
+    isDoing,
+    executeOrderId: executeOrderIdArray,
+    queue,
+    name: robotExecutionName,
+    allData: robotExecutionAllData,
+  } = useSelector((state) => state.robotControlScreen_robotExecutionList);
+  // console.log("asd:", executeOrderIdArray);
+  // console.log("asd:", queue - 1);
 
   const itemSize = {
     "16A": "70 * 52 * 32 (mm)",
@@ -94,20 +95,6 @@ function InformationAreaContent({
     detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
   }
 
-  // 因相機必須再過sensor時才會照相，所以detect_count + 1時不一定會有物體剛好在sensor感應區
-  // 所以需要在每次detect_count+1時把 compare 第一個移除，這樣比對時才不會比對到舊的值
-  // useEffect(() => {
-  //   console.log("qweqwe");
-  //   if (realtimeVisualCount > 1) {
-  //     console.log("useEffect");
-  //     console.log("inner compare:", compare);
-  //     compare.splice(0, 1);
-  //     detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
-  //   }
-  // }, [realtimeVisualCount]);
-  // console.log("compare:", compare);
-  // console.log("detectState:", detectState);
-
   const compareResult = (index) => {
     if (index + 1 < realtimeVisualCount) {
       return "";
@@ -125,13 +112,7 @@ function InformationAreaContent({
     }
   };
 
-  // const pictureIndex =
-  //   informationAreaMode === "multipleOrder"
-  //     ? queue
-  //     : executeOrderIdArray.length === 1
-  //     ? queue
-  //     : queue + 1;
-
+  // 多單細節Dialog
   const [
     multipleOrderInfoDetailDialogOpen,
     setMultipleOrderInfoDetailDialogOpen,
@@ -141,16 +122,16 @@ function InformationAreaContent({
     setMultipleOrderInfoDetailDialogOpen(state);
   };
 
-  const multipleOrderDetailHandler = (multipleOrderId) => {
+  const multipleOrderDetailHandler = (multipleOrderSelectId) => {
     dispatch({
       type: ROBOT_CONTROL_SCREEN.informationArea,
-      payload: { multipleOrderId },
+      payload: { multipleOrderSelectId },
     });
     setMultipleOrderInfoDetailDialogOpen(true);
   };
 
+  // mode:"order" 自動scroll到指定位置
   const scrollRef = useRef();
-
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({
@@ -254,45 +235,38 @@ function InformationAreaContent({
 
       {informationAreaMode === "multipleOrder" ? (
         <MultipleOrderListBox>
-          {multipleOrderSelectData.multipleOrder.map((order, index) => (
-            <MultipleOrderListDetailBox key={order.order.id}>
+          {robotExecutionAllData.map((order, index) => (
+            <MultipleOrderListDetailBox
+              key={order.id}
+              isDoing={index === queue && isDoing}
+            >
               <MultipleOrderListDetailOrder>
-                <Avatar
-                  sx={{
-                    backgroundColor: blueGrey[300],
-                    width: "33px",
-                    height: "33px",
-                    // backgroundColor: Colors.greyTextBlood,
-                  }}
-                >
+                <StyleAvatar isDoing={index === queue && isDoing}>
                   {index + 1}
-                </Avatar>
+                </StyleAvatar>
               </MultipleOrderListDetailOrder>
 
-              <MultipleOrderListDetailName>
-                {order.order.name}
+              <MultipleOrderListDetailName isDoing={index === queue && isDoing}>
+                {order.name}
               </MultipleOrderListDetailName>
 
               <MultipleOrderListDetailInfo>
                 <Tooltip title="詳細資料" placement="left" arrow>
-                  <IconButton
-                    onClick={() => multipleOrderDetailHandler(order.order.id)}
+                  <MultipleOrderListIconButton
+                    className="infoAreaMultiIconButton"
+                    onClick={() => multipleOrderDetailHandler(order.id)}
                   >
-                    <HelpRoundedIcon />
-                  </IconButton>
+                    <HelpRoundedIcon
+                      className="infoAreaMultiIcon"
+                      sx={{ fontSize: "20px" }}
+                    />
+                  </MultipleOrderListIconButton>
                 </Tooltip>
               </MultipleOrderListDetailInfo>
             </MultipleOrderListDetailBox>
           ))}
         </MultipleOrderListBox>
       ) : null}
-
-      <MultipleOrderInfoDetailDialog
-        multipleOrderInfoDetailDialogOpen={multipleOrderInfoDetailDialogOpen}
-        onMultipleOrderInfoDetailDialogOpen={
-          onMultipleOrderInfoDetailDialogOpen
-        }
-      />
 
       {realtimeVisualMode && informationAreaMode === "picture" && (
         <img
@@ -305,6 +279,13 @@ function InformationAreaContent({
           className="item-realtime-photo"
         ></img>
       )}
+
+      <MultipleOrderInfoDetailDialog
+        multipleOrderInfoDetailDialogOpen={multipleOrderInfoDetailDialogOpen}
+        onMultipleOrderInfoDetailDialogOpen={
+          onMultipleOrderInfoDetailDialogOpen
+        }
+      />
     </InformationAreaContentBox>
   );
 }

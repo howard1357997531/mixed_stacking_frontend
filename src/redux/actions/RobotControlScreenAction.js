@@ -40,8 +40,8 @@ export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
 };
 
 export const multipleOrderlistSelectAction =
-  (multipleOrderSelectObject) => (dispatch) => {
-    const orderSelectData = multipleOrderSelectObject.multipleOrder.at(0).order;
+  (multipleOrderSelectData) => (dispatch) => {
+    const orderSelectData = multipleOrderSelectData.multipleOrder.at(0).order;
     dispatch({
       type: ROBOT_CONTROL_SCREEN.orderSelect,
       payload: { data: orderSelectData },
@@ -49,7 +49,7 @@ export const multipleOrderlistSelectAction =
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
-      payload: { data: multipleOrderSelectObject },
+      payload: { name: multipleOrderSelectData.name },
     });
 
     dispatch({
@@ -62,15 +62,15 @@ export const multipleOrderlistSelectAction =
       payload: { mode: "multipleOrder" },
     });
 
-    const executeOrderId = multipleOrderSelectObject.orderSelectId_str
+    const executeOrderId = multipleOrderSelectData.orderSelectId_str
       .split(",")
       .map((order) => parseInt(order));
 
-    const name = multipleOrderSelectObject.multipleOrder.map(
+    const name = multipleOrderSelectData.multipleOrder.map(
       (order) => order.order.name
     );
 
-    const allData = multipleOrderSelectObject.multipleOrder.map(
+    const allData = multipleOrderSelectData.multipleOrder.map(
       (order) => order.order
     );
 
@@ -155,13 +155,6 @@ export const executeRobotAction =
                   payload: res.data,
                 });
 
-                // if (executeLength > 1 && executeLength > queue) {
-                //   dispatch({
-                //     type: ROBOT_CONTROL_SCREEN.orderSelect,
-                //     payload: { data: allData[queue] },
-                //   });
-                // }
-
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.informationArea,
                   payload: { mode: is_success },
@@ -181,20 +174,6 @@ export const executeRobotAction =
                   type: ROBOT_CONTROL_SCREEN.realtimeVisual,
                   payload: { mode: null, visualResult: [], visualCount: 1 },
                 });
-
-                // multipleOrder 只有兩單情況，executeLength = 2 會等於 queue + 1 = 2
-                // const robotExecutionCheck =
-                //   informationAreaMode === "multipleOrder"
-                //     ? { queue }
-                //     : executeLength > queue
-                //     ? { queue }
-                //     : {
-                //         isDoing: false,
-                //         executeOrderId: [],
-                //         name: [],
-                //         queue: 1,
-                //         allData: [],
-                //       };
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.robotExecutionList,
@@ -266,8 +245,7 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
 };
 
 export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
-  const { executeOrderId, name, allData } = robotExecutionData;
-  const executeLength = executeOrderId.length;
+  const { executeOrderId, name } = robotExecutionData;
   const queue = robotExecutionData.queue + 1;
 
   confirmSwal2(
@@ -307,13 +285,6 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
             payload: res.data,
           });
 
-          // if (executeLength > 1 && executeLength > queue) {
-          //   dispatch({
-          //     type: ROBOT_CONTROL_SCREEN.orderSelect,
-          //     payload: { data: allData[queue] },
-          //   });
-          // }
-
           dispatch({
             type: ROBOT_CONTROL_SCREEN.informationArea,
             payload: { mode: is_success },
@@ -333,17 +304,6 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
             type: ROBOT_CONTROL_SCREEN.realtimeVisual,
             payload: { mode: null, visualResult: [], visualCount: 1 },
           });
-
-          // const robotExecutionCheck =
-          //   executeOrderId.length > queue
-          //     ? { queue }
-          //     : {
-          //         isDoing: false,
-          //         executeOrderId: [],
-          //         name: [],
-          //         queue: 1,
-          //         allData: [],
-          //       };
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotExecutionList,

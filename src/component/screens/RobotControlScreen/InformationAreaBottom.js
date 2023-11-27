@@ -1,27 +1,28 @@
 import React from "react";
-import {
-  InformationAreaTitleBox,
-  OrderListTitleButton,
-} from "../../../styles/RobotControlScreen";
+import { InformationAreaTitleBox } from "../../../styles/RobotControlScreen";
 import { Box, styled } from "@mui/material";
 import { Colors } from "../../../styles/theme";
-import { useDispatch, useSelector } from "react-redux";
-import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
 
-function InformationAreaBottom({ informationAreaMode, robotExecutionData }) {
+function InformationAreaBottom({
+  robotStateMode,
+  informationAreaMode,
+  robotExecutionData,
+}) {
   const Title = styled(Box)(({ theme }) => ({
     fontWeight: 600,
-    fontSize: "24px",
-    color: Colors.geryText,
+    fontSize: "20px",
+    color: Colors.darkGreenHover,
   }));
 
-  const { name, queue } = robotExecutionData;
+  const { isDoing, name, queue } = robotExecutionData;
 
   return (
     <InformationAreaTitleBox>
-      {informationAreaMode === "order" && (
-        <Title>{`執行進度 (${queue + 1} / ${name.length})`}</Title>
-      )}
+      {robotStateMode !== "activate" &&
+      !["success"].includes(informationAreaMode) &&
+      isDoing ? (
+        <Title>{`執行進度 (${queue} / ${name.length})`}</Title>
+      ) : null}
     </InformationAreaTitleBox>
   );
 }

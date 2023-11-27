@@ -2,7 +2,6 @@ import {
   ROBOT_CONTROL_SCREEN,
   ROBOT_CONTROL_SCREEN_API_executeRobot,
   ROBOT_CONTROL_SCREEN_API_robotSetting,
-  ROBOT_CONTROL_SCREEN_informationArea,
   ROBOT_CONTROL_SCREEN_orderList,
   ROBOT_CONTROL_SCREEN_realtimeRobot,
   ROBOT_CONTROL_SCREEN_realtimeVisual,
@@ -27,7 +26,7 @@ export const robotControlScreen_orderSelectReducer = (
 };
 
 export const robotControlScreen_multipleOrderSelectReducer = (
-  state = { data: [] },
+  state = { name: "" },
   action
 ) => {
   switch (action.type) {
@@ -40,23 +39,12 @@ export const robotControlScreen_multipleOrderSelectReducer = (
 };
 
 export const robotControlScreen_informationAreaReducer = (
-  state = { mode: "initial", multipleOrderId: null },
+  state = { mode: "initial", multipleOrderSelectId: null },
   action
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.informationArea:
       return { ...state, ...action.payload };
-    case ROBOT_CONTROL_SCREEN_informationArea.mode:
-      return {
-        ...state,
-        mode: action.payload,
-      };
-
-    case ROBOT_CONTROL_SCREEN_informationArea.multipleOrderId:
-      return {
-        ...state,
-        multipleOrderId: action.payload,
-      };
 
     default:
       return state;
@@ -81,6 +69,20 @@ export const robotControlScreen_robotExecutionListReducer = (
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.robotExecutionList:
       return { ...state, ...action.payload };
+
+    case ROBOT_CONTROL_SCREEN.robotExecutionList_reset:
+      return {
+        check: false,
+        isDoing: false,
+        executeOrderId: [],
+        name: [],
+        queue: 1,
+        allData: [],
+        insertIndex: null,
+        insertOrderOpen: false,
+        insertOrderDetailOpen: false,
+        insertOrderDetailId: null,
+      };
 
     default:
       return state;

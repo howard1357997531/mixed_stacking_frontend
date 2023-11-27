@@ -47,21 +47,21 @@ function MultipleOrderInfoDetailDialogTabs(props) {
     setValue(newValue);
   };
 
-  const { data } = useSelector(
-    (state) => state.robotControlScreen_multipleOrderSelect
+  const { allData } = useSelector(
+    (state) => state.robotControlScreen_robotExecutionList
   );
 
-  const { multipleOrderId } = useSelector(
+  const { multipleOrderSelectId } = useSelector(
     (state) => state.robotControlScreen_informationArea
   );
 
-  if (multipleOrderId) {
-    var [multipleOrderData] = data.multipleOrder.filter(
-      (order) => order.order.id === multipleOrderId
+  if (multipleOrderSelectId) {
+    var [multipleOrderData] = allData.filter(
+      (order) => order.id === multipleOrderSelectId
     );
   }
 
-  const addProps = { ...props, data, multipleOrderId, multipleOrderData };
+  const addProps = { ...props, multipleOrderSelectId, multipleOrderData };
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -72,8 +72,16 @@ function MultipleOrderInfoDetailDialogTabs(props) {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="原始工單" {...a11yProps(0)} />
-          <Tab label="演算結果" {...a11yProps(1)} />
+          <Tab
+            label="原始工單"
+            sx={{ fontWeight: 600, fontSize: "16px" }}
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="演算結果"
+            sx={{ fontWeight: 600, fontSize: "16px" }}
+            {...a11yProps(1)}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

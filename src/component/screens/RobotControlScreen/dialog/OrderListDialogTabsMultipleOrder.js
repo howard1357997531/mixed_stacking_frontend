@@ -47,10 +47,10 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialoggOpen }) {
   } = useSelector((state) => state.multipleOrderList);
 
   const multipleOrderListHandler = (orderId) => {
-    const [multipleOrderSelectObject] = multipleOrderListData.filter(
+    const [multipleOrderSelectData] = multipleOrderListData.filter(
       (order) => order.id === orderId
     );
-    dispatch(multipleOrderlistSelectAction(multipleOrderSelectObject));
+    dispatch(multipleOrderlistSelectAction(multipleOrderSelectData));
     onOrderListDialoggOpen(false);
   };
   return (

@@ -54,6 +54,8 @@ export const ROBOT_CONTROL_SCREEN = {
   // api
   executeRobot: "ROBOT_CONTROL_SCREEN_executeRobot",
   robotSetting: "ROBOT_CONTROL_SCREEN_robotSetting",
+  //reset
+  robotExecutionList_reset: "ROBOT_CONTROL_SCREEN_robotExecutionList_reset",
 };
 
 export const ROBOT_CONTROL_SCREEN_orderList = {

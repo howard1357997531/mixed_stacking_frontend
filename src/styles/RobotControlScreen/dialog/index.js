@@ -1,4 +1,11 @@
-import { Avatar, Box, IconButton, Typography, styled } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  styled,
+} from "@mui/material";
 import { Colors } from "../../theme";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -10,6 +17,7 @@ import {
   OrderListExeListDeleteAnimation,
   OrderListExeListWaitToExecuteAnimation,
 } from "../../../animation";
+import { teal } from "@mui/material/colors";
 
 export const OrderListExeListBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
@@ -27,6 +35,8 @@ export const OrderListExeListTitleBox = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "8%",
   borderBottom: `1px solid ${Colors.brownHover}`,
+  color: Colors.brownText,
+  fontWeight: 600,
 }));
 
 export const IconButtonBack = styled(IconButton)(({ theme }) => ({
@@ -129,6 +139,8 @@ export const OrderListExeListInsertName = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "60px",
+  color: Colors.greyTextBlood,
+  // fontWeight: 600,
   borderBottom: `1px solid ${Colors.brownHover}`,
   "&:hover": {
     color: Colors.brown200,
@@ -143,14 +155,28 @@ export const ConfirmBox = styled(Box)(({ theme }) => ({
   justifyContent: "space-evenly",
   width: "397px",
   padding: "10px 0px",
+  borderBottom: `1px solid ${Colors.brownHover}`,
 }));
 
-export const IconButtonHelp = styled(IconButton)(({ theme }) => ({
+export const ConfirmBoxButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "colorArray",
+})(({ theme, colorArray }) => ({
+  backgroundColor: colorArray[0],
+  "&:hover": {
+    backgroundColor: colorArray[1],
+  },
+}));
+
+export const IconButtonHelp = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== "display",
+})(({ theme, display }) => ({
   position: "absolute",
   top: "50%",
   right: "10px",
   transform: "translateY(-50%)",
   padding: "10px",
+  opacity: display ? 1 : 0,
+  transition: "opacity .2s ease-in-out",
   "&:hover": {
     backgroundColor: "#00968733",
   },

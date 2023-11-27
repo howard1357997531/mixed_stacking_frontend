@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import {
   ConfirmBox,
+  ConfirmBoxButton,
   IconButtonBack,
   IconButtonHelp,
   IconButtonSearch,
@@ -20,10 +21,9 @@ import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
 import { OrderListContentMsg } from "../../../../styles/OrderScreen";
 import { Colors } from "../../../../styles/theme";
 import { selectInsertOrderAction } from "../../../../redux/actions/RobotControlScreenAction";
+import { teal } from "@mui/material/colors";
 
 function OrderListDialogExecutionListInsert(props) {
-  const [insertCkeck, setInsertCheck] = useState(false);
-  const [insertId, setInsertId] = useState(null);
   const dispatch = useDispatch();
   const {
     loading: orderListLoading,
@@ -31,7 +31,6 @@ function OrderListDialogExecutionListInsert(props) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { insertIndex } = props.robotExecutionData;
   const robotStateMode = props.robotStateMode;
 
   const backHandler = () => {
@@ -47,7 +46,10 @@ function OrderListDialogExecutionListInsert(props) {
     );
   };
 
-  const confirmHandler = (id) => {
+  const [insertCkeck, setInsertCheck] = useState(false);
+  const [insertId, setInsertId] = useState(null);
+
+  const confirmHandler = (id, index) => {
     if (id === insertId || !insertId) {
       setInsertCheck((prev) => !prev);
     } else if (id !== insertId) {
@@ -73,15 +75,27 @@ function OrderListDialogExecutionListInsert(props) {
     });
   };
 
+  // detail hover
+  const [detailId, setDetailId] = useState(null);
+  const [detailHover, setDetailHover] = useState(false);
+
+  const mouseEnterHandler = (id) => {
+    setDetailId(id);
+    setDetailHover(true);
+  };
+
+  const mouseLeaveHandler = () => {
+    setDetailId(null);
+    setDetailHover(false);
+  };
+
   return (
     <OrderListExeListBox>
       <OrderListExeListTitleBox>
         <IconButtonBack onClick={backHandler}>
           <ChevronLeftIcon />
         </IconButtonBack>
-
-        <Typography variant="h6">插單</Typography>
-
+        請選擇插單
         <IconButtonSearch>
           <SearchRoundedIcon />
         </IconButtonSearch>
@@ -95,44 +109,43 @@ function OrderListDialogExecutionListInsert(props) {
         ) : orderListData.length === 0 ? (
           <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
         ) : (
-          orderListData.map((order) =>
+          orderListData.map((order, index) =>
             order.aiTraining_order ? (
               <Fragment key={order.id}>
                 <OrderListExeListInsertName
-                  sx={{
-                    borderTop:
-                      insertCkeck && insertId === order.id + 1
-                        ? `1px solid ${Colors.brownHover}`
-                        : "none",
-                  }}
-                  onClick={() => confirmHandler(order.id)}
+                  onMouseEnter={() => mouseEnterHandler(order.id)}
+                  onMouseLeave={mouseLeaveHandler}
+                  onClick={() => confirmHandler(order.id, index)}
                 >
-                  <Typography>{order.name}</Typography>
+                  <Typography fontWeight={600}>{order.name}</Typography>
 
                   <Tooltip title="詳細資料" placement="left" arrow>
                     <IconButtonHelp
                       className="iconBtn-help"
+                      display={detailHover && detailId === order.id}
                       onClick={(e) => orderDetailHandler(e, order.id)}
                     >
                       <StyleHelpRoundedIcon className="icon-help" />
                     </IconButtonHelp>
                   </Tooltip>
                 </OrderListExeListInsertName>
+
                 <Collapse in={insertCkeck && insertId === order.id}>
                   <ConfirmBox>
-                    <Button
+                    <ConfirmBoxButton
                       variant="contained"
+                      colorArray={[Colors.darkGreenHover, teal[700]]}
                       onClick={() => selectInsertOrderHandler(order)}
                     >
-                      確定
-                    </Button>
-                    <Button
+                      插單
+                    </ConfirmBoxButton>
+                    <ConfirmBoxButton
                       variant="contained"
-                      color="error"
+                      colorArray={[Colors.darkred, Colors.darkredHover]}
                       onClick={confirmCancelHandler}
                     >
                       取消
-                    </Button>
+                    </ConfirmBoxButton>
                   </ConfirmBox>
                 </Collapse>
               </Fragment>

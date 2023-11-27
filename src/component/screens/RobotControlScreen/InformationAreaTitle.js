@@ -18,16 +18,16 @@ function InformationAreaTitle({
   const Title = styled(Box)(({ theme }) => ({
     fontWeight: 600,
     fontSize: "24px",
-    color: Colors.geryText,
+    color: Colors.greyText,
   }));
 
   const dispatch = useDispatch();
 
-  const { data: multipleOrderSelectData } = useSelector(
+  const { name: multipleOrderSelectName } = useSelector(
     (state) => state.robotControlScreen_multipleOrderSelect
   );
 
-  const { executeOrderId } = robotExecutionData;
+  const { isDoing, executeOrderId } = robotExecutionData;
 
   const changeModeHandler = (mode) => {
     dispatch({
@@ -37,7 +37,7 @@ function InformationAreaTitle({
   };
   return (
     <InformationAreaTitleBox>
-      {informationAreaMode === "order" && (
+      {informationAreaMode === "order" ? (
         <>
           {realtimeItemMode && (
             <OrderListTitleButton onClick={() => changeModeHandler("picture")}>
@@ -45,12 +45,18 @@ function InformationAreaTitle({
             </OrderListTitleButton>
           )}
 
-          <Title>{orderSelectData.name}</Title>
+          {robotStateMode !== "activate" ? (
+            <Title>{orderSelectData.name}</Title>
+          ) : null}
         </>
-      )}
+      ) : null}
 
-      {informationAreaMode === "multipleOrder" ? (
-        <Title>{multipleOrderSelectData.name}</Title>
+      {informationAreaMode === "multipleOrder" && !isDoing ? (
+        <Title>{multipleOrderSelectName}</Title>
+      ) : null}
+
+      {informationAreaMode === "multipleOrder" && isDoing ? (
+        <Title>待執行工單</Title>
       ) : null}
 
       {informationAreaMode === "picture" && robotStateMode !== "activate" && (
@@ -60,7 +66,9 @@ function InformationAreaTitle({
       )}
 
       {informationAreaMode === "success" && executeOrderId.length !== 0 ? (
-        <OrderListTitleButton onClick={() => changeModeHandler("order")}>
+        <OrderListTitleButton
+          onClick={() => changeModeHandler("multipleOrder")}
+        >
           待執行工單
         </OrderListTitleButton>
       ) : null}

@@ -7,7 +7,7 @@ import {
 } from "../../../../styles/RobotControlScreen";
 import { AiResultAvatarBgcolor } from "../../../../tool/func";
 function MultipleOrderInfoDetailDialogTabsAiResult({
-  multipleOrderId,
+  multipleOrderSelectId,
   multipleOrderData,
 }) {
   const StyleBox = styled(Box)(({ theme }) => ({
@@ -19,24 +19,20 @@ function MultipleOrderInfoDetailDialogTabsAiResult({
     overflowY: "auto",
   }));
 
-  return multipleOrderId ? (
+  return multipleOrderSelectId ? (
     <StyleBox className="multipleOrderInfoDetail">
-      {multipleOrderData.order.aiTraining_order
-        .split(",")
-        .map((order, index) => (
-          <MultipleOrderInfoDialogAiResultBox key={index}>
-            <MultipleOrderInfoDialogAiResultOrder>
-              <Avatar
-                sx={{ backgroundColor: AiResultAvatarBgcolor(index + 1) }}
-              >
-                {index + 1}
-              </Avatar>
-            </MultipleOrderInfoDialogAiResultOrder>
-            <MultipleOrderInfoDialogAiResultName>
-              {order}
-            </MultipleOrderInfoDialogAiResultName>
-          </MultipleOrderInfoDialogAiResultBox>
-        ))}
+      {multipleOrderData.aiTraining_order.split(",").map((order, index) => (
+        <MultipleOrderInfoDialogAiResultBox key={index}>
+          <MultipleOrderInfoDialogAiResultOrder>
+            <Avatar sx={{ backgroundColor: AiResultAvatarBgcolor(index + 1) }}>
+              {index + 1}
+            </Avatar>
+          </MultipleOrderInfoDialogAiResultOrder>
+          <MultipleOrderInfoDialogAiResultName>
+            {order}
+          </MultipleOrderInfoDialogAiResultName>
+        </MultipleOrderInfoDialogAiResultBox>
+      ))}
     </StyleBox>
   ) : null;
 }
