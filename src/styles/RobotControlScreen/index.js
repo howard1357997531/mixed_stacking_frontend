@@ -446,14 +446,6 @@ export const MultipleOrderInfoDialogBox = styled(Box, {
   backgroundColor: isTitle && Colors.brownHover,
   fontSize: isTitle && "14px",
   fontWeight: !isTitle && 600,
-  // "&:hover": {
-  //   color: !isTitle && deepPurple[500],
-  //   height: !isTitle && "60px",
-  //   fontSize: !isTitle && "24px",
-  //   fontWeight: !isTitle && 600,
-  //   backgroundColor: !isTitle && Colors.brownHover,
-  //   cursor: !isTitle && "pointer",
-  // },
 }));
 
 export const MultipleOrderInfoDialogSmBox = styled(Box)(({ theme }) => ({

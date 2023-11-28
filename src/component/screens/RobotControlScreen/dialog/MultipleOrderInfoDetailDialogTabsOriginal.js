@@ -29,6 +29,7 @@ function MultipleOrderInfoDetailDialogTabsOriginal({
       >
         {multipleOrderData.name}
       </Typography>
+
       <Typography
         textAlign="right"
         sx={{

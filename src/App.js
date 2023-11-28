@@ -19,15 +19,12 @@ import {
   robotExecutionAlertAction,
 } from "./redux/actions/RobotControlScreenAction";
 import SelectItemScreen from "./component/screen/SelectItemScreen";
+import Demo1SelectItemsScreen from "./screen/Demo1SelectItemsScreen";
 
 function App() {
   const dispatch = useDispatch();
   const { data: orderSelectData } = useSelector(
     (state) => state.robotControlScreen_orderSelect
-  );
-
-  const { data: multipleOrderSelectData } = useSelector(
-    (state) => state.robotControlScreen_multipleOrderSelect
   );
 
   const { mode: informationAreaMode } = useSelector(
@@ -58,7 +55,6 @@ function App() {
   // 為了slider可以穩定輸出
   // 第一個物件和下一個物件名稱一開始就會顯示(robot_mode=activate && !realtimeItemMode)
   // 後台不會用websocket回傳第一個物件和第一個物件下一個名稱，會從第二個開始回傳
-
   useEffect(() => {
     if (orderSelectData.length !== 0) {
       const orderList = orderSelectData.aiTraining_order.split(",");
@@ -211,7 +207,7 @@ function App() {
           path="/control-robot-socket"
           element={<ControlRobotScreen_socket />}
         />
-        <Route path="demo1-select-item" element={<SelectItemScreen />} />
+        <Route path="demo1-select-item" element={<Demo1SelectItemsScreen />} />
       </Routes>
     </Router>
   );

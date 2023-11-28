@@ -290,10 +290,10 @@ export const FunctionAreaContentBox = styled(Box, {
 }));
 
 export const FunctionAreaContentTitle = styled(Typography)(({ theme }) => ({
-  margin: "10px 0px",
   textAlign: "center",
   fontWeight: 600,
   color: Colors.brownHover,
+  marginTop: "10px",
 }));
 
 export const AiIsTraingGifText = styled(Typography)({
@@ -314,17 +314,10 @@ export const OrderListDetailBox = styled(Box, {
   width: "100%",
   height: isTitle ? " 30px" : "40px",
   borderBottom: `1px solid ${Colors.brown200}`,
-  color: isTitle ? Colors.brown100 : Colors.greyTextBlood,
+  color: isTitle ? "#fff" : Colors.greyTextBlood,
   backgroundColor: isTitle && Colors.brownHover,
   fontSize: isTitle && "14px",
   fontWeight: !isTitle && 600,
-  // "&:hover": {
-  //   height: !isTitle && "50px",
-  //   color: !isTitle && Colors.brownHover,
-  //   fontSize: !isTitle && "24px",
-  //   fontWeight: !isTitle && 600,
-  //   cursor: !isTitle && "pointer",
-  // },
 }));
 
 export const OrderListDetailSmallBox = styled(Box)(({ theme }) => ({

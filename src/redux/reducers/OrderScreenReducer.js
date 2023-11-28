@@ -5,7 +5,7 @@ export const orderScreen_orderSelectReducer = (
     mode: "close",
     orderId: [],
     aiTrainingState: null,
-    orderCurrentData: {},
+    orderCurrentData: null,
     aiCurrentData: "",
     edit: [],
     delete: [],

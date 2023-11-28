@@ -56,6 +56,7 @@ export const ROBOT_CONTROL_SCREEN = {
   robotSetting: "ROBOT_CONTROL_SCREEN_robotSetting",
   //reset
   robotExecutionList_reset: "ROBOT_CONTROL_SCREEN_robotExecutionList_reset",
+  robotState_reset: "ROBOT_CONTROL_SCREEN_robotState_reset",
 };
 
 export const ROBOT_CONTROL_SCREEN_orderList = {

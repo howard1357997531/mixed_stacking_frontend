@@ -92,16 +92,25 @@ export const robotControlScreen_robotExecutionListReducer = (
 export const robotControlScreen_robotStateReducer = (
   state = {
     mode: "inactivate",
-    text: "已選擇工單",
+    text: "尚未選擇工單",
     pause: false,
     reset: false,
-    speed: 50,
+    speed: 20,
   },
   action
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.robotState:
       return { ...state, ...action.payload };
+
+    case ROBOT_CONTROL_SCREEN.robotState_reset:
+      return {
+        mode: "inactivate",
+        text: "尚未選擇工單",
+        pause: false,
+        reset: false,
+        speed: 20,
+      };
 
     default:
       return state;

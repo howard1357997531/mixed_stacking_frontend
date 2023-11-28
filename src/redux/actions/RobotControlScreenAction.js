@@ -86,7 +86,7 @@ const replaceInsertName = (name) => {
 
 export const executeRobotAction =
   (robotStateMode, informationAreaMode, robotExecutionData) => (dispatch) => {
-    const { executeOrderId, name, allData } = robotExecutionData;
+    const { executeOrderId, name } = robotExecutionData;
     const executeLength = executeOrderId.length;
     const tempQueue = robotExecutionData.queue;
 
@@ -146,9 +146,7 @@ export const executeRobotAction =
               .post(`${domain}/api/executeRobot/`, { orderId })
               .then((res) => {
                 const state = res.data.robot_state;
-                const mode = state === "finish" ? "inactivate" : "reset";
-                const text = state === "finish" ? "已結束" : "已重置";
-                const is_success = state === "finish" ? "success" : "reset";
+                const is_finish = state === "finish" ? "success" : "reset";
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
@@ -157,12 +155,11 @@ export const executeRobotAction =
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.informationArea,
-                  payload: { mode: is_success },
+                  payload: { mode: is_finish },
                 });
 
                 dispatch({
-                  type: ROBOT_CONTROL_SCREEN.robotState,
-                  payload: { mode, text, speed: 50 },
+                  type: ROBOT_CONTROL_SCREEN.robotState_reset,
                 });
 
                 dispatch({
@@ -203,12 +200,6 @@ export const executeRobotAction =
   };
 
 export const robotSettingAction = (mode, speed) => async (dispatch) => {
-  if (["reset"].includes(mode)) {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.robotState,
-      payload: { mode, text: "已重置" },
-    });
-  }
   const robotSettingData = {
     pause: { pause: true },
     unPause: { pause: false },
@@ -276,9 +267,7 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
 
         axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
           const state = res.data.robot_state;
-          const mode = state === "finish" ? "inactivate" : "reset";
-          const text = state === "finish" ? "已結束" : "已重置";
-          const is_success = state === "finish" ? "success" : "reset";
+          const is_finish = state === "finish" ? "success" : "reset";
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
@@ -287,12 +276,11 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN.informationArea,
-            payload: { mode: is_success },
+            payload: { mode: is_finish },
           });
 
           dispatch({
-            type: ROBOT_CONTROL_SCREEN.robotState,
-            payload: { mode, text, speed: 50 },
+            type: ROBOT_CONTROL_SCREEN.robotState_reset,
           });
 
           dispatch({

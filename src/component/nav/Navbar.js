@@ -221,7 +221,7 @@ function Navbar({ onQRcodeNavId }) {
             </StyleLinkImageBox>
 
             <StyleLinkImageBox>
-              <Link to={"/order"}>
+              <Link to={"/demo1-select-item"}>
                 <StyleLinkImageSmallBox>
                   <img
                     src={"workListSearch.png"}

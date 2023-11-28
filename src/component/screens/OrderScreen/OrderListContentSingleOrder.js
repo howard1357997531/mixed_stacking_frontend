@@ -64,7 +64,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                 <OrderListName
                   itemSelect={
                     orderSelectIdArray.includes(order.id) &&
-                    orderSelectMode !== "multipleOrderCreate"
+                    -orderSelectMode !== "multipleOrderCreate"
                   }
                 >
                   {order.name}

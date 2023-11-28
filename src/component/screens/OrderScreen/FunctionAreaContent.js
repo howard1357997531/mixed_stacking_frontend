@@ -40,13 +40,16 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
     orderId: multipleOrderSelectId,
   } = useSelector((state) => state.multipleOrderList);
 
+  if (orderCurrentData) {
+    var orderCountArray = orderCurrentData.orderItem.map(
+      (order) => order.quantity
+    );
+    var orderCount = orderCountArray.reduce((acc, value) => acc + value, 0);
+  }
+
   const createMultipleOrderSelectData = (orderId) => {
     let [filterData] = orderListData.filter((order) => order.id === orderId);
     return filterData;
-  };
-
-  const trainingText = (text) => {
-    return text === "no_training" ? "尚未演算" : "已演算";
   };
 
   const Content = () => {
@@ -69,21 +72,26 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
               {orderCurrentData.name}
             </FunctionAreaContentTitle>
 
-            <Typography textAlign="right" sx={{ color: Colors.greyText }}>
-              上傳時間 : {orderCurrentData.createdAt}
+            <Typography
+              textAlign="right"
+              sx={{
+                color: Colors.greyTextBlood,
+                fontWeight: 600,
+                fontSize: "14px",
+              }}
+            >
+              數量: {orderCount}
             </Typography>
 
             <Typography
-              variant="body1"
-              align="center"
+              textAlign="right"
               sx={{
-                backgroundColor: Colors.brownHover,
-                color: "#fff",
-                marginTop: "0px",
-                padding: "5px 0px",
+                color: Colors.greyTextBlood,
+                fontWeight: 600,
+                fontSize: "14px",
               }}
             >
-              清單
+              上傳時間 : {orderCurrentData.createdAt}
             </Typography>
 
             <OrderListDetailBox isTitle={true}>

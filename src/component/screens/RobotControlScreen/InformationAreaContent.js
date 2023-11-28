@@ -190,6 +190,7 @@ function InformationAreaContent({
             <OrderListTitleText width="20%">次序</OrderListTitleText>
             <OrderListTitleText sx={{ flexGrow: 1 }}>名稱</OrderListTitleText>
             <OrderListTitleText width="25%">辨識</OrderListTitleText>
+            {/* <OrderListTitleText width="40%">尺寸</OrderListTitleText> */}
           </OrderListTitle>
 
           <OrderListContent className="orderlist">
