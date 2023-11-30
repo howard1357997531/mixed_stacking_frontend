@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, styled } from "@mui/material";
+import React, { Fragment } from "react";
+import { Box, Typography, styled } from "@mui/material";
 import LoadingCircle from "../../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
 import { OrderListContentMsg } from "../../../../styles/OrderScreen";
@@ -35,7 +35,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialoggOpen }) {
     alignItems: "center",
     width: "100%",
     height: "50px",
-    color: grey[900],
+    color: Colors.greyTextBlood,
     fontWeight: 600,
   }));
 
@@ -64,12 +64,23 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialoggOpen }) {
       ) : (
         orderListData.map((order) =>
           order.aiTraining_state === "finish_training" ? (
-            <StyleInnerBox
-              key={order.id}
-              onClick={() => orderListHandler(order.id)}
-            >
-              <StyleInnerSmallBox>{order.name}</StyleInnerSmallBox>
-            </StyleInnerBox>
+            <Fragment key={order.id}>
+              {order.is_today_latest ? (
+                <Typography
+                  sx={{
+                    padding: "5px 10px",
+                    borderBottom: `1px solid ${Colors.brownHover}`,
+                    color: Colors.greyTextBlood,
+                  }}
+                >
+                  {order.createdAt.slice(0, -7)}
+                </Typography>
+              ) : null}
+
+              <StyleInnerBox onClick={() => orderListHandler(order.id)}>
+                <StyleInnerSmallBox>{order.name}</StyleInnerSmallBox>
+              </StyleInnerBox>
+            </Fragment>
           ) : null
         )
       )}

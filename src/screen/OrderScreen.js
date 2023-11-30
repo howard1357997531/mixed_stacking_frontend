@@ -3,13 +3,8 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import OrderDesktop from "../component/screens/OrderScreen/OrderDesktop";
 import OrderMobile from "../component/screens/OrderScreen/OrderMobile";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  multipleOrderListAction,
-  orderListAction,
-} from "../redux/actions/OrderActions";
 
 function OrderScreen() {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -17,10 +12,15 @@ function OrderScreen() {
     (state) => state.orderScreen_orderSelect
   );
 
+  const { data: multipleOrderListData } = useSelector(
+    (state) => state.multipleOrderList
+  );
+
   const propsData = {
     matches,
     orderSelectMode,
     orderSelectIdArray,
+    multipleOrderListData,
   };
 
   // useEffect(() => {

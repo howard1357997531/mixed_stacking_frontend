@@ -12,22 +12,6 @@ import { confirmSwal } from "./swal/RobotControlScreenActionSwal";
 
 export const orderlistSelectAction =
   (mode, orderId, aiTrainingState, orderListData) => (dispatch) => {
-    if (
-      mode === "multipleOrderCreate" &&
-      aiTrainingState !== "finish_training"
-    ) {
-      Swal.fire({
-        position: "center",
-        width: "16em",
-        icon: "warning",
-        title: "只能選擇已訓練工單",
-        background: brown[400],
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
-
     if (["close", "orderDetail", "aiResult"].includes(mode)) {
       const [OrderData] = orderListData.filter((order) => order.id === orderId);
 
@@ -85,6 +69,30 @@ export const aiTrainingAction =
       var { data } = await axios.post(`${domain}/api/aiTraining/`, {
         orderId,
       });
+
+      dispatch({
+        type: ORDER_LIST.aiTrainingOrderAdd,
+        payload: { orderId, data: data.aiResult_str },
+      });
+
+      dispatch({
+        type: ORDER_LIST.aiTrainingStateChange,
+        payload: { orderId, aiTrainingState: "finish_training" },
+      });
+
+      dispatch({
+        type: ORDER_SCREEN_orderList.aiTrainingState,
+        payload: "finish_training",
+      });
+
+      dispatch({
+        type: ORDER_SCREEN_orderList.aiCurrentData,
+        payload: data.aiResult_str,
+      });
+
+      dispatch({
+        type: ORDER_SCREEN_orderList.currentPageCheck,
+      });
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -101,41 +109,25 @@ export const aiTrainingAction =
             mode: "error",
           })
           .then(() => {
-            window.location.reload();
+            // window.location.reload();
+            return;
           });
       });
     }
-
-    dispatch({
-      type: ORDER_LIST.aiTrainingOrderAdd,
-      payload: { orderId, data: data.aiResult_str },
-    });
-
-    dispatch({
-      type: ORDER_LIST.aiTrainingStateChange,
-      payload: { orderId, aiTrainingState: "finish_training" },
-    });
-
-    dispatch({
-      type: ORDER_SCREEN_orderList.aiTrainingState,
-      payload: "finish_training",
-    });
-
-    dispatch({
-      type: ORDER_SCREEN_orderList.aiCurrentData,
-      payload: data.aiResult_str,
-    });
-
-    dispatch({
-      type: ORDER_SCREEN_orderList.currentPageCheck,
-    });
   };
 
-export const functionAreaModeAction = (mode) => (dispatch) => {
+export const functionAreaModeAction = (mode, id) => (dispatch) => {
   dispatch({
     type: ORDER_SCREEN_orderList.mode,
     payload: mode,
   });
+
+  if (mode === "multipleOrder") {
+    dispatch({
+      type: MULTIPLE_ORDER_LIST.orderId,
+      payload: id,
+    });
+  }
 
   if (mode === "orderDetail" || mode === "multipleOrder") {
     dispatch({

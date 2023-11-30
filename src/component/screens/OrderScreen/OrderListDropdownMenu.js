@@ -66,6 +66,9 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
           "aria-labelledby": "basic-button",
         }}
       >
+        <StyleMenuItem onClick={() => handleClose("orderDetail")}>
+          工單
+        </StyleMenuItem>
         <StyleMenuItem onClick={() => handleClose("multipleOrder")}>
           組合單
         </StyleMenuItem>

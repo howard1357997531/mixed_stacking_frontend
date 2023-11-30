@@ -82,10 +82,6 @@ function OperationInterfaceBox1({
         return { text: "偵測正確", color: Colors.darkGreenHover };
       }
     }
-    // detect: { text: "物件偵測中", color: Colors.greyTextBlood },
-    // correct: { text: "偵測正確", color: Colors.darkGreenHover },
-    // error: { text: "偵測錯誤", color: red[100] },
-    // reset: { text: "重置", color: Colors.orange },
   };
 
   if (orderSelectData.length !== 0) {

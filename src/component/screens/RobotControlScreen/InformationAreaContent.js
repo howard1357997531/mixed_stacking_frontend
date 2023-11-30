@@ -271,10 +271,10 @@ function InformationAreaContent({
 
       {realtimeVisualMode && informationAreaMode === "picture" && (
         <img
-          src={`${domain}/static/media/Figures_step2_${
+          src={`${domain}/static/media/ai_figure/Figures_${
             executeOrderIdArray[queue - 1]
           }/box_${realtimeItemCount}_bin_1.png`}
-          alt={`${domain}/static/media/Figures_step2_${
+          alt={`${domain}/static/media/ai_figure/Figures_${
             executeOrderIdArray[queue - 1]
           }/box_${realtimeItemCount}_bin_1.png`}
           className="item-realtime-photo"

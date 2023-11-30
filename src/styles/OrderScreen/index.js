@@ -121,7 +121,6 @@ export const OrderListContentMsg = styled(Typography)(({ theme }) => ({
 export const OrderListDate = styled(Typography)(({ theme }) => ({
   borderTop: `1px solid ${Colors.greyBorder}`,
   borderBottom: `1px solid ${Colors.greyBorder}`,
-  background: Colors.lightOrangeHover,
   color: Colors.greyText,
   padding: "5px 10px",
 }));
@@ -129,11 +128,15 @@ export const OrderListDate = styled(Typography)(({ theme }) => ({
 export const OrderListDetial = styled(Box, {
   shouldForwardProp: (prop) => prop !== "itemSelect",
 })(({ theme, itemSelect }) => ({
+  boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
   width: "100%",
   height: "60px",
+  padding: "0px 20px",
+  color: itemSelect ? Colors.grey100 : Colors.greyText,
   backgroundColor: itemSelect ? Colors.lightbrown200 : null,
+  fontWeight: 600,
   "&:hover": {
     backgroundColor: itemSelect
       ? Colors.lightbrown200
@@ -149,18 +152,14 @@ export const OrderListName = styled(Box, {
   display: "flex",
   justifyContent: "left",
   alignItems: "center",
-  paddingLeft: "20px",
   width: "100%",
   height: "100%",
-  color: itemSelect ? Colors.grey100 : Colors.greyText,
-  fontWeight: itemSelect ? 600 : "initial",
 }));
 
 export const OrderListState = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "right",
   alignItems: "center",
-  paddingRight: "20px",
   width: "100%",
   height: "100%",
 }));
@@ -178,9 +177,11 @@ export const MultipleOrderBox = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "60px",
-  backgroundColor: itemSelect ? Colors.greyHover : null,
+  backgroundColor: itemSelect ? Colors.lightbrown200 : null,
   "&:hover": {
-    backgroundColor: itemSelect ? Colors.greyHover : Colors.lightOrangeHover,
+    backgroundColor: itemSelect
+      ? Colors.lightbrown200
+      : Colors.lightOrangeHover,
     cursor: "pointer",
   },
 }));
@@ -217,7 +218,9 @@ export const MultipleOrderContentTitle = styled(Typography)(({ theme }) => ({
 export const FunctionAreaBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "orderSelectMode",
 })(({ theme, orderSelectMode }) => ({
-  display: orderSelectMode !== "close" ? "flex" : "none",
+  display: ["close", "noMultipleOrder"].includes(orderSelectMode)
+    ? "none"
+    : "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",

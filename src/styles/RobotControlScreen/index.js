@@ -117,10 +117,10 @@ export const VisualIdentityTitle = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  height: "20%",
+  height: "30%",
   color: Colors.greyTextBlood,
   fontWeight: 600,
-  fontSize: 20,
+  fontSize: 24,
 }));
 
 export const VisualIdentityObject = styled(Box)(({ theme }) => ({

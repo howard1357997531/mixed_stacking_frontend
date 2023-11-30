@@ -14,16 +14,31 @@ import "./css/OrderList.css";
 import OrderListContent from "./OrderListContent";
 import { useDispatch } from "react-redux";
 import { functionAreaModeAction } from "../../../redux/actions/OrderScreenAction";
+import { ORDER_SCREEN_orderList } from "../../../redux/constants";
 
 function OrderList(props) {
   const dispatch = useDispatch();
+  const { orderSelectMode, multipleOrderListData } = props;
 
   const onFunctionMenuValueHandler = (mode) => {
-    if (mode !== null) {
-      if (mode !== props.orderSelectMode) {
-        dispatch(functionAreaModeAction(mode));
-      }
+    if (mode === null || mode === orderSelectMode) {
+      return;
     }
+
+    if (mode === "multipleOrder" && multipleOrderListData.length === 0) {
+      dispatch({
+        type: ORDER_SCREEN_orderList.mode,
+        payload: "noMultipleOrder",
+      });
+
+      dispatch({
+        type: ORDER_SCREEN_orderList.orderId,
+        payload: [],
+      });
+      return;
+    }
+
+    dispatch(functionAreaModeAction(mode, multipleOrderListData[0].id));
   };
 
   return (

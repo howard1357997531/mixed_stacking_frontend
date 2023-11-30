@@ -17,10 +17,21 @@ import FunctionAreaContent from "./FunctionAreaContent";
 
 function FunctionArea(props) {
   const dispatch = useDispatch();
+  const { orderSelectMode, multipleOrderListData } = props;
 
   const closeBoxHandler = () => {
-    if (props.orderSelectMode === "multipleOrderCreate") {
-      dispatch({ type: ORDER_SCREEN_orderList.mode, payload: "multipleOrder" });
+    if (orderSelectMode === "multipleOrderCreate") {
+      if (multipleOrderListData.length === 0) {
+        dispatch({
+          type: ORDER_SCREEN_orderList.mode,
+          payload: "noMultipleOrder",
+        });
+      } else {
+        dispatch({
+          type: ORDER_SCREEN_orderList.mode,
+          payload: "multipleOrder",
+        });
+      }
     } else {
       dispatch({ type: ORDER_SCREEN_orderList.mode, payload: "close" });
       dispatch({ type: ORDER_SCREEN_orderList.orderId, payload: [] });
@@ -29,10 +40,10 @@ function FunctionArea(props) {
   };
 
   return (
-    <FunctionAreaBox orderSelectMode={props.orderSelectMode}>
+    <FunctionAreaBox orderSelectMode={orderSelectMode}>
       <FunctionAreaNav>
         <CloseIconButton onClick={closeBoxHandler}>
-          {props.orderSelectMode === "multipleOrderCreate" ? (
+          {orderSelectMode === "multipleOrderCreate" ? (
             <ChevronLeftIcon />
           ) : (
             <CloseIcon />
