@@ -205,7 +205,7 @@ export const OrderListExeListInProgress = styled(Box)(({ theme }) => ({
 export const OrderListExeListDelete = styled(DisabledByDefaultRoundedIcon)(
   ({ theme }) => ({
     position: "absolute",
-    top: "calc(50% - 15px)",
+    top: "calc(50% - 13px)",
     right: "10px",
     color: Colors.red800,
     fontSize: "26px",

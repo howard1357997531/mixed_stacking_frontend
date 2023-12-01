@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   MULTIPLE_ORDER_LIST,
   ORDER_LIST,
+  ORDER_SCREEN,
   ORDER_SCREEN_orderList,
 } from "../constants";
 import Swal from "sweetalert2";
@@ -11,43 +12,38 @@ import { Colors } from "../../styles/theme";
 import { confirmSwal } from "./swal/RobotControlScreenActionSwal";
 
 export const orderlistSelectAction =
-  (mode, orderId, aiTrainingState, orderListData) => (dispatch) => {
-    if (["close", "orderDetail", "aiResult"].includes(mode)) {
-      const [OrderData] = orderListData.filter((order) => order.id === orderId);
+  (orderId, orderListData, aiTrainingState) => (dispatch) => {
+    const [OrderData] = orderListData.filter((order) => order.id === orderId);
 
-      dispatch({
-        type: ORDER_SCREEN_orderList.multipleData,
+    dispatch({
+      type: ORDER_SCREEN.orderSelectData,
+      payload: {
         mode: "orderDetail",
-        payload: {
-          mode: "orderDetail",
-          orderId: [orderId],
-          aiTrainingState,
-          aiCurrentData:
-            aiTrainingState === "finish_training"
-              ? OrderData.aiTraining_order
-              : "",
-          orderCurrentData: {
-            name: OrderData.name,
-            createdAt: OrderData.createdAt,
-            orderItem: OrderData.orderItem,
-          },
+        orderId: [orderId],
+        aiTrainingState,
+        aiCurrentData:
+          aiTrainingState === "finish_training"
+            ? OrderData.aiTraining_order
+            : "",
+        orderCurrentData: {
+          name: OrderData.name,
+          createdAt: OrderData.createdAt,
+          orderItem: OrderData.orderItem,
         },
-      });
-    } else if (mode === "multipleOrderCreate") {
-      dispatch({
-        type: ORDER_SCREEN_orderList.multipleData,
-        mode,
-        payload: {
-          mode,
-          orderId,
-        },
-      });
-    }
+      },
+    });
   };
 
 export const multipleOrderListSelectAction = (orderId) => (dispatch) => {
   dispatch({
     type: MULTIPLE_ORDER_LIST.orderId,
+    payload: orderId,
+  });
+};
+
+export const multipleOrderCreateAction = (orderId) => (dispatch) => {
+  dispatch({
+    type: ORDER_SCREEN.multiOrderCreateSelectData,
     payload: orderId,
   });
 };
@@ -116,26 +112,30 @@ export const aiTrainingAction =
     }
   };
 
-export const functionAreaModeAction = (mode, id) => (dispatch) => {
-  dispatch({
-    type: ORDER_SCREEN_orderList.mode,
-    payload: mode,
-  });
+export const functionAreaModeAction =
+  (mode, multipleOrderListData) => (dispatch) => {
+    dispatch({ type: ORDER_SCREEN.orderSelect_reset });
 
-  if (mode === "multipleOrder") {
-    dispatch({
-      type: MULTIPLE_ORDER_LIST.orderId,
-      payload: id,
-    });
-  }
+    if (mode === "multipleOrder" && multipleOrderListData.length === 0) {
+      dispatch({
+        type: ORDER_SCREEN_orderList.mode,
+        payload: "noMultipleOrder",
+      });
+      return;
+    }
 
-  if (mode === "orderDetail" || mode === "multipleOrder") {
     dispatch({
-      type: ORDER_SCREEN_orderList.orderId,
-      payload: [],
+      type: ORDER_SCREEN_orderList.mode,
+      payload: mode === "orderDetail" ? "close" : mode,
     });
-  }
-};
+
+    if (mode === "multipleOrder") {
+      dispatch({
+        type: MULTIPLE_ORDER_LIST.orderId,
+        payload: multipleOrderListData[0].id,
+      });
+    }
+  };
 
 export const functionAreaNavButtonAction =
   (changeMode, orderSelectIdArray, aiTrainingState) => (dispatch) => {

@@ -23,14 +23,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
   } = useSelector((state) => state.orderList);
 
   const orderListModeHandler = (orderId, aiTraining_state) => {
-    dispatch(
-      orderlistSelectAction(
-        orderSelectMode,
-        orderId,
-        aiTraining_state,
-        orderListData
-      )
-    );
+    dispatch(orderlistSelectAction(orderId, orderListData, aiTraining_state));
   };
 
   return (

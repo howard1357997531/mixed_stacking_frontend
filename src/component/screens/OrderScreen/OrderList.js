@@ -25,20 +25,7 @@ function OrderList(props) {
       return;
     }
 
-    if (mode === "multipleOrder" && multipleOrderListData.length === 0) {
-      dispatch({
-        type: ORDER_SCREEN_orderList.mode,
-        payload: "noMultipleOrder",
-      });
-
-      dispatch({
-        type: ORDER_SCREEN_orderList.orderId,
-        payload: [],
-      });
-      return;
-    }
-
-    dispatch(functionAreaModeAction(mode, multipleOrderListData[0].id));
+    dispatch(functionAreaModeAction(mode, multipleOrderListData));
   };
 
   return (

@@ -1,0 +1,18 @@
+.multi-create-input {
+    position: absolute;
+    top: 50% ;
+    right: 40px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 15px;
+    color: red
+}
+
+.multi-create-input:focus {
+    transform: translateY(-50%);
+}
+
+.multi-create-input::-webkit-inner-spin-button,
+.multi-create-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}

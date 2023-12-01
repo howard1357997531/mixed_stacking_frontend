@@ -1,9 +1,10 @@
-import { ORDER_SCREEN_orderList } from "../constants";
+import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../constants";
 
 export const orderScreen_orderSelectReducer = (
   state = {
     mode: "close",
     orderId: [],
+    combineOrder: [],
     aiTrainingState: null,
     orderCurrentData: null,
     aiCurrentData: "",
@@ -38,27 +39,44 @@ export const orderScreen_orderSelectReducer = (
       }
       return { ...state, item: temp };
 
-    case ORDER_SCREEN_orderList.multipleData:
-      if (action.mode === "orderDetail") {
-        return { ...state, ...action.payload };
-      } else if (action.mode === "multipleOrderCreate") {
-        if (state.orderId.includes(action.payload.orderId)) {
-          var newData = state.orderId.filter(
-            (order) => order !== action.payload.orderId
-          );
+    case ORDER_SCREEN.orderSelectData:
+      return { ...state, ...action.payload };
+
+    case ORDER_SCREEN.multiOrderCreateSelectData:
+      var combineOrder = [...state.combineOrder];
+      if (combineOrder.length === 0) {
+        return { ...state, combineOrder: [String(action.payload)] };
+      } else {
+        const lastNum = combineOrder.at(-1).split("*").at(0);
+        if (parseInt(lastNum) === action.payload) {
+          if (combineOrder.at(-1).includes("*")) {
+            const times = parseInt(combineOrder.at(-1).split("*").at(1)) + 1;
+            combineOrder.splice(-1, 1, lastNum + "*" + String(times));
+          } else {
+            combineOrder.splice(-1, 1, lastNum + "*2");
+          }
         } else {
-          var newData = [...state.orderId, action.payload.orderId];
+          combineOrder.push(String(action.payload));
         }
-        return {
-          ...state,
-          orderId: newData,
-        };
       }
+
+      return { ...state, combineOrder };
 
     case ORDER_SCREEN_orderList.currentPageCheck:
       if (state.mode === "orderDetail") {
         return { ...state, mode: "aiResult" };
       }
+
+    case ORDER_SCREEN.orderSelect_reset:
+      return {
+        ...state,
+        orderId: [],
+        aiTrainingState: null,
+        orderCurrentData: null,
+        aiCurrentData: "",
+        edit: [],
+        delete: [],
+      };
 
     default:
       return state;

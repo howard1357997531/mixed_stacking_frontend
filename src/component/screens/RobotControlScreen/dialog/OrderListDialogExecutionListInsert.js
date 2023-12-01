@@ -11,7 +11,7 @@ import {
   OrderListExeListTitleBox,
   StyleHelpRoundedIcon,
 } from "../../../../styles/RobotControlScreen/dialog";
-import { Button, Collapse, Tooltip, Typography } from "@mui/material";
+import { Collapse, Tooltip, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";

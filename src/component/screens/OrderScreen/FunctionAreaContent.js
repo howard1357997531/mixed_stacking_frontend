@@ -6,23 +6,21 @@ import {
   AiResultSmallBox,
   FunctionAreaContentBox,
   FunctionAreaContentTitle,
-  MenuFunctionBox,
-  MenuFunctionTitle,
   OrderListContentMsg,
   OrderListDetailBox,
   OrderListDetailSmallBox,
 } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
-import { Avatar, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import FunctionAreaMultipleOrderContent from "./FunctionAreaMultipleOrderContent";
-import CenterText from "../../../tool/CenterText";
 import { AiResultAvatarBgcolor } from "../../../tool/func";
 import { Colors } from "../../../styles/theme";
+import FunctionAreaContentMultipleOrderCreate from "./FunctionAreaContentMultipleOrderCreate";
 
-function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
+function FunctionAreaContent({ orderSelectMode }) {
   const {
     loading: orderListLoading,
     error: orderListError,
@@ -46,11 +44,6 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
     );
     var orderCount = orderCountArray.reduce((acc, value) => acc + value, 0);
   }
-
-  const createMultipleOrderSelectData = (orderId) => {
-    let [filterData] = orderListData.filter((order) => order.id === orderId);
-    return filterData;
-  };
 
   const Content = () => {
     if (orderSelectMode === "orderDetail") {
@@ -158,31 +151,8 @@ function FunctionAreaContent({ orderSelectMode, orderSelectIdArray }) {
         />
       );
     } else if (orderSelectMode === "multipleOrderCreate") {
-      return orderSelectIdArray.length === 0 ? (
-        <CenterText text={"尚未選擇工單"} />
-      ) : (
-        orderSelectIdArray.map((orderId, index) => (
-          <MenuFunctionBox key={orderId}>
-            <Avatar
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "15px",
-                transform: "translateY(-50%)",
-                height: "30px",
-                width: "30px",
-                color: Colors.grey100,
-                backgroundColor: Colors.greyBorder,
-                border: `1px solid ${Colors.greyBorder}`,
-              }}
-            >
-              {index + 1}
-            </Avatar>
-            <MenuFunctionTitle>
-              {createMultipleOrderSelectData(orderId).name}
-            </MenuFunctionTitle>
-          </MenuFunctionBox>
-        ))
+      return (
+        <FunctionAreaContentMultipleOrderCreate orderListData={orderListData} />
       );
     } else if (orderSelectMode === "edit") {
       return <p>edit</p>;

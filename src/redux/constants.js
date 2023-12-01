@@ -29,6 +29,13 @@ export const HOME_BUTTON = {
 };
 
 // OrderScreen
+export const ORDER_SCREEN = {
+  orderSelectData: "ORDER_SCREEN_orderSelectData",
+  multiOrderCreateSelectData: "ORDER_SCREEN_multiOrderCreateSelectData",
+  // reset
+  orderSelect_reset: "ORDER_SCREEN_orderSelect_reset",
+};
+
 export const ORDER_SCREEN_orderList = {
   mode: "ORDER_SCREEN_orderList_mode",
   orderId: "ORDER_SCREEN_orderList_orderId",

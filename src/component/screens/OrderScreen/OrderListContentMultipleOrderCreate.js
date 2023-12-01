@@ -1,18 +1,23 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import {
+  IconButtonHelp,
+  MultiCreateDetial,
+  MultiCreateName,
   OrderListContentMsg,
   OrderListDate,
   OrderListDetial,
   OrderListName,
   OrderListState,
   OrderListStateText,
+  StyleHelpRoundedIcon,
 } from "../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../../../styles/theme";
 import TextEffect from "../../../tool/TextEffect";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
-import { orderlistSelectAction } from "../../../redux/actions/OrderScreenAction";
+import { multipleOrderCreateAction } from "../../../redux/actions/OrderScreenAction";
+import { Tooltip } from "@mui/material";
 
 function OrderListContentMultipleOrderCreate({
   orderSelectMode,
@@ -25,15 +30,25 @@ function OrderListContentMultipleOrderCreate({
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const orderListModeHandler = (orderId) => {
-    dispatch(
-      orderlistSelectAction(
-        orderSelectMode,
-        orderId,
-        "finish_training",
-        orderListData
-      )
-    );
+  const multiOrderSelectHandler = (orderId) => {
+    dispatch(multipleOrderCreateAction(orderId));
+  };
+
+  const multiOrderDetailHandler = (e, id) => {
+    e.stopPropagation();
+  };
+
+  const [detailId, setDetailId] = useState(null);
+  const [detailHover, setDetailHover] = useState(false);
+  const mouseEnterHandler = (id) => {
+    setDetailId(id);
+    setDetailHover(true);
+  };
+
+  // console.log("asd*".includes("*"));
+  const mouseLeaveHandler = () => {
+    setDetailId(null);
+    setDetailHover(false);
   };
 
   return (
@@ -54,49 +69,27 @@ function OrderListContentMultipleOrderCreate({
                 </OrderListDate>
               ) : null}
 
-              <OrderListDetial
+              <MultiCreateDetial
                 itemSelect={false}
+                onMouseEnter={() => mouseEnterHandler(order.id)}
+                onMouseLeave={mouseLeaveHandler}
                 onClick={() => {
-                  orderListModeHandler(order.id);
+                  multiOrderSelectHandler(order.id);
                 }}
               >
-                <OrderListName itemSelect={false}>{order.name}</OrderListName>
-
-                <OrderListState>
-                  {order.aiTraining_state === "no_training" && (
-                    <OrderListStateText
-                      sx={{
-                        color: Colors.purple,
-                      }}
+                <MultiCreateName itemSelect={false}>
+                  {order.name}
+                  <Tooltip title="詳細資料" placement="left" arrow>
+                    <IconButtonHelp
+                      className="iconBtn-help"
+                      display={detailHover && detailId === order.id}
+                      onClick={(e) => multiOrderDetailHandler(e, order.id)}
                     >
-                      尚未演算
-                    </OrderListStateText>
-                  )}
-
-                  {order.aiTraining_state === "is_training" && (
-                    <TextEffect
-                      text={"AI演算中"}
-                      textColor={
-                        orderSelectIdArray.includes(order.id)
-                          ? Colors.grey100
-                          : Colors.greyBorder
-                      }
-                    />
-                  )}
-
-                  {order.aiTraining_state === "finish_training" && (
-                    <OrderListStateText
-                      sx={{
-                        padding: "4px 6px",
-                        color: Colors.brown200,
-                        border: `2px solid ${Colors.brown200}`,
-                      }}
-                    >
-                      已演算
-                    </OrderListStateText>
-                  )}
-                </OrderListState>
-              </OrderListDetial>
+                      <StyleHelpRoundedIcon className="icon-help" />
+                    </IconButtonHelp>
+                  </Tooltip>
+                </MultiCreateName>
+              </MultiCreateDetial>
             </Fragment>
           ) : null
         )

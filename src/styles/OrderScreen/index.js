@@ -10,6 +10,8 @@ import {
 import { Colors } from "../theme";
 import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
 import { OrderListExeListWaitToExecuteAnimation } from "../../animation";
+import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 export const OrderContainer = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
@@ -214,6 +216,56 @@ export const MultipleOrderContentTitle = styled(Typography)(({ theme }) => ({
   color: Colors.brownHover,
 }));
 
+export const MultiCreateDetial = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+  height: "60px",
+  color: itemSelect ? Colors.grey100 : Colors.greyText,
+  backgroundColor: itemSelect ? Colors.lightbrown200 : null,
+  fontWeight: 600,
+  "&:hover": {
+    backgroundColor: itemSelect
+      ? Colors.lightbrown200
+      : Colors.lightOrangeHover,
+    cursor: "pointer",
+  },
+}));
+
+export const MultiCreateName = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
+  boxSizing: "border-box",
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "100%",
+}));
+
+export const IconButtonHelp = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== "display",
+})(({ theme, display }) => ({
+  position: "absolute",
+  top: "50%",
+  right: "10px",
+  transform: "translateY(-50%)",
+  padding: "10px",
+  opacity: display ? 1 : 0,
+  transition: "opacity .2s ease-in-out",
+  "&:hover": {
+    backgroundColor: "#00968733",
+  },
+}));
+
+export const StyleHelpRoundedIcon = styled(HelpRoundedIcon)(({ theme }) => ({
+  fontSize: 16,
+}));
+
 // functionArea
 export const FunctionAreaBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "orderSelectMode",
@@ -369,4 +421,41 @@ export const MenuFunctionTitle = styled(Typography)(({ theme }) => ({
   width: "100%",
   height: "inherit",
   color: Colors.greyText,
+}));
+
+export const MultiCreateAvatarBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "15px",
+  transform: "translateY(-50%)",
+  display: "flex",
+  alignItems: "center",
+}));
+
+export const MultiCreateAvatar = styled(Avatar)(({ theme }) => ({
+  height: "22px",
+  width: "22px",
+  fontSize: "12px",
+  color: Colors.grey100,
+  backgroundColor: Colors.greyBorder,
+  border: `1px solid ${Colors.greyBorder}`,
+}));
+
+export const AvatarDivider = styled(Box)(({ theme }) => ({
+  height: "2px",
+  width: "10px",
+  margin: "0px 3px",
+  backgroundColor: Colors.greyText,
+}));
+
+export const MultiCreatePlusBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  right: "40px",
+  transform: "translateY(-50%)",
+  display: "flex",
+  flexDirection: "cloumn",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "90%",
 }));
