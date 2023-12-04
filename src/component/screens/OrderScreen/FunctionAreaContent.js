@@ -15,9 +15,9 @@ import { Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
-import FunctionAreaMultipleOrderContent from "./FunctionAreaMultipleOrderContent";
 import { AiResultAvatarBgcolor } from "../../../tool/func";
 import { Colors } from "../../../styles/theme";
+import FunctionAreaContentMultipleOrder from "./FunctionAreaContentMultipleOrder";
 import FunctionAreaContentMultipleOrderCreate from "./FunctionAreaContentMultipleOrderCreate";
 
 function FunctionAreaContent({ orderSelectMode }) {
@@ -146,7 +146,7 @@ function FunctionAreaContent({ orderSelectMode }) {
       ) : multipleOrderData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
       ) : (
-        <FunctionAreaMultipleOrderContent
+        <FunctionAreaContentMultipleOrder
           hasSelect={multipleOrderSelectId !== ""}
         />
       );

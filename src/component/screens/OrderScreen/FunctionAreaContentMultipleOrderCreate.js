@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AvatarDivider,
   MenuFunctionBox,
@@ -8,13 +8,22 @@ import {
 } from "../../../styles/OrderScreen";
 import { OrderListExeListDelete } from "../../../styles/RobotControlScreen/dialog";
 import "./css/FunctionAreaContentMultipleOrderCreate.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CenterText from "../../../tool/CenterText";
+import {
+  multipleOrderCreateDeleteAction,
+  multipleOrderCreateInputChangeAction,
+} from "../../../redux/actions/OrderScreenAction";
+import { ORDER_SCREEN } from "../../../redux/constants";
 
 function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
-  const { combineOrder } = useSelector(
-    (state) => state.orderScreen_orderSelect
-  );
+  const dispatch = useDispatch();
+  const {
+    combineOrder,
+    combineOrderFocusIndex,
+    combineOrderFocusValue,
+    combineOrderFocusBool,
+  } = useSelector((state) => state.orderScreen_orderSelect);
 
   if (combineOrder.length !== 0) {
     const countArray = combineOrder.map((order) =>
@@ -42,11 +51,62 @@ function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
     return filterData;
   };
 
+  const inputChangeHandler = (e, index) => {
+    if (e.target.value !== "") {
+      const num = parseInt(e.target.value) > 0 ? e.target.value : "1";
+      dispatch(multipleOrderCreateInputChangeAction(index, num, combineOrder));
+      const combineOrderFocusIndex = index;
+      dispatch({
+        type: ORDER_SCREEN.orderSelectData,
+        payload: {
+          combineOrderFocusBool: !combineOrderFocusBool,
+          combineOrderFocusIndex,
+        },
+      });
+    }
+  };
+
+  // focus blur 單一動作只會觸發一次
+  const inputFocusHandler = (e, index) => {
+    if (e.target.value !== "") {
+      // const combineOrderFocusBool = true;
+      // const combineOrderFocusIndex = index;
+      // const combineOrderFocusValue = e.target.value;
+      // dispatch({
+      //   type: ORDER_SCREEN.orderSelectData,
+      //   payload: {
+      //     combineOrderFocusBool,
+      //     combineOrderFocusIndex,
+      //     combineOrderFocusValue,
+      //   },
+      // });
+      // setFocusValue(index);
+    }
+  };
+
+  const inputBlurHandler = (e, index) => {
+    if (e.target.value === "") {
+      dispatch(multipleOrderCreateInputChangeAction(index, "1", combineOrder));
+    }
+  };
+
+  const deleteHandler = (index) => {
+    dispatch(multipleOrderCreateDeleteAction(index, combineOrder));
+  };
+
+  const inputFocusRef = useRef(null);
+  const inputNoFocusRef = useRef(null);
+  useEffect(() => {
+    if (combineOrder.length !== 0) {
+      inputFocusRef.current.focus();
+    }
+  }, [combineOrderFocusBool]);
+
   return combineOrder.length === 0 ? (
     <CenterText text={"尚未選擇工單"} />
   ) : (
     combineOrder.map((order, index) => (
-      <MenuFunctionBox key={parseId(order)}>
+      <MenuFunctionBox key={index}>
         <MultiCreateAvatarBox>
           <MultiCreateAvatar>{parseIndex(index)}</MultiCreateAvatar>
           {order.includes("*") ? (
@@ -61,11 +121,17 @@ function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
 
         <input
           type="number"
-          className="multi-create-input"
+          className={`multi-create-input ${index}`}
           defaultValue={parseTimes(order)}
+          ref={
+            index === combineOrderFocusIndex ? inputFocusRef : inputNoFocusRef
+          }
+          onChange={(e) => inputChangeHandler(e, index)}
+          onFocus={(e) => inputFocusHandler(e, index)}
+          onBlur={(e) => inputBlurHandler(e, index)}
         ></input>
 
-        <OrderListExeListDelete />
+        <OrderListExeListDelete onClick={() => deleteHandler(index)} />
       </MenuFunctionBox>
     ))
   );

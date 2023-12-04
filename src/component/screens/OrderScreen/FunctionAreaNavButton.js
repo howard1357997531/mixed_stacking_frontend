@@ -11,17 +11,18 @@ import { blueGrey } from "@mui/material/colors";
 function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
   const dispatch = useDispatch();
 
-  const { aiTrainingState } = useSelector(
+  const { aiTrainingState, combineOrder } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
   const buttonHandler = (changeMode, aiTraining_state) => {
+    if (changeMode === "orderDetail" && aiTraining_state === "no_training") {
+      var orderSelectData = orderSelectIdArray;
+    } else if (changeMode === "multipleOrder") {
+      var orderSelectData = combineOrder;
+    }
     dispatch(
-      functionAreaNavButtonAction(
-        changeMode,
-        orderSelectIdArray,
-        aiTraining_state
-      )
+      functionAreaNavButtonAction(changeMode, orderSelectData, aiTraining_state)
     );
   };
 

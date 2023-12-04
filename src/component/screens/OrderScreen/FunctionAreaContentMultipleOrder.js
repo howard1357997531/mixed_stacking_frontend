@@ -6,14 +6,13 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
 import { Colors } from "../../../styles/theme";
-import { styled } from "@mui/material";
 import {
   MultipleOrderContentTitle,
   OrderListDetailBox,
   OrderListDetailSmallBox,
 } from "../../../styles/OrderScreen";
 
-function FunctionAreaMultipleOrderContent({ hasSelect }) {
+function FunctionAreaContentMultipleOrder({ hasSelect }) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -177,4 +176,4 @@ function FunctionAreaMultipleOrderContent({ hasSelect }) {
   );
 }
 
-export default FunctionAreaMultipleOrderContent;
+export default FunctionAreaContentMultipleOrder;

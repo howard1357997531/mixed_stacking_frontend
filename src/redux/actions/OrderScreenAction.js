@@ -10,6 +10,7 @@ import { brown } from "@mui/material/colors";
 import { domain } from "../../env";
 import { Colors } from "../../styles/theme";
 import { confirmSwal } from "./swal/RobotControlScreenActionSwal";
+import { compose } from "redux";
 
 export const orderlistSelectAction =
   (orderId, orderListData, aiTrainingState) => (dispatch) => {
@@ -47,6 +48,34 @@ export const multipleOrderCreateAction = (orderId) => (dispatch) => {
     payload: orderId,
   });
 };
+
+export const multipleOrderCreateInputChangeAction =
+  (index, times, combineOrderTemp) => (dispatch) => {
+    // console.log(inedx, times, combineOrder);
+    const orderTemp = [...combineOrderTemp].at(index).split("*");
+    if (times === "1") {
+      orderTemp.splice(1, 1);
+    } else {
+      orderTemp.splice(1, 1, "*", times);
+    }
+
+    const combineOrder = [...combineOrderTemp];
+    combineOrder.splice(index, 1, orderTemp.join(""));
+    dispatch({
+      type: ORDER_SCREEN.orderSelectData,
+      payload: { combineOrder },
+    });
+  };
+
+export const multipleOrderCreateDeleteAction =
+  (index, combineOrderTemp) => (dispatch) => {
+    const combineOrder = [...combineOrderTemp];
+    combineOrder.splice(index, 1);
+    dispatch({
+      type: ORDER_SCREEN.orderSelectData,
+      payload: { combineOrder },
+    });
+  };
 
 // 寫如果不是在orderDetail 不會強制顯示ai結算畫面
 export const aiTrainingAction =
@@ -138,7 +167,7 @@ export const functionAreaModeAction =
   };
 
 export const functionAreaNavButtonAction =
-  (changeMode, orderSelectIdArray, aiTrainingState) => (dispatch) => {
+  (changeMode, orderSelectData, aiTrainingState) => (dispatch) => {
     if (changeMode !== "multipleOrder") {
       dispatch({
         type: ORDER_SCREEN_orderList.mode,
@@ -146,12 +175,12 @@ export const functionAreaNavButtonAction =
       });
     } else {
       // 組合單建立
-      if (orderSelectIdArray.length === 0) {
+      if (orderSelectData.length === 0) {
         Swal.fire({
           position: "center",
           width: "16em",
           icon: "warning",
-          title: "尚未選擇供單",
+          title: "尚未選擇工單",
           background: Colors.brown,
           showConfirmButton: false,
           timer: 1500,
@@ -164,7 +193,7 @@ export const functionAreaNavButtonAction =
       confirmSwal("執行 AI 演算?").then((result) => {
         if (result.isConfirmed) {
           dispatch(
-            aiTrainingAction(changeMode, orderSelectIdArray[0], "is_training")
+            aiTrainingAction(changeMode, orderSelectData[0], "is_training")
           );
         }
       });
@@ -190,13 +219,13 @@ export const functionAreaNavButtonAction =
           try {
             const { data } = await axios.post(
               `${domain}/api/createMultipleOrder/`,
-              { orderSelectIdArray, inputText }
+              { orderSelectData, inputText }
             );
 
-            dispatch({
-              type: MULTIPLE_ORDER_LIST.addData,
-              payload: data,
-            });
+            // dispatch({
+            //   type: MULTIPLE_ORDER_LIST.addData,
+            //   payload: data,
+            // });
           } catch (error) {
             Swal.showValidationMessage(`${error.response.data.error_msg}`);
           }
