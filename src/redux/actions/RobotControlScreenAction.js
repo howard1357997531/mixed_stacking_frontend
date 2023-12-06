@@ -39,8 +39,44 @@ export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
   });
 };
 
+const parseOrderId = (data) => {
+  var output = [];
+  const orderArray = data.orderSelectId_str.split(",");
+  orderArray.forEach((order) => {
+    const id = parseInt(order.split("*").at(0));
+    const times = parseInt(order.split("*").at(1));
+    if (order.includes("*")) {
+      Array(times)
+        .fill(id)
+        .forEach((id) => output.push(id));
+    } else {
+      output.push(parseInt(id));
+    }
+  });
+  return output;
+};
+
+const parseOrderName = (data) => {
+  var idToName = {};
+  data.multipleOrder.forEach(
+    (order) => (idToName[order.order.id] = order.order.name)
+  );
+  const nameArray = parseOrderId(data);
+  return nameArray.map((order) => idToName[order]);
+};
+
+const parseAllData = (data) => {
+  var idToAllData = {};
+  data.multipleOrder.forEach(
+    (order) => (idToAllData[order.order.id] = order.order)
+  );
+  const nameArray = parseOrderId(data);
+  return nameArray.map((order) => idToAllData[order]);
+};
+
 export const multipleOrderlistSelectAction =
   (multipleOrderSelectData) => (dispatch) => {
+    console.log(multipleOrderSelectData);
     const orderSelectData = multipleOrderSelectData.multipleOrder.at(0).order;
     dispatch({
       type: ROBOT_CONTROL_SCREEN.orderSelect,
@@ -62,17 +98,20 @@ export const multipleOrderlistSelectAction =
       payload: { mode: "multipleOrder" },
     });
 
-    const executeOrderId = multipleOrderSelectData.orderSelectId_str
-      .split(",")
-      .map((order) => parseInt(order));
+    // const executeOrderId = multipleOrderSelectData.orderSelectId_str
+    //   .split(",")
+    //   .map((order) => parseInt(order));
 
-    const name = multipleOrderSelectData.multipleOrder.map(
-      (order) => order.order.name
-    );
+    // const name = multipleOrderSelectData.multipleOrder.map(
+    //   (order) => order.order.name
+    // );
+    // const allData = multipleOrderSelectData.multipleOrder.map(
+    //   (order) => order.order
+    // );
 
-    const allData = multipleOrderSelectData.multipleOrder.map(
-      (order) => order.order
-    );
+    const executeOrderId = parseOrderId(multipleOrderSelectData);
+    const name = parseOrderName(multipleOrderSelectData);
+    const allData = parseAllData(multipleOrderSelectData);
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.robotExecutionList,

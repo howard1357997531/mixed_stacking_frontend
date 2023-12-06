@@ -88,12 +88,15 @@ function InformationAreaContent({
         detect.replace("A", "") === realtimeVisualResult[index].replace("#", "")
       ) {
         return detect;
+      } else if (realtimeVisualResult[0] === "#0") {
+        return "#0";
       } else {
         return "err";
       }
     });
     detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
   }
+  // console.log(detectState);
 
   const compareResult = (index) => {
     if (index + 1 < realtimeVisualCount) {
@@ -102,11 +105,14 @@ function InformationAreaContent({
     if (index + 2 > realtimeVisualCount + realtimeVisualResult.length) {
       return "";
     }
+
     const orderList = orderSelectData.aiTraining_order.split(",");
     if (detectState[index] === orderList[index]) {
       return (
         <CheckIcon sx={{ color: Colors.darkGreenHover, fontSize: "26px" }} />
       );
+    } else if (detectState[index] === "#0") {
+      return "";
     } else {
       return <WarningIcon sx={{ color: Colors.red800, fontSize: "26px" }} />;
     }

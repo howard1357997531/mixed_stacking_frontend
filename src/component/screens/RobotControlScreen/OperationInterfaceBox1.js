@@ -71,7 +71,7 @@ function OperationInterfaceBox1({
     var VisualIdentityBoxColor = Colors.darkPink;
     var VisualIdentityBoxHoverColor = Colors.darkPinkHover;
   }
-
+  // console.log("asd", compare);
   const realtimeAllText = () => {
     if (realtimeVisualMode === "detect") {
       return { text: "物件偵測中", color: Colors.greyTextBlood };

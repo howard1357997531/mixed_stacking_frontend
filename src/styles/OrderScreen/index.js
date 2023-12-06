@@ -341,7 +341,7 @@ export const FunctionAreaContentBox = styled(Box, {
   overflowY: "auto",
   border: `1px solid ${Colors.greyBorder}`,
   boxSizing: "border-box",
-  padding: ["orderDetail", "multipleOrder"].includes(orderSelectMode) ? 10 : 0,
+  padding: ["orderDetail"].includes(orderSelectMode) ? 10 : 0,
 }));
 
 export const FunctionAreaContentTitle = styled(Typography)(({ theme }) => ({
@@ -406,21 +406,55 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   marginLeft: "20px",
 }));
 
-export const MenuFunctionBox = styled(Box)(({ theme }) => ({
+export const MultiCreateBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  height: "100%",
+}));
+
+export const MultiCreateCount = styled(Typography)(({ theme }) => ({
+  position: "relative",
+  color: "#fff",
+  fontWeight: 600,
+  backgroundColor: Colors.greyBorder,
+  padding: "5px 10px",
+  textAlign: "center",
+}));
+
+export const MultiCreateResetBtn = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  right: "10px",
+  transform: "translateY(-50%)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  color: Colors.greyTextBlood,
+  backgroundColor: Colors.purple,
+  width: "40px",
+  height: "75%",
+  fontSize: "12px",
+  "&:hover": {
+    cursor: "pointer",
+    transform: "scale(1.05) translateY(-50%)",
+  },
+  "&:active": {
+    transform: "scale(0.95) translateY(-50%)",
+  },
+}));
+
+export const MultiCreateSelectBox = styled(Box)(({ theme }) => ({
+  flexGrow: 1,
+  overflowY: "auto",
+}));
+
+export const MultiCreateSelectSmBox = styled(Box)(({ theme }) => ({
   position: "relative",
   display: "flex",
   width: "100%",
   height: "60px",
   borderBottom: `1px solid ${Colors.greyBorder}`,
-}));
-
-export const MenuFunctionTitle = styled(Typography)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "inherit",
-  color: Colors.greyText,
 }));
 
 export const MultiCreateAvatarBox = styled(Box)(({ theme }) => ({
@@ -446,6 +480,15 @@ export const AvatarDivider = styled(Box)(({ theme }) => ({
   width: "10px",
   margin: "0px 3px",
   backgroundColor: Colors.greyText,
+}));
+
+export const MultiCreateOrderName = styled(Typography)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "inherit",
+  color: Colors.greyText,
 }));
 
 export const MultiCreatePlusBox = styled(Box)(({ theme }) => ({

@@ -95,7 +95,7 @@ export const robotControlScreen_robotStateReducer = (
     text: "尚未選擇工單",
     pause: false,
     reset: false,
-    speed: 20,
+    speed: 50,
   },
   action
 ) => {
@@ -109,7 +109,7 @@ export const robotControlScreen_robotStateReducer = (
         text: "尚未選擇工單",
         pause: false,
         reset: false,
-        speed: 20,
+        speed: 50,
       };
 
     default:

@@ -1,0 +1,7 @@
+.multi-order::-webkit-scrollbar {
+    width: 0px
+}
+
+.multi-order::-webkit-scrollbar-thumb {
+    background-color: aquamarine;
+}

@@ -6,7 +6,6 @@ import {
   AiResultSmallBox,
   FunctionAreaContentBox,
   FunctionAreaContentTitle,
-  OrderListContentMsg,
   OrderListDetailBox,
   OrderListDetailSmallBox,
 } from "../../../styles/OrderScreen";
@@ -14,11 +13,11 @@ import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
-import LoadingCircle from "../../../tool/LoadingCircle";
 import { AiResultAvatarBgcolor } from "../../../tool/func";
 import { Colors } from "../../../styles/theme";
 import FunctionAreaContentMultipleOrder from "./FunctionAreaContentMultipleOrder";
 import FunctionAreaContentMultipleOrderCreate from "./FunctionAreaContentMultipleOrderCreate";
+import "./css/FunctionAreaContent.css";
 
 function FunctionAreaContent({ orderSelectMode }) {
   const {
@@ -30,13 +29,6 @@ function FunctionAreaContent({ orderSelectMode }) {
   const { aiTrainingState, orderCurrentData, aiCurrentData } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
-
-  const {
-    loading: multipleOrderLoading,
-    error: multipleOrderError,
-    data: multipleOrderData,
-    orderId: multipleOrderSelectId,
-  } = useSelector((state) => state.multipleOrderList);
 
   if (orderCurrentData) {
     var orderCountArray = orderCurrentData.orderItem.map(
@@ -139,17 +131,7 @@ function FunctionAreaContent({ orderSelectMode }) {
         </AiResultBox>
       );
     } else if (orderSelectMode === "multipleOrder") {
-      return multipleOrderLoading ? (
-        <LoadingCircle />
-      ) : multipleOrderError ? (
-        <ErrorMsgBox />
-      ) : multipleOrderData.length === 0 ? (
-        <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
-      ) : (
-        <FunctionAreaContentMultipleOrder
-          hasSelect={multipleOrderSelectId !== ""}
-        />
-      );
+      return <FunctionAreaContentMultipleOrder orderListData={orderListData} />;
     } else if (orderSelectMode === "multipleOrderCreate") {
       return (
         <FunctionAreaContentMultipleOrderCreate orderListData={orderListData} />
@@ -164,7 +146,7 @@ function FunctionAreaContent({ orderSelectMode }) {
   return (
     <FunctionAreaContentBox
       orderSelectMode={orderSelectMode}
-      className="functionArea-list"
+      className="functionArea-box"
     >
       {orderListLoading ? (
         <CircularProgress />

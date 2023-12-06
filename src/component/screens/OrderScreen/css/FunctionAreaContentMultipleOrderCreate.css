@@ -1,3 +1,12 @@
+.multi-create-select-box::-webkit-scrollbar {
+    width: 4px;
+}
+
+.multi-create-select-box::-webkit-scrollbar-thumb {
+    background-color: #9575cd;
+    border-radius: 40px;
+}
+
 .multi-create-input {
     position: absolute;
     top: 50% ;
