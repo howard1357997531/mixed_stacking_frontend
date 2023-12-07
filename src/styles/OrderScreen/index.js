@@ -341,7 +341,7 @@ export const FunctionAreaContentBox = styled(Box, {
   overflowY: "auto",
   border: `1px solid ${Colors.greyBorder}`,
   boxSizing: "border-box",
-  padding: ["orderDetail"].includes(orderSelectMode) ? 10 : 0,
+  // padding: ["orderDetail"].includes(orderSelectMode) ? 10 : 0,
 }));
 
 export const FunctionAreaContentTitle = styled(Typography)(({ theme }) => ({

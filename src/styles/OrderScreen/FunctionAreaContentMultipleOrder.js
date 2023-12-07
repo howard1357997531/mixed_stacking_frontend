@@ -1,5 +1,6 @@
 import { Avatar, Box, Typography, styled } from "@mui/material";
 import { Colors } from "../theme";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const MultiOrderBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -9,18 +10,18 @@ export const MultiOrderBox = styled(Box)(({ theme }) => ({
 }));
 
 export const MultiOrderTitleBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-end",
   width: "100%",
-  marginBottom: "5px",
+  padding: "5px 8px",
 }));
 
 export const MultiOrderTitle = styled(Typography)(({ theme }) => ({
+  fontSize: "16px",
   fontWeight: 600,
   color: Colors.greyTextBlood,
-  marginLeft: "4px",
-  textAlign: "center",
 }));
 
 export const MultiOrderInfo = styled(Typography)(({ theme }) => ({
@@ -39,7 +40,7 @@ export const MultiOrderCount = styled(Typography)(({ theme }) => ({
   textAlign: "center",
 }));
 
-export const MultiOrderDeleteBtn = styled(Box)(({ theme }) => ({
+export const MultiOrderDeleteBtn = styled(DeleteIcon)(({ theme }) => ({
   position: "absolute",
   top: "50%",
   right: "10px",
@@ -47,11 +48,7 @@ export const MultiOrderDeleteBtn = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  color: Colors.greyTextBlood,
-  backgroundColor: Colors.red,
-  width: "40px",
-  height: "75%",
-  fontSize: "12px",
+  color: Colors.red800,
   "&:hover": {
     cursor: "pointer",
     transform: "scale(1.05) translateY(-50%)",
@@ -63,7 +60,7 @@ export const MultiOrderDeleteBtn = styled(Box)(({ theme }) => ({
 
 export const MultiOrderDetailBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  padding: "5px",
+  padding: "4px 8px",
   flexGrow: 1,
   width: "100%",
   overflowY: "auto",
@@ -79,9 +76,16 @@ export const MultiOrderDetailSmBox = styled(Box, {
   height: "60px",
   marginTop: !isFirst ? "4px" : "0px",
   borderRadius: "5px",
-  //   borderTop: isFirst && "none",
-  //   borderBottom: `1px solid ${Colors.greyBorder}`,
   backgroundColor: Colors.lightOrangeHover,
+  "&:hover": {
+    cursor: "pointer",
+    transform: "scale(1.01)",
+    backgroundColor: Colors.brown,
+    transition: "all .2s ease-in-out",
+  },
+  "&:active": {
+    transform: "scale(.99)",
+  },
 }));
 
 export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({

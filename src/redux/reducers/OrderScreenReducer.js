@@ -45,6 +45,10 @@ export const orderScreen_orderSelectReducer = (
     case ORDER_SCREEN.orderSelectData:
       return { ...state, ...action.payload };
 
+    //
+    case ORDER_SCREEN.orderSelect:
+      return { ...state, ...action.payload };
+
     case ORDER_SCREEN.multiOrderCreateSelectData:
       var combineOrder = [...state.combineOrder];
       if (combineOrder.length === 0) {
@@ -74,6 +78,10 @@ export const orderScreen_orderSelectReducer = (
       return {
         ...state,
         orderId: [],
+        combineOrder: [],
+        combineOrderFocusBool: false,
+        combineOrderFocusIndex: 0,
+        combineOrderFocusValue: null,
         aiTrainingState: null,
         orderCurrentData: null,
         aiCurrentData: "",

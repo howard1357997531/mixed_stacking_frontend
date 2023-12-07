@@ -30,7 +30,7 @@ export const Colors = {
   ///////////////
   bgcolorLightorange: "#FFF7EC",
   lightOrange: "#FFDDB0",
-  lightOrangeHover: "#f4d3a8",
+  lightOrangeHover: "#f2cd9d",
   orange: "#FE4A1B",
   softOrange: deepOrange[400],
   softOrangeHover: deepOrange[500],

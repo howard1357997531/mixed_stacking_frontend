@@ -9,11 +9,13 @@ export const ORDER_LIST = {
 
 // multipleOrderList
 export const MULTIPLE_ORDER_LIST = {
+  revise: "MULTIPLE_ORDER_LIST_revise",
   request: "MULTIPLE_ORDER_LIST_request",
   success: "MULTIPLE_ORDER_LIST_success",
   fail: "MULTIPLE_ORDER_LIST_fail",
   orderId: "MULTIPLE_ORDER_LIST_orderId",
   addData: "MULTIPLE_ORDER_LIST_addData",
+  deleteData: "MULTIPLE_ORDER_LIST_deleteData",
 };
 
 // homeScreen
@@ -30,6 +32,7 @@ export const HOME_BUTTON = {
 
 // OrderScreen
 export const ORDER_SCREEN = {
+  orderSelect: "ORDER_SCREEN_orderSelect",
   orderSelectData: "ORDER_SCREEN_orderSelectData",
   multiOrderCreateSelectData: "ORDER_SCREEN_multiOrderCreateSelectData",
   // reset

@@ -45,7 +45,6 @@ function OrderListContentMultipleOrderCreate({
     setDetailHover(true);
   };
 
-  // console.log("asd*".includes("*"));
   const mouseLeaveHandler = () => {
     setDetailId(null);
     setDetailHover(false);

@@ -34,9 +34,9 @@ function OrderListContentMultipleOrder() {
     });
   };
 
-  if (multipleOrderId.length !== 0) {
-    var itemSelectId = multipleOrderId;
-  }
+  const itemSelect = (id) => {
+    return multipleOrderId && id === multipleOrderId ? true : false;
+  };
 
   return multipleOrderLoading ? (
     <LoadingCircle />
@@ -57,10 +57,10 @@ function OrderListContentMultipleOrder() {
           </OrderListDate>
         ) : null}
         <MultipleOrderBox
-          itemSelect={order.id === itemSelectId}
+          itemSelect={itemSelect(order.id)}
           onClick={() => multipleOrderHandler(order.id)}
         >
-          <MultipleOrderName itemSelect={order.id === itemSelectId}>
+          <MultipleOrderName itemSelect={itemSelect(order.id)}>
             {order.name}
           </MultipleOrderName>
         </MultipleOrderBox>

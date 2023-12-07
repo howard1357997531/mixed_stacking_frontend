@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../../../styles/theme";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
@@ -19,14 +19,17 @@ import {
   MultiOrderTitleBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentMultipleOrder";
 import { OrderListContentMsg } from "../../../styles/OrderScreen";
+
 import "./css/FunctionAreaContentMultipleOrder.css";
+import { multipleOrderDeleteAction } from "../../../redux/actions/OrderScreenAction";
 
 function FunctionAreaContentMultipleOrder({ orderListData }) {
+  const dispatch = useDispatch();
   const { loading, error, data, orderId } = useSelector(
     (state) => state.multipleOrderList
   );
 
-  if (data.length !== 0) {
+  if (data.length !== 0 && orderId) {
     var [multipleOrderData] = data.filter((order) => order.id === orderId);
     var multipleOrderArray = multipleOrderData.orderSelectId_str.split(",");
     const countArray = multipleOrderArray.map((order) =>
@@ -49,8 +52,8 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
     return times.includes("*") ? parseInt(times.split("*").at(1)) : 1;
   };
 
-  const parseName = (orderId) => {
-    let [filterData] = orderListData.filter((order) => order.id === orderId);
+  const parseName = (id) => {
+    let [filterData] = orderListData.filter((order) => order.id === id);
     return filterData;
   };
 
@@ -63,27 +66,41 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
     return count.reduce((acc, crr) => acc + crr);
   };
 
+  const multiOrderDetailHandler = (id) => {
+    console.log(id);
+  };
+
+  const deleteHandler = () => {
+    dispatch(multipleOrderDeleteAction(orderId));
+  };
+
   return loading ? (
     <LoadingCircle />
   ) : error ? (
     <ErrorMsgBox />
   ) : data.length === 0 ? (
     <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
+  ) : !orderId ? (
+    <OrderListContentMsg variant="h5">已刪除資料</OrderListContentMsg>
   ) : (
     <MultiOrderBox>
       {/* <MultiOrderTitleBox>
-        <MultiOrderTitle variant="h5">{multipleOrderData.name}</MultiOrderTitle>
+        <MultiOrderTitle>{multipleOrderData.name}</MultiOrderTitle>
         <MultiOrderInfo>創建時間: {multipleOrderData.createdAt}</MultiOrderInfo>
       </MultiOrderTitleBox> */}
 
       <MultiOrderCount>
         數量: {parseCount(multipleOrderData.orderSelectId_str)}
-        <MultiOrderDeleteBtn>刪除</MultiOrderDeleteBtn>
+        <MultiOrderDeleteBtn onClick={deleteHandler} />
       </MultiOrderCount>
 
       <MultiOrderDetailBox className="multi-order">
         {multipleOrderArray.map((order, index) => (
-          <MultiOrderDetailSmBox key={index} isFirst={index === 0}>
+          <MultiOrderDetailSmBox
+            key={index}
+            isFirst={index === 0}
+            onClick={() => multiOrderDetailHandler(parseId(order))}
+          >
             <MultiOrderAvatarBox>
               <MultiOrderAvatar>{parseIndex(index)}</MultiOrderAvatar>
               {order.includes("*") ? (

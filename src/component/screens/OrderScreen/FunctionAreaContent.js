@@ -18,6 +18,7 @@ import { Colors } from "../../../styles/theme";
 import FunctionAreaContentMultipleOrder from "./FunctionAreaContentMultipleOrder";
 import FunctionAreaContentMultipleOrderCreate from "./FunctionAreaContentMultipleOrderCreate";
 import "./css/FunctionAreaContent.css";
+import FunctionAreaContentOrder from "./FunctionAreaContentOrder";
 
 function FunctionAreaContent({ orderSelectMode }) {
   const {
@@ -29,13 +30,6 @@ function FunctionAreaContent({ orderSelectMode }) {
   const { aiTrainingState, orderCurrentData, aiCurrentData } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
-
-  if (orderCurrentData) {
-    var orderCountArray = orderCurrentData.orderItem.map(
-      (order) => order.quantity
-    );
-    var orderCount = orderCountArray.reduce((acc, value) => acc + value, 0);
-  }
 
   const Content = () => {
     if (orderSelectMode === "orderDetail") {
@@ -51,65 +45,7 @@ function FunctionAreaContent({ orderSelectMode }) {
           </>
         );
       } else {
-        return (
-          <>
-            <FunctionAreaContentTitle variant="h5">
-              {orderCurrentData.name}
-            </FunctionAreaContentTitle>
-
-            <Typography
-              textAlign="right"
-              sx={{
-                color: Colors.greyTextBlood,
-                fontWeight: 600,
-                fontSize: "14px",
-              }}
-            >
-              數量: {orderCount}
-            </Typography>
-
-            <Typography
-              textAlign="right"
-              sx={{
-                color: Colors.greyTextBlood,
-                fontWeight: 600,
-                fontSize: "14px",
-              }}
-            >
-              上傳時間 : {orderCurrentData.createdAt}
-            </Typography>
-
-            <OrderListDetailBox isTitle={true}>
-              <OrderListDetailSmallBox>名稱</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>寬度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>長度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>高度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>數量</OrderListDetailSmallBox>
-            </OrderListDetailBox>
-
-            {orderCurrentData.orderItem.map((order, index) =>
-              order.quantity !== 0 ? (
-                <OrderListDetailBox key={index} isTitle={false}>
-                  <OrderListDetailSmallBox>
-                    {order.name}
-                  </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox>
-                    {order.width}
-                  </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox>
-                    {order.height}
-                  </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox>
-                    {order.depth}
-                  </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox>
-                    {order.quantity}
-                  </OrderListDetailSmallBox>
-                </OrderListDetailBox>
-              ) : null
-            )}
-          </>
-        );
+        return <FunctionAreaContentOrder orderCurrentData={orderCurrentData} />;
       }
     } else if (orderSelectMode === "aiResult") {
       return (

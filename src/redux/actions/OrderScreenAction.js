@@ -9,8 +9,7 @@ import Swal from "sweetalert2";
 import { brown } from "@mui/material/colors";
 import { domain } from "../../env";
 import { Colors } from "../../styles/theme";
-import { confirmSwal } from "./swal/RobotControlScreenActionSwal";
-import { compose } from "redux";
+import { confirmSwal } from "../../swal";
 
 export const orderlistSelectAction =
   (orderId, orderListData, aiTrainingState) => (dispatch) => {
@@ -39,6 +38,27 @@ export const multipleOrderListSelectAction = (orderId) => (dispatch) => {
   dispatch({
     type: MULTIPLE_ORDER_LIST.orderId,
     payload: orderId,
+  });
+};
+
+export const multipleOrderDeleteAction = (orderId) => (dispatch) => {
+  confirmSwal("確定刪除?").then((result) => {
+    if (result.isConfirmed) {
+      try {
+        axios
+          .post(`${domain}/api/deleteMultipleOrder/`, {
+            orderId,
+          })
+          .then(() => {
+            dispatch({
+              type: MULTIPLE_ORDER_LIST.deleteData,
+              payload: orderId,
+            });
+          });
+      } catch (error) {
+        console.log(error.response.data.error_msg);
+      }
+    }
   });
 };
 
@@ -81,8 +101,8 @@ export const multipleOrderCreateDeleteAction =
 export const aiTrainingAction =
   (mode, orderId, aiTrainingState) => async (dispatch) => {
     dispatch({
-      type: ORDER_SCREEN_orderList.aiTrainingState,
-      payload: aiTrainingState,
+      type: ORDER_SCREEN.orderSelect,
+      payload: { aiTrainingState },
     });
 
     dispatch({
@@ -106,14 +126,21 @@ export const aiTrainingAction =
       });
 
       dispatch({
-        type: ORDER_SCREEN_orderList.aiTrainingState,
-        payload: "finish_training",
+        type: ORDER_SCREEN.orderSelect,
+        payload: {
+          aiTrainingState: "finish_training",
+          aiCurrentData: data.aiResult_str,
+        },
       });
+      // dispatch({
+      //   type: ORDER_SCREEN_orderList.aiTrainingState,
+      //   payload: "finish_training",
+      // });
 
-      dispatch({
-        type: ORDER_SCREEN_orderList.aiCurrentData,
-        payload: data.aiResult_str,
-      });
+      // dispatch({
+      //   type: ORDER_SCREEN_orderList.aiCurrentData,
+      //   payload: data.aiResult_str,
+      // });
 
       dispatch({
         type: ORDER_SCREEN_orderList.currentPageCheck,
@@ -147,15 +174,14 @@ export const functionAreaModeAction =
 
     if (mode === "multipleOrder" && multipleOrderListData.length === 0) {
       dispatch({
-        type: ORDER_SCREEN_orderList.mode,
-        payload: "noMultipleOrder",
+        type: ORDER_SCREEN.orderSelect,
+        payload: { mode: "noMultipleOrder" },
       });
       return;
     }
-
     dispatch({
-      type: ORDER_SCREEN_orderList.mode,
-      payload: mode === "orderDetail" ? "close" : mode,
+      type: ORDER_SCREEN.orderSelect,
+      payload: { mode: mode === "orderDetail" ? "close" : mode },
     });
 
     if (mode === "multipleOrder") {
@@ -170,8 +196,8 @@ export const functionAreaNavButtonAction =
   (changeMode, orderSelectData, aiTrainingState) => (dispatch) => {
     if (changeMode !== "multipleOrder") {
       dispatch({
-        type: ORDER_SCREEN_orderList.mode,
-        payload: changeMode,
+        type: ORDER_SCREEN.orderSelect,
+        payload: { mode: changeMode },
       });
     } else {
       // 組合單建立
@@ -222,10 +248,10 @@ export const functionAreaNavButtonAction =
               { orderSelectData, inputText }
             );
 
-            // dispatch({
-            //   type: MULTIPLE_ORDER_LIST.addData,
-            //   payload: data,
-            // });
+            dispatch({
+              type: MULTIPLE_ORDER_LIST.addData,
+              payload: data,
+            });
           } catch (error) {
             Swal.showValidationMessage(`${error.response.data.error_msg}`);
           }
@@ -243,14 +269,11 @@ export const functionAreaNavButtonAction =
             timer: 2000,
           }).then(() => {
             dispatch({
-              type: ORDER_SCREEN_orderList.orderId,
-              payload: [],
+              type: ORDER_SCREEN.orderSelect,
+              payload: { mode: changeMode },
             });
 
-            dispatch({
-              type: ORDER_SCREEN_orderList.mode,
-              payload: changeMode,
-            });
+            dispatch({ type: ORDER_SCREEN.orderSelect_reset });
           });
         }
       });
