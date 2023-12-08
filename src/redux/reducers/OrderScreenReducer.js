@@ -3,14 +3,12 @@ import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../constants";
 export const orderScreen_orderSelectReducer = (
   state = {
     mode: "close",
-    orderId: [],
+    orderId: null,
+    aiTrainingState: null,
     combineOrder: [],
     combineOrderFocusBool: false,
     combineOrderFocusIndex: 0,
     combineOrderFocusValue: null,
-    aiTrainingState: null,
-    orderCurrentData: null,
-    aiCurrentData: "",
     edit: [],
     delete: [],
   },
@@ -76,15 +74,13 @@ export const orderScreen_orderSelectReducer = (
 
     case ORDER_SCREEN.orderSelect_reset:
       return {
-        ...state,
-        orderId: [],
+        mode: "close",
+        orderId: null,
+        aiTrainingState: null,
         combineOrder: [],
         combineOrderFocusBool: false,
         combineOrderFocusIndex: 0,
         combineOrderFocusValue: null,
-        aiTrainingState: null,
-        orderCurrentData: null,
-        aiCurrentData: "",
         edit: [],
         delete: [],
       };

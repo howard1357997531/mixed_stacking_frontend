@@ -1,6 +1,4 @@
-import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
-import { Colors } from "../../../styles/theme";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import {
@@ -13,15 +11,14 @@ import {
   MultiOrderDetailBox,
   MultiOrderDetailSmBox,
   MultiOrderEachCount,
-  MultiOrderInfo,
   MultiOrderName,
-  MultiOrderTitle,
-  MultiOrderTitleBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentMultipleOrder";
 import { OrderListContentMsg } from "../../../styles/OrderScreen";
-
-import "./css/FunctionAreaContentMultipleOrder.css";
 import { multipleOrderDeleteAction } from "../../../redux/actions/OrderScreenAction";
+import OrderDetailDialog from "../../dialog/orderDetail/OrderDetailDialog";
+import { useState } from "react";
+import { DIALOG } from "../../../redux/constants";
+import "./css/FunctionAreaContentMultipleOrder.css";
 
 function FunctionAreaContentMultipleOrder({ orderListData }) {
   const dispatch = useDispatch();
@@ -66,8 +63,14 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
     return count.reduce((acc, crr) => acc + crr);
   };
 
-  const multiOrderDetailHandler = (id) => {
-    console.log(id);
+  const [openDialog, setOpenDialog] = useState(false);
+  const onCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const orderDetailHandler = (orderId) => {
+    dispatch({ type: DIALOG.order, payload: { orderId } });
+    setOpenDialog(true);
   };
 
   const deleteHandler = () => {
@@ -99,7 +102,7 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
           <MultiOrderDetailSmBox
             key={index}
             isFirst={index === 0}
-            onClick={() => multiOrderDetailHandler(parseId(order))}
+            onClick={() => orderDetailHandler(parseId(order))}
           >
             <MultiOrderAvatarBox>
               <MultiOrderAvatar>{parseIndex(index)}</MultiOrderAvatar>
@@ -124,6 +127,12 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
         <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox>
         <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox> */}
       </MultiOrderDetailBox>
+
+      <OrderDetailDialog
+        openDialog={openDialog}
+        onCloseDialog={onCloseDialog}
+        source={"multiOrder"}
+      />
     </MultiOrderBox>
   );
 }

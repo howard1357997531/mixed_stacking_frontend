@@ -1,15 +1,13 @@
 import React from "react";
 import { FunctionAreaNavBtn } from "../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  aiTrainingAction,
-  functionAreaNavButtonAction,
-} from "../../../redux/actions/OrderScreenAction";
+import { functionAreaNavButtonAction } from "../../../redux/actions/OrderScreenAction";
 import { Colors } from "../../../styles/theme";
 import { blueGrey } from "@mui/material/colors";
 
 function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
   const dispatch = useDispatch();
+  const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
 
   const { aiTrainingState, combineOrder } = useSelector(
     (state) => state.orderScreen_orderSelect
@@ -17,7 +15,7 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
 
   const buttonHandler = (changeMode, aiTraining_state) => {
     if (changeMode === "orderDetail" && aiTraining_state === "no_training") {
-      var orderSelectData = orderSelectIdArray;
+      var orderSelectData = orderId;
     } else if (changeMode === "multipleOrder") {
       var orderSelectData = combineOrder;
     }

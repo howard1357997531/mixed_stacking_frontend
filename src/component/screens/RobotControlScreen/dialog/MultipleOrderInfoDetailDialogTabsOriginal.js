@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography, styled } from "@mui/material";
-import { useSelector } from "react-redux";
 import {
   MultipleOrderInfoDialogBox,
   MultipleOrderInfoDialogSmBox,

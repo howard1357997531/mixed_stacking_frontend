@@ -1,24 +1,16 @@
 import React from "react";
 import {
   AiIsTraingGifText,
-  AiResultAvatar,
-  AiResultBox,
-  AiResultSmallBox,
   FunctionAreaContentBox,
-  FunctionAreaContentTitle,
-  OrderListDetailBox,
-  OrderListDetailSmallBox,
 } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
-import { Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
-import { AiResultAvatarBgcolor } from "../../../tool/func";
-import { Colors } from "../../../styles/theme";
 import FunctionAreaContentMultipleOrder from "./FunctionAreaContentMultipleOrder";
 import FunctionAreaContentMultipleOrderCreate from "./FunctionAreaContentMultipleOrderCreate";
 import "./css/FunctionAreaContent.css";
 import FunctionAreaContentOrder from "./FunctionAreaContentOrder";
+import FunctionAreaContentAiResult from "./FunctionAreaContentAiResult";
 
 function FunctionAreaContent({ orderSelectMode }) {
   const {
@@ -27,7 +19,7 @@ function FunctionAreaContent({ orderSelectMode }) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { aiTrainingState, orderCurrentData, aiCurrentData } = useSelector(
+  const { aiTrainingState } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
@@ -45,27 +37,10 @@ function FunctionAreaContent({ orderSelectMode }) {
           </>
         );
       } else {
-        return <FunctionAreaContentOrder orderCurrentData={orderCurrentData} />;
+        return <FunctionAreaContentOrder />;
       }
     } else if (orderSelectMode === "aiResult") {
-      return (
-        <AiResultBox>
-          {aiCurrentData.split(",").map((aiData, index) => (
-            <AiResultSmallBox key={index}>
-              <AiResultAvatar
-                sx={{
-                  backgroundColor: AiResultAvatarBgcolor(index + 1),
-                }}
-              >
-                {index + 1}
-              </AiResultAvatar>
-              <Typography sx={{ flexGrow: 1, textAlign: "center" }}>
-                {aiData}
-              </Typography>
-            </AiResultSmallBox>
-          ))}
-        </AiResultBox>
-      );
+      return <FunctionAreaContentAiResult />;
     } else if (orderSelectMode === "multipleOrder") {
       return <FunctionAreaContentMultipleOrder orderListData={orderListData} />;
     } else if (orderSelectMode === "multipleOrderCreate") {

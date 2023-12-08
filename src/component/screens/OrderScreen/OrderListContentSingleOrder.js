@@ -22,8 +22,10 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
+  const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
+
   const orderListModeHandler = (orderId, aiTraining_state) => {
-    dispatch(orderlistSelectAction(orderId, orderListData, aiTraining_state));
+    dispatch(orderlistSelectAction(orderId, aiTraining_state));
   };
 
   return (
@@ -44,12 +46,12 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
             ) : null}
 
             <OrderListDetial
-              itemSelect={orderSelectIdArray.includes(order.id)}
+              itemSelect={orderId === order.id}
               onClick={() => {
                 orderListModeHandler(order.id, order.aiTraining_state);
               }}
             >
-              <OrderListName itemSelect={orderSelectIdArray.includes(order.id)}>
+              <OrderListName itemSelect={orderId === order.id}>
                 {order.name}
               </OrderListName>
 
@@ -68,9 +70,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                   <TextEffect
                     text={"AI演算中"}
                     textColor={
-                      orderSelectIdArray.includes(order.id)
-                        ? Colors.grey100
-                        : Colors.greyBorder
+                      orderId === order.id ? Colors.grey100 : Colors.greyBorder
                     }
                   />
                 )}
@@ -80,13 +80,10 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                     sx={{
                       padding: "4px 6px",
                       color: Colors.brown200,
-                      backgroundColor: orderSelectIdArray.includes(order.id)
-                        ? Colors.grey100
-                        : "transparent",
+                      backgroundColor:
+                        orderId === order.id ? Colors.grey100 : "transparent",
                       border: `2px solid ${
-                        orderSelectIdArray.includes(order.id)
-                          ? Colors.grey100
-                          : Colors.brown200
+                        orderId === order.id ? Colors.grey100 : Colors.brown200
                       }`,
                     }}
                   >

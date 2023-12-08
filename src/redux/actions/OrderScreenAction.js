@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  DIALOG,
   MULTIPLE_ORDER_LIST,
   ORDER_LIST,
   ORDER_SCREEN,
@@ -12,33 +13,24 @@ import { Colors } from "../../styles/theme";
 import { confirmSwal } from "../../swal";
 
 export const orderlistSelectAction =
-  (orderId, orderListData, aiTrainingState) => (dispatch) => {
-    const [OrderData] = orderListData.filter((order) => order.id === orderId);
-
+  (orderId, aiTrainingState) => (dispatch) => {
     dispatch({
       type: ORDER_SCREEN.orderSelectData,
       payload: {
         mode: "orderDetail",
-        orderId: [orderId],
+        orderId: orderId,
         aiTrainingState,
-        aiCurrentData:
-          aiTrainingState === "finish_training"
-            ? OrderData.aiTraining_order
-            : "",
-        orderCurrentData: {
-          name: OrderData.name,
-          createdAt: OrderData.createdAt,
-          orderItem: OrderData.orderItem,
-        },
       },
     });
   };
 
-export const multipleOrderListSelectAction = (orderId) => (dispatch) => {
+export const multipleOrderListSelectAction = (multiOrderId) => (dispatch) => {
   dispatch({
     type: MULTIPLE_ORDER_LIST.orderId,
-    payload: orderId,
+    payload: multiOrderId,
   });
+
+  dispatch({ type: DIALOG.order, payload: { multiOrderId } });
 };
 
 export const multipleOrderDeleteAction = (orderId) => (dispatch) => {
@@ -99,7 +91,7 @@ export const multipleOrderCreateDeleteAction =
 
 // 寫如果不是在orderDetail 不會強制顯示ai結算畫面
 export const aiTrainingAction =
-  (mode, orderId, aiTrainingState) => async (dispatch) => {
+  (orderId, aiTrainingState) => async (dispatch) => {
     dispatch({
       type: ORDER_SCREEN.orderSelect,
       payload: { aiTrainingState },
@@ -127,10 +119,7 @@ export const aiTrainingAction =
 
       dispatch({
         type: ORDER_SCREEN.orderSelect,
-        payload: {
-          aiTrainingState: "finish_training",
-          aiCurrentData: data.aiResult_str,
-        },
+        payload: { aiTrainingState: "finish_training" },
       });
       // dispatch({
       //   type: ORDER_SCREEN_orderList.aiTrainingState,
@@ -142,6 +131,7 @@ export const aiTrainingAction =
       //   payload: data.aiResult_str,
       // });
 
+      // 如果是在orderDetail 才會顯示aiResult,但還要檢查是不是在同id頁面
       dispatch({
         type: ORDER_SCREEN_orderList.currentPageCheck,
       });
@@ -189,6 +179,8 @@ export const functionAreaModeAction =
         type: MULTIPLE_ORDER_LIST.orderId,
         payload: multipleOrderListData[0].id,
       });
+      const multiOrderId = multipleOrderListData[0].id;
+      dispatch({ type: DIALOG.order, payload: { multiOrderId } });
     }
   };
 
@@ -218,9 +210,7 @@ export const functionAreaNavButtonAction =
     if (aiTrainingState === "no_training") {
       confirmSwal("執行 AI 演算?").then((result) => {
         if (result.isConfirmed) {
-          dispatch(
-            aiTrainingAction(changeMode, orderSelectData[0], "is_training")
-          );
+          dispatch(aiTrainingAction(orderSelectData, "is_training"));
         }
       });
     }

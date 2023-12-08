@@ -12,23 +12,25 @@ import {
   OrderTitleRightBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
 import "./css/FunctionAreaContentOrder.css";
+import { useSelector } from "react-redux";
 
-function FunctionAreaContentOrder({ orderCurrentData }) {
-  if (orderCurrentData) {
-    var orderCountArray = orderCurrentData.orderItem.map(
-      (order) => order.quantity
-    );
-    var orderCount = orderCountArray.reduce((acc, value) => acc + value, 0);
+function FunctionAreaContentOrder() {
+  const { data } = useSelector((state) => state.orderList);
+  const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
+
+  if (data) {
+    var [orderData] = data.filter((order) => order.id === orderId);
+    var orderCount = orderData.aiTraining_order
+      ? `總數: ${orderData.aiTraining_order.split(",").length}`
+      : "";
   }
-  console.log(orderCurrentData);
+
   return (
     <OrderBox>
       <OrderTitleBox>
-        <OrderTitleLeftBox>總數: {orderCount}</OrderTitleLeftBox>
-        <OrderTitleCenterBox>{orderCurrentData.name}</OrderTitleCenterBox>
-        <OrderTitleRightBox>
-          {orderCurrentData.createdAt.slice(-6)}
-        </OrderTitleRightBox>
+        <OrderTitleLeftBox>{orderCount}</OrderTitleLeftBox>
+        <OrderTitleCenterBox>{orderData.name}</OrderTitleCenterBox>
+        <OrderTitleRightBox>{orderData.createdAt.slice(-6)}</OrderTitleRightBox>
       </OrderTitleBox>
 
       <OrderTitle2Box>
@@ -40,7 +42,7 @@ function FunctionAreaContentOrder({ orderCurrentData }) {
       </OrderTitle2Box>
 
       <OrderContentBox className="function-order-box">
-        {orderCurrentData.orderItem.map((order, index) =>
+        {orderData.orderItem.map((order, index) =>
           order.quantity !== 0 ? (
             <OrderDetailBox key={index} isFirst={index === 0}>
               <OrderDetailSmBox isName={true}>{order.name}</OrderDetailSmBox>

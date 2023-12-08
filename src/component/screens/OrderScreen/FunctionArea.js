@@ -1,6 +1,7 @@
 import React from "react";
 import {
   MULTIPLE_ORDER_LIST,
+  ORDER_SCREEN,
   ORDER_SCREEN_orderList,
 } from "../../../redux/constants";
 import {
@@ -33,8 +34,10 @@ function FunctionArea(props) {
         });
       }
     } else {
-      dispatch({ type: ORDER_SCREEN_orderList.mode, payload: "close" });
-      dispatch({ type: ORDER_SCREEN_orderList.orderId, payload: [] });
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { mode: "close", orderId: null },
+      });
       dispatch({ type: MULTIPLE_ORDER_LIST.orderId, payload: "" });
     }
   };

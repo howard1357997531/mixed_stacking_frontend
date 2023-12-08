@@ -77,11 +77,13 @@ export const MultiOrderDetailSmBox = styled(Box, {
   marginTop: !isFirst ? "4px" : "0px",
   borderRadius: "5px",
   backgroundColor: Colors.lightOrangeHover,
+  boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     cursor: "pointer",
     transform: "scale(1.01)",
-    backgroundColor: Colors.brown,
-    transition: "all .2s ease-in-out",
+    border: `1px solid ${Colors.brownText}`,
+    boxShadow: "none",
+    // transition: "scale 0.5s ease-in-out",
   },
   "&:active": {
     transform: "scale(.99)",

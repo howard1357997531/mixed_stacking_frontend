@@ -18,6 +18,12 @@ export const MULTIPLE_ORDER_LIST = {
   deleteData: "MULTIPLE_ORDER_LIST_deleteData",
 };
 
+// dialog
+export const DIALOG = {
+  order: "DIALOG_order",
+  reset: "DIALOG_reset",
+};
+
 // homeScreen
 export const HOME_BUTTON = {
   createNewOrder: {

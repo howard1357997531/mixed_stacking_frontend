@@ -16,9 +16,11 @@ import {
   robotControlScreen_API_robotSettingReducer,
   robotControlScreen_API_executeRobotReducer,
 } from "./reducers/RobotControlScreenReducer";
+import { dialogReducer } from "./reducers/dialogReducer";
 
 const reducer = {
   HomeButtonHover: HomeButtonHoverReducer,
+  dialog: dialogReducer,
   orderList: orderListReducer,
   multipleOrderList: multipleOrderListReducer,
   orderScreen_orderSelect: orderScreen_orderSelectReducer,

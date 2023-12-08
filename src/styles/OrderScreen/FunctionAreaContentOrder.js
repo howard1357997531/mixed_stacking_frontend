@@ -1,15 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  Typography,
-  styled,
-} from "@mui/material";
-import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
-import { OrderListExeListWaitToExecuteAnimation } from "../../animation";
-import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+import { Box, Typography, styled } from "@mui/material";
 import { Colors } from "../theme";
 
 export const OrderBox = styled(Box)(({ theme }) => ({
@@ -26,7 +15,7 @@ export const OrderTitleBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  padding: "5px 10px",
+  padding: "2px 10px",
   color: "#fff",
   backgroundColor: Colors.greyBorder,
   fontWeight: 600,
@@ -34,11 +23,14 @@ export const OrderTitleBox = styled(Box)(({ theme }) => ({
 
 export const OrderTitleCenterBox = styled(Typography)(({ theme }) => ({
   color: Colors.greyTextBlood,
+  fontSize: 18,
+  fontWeight: 600,
+  paddingTop: 2,
 }));
 
 export const OrderTitleLeftBox = styled(Typography)(({ theme }) => ({
   position: "absolute",
-  top: "50%",
+  top: "55%",
   left: "10px",
   transform: "translateY(-50%)",
   color: Colors.greyTextBlood,
@@ -47,7 +39,7 @@ export const OrderTitleLeftBox = styled(Typography)(({ theme }) => ({
 
 export const OrderTitleRightBox = styled(Typography)(({ theme }) => ({
   position: "absolute",
-  top: "50%",
+  top: "55%",
   right: "10px",
   transform: "translateY(-50%)",
   color: Colors.greyTextBlood,
@@ -58,19 +50,18 @@ export const OrderTitle2Box = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   width: "100%",
-  padding: "5px 8px",
+  padding: "2px 8px",
   color: "#fff",
   backgroundColor: Colors.brownHover,
-  fontWeight: 600,
 }));
 
-export const OrderTitle2SmBox = styled(Typography, {
+export const OrderTitle2SmBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isName",
 })(({ theme, isName }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "207%",
+  width: "100%",
   height: "100%",
 }));
 
@@ -95,6 +86,7 @@ export const OrderDetailBox = styled(Box, {
   marginTop: !isFirst ? "4px" : "0px",
   borderRadius: "5px",
   backgroundColor: Colors.lightOrangeHover,
+  boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
 }));
 
 export const OrderDetailSmBox = styled(Box, {

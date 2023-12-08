@@ -1,0 +1,8 @@
+.order-dialog::-webkit-scrollbar{
+    width: 0px;
+}
+
+.order-dialog::-webkit-scrollbar-thumb{
+    background-color: #1976d2;
+    
+}
