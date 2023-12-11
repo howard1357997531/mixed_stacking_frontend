@@ -10,25 +10,32 @@ import {
   OrderTitleCenterBox,
   OrderTitleLeftBox,
   OrderTitleRightBox,
-} from "../../../styles/OrderScreen/FunctionAreaContentOrder";
-import "./css/FunctionAreaContentOrder.css";
+} from "../../../styles/OrderScreen/FunctionAreaContentEdit";
+import "./css/FunctionAreaContentEdit.css";
 import { useSelector } from "react-redux";
+import CenterText from "../../../tool/CenterText";
 
-function FunctionAreaContentOrder() {
+function FunctionAreaContentEdit() {
   const { data } = useSelector((state) => state.orderList);
-  const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
+  const { edit } = useSelector((state) => state.orderScreen_orderSelect);
 
-  if (data) {
-    var [orderData] = data.filter((order) => order.id === orderId);
+  if (data && edit) {
+    var [orderData] = data.filter((order) => order.id === edit);
     const count = orderData.orderItem.map((order) => order.quantity);
-    var orderCount = `總數: ${count.reduce((acc, cur) => acc + cur)}`;
+    var orderCount = `總數: ${count.reduce((acc, cur) => acc + cur, 0)}`;
   }
 
-  return (
+  return !edit ? (
+    <CenterText text={"請選擇工單"} />
+  ) : (
     <OrderBox>
       <OrderTitleBox>
         <OrderTitleLeftBox>{orderCount}</OrderTitleLeftBox>
-        <OrderTitleCenterBox>{orderData.name}</OrderTitleCenterBox>
+        <input
+          type="text"
+          className={`edit-title-input`}
+          defaultValue={orderData.name}
+        ></input>
         <OrderTitleRightBox>{orderData.createdAt.slice(-6)}</OrderTitleRightBox>
       </OrderTitleBox>
 
@@ -48,7 +55,13 @@ function FunctionAreaContentOrder() {
               <OrderDetailSmBox>{order.width}</OrderDetailSmBox>
               <OrderDetailSmBox>{order.height}</OrderDetailSmBox>
               <OrderDetailSmBox>{order.depth}</OrderDetailSmBox>
-              <OrderDetailSmBox>{order.quantity}</OrderDetailSmBox>
+              <OrderDetailSmBox>
+                <input
+                  type="text"
+                  className={`edit-item-input ${order.name}`}
+                  defaultValue={order.quantity}
+                ></input>
+              </OrderDetailSmBox>
             </OrderDetailBox>
           ) : null
         )}
@@ -57,4 +70,4 @@ function FunctionAreaContentOrder() {
   );
 }
 
-export default FunctionAreaContentOrder;
+export default FunctionAreaContentEdit;

@@ -49,6 +49,35 @@ export const orderListReducer = (state = { data: [] }, action) => {
         data: orderData,
       };
 
+    case ORDER_LIST.delete:
+      var data = state.data;
+
+      for (let i = 0; i < action.payload.length; i++) {
+        var deleteData;
+        var deleteIndex;
+        data.forEach((order, index) => {
+          if (order.id === action.payload.at(i)) {
+            deleteData = order;
+            deleteIndex = index;
+          }
+        });
+
+        if (deleteData.is_today_latest) {
+          data = data.map((order, index) => {
+            if (
+              index === deleteIndex + 1 &&
+              order.createdAt.slice(8, 10) === deleteData.createdAt.slice(8, 10)
+            ) {
+              return { ...order, is_today_latest: true };
+            } else {
+              return order;
+            }
+          });
+        }
+
+        data = data.filter((order) => order.id !== action.payload.at(i));
+      }
+      return { ...state, data };
     default:
       return state;
   }
@@ -107,7 +136,7 @@ export const multipleOrderListReducer = (
           }
         });
       } else {
-        var dataTemp = state;
+        var dataTemp = state.data;
       }
 
       return {

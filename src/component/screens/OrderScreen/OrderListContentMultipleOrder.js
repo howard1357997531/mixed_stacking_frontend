@@ -13,6 +13,7 @@ import {
 import { multipleOrderListSelectAction } from "../../../redux/actions/OrderScreenAction";
 import { Button } from "@mui/material";
 import { ORDER_SCREEN_orderList } from "../../../redux/constants";
+import { Colors } from "../../../styles/theme";
 
 function OrderListContentMultipleOrder() {
   const dispatch = useDispatch();
@@ -44,7 +45,14 @@ function OrderListContentMultipleOrder() {
     <ErrorMsgBox />
   ) : multipleOrderData.length === 0 ? (
     <OrderListContentMsg variant="h5">
-      <Button variant="contained" onClick={createMultipleOrder}>
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: Colors.greyBorder,
+          "&:hover": { backgroundColor: Colors.greyText },
+        }}
+        onClick={createMultipleOrder}
+      >
         建立組合單
       </Button>
     </OrderListContentMsg>

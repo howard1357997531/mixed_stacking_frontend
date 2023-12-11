@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { brown } from "@mui/material/colors";
 import { domain } from "../../env";
 import { Colors } from "../../styles/theme";
-import { confirmSwal } from "../../swal";
+import { confirmSwal, infoToast, timerToast } from "../../swal";
 
 export const orderlistSelectAction =
   (orderId, aiTrainingState) => (dispatch) => {
@@ -24,6 +24,30 @@ export const orderlistSelectAction =
     });
   };
 
+export const orderEditSelectAction =
+  (orderId, orderListData) => async (dispatch) => {
+    const [dataTemp] = orderListData.filter((order) => order.id === orderId);
+    // const data = dataTemp.orderItem.map(order => {`${order.name}`: order.quantity})
+    dispatch({ type: ORDER_SCREEN.orderSelect, payload: { edit: orderId } });
+  };
+
+export const orderDeleteSelectAction = (orderId, orderDelete) => (dispatch) => {
+  if (orderDelete.includes(orderId)) {
+    var deleteArray = orderDelete.filter((id) => id !== orderId);
+  } else {
+    var deleteArray = [...orderDelete, orderId];
+  }
+
+  dispatch({
+    type: ORDER_SCREEN.orderSelect,
+    payload: { delete: deleteArray },
+  });
+};
+
+export const orderDeleteAction = (orderId) => async (dispatch) => {
+  const { data } = axios.post(`${domain}/api/deleteOrder/`, { orderId });
+};
+
 export const multipleOrderListSelectAction = (multiOrderId) => (dispatch) => {
   dispatch({
     type: MULTIPLE_ORDER_LIST.orderId,
@@ -36,6 +60,7 @@ export const multipleOrderListSelectAction = (multiOrderId) => (dispatch) => {
 export const multipleOrderDeleteAction = (orderId) => (dispatch) => {
   confirmSwal("確定刪除?").then((result) => {
     if (result.isConfirmed) {
+      // infoToast("error", "刪除中");
       try {
         axios
           .post(`${domain}/api/deleteMultipleOrder/`, {
@@ -160,7 +185,7 @@ export const aiTrainingAction =
 
 export const functionAreaModeAction =
   (mode, multipleOrderListData) => (dispatch) => {
-    dispatch({ type: ORDER_SCREEN.orderSelect_reset });
+    dispatch({ type: ORDER_SCREEN.orderSelect, payload: { orderId: null } });
 
     if (mode === "multipleOrder" && multipleOrderListData.length === 0) {
       dispatch({
@@ -260,11 +285,38 @@ export const functionAreaNavButtonAction =
           }).then(() => {
             dispatch({
               type: ORDER_SCREEN.orderSelect,
-              payload: { mode: changeMode },
+              payload: { mode: changeMode, combineOrder: [] },
             });
-
-            dispatch({ type: ORDER_SCREEN.orderSelect_reset });
           });
+        }
+      });
+    }
+
+    if (changeMode === "edit") {
+      try {
+        axios
+          .post(`${domain}/api/editOrder/`, { orderSelectData })
+          .then((res) => console.log(res.data));
+      } catch (error) {}
+    }
+
+    if (changeMode === "delete") {
+      confirmSwal("確定刪除?").then((result) => {
+        if (result.isConfirmed) {
+          infoToast("error", "刪除中");
+          try {
+            axios
+              .post(`${domain}/api/deleteOrder/`, { orderSelectData })
+              .then((res) => {
+                Swal.close();
+                dispatch({
+                  type: ORDER_SCREEN.orderSelect,
+                  payload: { delete: [] },
+                });
+                dispatch({ type: ORDER_LIST.delete, payload: orderSelectData });
+                timerToast("success", "刪除成功");
+              });
+          } catch (error) {}
         }
       });
     }

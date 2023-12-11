@@ -9,15 +9,22 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
   const dispatch = useDispatch();
   const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
 
-  const { aiTrainingState, combineOrder } = useSelector(
-    (state) => state.orderScreen_orderSelect
-  );
+  const {
+    aiTrainingState,
+    combineOrder,
+    edit,
+    delete: deleteArray,
+  } = useSelector((state) => state.orderScreen_orderSelect);
 
   const buttonHandler = (changeMode, aiTraining_state) => {
     if (changeMode === "orderDetail" && aiTraining_state === "no_training") {
       var orderSelectData = orderId;
     } else if (changeMode === "multipleOrder") {
       var orderSelectData = combineOrder;
+    } else if (changeMode === "edit") {
+      var orderSelectData = edit;
+    } else if (changeMode === "delete") {
+      var orderSelectData = deleteArray;
     }
     dispatch(
       functionAreaNavButtonAction(changeMode, orderSelectData, aiTraining_state)

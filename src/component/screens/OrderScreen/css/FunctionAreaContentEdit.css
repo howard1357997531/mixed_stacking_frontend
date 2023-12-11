@@ -1,0 +1,20 @@
+.edit-title-input {
+    width: 100px;
+    height: 8px;
+    color: #424242;
+    /* padding-bottom: 6px; */
+    font-size: large;
+    border: none;
+    border-bottom: 1px solid #424242;
+}
+
+.edit-item-input {
+    width: 30px;
+    height: 15px;
+    color: #424242;
+}
+
+.edit-item-input::-webkit-inner-spin-button,
+.edit-item-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}

@@ -12,7 +12,14 @@ import { Colors } from "../../../styles/theme";
 import TextEffect from "../../../tool/TextEffect";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
-import { orderlistSelectAction } from "../../../redux/actions/OrderScreenAction";
+import {
+  orderDeleteAction,
+  orderDeleteSelectAction,
+  orderEditAction,
+  orderEditSelectAction,
+  orderlistSelectAction,
+} from "../../../redux/actions/OrderScreenAction";
+import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../../../redux/constants";
 
 function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
   const dispatch = useDispatch();
@@ -22,10 +29,18 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
+  const { orderId, delete: orderDelete } = useSelector(
+    (state) => state.orderScreen_orderSelect
+  );
 
   const orderListModeHandler = (orderId, aiTraining_state) => {
-    dispatch(orderlistSelectAction(orderId, aiTraining_state));
+    if (["close", "orderDetail"].includes(orderSelectMode)) {
+      dispatch(orderlistSelectAction(orderId, aiTraining_state));
+    } else if (orderSelectMode === "edit") {
+      dispatch(orderEditSelectAction(orderId, orderListData));
+    } else if (orderSelectMode === "delete") {
+      dispatch(orderDeleteSelectAction(orderId, orderDelete));
+    }
   };
 
   return (

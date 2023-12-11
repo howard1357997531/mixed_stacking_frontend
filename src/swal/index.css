@@ -1,0 +1,12 @@
+/*
+swalRed: "#f27474",
+swalGreen: "#a5dc86",
+*/
+
+.swal-success {
+    background-color: #a5dc86;
+}
+
+.swal-error {
+    background-color: #f27474;
+}

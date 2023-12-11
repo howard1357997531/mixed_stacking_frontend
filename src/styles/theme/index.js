@@ -75,6 +75,9 @@ export const Colors = {
   brownHover: brown[400],
   brown500: brown[500],
   brownText: brown[600],
+  // swal
+  swalRed: "#f27474",
+  swalGreen: "#a5dc86",
 };
 
 const theme = createTheme({

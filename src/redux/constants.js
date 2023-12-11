@@ -5,6 +5,8 @@ export const ORDER_LIST = {
   fail: "ORDER_LIST_fail",
   aiTrainingStateChange: "ORDER_LIST_aiTrainingStateChange",
   aiTrainingOrderAdd: "ORDER_LIST_aiTrainingOrderAdd",
+  edit: "ORDER_LIST_edit",
+  delete: "ORDER_LIST_delete",
 };
 
 // multipleOrderList

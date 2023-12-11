@@ -41,8 +41,8 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
     var parseIndex2 = (index) => indexArray[index];
   }
 
-  const parseId = (id) => {
-    return parseInt(id.split("*").at(0));
+  const parseId = (order) => {
+    return parseInt(order.split("*").at(0));
   };
 
   const parseTimes = (times) => {
@@ -50,8 +50,10 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
   };
 
   const parseName = (id) => {
-    let [filterData] = orderListData.filter((order) => order.id === id);
-    return filterData;
+    let [filterData] = multipleOrderData.multipleOrder.filter(
+      (order) => order.order.id === id
+    );
+    return filterData.order;
   };
 
   const parseCount = (orders) => {

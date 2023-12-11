@@ -11,6 +11,8 @@ import FunctionAreaContentMultipleOrderCreate from "./FunctionAreaContentMultipl
 import "./css/FunctionAreaContent.css";
 import FunctionAreaContentOrder from "./FunctionAreaContentOrder";
 import FunctionAreaContentAiResult from "./FunctionAreaContentAiResult";
+import FunctionAreaContentDelete from "./FunctionAreaContentDelete";
+import FunctionAreaContentEdit from "./FunctionAreaContentEdit";
 
 function FunctionAreaContent({ orderSelectMode }) {
   const {
@@ -48,9 +50,9 @@ function FunctionAreaContent({ orderSelectMode }) {
         <FunctionAreaContentMultipleOrderCreate orderListData={orderListData} />
       );
     } else if (orderSelectMode === "edit") {
-      return <p>edit</p>;
+      return <FunctionAreaContentEdit />;
     } else if (orderSelectMode === "delete") {
-      return <p>delete</p>;
+      return <FunctionAreaContentDelete orderListData={orderListData} />;
     }
   };
 

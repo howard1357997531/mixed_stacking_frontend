@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import { Colors } from "../styles/theme";
+import "./index.css";
 
 export const basicSwal = (icon, title, background) => {
   return Swal.fire({
@@ -48,4 +49,45 @@ export const timerSwal = (icon, title, background, timer) => {
     showConfirmButton: false,
     timer: timer,
   });
+};
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "bottom-end",
+  background: Colors.greyTextBlood,
+  color: Colors.swalRed,
+  showConfirmButton: false,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  },
+});
+
+export const infoToast = (icon, title) => {
+  return Toast.fire({ icon, title });
+};
+
+export const timerToast = (icon, title) => {
+  if (icon === "success") {
+    var cumColor = "swal-success";
+  }
+  const timerToastSet = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    background: Colors.greyTextBlood,
+    color: Colors.swalGreen,
+    timer: 3000,
+    showConfirmButton: false,
+    timerProgressBar: true,
+    customClass: {
+      timerProgressBar: cumColor,
+    },
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
+  return timerToastSet.fire({ icon, title });
 };
