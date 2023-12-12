@@ -51,37 +51,52 @@ export const timerSwal = (icon, title, background, timer) => {
   });
 };
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "bottom-end",
-  background: Colors.greyTextBlood,
-  color: Colors.swalRed,
-  showConfirmButton: false,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  },
-});
+const parseColor = (icon) => {
+  if (icon === "success") {
+    return Colors.swalGreen;
+  } else if (icon === "warning") {
+    return Colors.swalYellow;
+  } else if (icon === "error") {
+    return Colors.swalRed;
+  } else if (icon === "info") {
+    return Colors.swalBlue;
+  } else if (icon === "question") {
+    return Colors.swalGrey;
+  }
+};
+
+const parseIcon = (icon) => {
+  return "swal-" + icon;
+};
 
 export const infoToast = (icon, title) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    background: Colors.greyTextBlood,
+    color: parseColor(icon),
+    showConfirmButton: false,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
   return Toast.fire({ icon, title });
 };
 
 export const timerToast = (icon, title) => {
-  if (icon === "success") {
-    var cumColor = "swal-success";
-  }
   const timerToastSet = Swal.mixin({
     toast: true,
     position: "bottom-end",
     background: Colors.greyTextBlood,
-    color: Colors.swalGreen,
+    color: parseColor(icon),
     timer: 3000,
     showConfirmButton: false,
     timerProgressBar: true,
     customClass: {
-      timerProgressBar: cumColor,
+      timerProgressBar: parseIcon(icon),
     },
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;

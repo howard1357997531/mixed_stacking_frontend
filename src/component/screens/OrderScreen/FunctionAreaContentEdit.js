@@ -7,17 +7,20 @@ import {
   OrderTitleBox,
   OrderTitle2Box,
   OrderTitle2SmBox,
-  OrderTitleCenterBox,
   OrderTitleLeftBox,
   OrderTitleRightBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentEdit";
 import "./css/FunctionAreaContentEdit.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CenterText from "../../../tool/CenterText";
+import { orderEditChangeAction } from "../../../redux/actions/OrderScreenAction";
 
 function FunctionAreaContentEdit() {
+  const dispatch = useDispatch();
   const { data } = useSelector((state) => state.orderList);
-  const { edit } = useSelector((state) => state.orderScreen_orderSelect);
+  const { edit, editData } = useSelector(
+    (state) => state.orderScreen_orderSelect
+  );
 
   if (data && edit) {
     var [orderData] = data.filter((order) => order.id === edit);
@@ -25,8 +28,21 @@ function FunctionAreaContentEdit() {
     var orderCount = `總數: ${count.reduce((acc, cur) => acc + cur, 0)}`;
   }
 
+  const titleHandler = (e) => {
+    dispatch(orderEditChangeAction("name", e.target.value, editData));
+  };
+
+  const countHandler = (e, name) => {
+    if (e.target.value === "") {
+      return;
+    }
+    dispatch(orderEditChangeAction(name, Math.abs(e.target.value), editData));
+  };
+
   return !edit ? (
     <CenterText text={"請選擇工單"} />
+  ) : orderData.aiTraining_state === "is_training" ? (
+    <CenterText text={"工單演算中..."} />
   ) : (
     <OrderBox>
       <OrderTitleBox>
@@ -34,7 +50,8 @@ function FunctionAreaContentEdit() {
         <input
           type="text"
           className={`edit-title-input`}
-          defaultValue={orderData.name}
+          defaultValue={editData.name}
+          onChange={titleHandler}
         ></input>
         <OrderTitleRightBox>{orderData.createdAt.slice(-6)}</OrderTitleRightBox>
       </OrderTitleBox>
@@ -48,23 +65,22 @@ function FunctionAreaContentEdit() {
       </OrderTitle2Box>
 
       <OrderContentBox className="function-order-box">
-        {orderData.orderItem.map((order, index) =>
-          order.quantity !== 0 ? (
-            <OrderDetailBox key={index} isFirst={index === 0}>
-              <OrderDetailSmBox isName={true}>{order.name}</OrderDetailSmBox>
-              <OrderDetailSmBox>{order.width}</OrderDetailSmBox>
-              <OrderDetailSmBox>{order.height}</OrderDetailSmBox>
-              <OrderDetailSmBox>{order.depth}</OrderDetailSmBox>
-              <OrderDetailSmBox>
-                <input
-                  type="text"
-                  className={`edit-item-input ${order.name}`}
-                  defaultValue={order.quantity}
-                ></input>
-              </OrderDetailSmBox>
-            </OrderDetailBox>
-          ) : null
-        )}
+        {orderData.orderItem.map((order, index) => (
+          <OrderDetailBox key={index} isFirst={index === 0}>
+            <OrderDetailSmBox isName={true}>{order.name}</OrderDetailSmBox>
+            <OrderDetailSmBox>{order.width}</OrderDetailSmBox>
+            <OrderDetailSmBox>{order.height}</OrderDetailSmBox>
+            <OrderDetailSmBox>{order.depth}</OrderDetailSmBox>
+            <OrderDetailSmBox>
+              <input
+                type="number"
+                className={`edit-item-input ${order.name}`}
+                defaultValue={editData[order.name]}
+                onChange={(e) => countHandler(e, order.name)}
+              ></input>
+            </OrderDetailSmBox>
+          </OrderDetailBox>
+        ))}
       </OrderContentBox>
     </OrderBox>
   );

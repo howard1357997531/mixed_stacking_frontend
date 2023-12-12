@@ -3,10 +3,22 @@ swalRed: "#f27474",
 swalGreen: "#a5dc86",
 */
 
+.swal-info {
+    background-color: #9de0f6;
+}
+
 .swal-success {
     background-color: #a5dc86;
 }
 
+.swal-warning {
+    background-color: #facea8;
+}
+
 .swal-error {
     background-color: #f27474;
+}
+
+.swal-question {
+    background-color: #c9dae1;
 }

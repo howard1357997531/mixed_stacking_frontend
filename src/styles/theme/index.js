@@ -77,7 +77,10 @@ export const Colors = {
   brownText: brown[600],
   // swal
   swalRed: "#f27474",
+  swalYellow: "#facea8",
   swalGreen: "#a5dc86",
+  swalBlue: "#9de0f6",
+  swalGrey: "#c9dae1",
 };
 
 const theme = createTheme({

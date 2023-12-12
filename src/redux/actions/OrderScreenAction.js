@@ -25,24 +25,48 @@ export const orderlistSelectAction =
   };
 
 export const orderEditSelectAction =
-  (orderId, orderListData) => async (dispatch) => {
-    const [dataTemp] = orderListData.filter((order) => order.id === orderId);
-    // const data = dataTemp.orderItem.map(order => {`${order.name}`: order.quantity})
-    dispatch({ type: ORDER_SCREEN.orderSelect, payload: { edit: orderId } });
+  (edit, orderListData, aiTraining_state) => (dispatch) => {
+    if (aiTraining_state === "is_training") {
+      timerToast("warning", "演算中，不能修改");
+      return;
+    }
+    const [dataTemp] = orderListData.filter((order) => order.id === edit);
+    const editData = dataTemp.orderItem.reduce((obj, item) => {
+      obj[item.name] = item.quantity;
+      return obj;
+    }, {});
+    editData["id"] = edit;
+    editData["name"] = dataTemp.name;
+    editData["aiTraining_state"] = dataTemp.aiTraining_state;
+    dispatch({ type: ORDER_SCREEN.orderSelect, payload: { edit, editData } });
   };
 
-export const orderDeleteSelectAction = (orderId, orderDelete) => (dispatch) => {
-  if (orderDelete.includes(orderId)) {
-    var deleteArray = orderDelete.filter((id) => id !== orderId);
-  } else {
-    var deleteArray = [...orderDelete, orderId];
-  }
-
+export const orderEditChangeAction = (name, value, data) => (dispatch) => {
+  const editData = { ...data };
+  editData[name] = value;
   dispatch({
     type: ORDER_SCREEN.orderSelect,
-    payload: { delete: deleteArray },
+    payload: { editData },
   });
 };
+
+export const orderDeleteSelectAction =
+  (orderId, orderDelete, aiTraining_state) => (dispatch) => {
+    if (aiTraining_state === "is_training") {
+      timerToast("warning", "演算中，不能刪除");
+      return;
+    }
+    if (orderDelete.includes(orderId)) {
+      var deleteArray = orderDelete.filter((id) => id !== orderId);
+    } else {
+      var deleteArray = [...orderDelete, orderId];
+    }
+
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { delete: deleteArray },
+    });
+  };
 
 export const orderDeleteAction = (orderId) => async (dispatch) => {
   const { data } = axios.post(`${domain}/api/deleteOrder/`, { orderId });
@@ -293,14 +317,31 @@ export const functionAreaNavButtonAction =
     }
 
     if (changeMode === "edit") {
-      try {
-        axios
-          .post(`${domain}/api/editOrder/`, { orderSelectData })
-          .then((res) => console.log(res.data));
-      } catch (error) {}
+      if (!orderSelectData) {
+        timerToast("info", "尚未選擇工單");
+        return;
+      }
+      confirmSwal("確定修改?").then((result) => {
+        if (result.isConfirmed) {
+          infoToast("warning", "修改中");
+          try {
+            axios
+              .post(`${domain}/api/editOrder/`, { orderSelectData })
+              .then((res) => {
+                Swal.close();
+                timerToast("success", "修改成功");
+                dispatch({ type: ORDER_LIST.edit, payload: orderSelectData });
+              });
+          } catch (error) {}
+        }
+      });
     }
 
     if (changeMode === "delete") {
+      if (orderSelectData.length === 0) {
+        timerToast("info", "尚未選擇工單");
+        return;
+      }
       confirmSwal("確定刪除?").then((result) => {
         if (result.isConfirmed) {
           infoToast("error", "刪除中");

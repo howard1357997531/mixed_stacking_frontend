@@ -49,6 +49,22 @@ export const orderListReducer = (state = { data: [] }, action) => {
         data: orderData,
       };
 
+    case ORDER_LIST.edit:
+      const editData = state.data.map((order) => {
+        if (order.id === action.payload.id) {
+          const name = action.payload.name;
+          const orderItem = order.orderItem.map((order) => {
+            return { ...order, quantity: action.payload[order.name] };
+          });
+          console.log(orderItem);
+          return { ...order, name, orderItem };
+        } else {
+          return order;
+        }
+      });
+
+      return { ...state, data: editData };
+
     case ORDER_LIST.delete:
       var data = state.data;
 

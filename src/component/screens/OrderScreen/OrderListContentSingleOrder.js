@@ -13,13 +13,10 @@ import TextEffect from "../../../tool/TextEffect";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import {
-  orderDeleteAction,
   orderDeleteSelectAction,
-  orderEditAction,
   orderEditSelectAction,
   orderlistSelectAction,
 } from "../../../redux/actions/OrderScreenAction";
-import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../../../redux/constants";
 
 function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
   const dispatch = useDispatch();
@@ -37,9 +34,9 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
     if (["close", "orderDetail"].includes(orderSelectMode)) {
       dispatch(orderlistSelectAction(orderId, aiTraining_state));
     } else if (orderSelectMode === "edit") {
-      dispatch(orderEditSelectAction(orderId, orderListData));
+      dispatch(orderEditSelectAction(orderId, orderListData, aiTraining_state));
     } else if (orderSelectMode === "delete") {
-      dispatch(orderDeleteSelectAction(orderId, orderDelete));
+      dispatch(orderDeleteSelectAction(orderId, orderDelete, aiTraining_state));
     }
   };
 

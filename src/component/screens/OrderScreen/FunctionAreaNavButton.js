@@ -12,7 +12,7 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
   const {
     aiTrainingState,
     combineOrder,
-    edit,
+    editData,
     delete: deleteArray,
   } = useSelector((state) => state.orderScreen_orderSelect);
 
@@ -22,7 +22,7 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
     } else if (changeMode === "multipleOrder") {
       var orderSelectData = combineOrder;
     } else if (changeMode === "edit") {
-      var orderSelectData = edit;
+      var orderSelectData = editData;
     } else if (changeMode === "delete") {
       var orderSelectData = deleteArray;
     }

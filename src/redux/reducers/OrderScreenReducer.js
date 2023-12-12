@@ -10,7 +10,7 @@ export const orderScreen_orderSelectReducer = (
     combineOrderFocusIndex: 0,
     combineOrderFocusValue: null,
     edit: null,
-    editData: {},
+    editData: null,
     delete: [],
   },
   action
