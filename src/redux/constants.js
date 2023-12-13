@@ -69,6 +69,7 @@ export const ROBOT_CONTROL_SCREEN = {
   robotSetting: "ROBOT_CONTROL_SCREEN_robotSetting",
   realtimeItem: "ROBOT_CONTROL_SCREEN_realtimeItem",
   realtimeVisual: "ROBOT_CONTROL_SCREEN_realtimeVisual",
+  realtimeVisual_demo3: "ROBOT_CONTROL_SCREEN_realtimeVisual_demo3",
   // api
   executeRobot: "ROBOT_CONTROL_SCREEN_executeRobot",
   robotSetting: "ROBOT_CONTROL_SCREEN_robotSetting",

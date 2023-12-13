@@ -80,7 +80,7 @@ function App() {
     socket.onmessage = (event) => {
       const realtimeData = JSON.parse(event.data);
 
-      console.log("websocket: ", realtimeData);
+      // console.log("websocket: ", realtimeData);
       if (realtimeData.count) {
         dispatch({
           type: ROBOT_CONTROL_SCREEN.realtimeItem,
@@ -90,7 +90,9 @@ function App() {
 
       if (realtimeData.mode) {
         if (
-          ["prepare", "operate", "reset", "finish"].includes(realtimeData.mode)
+          ["prepare", "operate", "reset", "finish", "buffer"].includes(
+            realtimeData.mode
+          )
         ) {
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotState,
@@ -115,6 +117,21 @@ function App() {
         dispatch({
           type: ROBOT_CONTROL_SCREEN.realtimeVisual,
           payload: { visualResult: realtimeData.visual_result },
+        });
+
+        // dispatch({
+        //   type: ROBOT_CONTROL_SCREEN.realtimeVisual_demo3,
+        //   payload: {
+        //     visualResult: realtimeData.visual_result,
+        //     visualCount: realtimeData.visual_count,
+        //     bufferCount: realtimeData.buffer_count,
+        //   },
+        // });
+        console.log("websocket: ", {
+          visualResult: realtimeData.visual_result,
+          visualCount: realtimeData.visual_count,
+          bufferOrder: realtimeData.buffer_order,
+          checkNumberlist: realtimeData.check_numberlist,
         });
       }
 

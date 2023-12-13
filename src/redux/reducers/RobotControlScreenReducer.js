@@ -142,12 +142,30 @@ export const robotControlScree_realtimeVisualReducer = (
     nextName: null,
     visualResult: [],
     visualCount: 1,
+    bufferCount: [],
   },
   action
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.realtimeVisual:
       return { ...state, ...action.payload };
+
+    case ROBOT_CONTROL_SCREEN.realtimeVisual_demo3:
+      let stateResult = [...state.visualResult];
+      let visualCount = action.payload.visual_count;
+      let visualResult = action.paylaod.visual_result;
+      if (state.visualCount === visualCount) {
+        if (visualResult.length > stateResult) {
+          return {
+            ...state,
+            visualResult: [...stateResult, visualResult.at(-1)],
+          };
+        }
+      } else {
+        return { ...state, visualResult };
+      }
+      return { ...state, ...action.payload };
+
     case ROBOT_CONTROL_SCREEN_realtimeVisual.mode:
       return { ...state, mode: action.payload };
 

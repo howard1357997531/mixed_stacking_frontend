@@ -36,6 +36,7 @@ function OperationInterfaceBox3({
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
     finish: { text: "已結束", color: Colors.greyTextBlood },
+    buffer: { text: "夾至 Buffer 區", color: Colors.greyTextBlood },
   };
 
   return (
@@ -86,6 +87,7 @@ function OperationInterfaceBox3({
             >
               {robotStatePause ? "暫停" : boxText[robotStateMode]["text"]}
             </TextShowBoardText>
+
             {robotStateMode === "prepare" && !robotStatePause ? (
               <Dot dotColor={boxText[robotStateMode]["color"]} />
             ) : null}
