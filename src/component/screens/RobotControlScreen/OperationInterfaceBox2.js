@@ -41,7 +41,7 @@ function OperationInterfaceBox2() {
   };
 
   useEffect(() => {
-    if (robotStateMode === "inactivate") {
+    if (["inactivate", "reset"].includes(robotStateMode)) {
       setRobotSettingDialogOpen(false);
     }
   }, [robotStateMode]);

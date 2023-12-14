@@ -199,6 +199,7 @@ export const executeRobotAction =
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.robotState_reset,
+                  payload: is_finish,
                 });
 
                 dispatch({
@@ -266,6 +267,8 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
       type: ROBOT_CONTROL_SCREEN_API_robotSetting.success,
       payload: data,
     });
+
+    // dispatch({ type: ROBOT_CONTROL_SCREEN.robotState, payload: { mode } });
   } catch (error) {
     dispatch({
       type: ROBOT_CONTROL_SCREEN_API_robotSetting.fail,

@@ -71,8 +71,10 @@ export const FortyRadioWidthButton = styled(Box, {
 export const SixtyRadioWidthButton = styled(Box, {
   shouldForwardProp: (prop) => prop !== "customColor",
 })(({ theme, customColor }) => ({
+  boxSizing: "border-box",
   position: "relative",
   width: "60%",
+  padding: "25px 50px",
   borderRadius: "20px",
   backgroundColor: customColor[0],
   "&:hover": {
@@ -218,6 +220,8 @@ export const StyleDotBox = styled(Box)(({ theme }) => ({
 // InformationArea
 export const InformationArea = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
   height: "70vh",
   width: "50%",
   padding: "0px 50px",
@@ -229,13 +233,15 @@ export const InformationArea = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const InformationAreaBox = styled(Box)(({ theme }) => ({
+export const InformationAreaBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
   position: "relative",
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-start",
   alignItems: "center",
-  height: "inherit",
+  height: mode ? "100%" : "100%",
   backgroundColor: Colors.lightOrange,
   borderRadius: "20px",
 }));
@@ -250,12 +256,12 @@ export const InformationAreaTitleBox = styled(Box)(({ theme }) => ({
 }));
 
 export const InformationAreaContentBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "hasOrderList",
-})(({ theme, hasOrderList }) => ({
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
   position: "relative",
   width: "80%",
-  height: "80%",
-  border: `1px ${hasOrderList ? "solid" : "dashed"} ${Colors.brown}`,
+  height: data[1] ? "80%" : "80%",
+  border: `1px ${data[0] ? "solid" : "dashed"} ${Colors.brown}`,
 }));
 
 export const InformationAreaBottomBox = styled(Box)(({ theme }) => ({

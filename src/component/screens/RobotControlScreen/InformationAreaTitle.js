@@ -39,11 +39,11 @@ function InformationAreaTitle({
     <InformationAreaTitleBox>
       {informationAreaMode === "order" ? (
         <>
-          {realtimeItemMode && (
+          {/* {realtimeItemMode && (
             <OrderListTitleButton onClick={() => changeModeHandler("picture")}>
               圖片
             </OrderListTitleButton>
-          )}
+          )} */}
 
           {robotStateMode !== "activate" ? (
             <Title>{orderSelectData.name}</Title>

@@ -32,16 +32,21 @@ function OperationInterfaceBox3({
     },
     operate: {
       text: `正在操作第${realtimeItemCount}個物件`,
-      color: Colors.yellow,
+      color: Colors.darkGreenHover,
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
     finish: { text: "已結束", color: Colors.greyTextBlood },
-    buffer: { text: "夾至 Buffer 區", color: Colors.greyTextBlood },
+    buffer: { text: "錯誤!! 夾至 Buffer 區", color: Colors.red800 },
+    buffer_to_main: {
+      text: `從 Buffer 夾第${realtimeItemCount}個物件至棧板`,
+      color: Colors.darkGreenHover,
+      animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
+    },
   };
 
   return (
-    <TextShowBoard className="board">
-      <img src="board.png" alt="board.png"></img>
+    <TextShowBoard>
+      <img className="board" src="board.png" alt="board.png"></img>
       <TextShowBoardTextBox>
         {executeOrderIdArray.length === 0 && (
           <TextShowBoardText sx={{ color: Colors.greyTextBlood }}>
@@ -79,7 +84,9 @@ function OperationInterfaceBox3({
           <>
             <TextShowBoardText
               sx={{
-                color: boxText[robotStateMode]["color"],
+                color: robotStatePause
+                  ? Colors.red800
+                  : boxText[robotStateMode]["color"],
                 animation: boxText[robotStateMode]["animation"]
                   ? boxText[robotStateMode]["animation"]
                   : "none",

@@ -19,6 +19,9 @@ import { Colors } from "../../../styles/theme";
 import OrderListDialog from "./dialog/OrderListDialog";
 import TextEffect2 from "../../../tool/TextEffect2";
 import { Box, Slide } from "@mui/material";
+import { domain } from "../../../env";
+import { useSelector } from "react-redux";
+import "./css/OperationInterfaceBox1.css";
 
 // demo1 可能要把 realtime-Visual-Count 改成 realtimeItemCount
 // 視覺辨識區要改 30% 70% fontSize: 26
@@ -40,6 +43,12 @@ function OperationInterfaceBox1({
   const onOrderListDialoggOpen = (state) => {
     setOrderListDialogOpen(state);
   };
+
+  const { executeOrderId: executeOrderIdArray, queue } = useSelector(
+    (state) => state.robotControlScreen_robotExecutionList
+  );
+
+  const itemCount = realtimeItemCount ? realtimeItemCount : 1;
 
   // if (orderSelectData.length !== 0) {
   //   console.log(orderSelectData.aiTraining_order.split(","));
@@ -138,8 +147,9 @@ function OperationInterfaceBox1({
         </OperationInterfaceButtonText>
       </FortyRadioWidthButton>
 
+      {/* customColor={[VisualIdentityBoxColor, VisualIdentityBoxHoverColor] */}
       <SixtyRadioWidthButton
-        customColor={[VisualIdentityBoxColor, VisualIdentityBoxHoverColor]}
+        customColor={[Colors.darkPink, Colors.darkPinkHover]}
       >
         {["inactivate", "reset"].includes(robotStateMode) ? (
           <>
@@ -153,8 +163,20 @@ function OperationInterfaceBox1({
           </>
         ) : null}
 
+        {!["inactivate", "reset"].includes(robotStateMode) ? (
+          <img
+            src={`${domain}/static/media/ai_figure/Figures_${
+              executeOrderIdArray[queue - 1]
+            }/box_${itemCount}_bin_1.png`}
+            alt={`${domain}/static/media/ai_figure/Figures_${
+              executeOrderIdArray[queue - 1]
+            }/box_${itemCount}_bin_1.png`}
+            className="box-photo"
+          ></img>
+        ) : null}
+
         <VisualIdentityBox>
-          {!["inactivate", "reset"].includes(robotStateMode) ? (
+          {/* {!["inactivate", "reset"].includes(robotStateMode) ? (
             // 20% 50% fontSize: 20
             // 30% 50% fontSize: 26
             <>
@@ -205,10 +227,10 @@ function OperationInterfaceBox1({
                 </VisualIdentityNextObjectBox>
               </VisualIdentityObject>
             </>
-          ) : null}
+          ) : null} */}
 
           {/* demo1 註解 */}
-          <VisualIdentityState>
+          {/* <VisualIdentityState>
             {!realtimeVisualMode && robotStateMode === "activate" ? (
               <VisualIdentityStateText sx={{ color: "#999999" }}>
                 <TextEffect2 texts={"準備偵測"} mode={"no effect"} />
@@ -226,7 +248,7 @@ function OperationInterfaceBox1({
                 )}
               </VisualIdentityStateText>
             ) : null}
-          </VisualIdentityState>
+          </VisualIdentityState> */}
         </VisualIdentityBox>
       </SixtyRadioWidthButton>
 

@@ -90,9 +90,14 @@ function App() {
 
       if (realtimeData.mode) {
         if (
-          ["prepare", "operate", "reset", "finish", "buffer"].includes(
-            realtimeData.mode
-          )
+          [
+            "prepare",
+            "operate",
+            "reset",
+            "finish",
+            "buffer",
+            "buffer_to_main",
+          ].includes(realtimeData.mode)
         ) {
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotState,

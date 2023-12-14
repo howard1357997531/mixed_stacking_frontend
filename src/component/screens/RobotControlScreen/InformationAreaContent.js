@@ -146,9 +146,11 @@ function InformationAreaContent({
       });
     }
   }, [realtimeItemCount]);
+  const hasOrderList = executeOrderIdArray.length !== 0;
+  const mode = !["inactivate", "reset"].includes(robotStateMode);
 
   return (
-    <InformationAreaContentBox hasOrderList={executeOrderIdArray.length !== 0}>
+    <InformationAreaContentBox data={[hasOrderList, mode]}>
       {informationAreaMode === "initial" ? (
         <NoSelectOrderText>尚未選擇工單</NoSelectOrderText>
       ) : null}
@@ -195,8 +197,8 @@ function InformationAreaContent({
           <OrderListTitle>
             <OrderListTitleText width="20%">次序</OrderListTitleText>
             <OrderListTitleText sx={{ flexGrow: 1 }}>名稱</OrderListTitleText>
-            <OrderListTitleText width="25%">辨識</OrderListTitleText>
-            {/* <OrderListTitleText width="40%">尺寸</OrderListTitleText> */}
+            {/* <OrderListTitleText width="25%">辨識</OrderListTitleText> */}
+            <OrderListTitleText width="40%">尺寸</OrderListTitleText>
           </OrderListTitle>
 
           <OrderListContent className="orderlist">
@@ -225,15 +227,15 @@ function InformationAreaContent({
                   <Typography sx={{ marginLeft: "5px" }}>{order}</Typography>
                 </OrderListContentSmBox>
 
-                {/* <OrderListContentSmBox width="40%">
+                <OrderListContentSmBox width="40%">
                   {itemSize[order]}
-                </OrderListContentSmBox> */}
+                </OrderListContentSmBox>
 
-                <OrderListContentSmBox width="25%">
+                {/* <OrderListContentSmBox width="25%">
                   {realtimeVisualResult.length !== 0
                     ? compareResult(index)
                     : null}
-                </OrderListContentSmBox>
+                </OrderListContentSmBox> */}
               </OrderListContentBox>
             ))}
           </OrderListContent>

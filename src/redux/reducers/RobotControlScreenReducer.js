@@ -95,7 +95,7 @@ export const robotControlScreen_robotStateReducer = (
     text: "尚未選擇工單",
     pause: false,
     reset: false,
-    speed: 50,
+    speed: 20,
   },
   action
 ) => {
@@ -104,12 +104,13 @@ export const robotControlScreen_robotStateReducer = (
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN.robotState_reset:
+      const mode = action.payload === "success" ? "inactivate" : "reset";
       return {
-        mode: "inactivate",
+        mode,
         text: "尚未選擇工單",
         pause: false,
         reset: false,
-        speed: 50,
+        speed: 20,
       };
 
     default:
@@ -153,17 +154,10 @@ export const robotControlScree_realtimeVisualReducer = (
     case ROBOT_CONTROL_SCREEN.realtimeVisual_demo3:
       let stateResult = [...state.visualResult];
       let visualCount = action.payload.visual_count;
-      let visualResult = action.paylaod.visual_result;
-      if (state.visualCount === visualCount) {
-        if (visualResult.length > stateResult) {
-          return {
-            ...state,
-            visualResult: [...stateResult, visualResult.at(-1)],
-          };
-        }
-      } else {
-        return { ...state, visualResult };
-      }
+      let checkNumberlist = action.paylaod.checkNumberlist;
+
+      const asd = checkNumberlist.filter((number) => [1, 3].includes(number));
+
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN_realtimeVisual.mode:
