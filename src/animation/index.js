@@ -53,3 +53,21 @@ export const OrderListExeListWaitToExecuteAnimation = keyframes`
             transform : scale(1);
   }
 `;
+
+export const boxMove = keyframes`
+  0% {
+    left: 0px
+  }
+  100% {
+    left: calc(100% - 80px)
+  }
+`;
+
+export const boxMove2 = keyframes`
+  0% {
+    left: 0px;
+  }
+  100% {
+    left: calc(100% - 160px)
+  }
+`;

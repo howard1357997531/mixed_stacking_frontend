@@ -119,25 +119,25 @@ function App() {
       }
 
       if (realtimeData.visual_result) {
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.realtimeVisual,
-          payload: { visualResult: realtimeData.visual_result },
-        });
-
         // dispatch({
-        //   type: ROBOT_CONTROL_SCREEN.realtimeVisual_demo3,
-        //   payload: {
-        //     visualResult: realtimeData.visual_result,
-        //     visualCount: realtimeData.visual_count,
-        //     bufferCount: realtimeData.buffer_count,
-        //   },
+        //   type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+        //   payload: { visualResult: realtimeData.visual_result },
         // });
-        console.log("websocket: ", {
-          visualResult: realtimeData.visual_result,
-          visualCount: realtimeData.visual_count,
-          bufferOrder: realtimeData.buffer_order,
-          checkNumberlist: realtimeData.check_numberlist,
+        // console.log(realtimeData.visual_result);
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.realtimeVisual_demo3,
+          payload: {
+            visualResult: realtimeData.visual_result,
+            checkNumberlist: realtimeData.check_numberlist,
+          },
         });
+        // console.log("websocket: ", {
+        //   visualResult: realtimeData.visual_result,
+        //   visualCount: realtimeData.visual_count,
+        //   bufferOrder: realtimeData.buffer_order,
+        //   checkNumberlist: realtimeData.check_numberlist,
+        // });
       }
 
       if (realtimeData.visual_count) {

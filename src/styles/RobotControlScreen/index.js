@@ -241,7 +241,7 @@ export const InformationAreaBox = styled(Box, {
   flexDirection: "column",
   justifyContent: "flex-start",
   alignItems: "center",
-  height: mode ? "100%" : "100%",
+  height: mode ? "80%" : "100%",
   backgroundColor: Colors.lightOrange,
   borderRadius: "20px",
 }));
@@ -260,7 +260,7 @@ export const InformationAreaContentBox = styled(Box, {
 })(({ theme, data }) => ({
   position: "relative",
   width: "80%",
-  height: data[1] ? "80%" : "80%",
+  height: data[1] ? "85%" : "80%",
   border: `1px ${data[0] ? "solid" : "dashed"} ${Colors.brown}`,
 }));
 

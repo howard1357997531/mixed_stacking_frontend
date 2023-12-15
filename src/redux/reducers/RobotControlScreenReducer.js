@@ -144,6 +144,7 @@ export const robotControlScree_realtimeVisualReducer = (
     visualResult: [],
     visualCount: 1,
     bufferCount: [],
+    checkNumberlist: [],
   },
   action
 ) => {
@@ -152,12 +153,6 @@ export const robotControlScree_realtimeVisualReducer = (
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN.realtimeVisual_demo3:
-      let stateResult = [...state.visualResult];
-      let visualCount = action.payload.visual_count;
-      let checkNumberlist = action.paylaod.checkNumberlist;
-
-      const asd = checkNumberlist.filter((number) => [1, 3].includes(number));
-
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN_realtimeVisual.mode:
