@@ -17,6 +17,7 @@ import { Box, Typography } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { boxMove, boxMove2 } from "../../../animation";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function RobotControlDesktop(props) {
   const BoardBox = styled(Box)(({ theme }) => ({
@@ -40,7 +41,9 @@ function RobotControlDesktop(props) {
     padding: "0px 10px",
   }));
 
-  const ImageBox = styled(Box)(({ theme }) => ({
+  const ImageBox = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "data",
+  })(({ theme, data }) => ({
     boxSizing: "border-box",
     position: "absolute",
     top: "50%",
@@ -51,13 +54,17 @@ function RobotControlDesktop(props) {
     alignItems: "center",
     width: "90px",
     height: "50px",
-    backgroundColor: "#fff",
-    borderRadius: "8px",
+    borderRadius: "5px",
     zIndex: 3,
-    // animation: `${boxMove} 5s`,
+    color: data[0] ? "#fff" : Colors.greyTextBlood,
+    backgroundColor: data[0] ? data[1] : "#fff",
+    boxShadow:
+      "0px 0px 8px rgba(0, 0, 0, 0.4) inset, 0px 0px 2px rgba(0, 0, 0, 0.2) inset",
   }));
 
-  const ImageBox2 = styled(Box)(({ theme }) => ({
+  const ImageBox2 = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "data",
+  })(({ theme, data }) => ({
     boxSizing: "border-box",
     position: "absolute",
     top: "50%",
@@ -68,14 +75,19 @@ function RobotControlDesktop(props) {
     alignItems: "center",
     width: "90px",
     height: "50px",
-    backgroundColor: "#fff",
     borderRadius: "8px",
     zIndex: 3,
     // animation: `${boxMove2} 5s`,
     // animationDelay: "1s",
+    color: data[0] ? "#fff" : Colors.greyTextBlood,
+    backgroundColor: data[0] ? data[1] : "#fff",
+    boxShadow:
+      "0px 0px 8px rgba(0, 0, 0, 0.4) inset, 0px 0px 2px rgba(0, 0, 0, 0.2) inset",
   }));
 
-  const ImageBox3 = styled(Box)(({ theme }) => ({
+  const ImageBox3 = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "data",
+  })(({ theme, data }) => ({
     boxSizing: "border-box",
     position: "absolute",
     top: "50%",
@@ -86,14 +98,19 @@ function RobotControlDesktop(props) {
     alignItems: "center",
     width: "90px",
     height: "50px",
-    backgroundColor: "#fff",
     borderRadius: "8px",
     zIndex: 3,
     // animation: `${boxMove2} 5s`,
     // animationDelay: "1s",
+    color: data[0] ? "#fff" : Colors.greyTextBlood,
+    backgroundColor: data[0] ? data[1] : "#fff",
+    boxShadow:
+      "0px 0px 8px rgba(0, 0, 0, 0.4) inset, 0px 0px 2px rgba(0, 0, 0, 0.2) inset",
   }));
 
-  const ImageBox4 = styled(Box)(({ theme }) => ({
+  const ImageBox4 = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "data",
+  })(({ theme, data }) => ({
     boxSizing: "border-box",
     position: "absolute",
     top: "50%",
@@ -104,27 +121,31 @@ function RobotControlDesktop(props) {
     alignItems: "center",
     width: "90px",
     height: "50px",
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     borderRadius: "8px",
     zIndex: 3,
     // animation: `${boxMove2} 5s`,
     // animationDelay: "1s",
+    color: data[0] ? "#fff" : Colors.greyTextBlood,
+    backgroundColor: data[0] ? data[1] : "#fff",
+    boxShadow:
+      "0px 0px 8px rgba(0, 0, 0, 0.4) inset, 0px 0px 2px rgba(0, 0, 0, 0.2) inset",
   }));
 
   const { checkNumberlist } = useSelector(
     (state) => state.robotControlScreen_realtimeVisual
   );
 
-  console.log(checkNumberlist);
+  console.log("checkNumberlist:", checkNumberlist);
   const realtimeVisualResult = [null, "#0"].includes(props.realtimeVisualResult)
     ? null
     : props.realtimeVisualResult;
   // const realtimeVisualResult = ["16", "18", "16", "18"];
 
   if (checkNumberlist) {
-    const temp = checkNumberlist.filter((num) => num !== 3);
-    if (temp) {
-      var boxBorder = temp.map((order) => {
+    var motionList = checkNumberlist.filter((num) => num !== 3);
+    if (motionList) {
+      var boxColor = motionList.map((order) => {
         if (order === 1) {
           return Colors.swalGreen;
         } else {
@@ -133,6 +154,8 @@ function RobotControlDesktop(props) {
       });
     }
   }
+  console.log("motionList:", motionList);
+  console.log("boxColor:", boxColor);
   const is_buffer = ["suc", "err"];
   const orderSelectData = props.orderSelectData;
   const realtimeVisualCount = props.realtimeVisualCount;
@@ -193,25 +216,25 @@ function RobotControlDesktop(props) {
               {realtimeVisualResult &&
               realtimeVisualResult[0] &&
               realtimeVisualResult[0] !== "#0" ? (
-                <ImageBox sx={{ border: `7px solid ${boxBorder[0]}` }}>
+                <ImageBox data={[motionList[0], boxColor[0]]}>
                   <Typography>{realtimeVisualResult[0]}</Typography>
                 </ImageBox>
               ) : null}
 
               {realtimeVisualResult && realtimeVisualResult[1] ? (
-                <ImageBox2 sx={{ border: `7px solid ${boxBorder[1]}` }}>
+                <ImageBox2 data={[motionList[1], boxColor[1]]}>
                   <Typography>{realtimeVisualResult[1]}</Typography>
                 </ImageBox2>
               ) : null}
 
               {realtimeVisualResult && realtimeVisualResult[2] ? (
-                <ImageBox3 sx={{ border: `7px solid ${boxBorder[2]}` }}>
+                <ImageBox3 data={[motionList[2], boxColor[2]]}>
                   <Typography>{realtimeVisualResult[2]}</Typography>
                 </ImageBox3>
               ) : null}
 
               {realtimeVisualResult && realtimeVisualResult[3] ? (
-                <ImageBox4 sx={{ border: `7px solid ${boxBorder[3]}` }}>
+                <ImageBox4 data={[motionList[3], boxColor[3]]}>
                   <Typography>{realtimeVisualResult[3]}</Typography>
                 </ImageBox4>
               ) : null}

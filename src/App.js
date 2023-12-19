@@ -13,12 +13,10 @@ import {
   multipleOrderListAction,
   orderListAction,
 } from "./redux/actions/OrderActions";
-import { confirmSwal } from "./redux/actions/swal/RobotControlScreenActionSwal";
 import {
   hasNextExecutionOrderAction,
   robotExecutionAlertAction,
 } from "./redux/actions/RobotControlScreenAction";
-import SelectItemScreen from "./component/screen/SelectItemScreen";
 import Demo1SelectItemsScreen from "./screen/Demo1SelectItemsScreen";
 
 function App() {

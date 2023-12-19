@@ -21,8 +21,8 @@ export const orderListReducer = (state = { data: [] }, action) => {
         error: action.payload,
       };
 
-    case ORDER_LIST.aiTrainingStateChange:
-      const stateData = state.data.map((data) =>
+    case ORDER_LIST.beforeTraining:
+      const beforeData = state.data.map((data) =>
         data.id === action.payload.orderId
           ? {
               ...data,
@@ -30,24 +30,19 @@ export const orderListReducer = (state = { data: [] }, action) => {
             }
           : data
       );
-      return {
-        ...state,
-        data: stateData,
-      };
+      return { ...state, data: beforeData };
 
-    case ORDER_LIST.aiTrainingOrderAdd:
-      const orderData = state.data.map((data) =>
+    case ORDER_LIST.afterTraining:
+      const afterData = state.data.map((data) =>
         data.id === action.payload.orderId
           ? {
               ...data,
+              aiTraining_state: action.payload.aiTrainingState,
               aiTraining_order: action.payload.data,
             }
           : data
       );
-      return {
-        ...state,
-        data: orderData,
-      };
+      return { ...state, data: afterData };
 
     case ORDER_LIST.edit:
       const editData = state.data.map((order) => {
@@ -56,7 +51,6 @@ export const orderListReducer = (state = { data: [] }, action) => {
           const orderItem = order.orderItem.map((order) => {
             return { ...order, quantity: action.payload[order.name] };
           });
-          console.log(orderItem);
           return { ...order, name, orderItem };
         } else {
           return order;

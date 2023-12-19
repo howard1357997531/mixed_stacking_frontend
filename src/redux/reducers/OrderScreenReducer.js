@@ -1,4 +1,5 @@
-import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../constants";
+import { InfoBtnToast, timerToast } from "../../swal";
+import { ORDER_SCREEN, TOAST } from "../constants";
 
 export const orderScreen_orderSelectReducer = (
   state = {
@@ -16,33 +17,33 @@ export const orderScreen_orderSelectReducer = (
   action
 ) => {
   switch (action.type) {
-    case ORDER_SCREEN_orderList.mode:
-      return { ...state, mode: action.payload };
+    // case ORDER_SCREEN_orderList.mode:
+    //   return { ...state, mode: action.payload };
 
-    case ORDER_SCREEN_orderList.orderId:
-      return { ...state, orderId: action.payload };
+    // case ORDER_SCREEN_orderList.orderId:
+    //   return { ...state, orderId: action.payload };
 
-    case ORDER_SCREEN_orderList.aiTrainingState:
-      return { ...state, aiTrainingState: action.payload };
+    // case ORDER_SCREEN_orderList.aiTrainingState:
+    //   return { ...state, aiTrainingState: action.payload };
 
-    case ORDER_SCREEN_orderList.orderCurrentData:
-      return { ...state, orderCurrentData: action.payload };
+    // case ORDER_SCREEN_orderList.orderCurrentData:
+    //   return { ...state, orderCurrentData: action.payload };
 
-    case ORDER_SCREEN_orderList.aiCurrentData:
-      return { ...state, aiCurrentData: action.payload };
+    // case ORDER_SCREEN_orderList.aiCurrentData:
+    //   return { ...state, aiCurrentData: action.payload };
 
-    case ORDER_SCREEN_orderList.delete:
-      const deleteExist = state.item.includes(action.payload);
+    // case ORDER_SCREEN_orderList.delete:
+    //   const deleteExist = state.item.includes(action.payload);
 
-      if (deleteExist) {
-        var temp = state.item.filter((itemId) => itemId !== action.payload);
-      } else {
-        var temp = [...state.item, action.payload];
-      }
-      return { ...state, item: temp };
+    //   if (deleteExist) {
+    //     var temp = state.item.filter((itemId) => itemId !== action.payload);
+    //   } else {
+    //     var temp = [...state.item, action.payload];
+    //   }
+    //   return { ...state, item: temp };
 
-    case ORDER_SCREEN.orderSelectData:
-      return { ...state, ...action.payload };
+    // case ORDER_SCREEN.orderSelectData:
+    //   return { ...state, ...action.payload };
 
     //
     case ORDER_SCREEN.orderSelect:
@@ -68,9 +69,19 @@ export const orderScreen_orderSelectReducer = (
 
       return { ...state, combineOrder };
 
-    case ORDER_SCREEN_orderList.currentPageCheck:
-      if (state.mode === "orderDetail") {
-        return { ...state, mode: "aiResult" };
+    case ORDER_SCREEN.afterTrainingCheck:
+      let id = action.payload.orderId;
+      if (state.mode === "orderDetail" && state.orderId === id) {
+        timerToast("success", "工單演算完成");
+        return {
+          ...state,
+          mode: "aiResult",
+          aiTrainingState: "finish_training",
+        };
+      } else {
+        InfoBtnToast("success", "工單演算完成");
+
+        return state;
       }
 
     case ORDER_SCREEN.orderSelect_reset:

@@ -31,7 +31,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
   );
 
   const orderListModeHandler = (orderId, aiTraining_state) => {
-    if (["close", "orderDetail"].includes(orderSelectMode)) {
+    if (["close", "orderDetail", "aiResult"].includes(orderSelectMode)) {
       dispatch(orderlistSelectAction(orderId, aiTraining_state));
     } else if (orderSelectMode === "edit") {
       dispatch(orderEditSelectAction(orderId, orderListData, aiTraining_state));

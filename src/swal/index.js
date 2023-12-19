@@ -73,13 +73,46 @@ export const infoToast = (icon, title) => {
   const Toast = Swal.mixin({
     toast: true,
     position: "bottom-end",
-    background: Colors.greyTextBlood,
-    color: parseColor(icon),
     showConfirmButton: false,
     timerProgressBar: true,
+    background: Colors.greyTextBlood,
+    color: parseColor(icon),
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;
       toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
+  return Toast.fire({ icon, title });
+};
+
+export const InfoBtnToast = (icon, title, func, route = null) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    showConfirmButton: false,
+    timerProgressBar: true,
+    background: Colors.greyTextBlood,
+    color: parseColor(icon),
+    customClass: {
+      popup: "infoBtnToast-popup",
+      actions: "infoBtnToast-actions",
+    },
+    didOpen: (toast) => {
+      const button = document.createElement("button");
+      button.textContent = "查看";
+      button.className = "infoBtnToast-button";
+
+      button.addEventListener("click", () => {
+        if (route) {
+          route();
+        }
+        func();
+        Swal.close();
+      });
+
+      const actionsContainer = toast.querySelector(".infoBtnToast-actions");
+      actionsContainer.appendChild(button);
     },
   });
 

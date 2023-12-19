@@ -4,18 +4,17 @@ import {
   MULTIPLE_ORDER_LIST,
   ORDER_LIST,
   ORDER_SCREEN,
-  ORDER_SCREEN_orderList,
+  TOAST,
 } from "../constants";
 import Swal from "sweetalert2";
-import { brown } from "@mui/material/colors";
 import { domain } from "../../env";
 import { Colors } from "../../styles/theme";
-import { confirmSwal, infoToast, timerToast } from "../../swal";
+import { confirmSwal, infoBtnToast, infoToast, timerToast } from "../../swal";
 
 export const orderlistSelectAction =
   (orderId, aiTrainingState) => (dispatch) => {
     dispatch({
-      type: ORDER_SCREEN.orderSelectData,
+      type: ORDER_SCREEN.orderSelect,
       payload: {
         mode: "orderDetail",
         orderId: orderId,
@@ -123,7 +122,7 @@ export const multipleOrderCreateInputChangeAction =
     const combineOrder = [...combineOrderTemp];
     combineOrder.splice(index, 1, orderTemp.join(""));
     dispatch({
-      type: ORDER_SCREEN.orderSelectData,
+      type: ORDER_SCREEN.orderSelect,
       payload: { combineOrder },
     });
   };
@@ -133,7 +132,7 @@ export const multipleOrderCreateDeleteAction =
     const combineOrder = [...combineOrderTemp];
     combineOrder.splice(index, 1);
     dispatch({
-      type: ORDER_SCREEN.orderSelectData,
+      type: ORDER_SCREEN.orderSelect,
       payload: { combineOrder },
     });
   };
@@ -142,13 +141,13 @@ export const multipleOrderCreateDeleteAction =
 export const aiTrainingAction =
   (orderId, aiTrainingState) => async (dispatch) => {
     dispatch({
-      type: ORDER_SCREEN.orderSelect,
-      payload: { aiTrainingState },
+      type: ORDER_LIST.beforeTraining,
+      payload: { orderId, aiTrainingState },
     });
 
     dispatch({
-      type: ORDER_LIST.aiTrainingStateChange,
-      payload: { orderId, aiTrainingState },
+      type: ORDER_SCREEN.orderSelect,
+      payload: { aiTrainingState },
     });
 
     try {
@@ -157,59 +156,41 @@ export const aiTrainingAction =
       });
 
       dispatch({
-        type: ORDER_LIST.aiTrainingOrderAdd,
-        payload: { orderId, data: data.aiResult_str },
+        type: ORDER_LIST.afterTraining,
+        payload: {
+          orderId,
+          data: data.aiResult_str,
+          aiTrainingState: "finish_training",
+        },
       });
+      // 如果是在orderDetail和同id 才會跳轉aiResult
+      // dispatch({
+      //   type: ORDER_SCREEN.afterTrainingCheck,
+      //   payload: { orderId },
+      // });
 
       dispatch({
-        type: ORDER_LIST.aiTrainingStateChange,
-        payload: { orderId, aiTrainingState: "finish_training" },
+        type: TOAST.aiTraining,
+        payload: { aiTrainingToast: true, aiTrainingId: orderId },
+      });
+    } catch (error) {
+      timerToast("error", "演算失敗");
+
+      dispatch({
+        type: ORDER_LIST.beforeTraining,
+        payload: { orderId, aiTrainingState: "no_training" },
       });
 
       dispatch({
         type: ORDER_SCREEN.orderSelect,
-        payload: { aiTrainingState: "finish_training" },
-      });
-      // dispatch({
-      //   type: ORDER_SCREEN_orderList.aiTrainingState,
-      //   payload: "finish_training",
-      // });
-
-      // dispatch({
-      //   type: ORDER_SCREEN_orderList.aiCurrentData,
-      //   payload: data.aiResult_str,
-      // });
-
-      // 如果是在orderDetail 才會顯示aiResult,但還要檢查是不是在同id頁面
-      dispatch({
-        type: ORDER_SCREEN_orderList.currentPageCheck,
-      });
-    } catch (error) {
-      Swal.fire({
-        position: "center",
-        width: "16em",
-        icon: "warning",
-        title: "AI 演算失敗",
-        background: brown[400],
-        showConfirmButton: false,
-        timer: 2000,
-      }).then(() => {
-        axios
-          .post(`${domain}/api/aiTraining/`, {
-            orderId,
-            mode: "error",
-          })
-          .then(() => {
-            // window.location.reload();
-            return;
-          });
+        payload: { aiTrainingState: "no_training" },
       });
     }
   };
 
 export const functionAreaModeAction =
   (mode, multipleOrderListData) => (dispatch) => {
-    dispatch({ type: ORDER_SCREEN.orderSelect, payload: { orderId: null } });
+    // dispatch({ type: ORDER_SCREEN.orderSelect, payload: { orderId: null } });
 
     if (mode === "multipleOrder" && multipleOrderListData.length === 0) {
       dispatch({
@@ -234,29 +215,8 @@ export const functionAreaModeAction =
   };
 
 export const functionAreaNavButtonAction =
-  (changeMode, orderSelectData, aiTrainingState) => (dispatch) => {
-    if (changeMode !== "multipleOrder") {
-      dispatch({
-        type: ORDER_SCREEN.orderSelect,
-        payload: { mode: changeMode },
-      });
-    } else {
-      // 組合單建立
-      if (orderSelectData.length === 0) {
-        Swal.fire({
-          position: "center",
-          width: "16em",
-          icon: "warning",
-          title: "尚未選擇工單",
-          background: Colors.brown,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
-      }
-    }
-
-    if (aiTrainingState === "no_training") {
+  (mode, orderSelectData, aiTrainingState) => (dispatch) => {
+    if (mode === "orderDetail" && aiTrainingState === "no_training") {
       confirmSwal("執行 AI 演算?").then((result) => {
         if (result.isConfirmed) {
           dispatch(aiTrainingAction(orderSelectData, "is_training"));
@@ -264,59 +224,77 @@ export const functionAreaNavButtonAction =
       });
     }
 
-    if (changeMode === "multipleOrder") {
-      Swal.fire({
-        title: "請輸入組合單名稱",
-        input: "text",
-        background: Colors.darkGreen,
-        // color: "#fff",
-        inputAttributes: {
-          autocapitalize: "off",
-        },
-        showCancelButton: true,
-        confirmButtonText: "送出",
-        cancelButtonText: "返回",
-        showLoaderOnConfirm: true,
-        preConfirm: async (inputText) => {
-          if (inputText === "") {
-            return Swal.showValidationMessage(`請輸入名稱`);
-          }
-          try {
-            const { data } = await axios.post(
-              `${domain}/api/createMultipleOrder/`,
-              { orderSelectData, inputText }
-            );
-
-            dispatch({
-              type: MULTIPLE_ORDER_LIST.addData,
-              payload: data,
-            });
-          } catch (error) {
-            Swal.showValidationMessage(`${error.response.data.error_msg}`);
-          }
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            position: "center",
-            width: "16em",
-            icon: "success",
-            title: "建立成功",
-            background: Colors.darkGreen,
-            showConfirmButton: false,
-            timer: 2000,
-          }).then(() => {
-            dispatch({
-              type: ORDER_SCREEN.orderSelect,
-              payload: { mode: changeMode, combineOrder: [] },
-            });
-          });
-        }
+    if (mode === "orderDetail" && aiTrainingState === "finish_training") {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { mode: "aiResult" },
       });
     }
 
-    if (changeMode === "edit") {
+    if (mode === "aiResult") {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { mode: "orderDetail" },
+      });
+    }
+
+    if (mode === "multipleOrder") {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { mode: "multipleOrderCreate" },
+      });
+    }
+
+    if (mode === "multipleOrderCreate") {
+      if (orderSelectData.length === 0) {
+        timerToast("warning", "尚未選擇工單");
+        return;
+      } else {
+        Swal.fire({
+          title: "請輸入組合單名稱",
+          input: "text",
+          background: Colors.darkGreen,
+          // color: "#fff",
+          inputAttributes: {
+            autocapitalize: "off",
+          },
+          showCancelButton: true,
+          confirmButtonText: "送出",
+          cancelButtonText: "返回",
+          showLoaderOnConfirm: true,
+          preConfirm: async (inputText) => {
+            if (inputText === "") {
+              return Swal.showValidationMessage(`請輸入名稱`);
+            }
+            try {
+              const { data } = await axios.post(
+                `${domain}/api/createMultipleOrder/`,
+                { orderSelectData, inputText }
+              );
+
+              dispatch({
+                type: MULTIPLE_ORDER_LIST.addData,
+                payload: data,
+              });
+            } catch (error) {
+              Swal.showValidationMessage(`${error.response.data.error_msg}`);
+            }
+          },
+          allowOutsideClick: () => !Swal.isLoading(),
+        }).then((result) => {
+          if (result.isConfirmed) {
+            timerToast("success", "建立成功");
+
+            dispatch({
+              type: ORDER_SCREEN.orderSelect,
+              payload: { mode: "multipleOrder", combineOrder: [] },
+            });
+          }
+        });
+      }
+    }
+
+    if (mode === "edit") {
       if (!orderSelectData) {
         timerToast("info", "尚未選擇工單");
         return;
@@ -337,7 +315,7 @@ export const functionAreaNavButtonAction =
       });
     }
 
-    if (changeMode === "delete") {
+    if (mode === "delete") {
       if (orderSelectData.length === 0) {
         timerToast("info", "尚未選擇工單");
         return;

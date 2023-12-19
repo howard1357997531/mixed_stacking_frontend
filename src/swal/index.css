@@ -22,3 +22,34 @@ swalGreen: "#a5dc86",
 .swal-question {
     background-color: #c9dae1;
 }
+
+.infoBtnToast-popup {
+    position: relative;
+}
+
+.infoBtnToast-actions {
+    display: block !important;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    margin: 0px !important
+}
+
+.infoBtnToast-button {
+    font-weight: 600;
+    color: #424242;
+    background-color: #a5dc86;
+    padding: 6px 8px;
+    border: none
+}
+
+.infoBtnToast-button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.infoBtnToast-button:active {
+    transform: scale(0.95);
+    color: rgba(97, 128, 79, 0.577);
+}

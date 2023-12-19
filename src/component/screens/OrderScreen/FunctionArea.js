@@ -24,19 +24,19 @@ function FunctionArea(props) {
     if (orderSelectMode === "multipleOrderCreate") {
       if (multipleOrderListData.length === 0) {
         dispatch({
-          type: ORDER_SCREEN_orderList.mode,
-          payload: "noMultipleOrder",
+          type: ORDER_SCREEN.orderSelect,
+          payload: { mode: "noMultipleOrder" },
         });
       } else {
         dispatch({
-          type: ORDER_SCREEN_orderList.mode,
-          payload: "multipleOrder",
+          type: ORDER_SCREEN.orderSelect,
+          payload: { mode: "multipleOrder" },
         });
       }
     } else {
       dispatch({
         type: ORDER_SCREEN.orderSelect,
-        payload: { mode: "close", orderId: null },
+        payload: { mode: "close" },
       });
       dispatch({ type: MULTIPLE_ORDER_LIST.orderId, payload: "" });
     }

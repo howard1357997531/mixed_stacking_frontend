@@ -5,7 +5,7 @@ import { functionAreaNavButtonAction } from "../../../redux/actions/OrderScreenA
 import { Colors } from "../../../styles/theme";
 import { blueGrey } from "@mui/material/colors";
 
-function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
+function FunctionAreaNavButton({ orderSelectMode }) {
   const dispatch = useDispatch();
   const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
 
@@ -16,49 +16,44 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
     delete: deleteArray,
   } = useSelector((state) => state.orderScreen_orderSelect);
 
-  const buttonHandler = (changeMode, aiTraining_state) => {
-    if (changeMode === "orderDetail" && aiTraining_state === "no_training") {
+  const buttonHandler = (mode, aiTraining_state) => {
+    if (mode === "orderDetail") {
       var orderSelectData = orderId;
-    } else if (changeMode === "multipleOrder") {
+    } else if (mode === "multipleOrderCreate") {
       var orderSelectData = combineOrder;
-    } else if (changeMode === "edit") {
+    } else if (mode === "edit") {
       var orderSelectData = editData;
-    } else if (changeMode === "delete") {
+    } else if (mode === "delete") {
       var orderSelectData = deleteArray;
     }
     dispatch(
-      functionAreaNavButtonAction(changeMode, orderSelectData, aiTraining_state)
+      functionAreaNavButtonAction(mode, orderSelectData, aiTraining_state)
     );
   };
 
   const modeData = {
     aiResult: {
       name: "清單",
-      changeMode: "orderDetail",
       bgColor: Colors.brownHover,
       bgColorHover: Colors.brown500,
     },
     multipleOrder: {
       name: "建立",
-      changeMode: "multipleOrderCreate",
       bgColor: Colors.grey600,
       bgColorHover: Colors.greyText,
     },
     multipleOrderCreate: {
       name: "創建",
-      changeMode: "multipleOrder",
       bgColor: Colors.darkGreen,
       bgColorHover: Colors.darkGreenHover,
     },
     edit: {
       name: "修改",
-      changeMode: "edit",
       bgColor: Colors.brown,
       bgColorHover: Colors.brownHover,
     },
     delete: {
       name: "刪除",
-      changeMode: "delete",
       bgColor: Colors.brown,
       bgColorHover: Colors.brownHover,
     },
@@ -72,7 +67,7 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
             disableElevation
             variant="contained"
             colorData={[Colors.purple, Colors.purple400]}
-            onClick={() => buttonHandler("orderDetail", "no_training")}
+            onClick={() => buttonHandler(orderSelectMode, "no_training")}
           >
             AI 演算
           </FunctionAreaNavBtn>
@@ -83,7 +78,7 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
             disableElevation
             variant="contained"
             colorData={[blueGrey[400], blueGrey[500]]}
-            onClick={() => buttonHandler("aiResult", null)}
+            onClick={() => buttonHandler(orderSelectMode, "finish_training")}
           >
             AI 結果
           </FunctionAreaNavBtn>
@@ -106,9 +101,7 @@ function FunctionAreaNavButton({ orderSelectMode, orderSelectIdArray }) {
             modeData[orderSelectMode]["bgColor"],
             modeData[orderSelectMode]["bgColorHover"],
           ]}
-          onClick={() =>
-            buttonHandler(modeData[orderSelectMode]["changeMode"], null)
-          }
+          onClick={() => buttonHandler(orderSelectMode, null)}
         >
           {modeData[orderSelectMode]["name"]}
         </FunctionAreaNavBtn>

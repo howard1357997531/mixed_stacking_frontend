@@ -3,6 +3,8 @@ export const ORDER_LIST = {
   request: "ORDER_LIST_request",
   success: "ORDER_LIST_success",
   fail: "ORDER_LIST_fail",
+  beforeTraining: "ORDER_LIST_beforeTraining",
+  afterTraining: "ORDER_LIST_afterTraining",
   aiTrainingStateChange: "ORDER_LIST_aiTrainingStateChange",
   aiTrainingOrderAdd: "ORDER_LIST_aiTrainingOrderAdd",
   edit: "ORDER_LIST_edit",
@@ -26,6 +28,11 @@ export const DIALOG = {
   reset: "DIALOG_reset",
 };
 
+// toast
+export const TOAST = {
+  aiTraining: "TOAST_aiTraining",
+};
+
 // homeScreen
 export const HOME_BUTTON = {
   createNewOrder: {
@@ -41,8 +48,8 @@ export const HOME_BUTTON = {
 // OrderScreen
 export const ORDER_SCREEN = {
   orderSelect: "ORDER_SCREEN_orderSelect",
-  orderSelectData: "ORDER_SCREEN_orderSelectData",
   multiOrderCreateSelectData: "ORDER_SCREEN_multiOrderCreateSelectData",
+  afterTrainingCheck: "ORDER_SCREEN_afterTrainingCheck",
   // reset
   orderSelect_reset: "ORDER_SCREEN_orderSelect_reset",
 };
