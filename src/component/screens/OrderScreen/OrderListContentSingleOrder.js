@@ -2,8 +2,10 @@ import React, { Fragment } from "react";
 import {
   OrderListContentMsg,
   OrderListDate,
+  OrderListDateBox,
   OrderListDetial,
   OrderListName,
+  OrderListNameSelect,
   OrderListState,
   OrderListStateText,
 } from "../../../styles/OrderScreen";
@@ -52,9 +54,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
         orderListData.map((order, index) => (
           <Fragment key={order.id}>
             {order.is_today_latest ? (
-              <OrderListDate sx={{ borderTop: index === 0 && "none" }}>
-                {order.createdAt.slice(0, -7)}
-              </OrderListDate>
+              <OrderListDate>{order.createdAt.slice(0, -7)}</OrderListDate>
             ) : null}
 
             <OrderListDetial
@@ -64,41 +64,23 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
               }}
             >
               <OrderListName itemSelect={orderId === order.id}>
+                <OrderListNameSelect itemSelect={orderId === order.id} />
                 {order.name}
               </OrderListName>
 
               <OrderListState>
                 {order.aiTraining_state === "no_training" && (
-                  <OrderListStateText
-                    sx={{
-                      color: Colors.purple,
-                    }}
-                  >
+                  <OrderListStateText sx={{ color: Colors.purple }}>
                     尚未演算
                   </OrderListStateText>
                 )}
 
                 {order.aiTraining_state === "is_training" && (
-                  <TextEffect
-                    text={"AI演算中"}
-                    textColor={
-                      orderId === order.id ? Colors.grey100 : Colors.greyBorder
-                    }
-                  />
+                  <TextEffect text={"AI演算中"} textColor={Colors.greyText} />
                 )}
 
                 {order.aiTraining_state === "finish_training" && (
-                  <OrderListStateText
-                    sx={{
-                      padding: "4px 6px",
-                      color: Colors.brown200,
-                      backgroundColor:
-                        orderId === order.id ? Colors.grey100 : "transparent",
-                      border: `2px solid ${
-                        orderId === order.id ? Colors.grey100 : Colors.brown200
-                      }`,
-                    }}
-                  >
+                  <OrderListStateText sx={{ color: Colors.greyText }}>
                     已演算
                   </OrderListStateText>
                 )}

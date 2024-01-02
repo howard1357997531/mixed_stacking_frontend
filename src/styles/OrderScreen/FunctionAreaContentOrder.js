@@ -8,85 +8,70 @@ export const OrderBox = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
-export const OrderTitleBox = styled(Box)(({ theme }) => ({
-  boxSizing: "border-box",
-  position: "relative",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  padding: "2px 10px",
-  color: "#fff",
-  backgroundColor: Colors.greyBorder,
-  fontWeight: 600,
-}));
-
-export const OrderTitleCenterBox = styled(Typography)(({ theme }) => ({
-  color: Colors.greyTextBlood,
-  fontSize: 18,
-  fontWeight: 600,
-  paddingTop: 2,
-}));
-
-export const OrderTitleLeftBox = styled(Typography)(({ theme }) => ({
+export const IsTrainingText = styled(Typography)(({ theme }) => ({
   position: "absolute",
-  top: "55%",
-  left: "10px",
-  transform: "translateY(-50%)",
-  color: Colors.greyTextBlood,
+  right: 0,
+  transform: "translate(-40%, 270%)",
+  color: Colors.blue700,
   fontWeight: 600,
 }));
 
-export const OrderTitleRightBox = styled(Typography)(({ theme }) => ({
-  position: "absolute",
-  top: "55%",
-  right: "10px",
-  transform: "translateY(-50%)",
-  color: Colors.greyTextBlood,
+export const DescText = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== "isTitle",
+})(({ theme, isTitle }) => ({
+  color: isTitle ? Colors.lightOrange : Colors.greyText,
+  fontWeight: !isTitle && 600,
+  padding: isTitle && "2px 5px 0px",
+  display: isTitle && "inline-block",
+  backgroundColor: isTitle && Colors.brown200,
 }));
 
-export const OrderTitle2Box = styled(Box)(({ theme }) => ({
+export const DescTextBox = styled(Box)(({ theme }) => ({
+  fontWeight: 600,
+  marginBottom: "3px",
+}));
+
+export const OrderContentTitleBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
   width: "100%",
-  padding: "2px 8px",
-  color: "#fff",
-  backgroundColor: Colors.brownHover,
+  paddingRight: "1px",
+  color: Colors.greyText,
+  gap: "2px",
 }));
 
-export const OrderTitle2SmBox = styled(Box, {
+export const OrderContentTitleSmBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isName",
 })(({ theme, isName }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "100%",
-  height: "100%",
+  width: isName ? "40%" : "15%",
+  height: "40px",
+  backgroundColor: Colors.brown200,
+  boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  fontWeight: 600,
 }));
 
 export const OrderContentBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  padding: "4px 8px",
+  paddingRight: "1px",
   flexGrow: 1,
   width: "100%",
   overflowY: "auto",
 }));
 
-export const OrderDetailBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isFirst",
-})(({ theme, isFirst }) => ({
+export const OrderDetailBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   position: "relative",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  height: "60px",
-  marginTop: !isFirst ? "4px" : "0px",
-  borderRadius: "5px",
-  backgroundColor: Colors.lightOrangeHover,
-  boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  height: "40px",
+  gap: "2px",
+  margin: "3px 0px",
 }));
 
 export const OrderDetailSmBox = styled(Box, {
@@ -95,8 +80,10 @@ export const OrderDetailSmBox = styled(Box, {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "20%",
+  width: isName ? "40%" : "15%",
   height: "100%",
-  color: isName ? Colors.brownText : Colors.greyTextBlood,
+  backgroundColor: isName && Colors.lightOrangeHover,
+  color: Colors.greyText,
   fontWeight: 600,
+  boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
 }));

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../../../../styles/theme";
 import { multipleOrderlistSelectAction } from "../../../../redux/actions/RobotControlScreenAction";
 
-function OrderListDialogTabsMultipleOrder({ onOrderListDialoggOpen }) {
+function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
   const StyleBox = styled(Box)(({ theme }) => ({
     width: "100%",
     height: "500px",
@@ -51,7 +51,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialoggOpen }) {
       (order) => order.id === orderId
     );
     dispatch(multipleOrderlistSelectAction(multipleOrderSelectData));
-    onOrderListDialoggOpen(false);
+    onOrderListDialogOpen(false);
   };
   return (
     <StyleBox className="dialog-box">

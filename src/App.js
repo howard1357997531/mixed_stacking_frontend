@@ -131,10 +131,23 @@ function App() {
           },
         });
         // console.log("websocket: ", {
-        //   visualResult: realtimeData.visual_result,
-        //   visualCount: realtimeData.visual_count,
-        //   bufferOrder: realtimeData.buffer_order,
-        //   checkNumberlist: realtimeData.check_numberlist,
+        //   // visualResult: realtimeData.visual_result,
+        //   // visualCount: realtimeData.visual_count,
+        //   // bufferOrder: realtimeData.buffer_order,
+        //   // checkNumberlist: realtimeData.check_numberlist,
+        //   bufferquanlity: realtimeData.bufferquanlity,
+        // });
+      }
+
+      if (realtimeData.bufferquanlity) {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.realtimeVisual_demo3,
+          payload: {
+            bufferquanlity: realtimeData.bufferquanlity,
+          },
+        });
+        // console.log("websocket: ", {
+        //   bufferquanlity: realtimeData.bufferquanlity,
         // });
       }
 

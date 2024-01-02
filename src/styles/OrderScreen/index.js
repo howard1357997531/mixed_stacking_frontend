@@ -82,8 +82,31 @@ export const OrderListSearch = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
+export const SearchSelect = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  margin: "0px 10px",
+  padding: "0px 8px",
+  height: "50%",
+  color: Colors.greyText,
+  backgroundColor: Colors.lightOrangeHover,
+  color: Colors.lightOrangeHover,
+  backgroundColor: Colors.greyText,
+  fontSize: "14px",
+  fontWeight: 600,
+  // border: `2px solid ${Colors.greyText}`,
+  borderRadius: "10px",
+  boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  "&:hover": {
+    cursor: "pointer",
+    color: Colors.lightOrangeHover,
+    backgroundColor: Colors.greyText,
+  },
+}));
+
 export const OrderListDropdown = styled(Box)(({ theme }) => ({
-  width: "25%",
+  width: "15%",
   height: "100%",
 }));
 
@@ -91,16 +114,8 @@ export const OrderListUploadFile = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "right",
   alignItems: "center",
-  width: "25%",
+  width: "15%",
   height: "100%",
-}));
-
-export const OrderListContentBox = styled(Box)(({ theme }) => ({
-  position: "relative",
-  width: "100%",
-  height: "90%",
-  overflowY: "auto",
-  border: `1px solid ${Colors.greyBorder}`,
 }));
 
 export const OrderListContentErrorMsgBox = styled(Box)(({ theme }) => ({
@@ -120,11 +135,28 @@ export const OrderListContentMsg = styled(Typography)(({ theme }) => ({
   color: Colors.greyText,
 }));
 
+export const OrderListContentBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  width: "100%",
+  height: "90%",
+  overflowY: "auto",
+  boxSizing: "border-box",
+  padding: "0px 3px",
+}));
+
+export const OrderListDateBox = styled(Box)(({ theme }) => ({
+  // padding: "5px 5px",
+  // border: `1px solid ${Colors.greyBorder}`,
+  // backgroundColor: Colors.brown200,
+  // textAlign: "center",
+  // boxShadow: `inset 0px 0px 2px ${Colors.greyBorder}`,
+  // marginBottom: "5px",
+  // borderBottom: `1px solid ${Colors.greyBorder}`,
+}));
+
 export const OrderListDate = styled(Typography)(({ theme }) => ({
-  borderTop: `1px solid ${Colors.greyBorder}`,
-  borderBottom: `1px solid ${Colors.greyBorder}`,
   color: Colors.greyText,
-  padding: "5px 10px",
+  padding: "0px 1px",
 }));
 
 export const OrderListDetial = styled(Box, {
@@ -135,27 +167,42 @@ export const OrderListDetial = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "60px",
-  padding: "0px 20px",
-  color: itemSelect ? Colors.grey100 : Colors.greyText,
-  backgroundColor: itemSelect ? Colors.lightbrown200 : null,
+  margin: "5px 0px",
+  padding: "0px 10px",
+  color: Colors.greyText,
   fontWeight: 600,
+  backgroundColor: Colors.lightOrangeHover,
+  boxShadow: itemSelect
+    ? `inset 1px 1px 2px ${Colors.purple}, 1px 1px ${Colors.purple}`
+    : "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
-    backgroundColor: itemSelect
-      ? Colors.lightbrown200
-      : Colors.lightOrangeHover,
+    backgroundColor: Colors.lightOrangeHover,
+    boxShadow: !itemSelect && `1px 1px ${Colors.purple}`,
     cursor: "pointer",
+    transform: "scale(1.01)",
+    transition: "scale 0.2s ease-in-out",
   },
 }));
 
-export const OrderListName = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "itemSelect",
-})(({ theme, itemSelect }) => ({
+export const OrderListName = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "left",
   alignItems: "center",
   width: "100%",
   height: "100%",
+  color: Colors.greyText,
+}));
+
+export const OrderListNameSelect = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
+  marginRight: "10px",
+  width: "15px",
+  height: "15px",
+  backgroundColor: itemSelect && Colors.purple,
+  borderRadius: "50%",
+  border: `1px solid ${Colors.brown200}`,
 }));
 
 export const OrderListState = styled(Box)(({ theme }) => ({
@@ -168,7 +215,7 @@ export const OrderListState = styled(Box)(({ theme }) => ({
 
 export const OrderListStateText = styled(Typography)(({ theme }) => ({
   display: "inline-block",
-  fontSize: "16px",
+  fontSize: "14px",
   fontWeight: 600,
 }));
 
@@ -322,6 +369,8 @@ export const FunctionAreaNavBtn = styled(Button, {
   right: 0,
   height: "60%",
   fontSize: "16px",
+  fontWeight: 600,
+  color: Colors.lightOrange,
   textTransform: "initial",
   backgroundColor: colorData[0],
   animation:
@@ -339,7 +388,7 @@ export const FunctionAreaContentBox = styled(Box, {
   width: "100%",
   height: "90%",
   overflowY: "auto",
-  border: `1px solid ${Colors.greyBorder}`,
+  // border: `1px solid ${Colors.greyBorder}`,
   boxSizing: "border-box",
   // padding: ["orderDetail"].includes(orderSelectMode) ? 10 : 0,
 }));
@@ -394,12 +443,6 @@ export const AiResultSmallBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "33.3%",
   height: "70px",
-  borderBottom: `1px solid ${blueGrey[100]}`,
-  // "&:hover": {
-  //   color: deepPurple[500],
-  //   backgroundColor: brown[300],
-  //   cursor: "pointer",
-  // },
 }));
 
 export const AiResultAvatar = styled(Avatar)(({ theme }) => ({

@@ -136,12 +136,13 @@ function RobotControlDesktop(props) {
     (state) => state.robotControlScreen_realtimeVisual
   );
 
-  console.log("checkNumberlist:", checkNumberlist);
+  // console.log("checkNumberlist:", checkNumberlist);
   const realtimeVisualResult = [null, "#0"].includes(props.realtimeVisualResult)
     ? null
     : props.realtimeVisualResult;
   // const realtimeVisualResult = ["16", "18", "16", "18"];
 
+  // checkNumberlist [1,1,2,2,3]
   if (checkNumberlist) {
     var motionList = checkNumberlist.filter((num) => num !== 3);
     if (motionList) {
@@ -154,8 +155,8 @@ function RobotControlDesktop(props) {
       });
     }
   }
-  console.log("motionList:", motionList);
-  console.log("boxColor:", boxColor);
+  // console.log("motionList:", motionList);
+  // console.log("boxColor:", boxColor);
   const is_buffer = ["suc", "err"];
   const orderSelectData = props.orderSelectData;
   const realtimeVisualCount = props.realtimeVisualCount;

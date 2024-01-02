@@ -22,6 +22,8 @@ import { Box, Slide } from "@mui/material";
 import { domain } from "../../../env";
 import { useSelector } from "react-redux";
 import "./css/OperationInterfaceBox1.css";
+import StackAndBufferDialog from "./dialog/StackAndBufferDialog";
+import { timerToast } from "../../../swal";
 
 // demo1 可能要把 realtime-Visual-Count 改成 realtimeItemCount
 // 視覺辨識區要改 30% 70% fontSize: 26
@@ -39,9 +41,23 @@ function OperationInterfaceBox1({
   objectNextName,
   robotExecutionData,
 }) {
+  // orderListDialog
   const [orderListDialogOpen, setOrderListDialogOpen] = useState(false);
-  const onOrderListDialoggOpen = (state) => {
+  const onOrderListDialogOpen = (state) => {
     setOrderListDialogOpen(state);
+  };
+
+  // stackAndBufferDialog
+  const [stackAndBufferOpen, setStackAndBufferOpen] = useState(false);
+  const onStackAndBufferOpen = () => {
+    setStackAndBufferOpen(false);
+  };
+  const stackAndBufferDialogOpenHandler = () => {
+    // if (["inactivate", "reset"].includes(robotStateMode)) {
+    //   timerToast("warning", "尚未啟動手臂");
+    //   return;
+    // }
+    setStackAndBufferOpen(true);
   };
 
   const { executeOrderId: executeOrderIdArray, queue } = useSelector(
@@ -150,6 +166,7 @@ function OperationInterfaceBox1({
       {/* customColor={[VisualIdentityBoxColor, VisualIdentityBoxHoverColor] */}
       <SixtyRadioWidthButton
         customColor={[Colors.darkPink, Colors.darkPinkHover]}
+        onClick={stackAndBufferDialogOpenHandler}
       >
         {["inactivate", "reset"].includes(robotStateMode) ? (
           <>
@@ -254,9 +271,17 @@ function OperationInterfaceBox1({
 
       <OrderListDialog
         orderListDialogOpen={orderListDialogOpen}
-        onOrderListDialoggOpen={onOrderListDialoggOpen}
+        onOrderListDialogOpen={onOrderListDialogOpen}
         robotStateMode={robotStateMode}
         robotExecutionData={robotExecutionData}
+      />
+
+      <StackAndBufferDialog
+        stackAndBufferOpen={stackAndBufferOpen}
+        onStackAndBufferOpen={onStackAndBufferOpen}
+        robotStateMode={robotStateMode}
+        robotExecutionData={robotExecutionData}
+        itemCount={itemCount}
       />
     </FortyRadioHeightBox>
   );

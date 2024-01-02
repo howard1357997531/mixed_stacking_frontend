@@ -1,18 +1,15 @@
 import React from "react";
-import {
-  AiIsTraingGifText,
-  FunctionAreaContentBox,
-} from "../../../styles/OrderScreen";
+import { FunctionAreaContentBox } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import FunctionAreaContentMultipleOrder from "./FunctionAreaContentMultipleOrder";
 import FunctionAreaContentMultipleOrderCreate from "./FunctionAreaContentMultipleOrderCreate";
-import "./css/FunctionAreaContent.css";
 import FunctionAreaContentOrder from "./FunctionAreaContentOrder";
 import FunctionAreaContentAiResult from "./FunctionAreaContentAiResult";
 import FunctionAreaContentDelete from "./FunctionAreaContentDelete";
 import FunctionAreaContentEdit from "./FunctionAreaContentEdit";
+import "./css/FunctionAreaContent.css";
 
 function FunctionAreaContent({ orderSelectMode }) {
   const {
@@ -21,26 +18,9 @@ function FunctionAreaContent({ orderSelectMode }) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { aiTrainingState } = useSelector(
-    (state) => state.orderScreen_orderSelect
-  );
-
   const Content = () => {
     if (orderSelectMode === "orderDetail") {
-      if (aiTrainingState === "is_training") {
-        return (
-          <>
-            <img
-              src={"loading.gif"}
-              alt={"loading.gif"}
-              className="ai-gif"
-            ></img>
-            <AiIsTraingGifText>演算中</AiIsTraingGifText>
-          </>
-        );
-      } else {
-        return <FunctionAreaContentOrder />;
-      }
+      return <FunctionAreaContentOrder />;
     } else if (orderSelectMode === "aiResult") {
       return <FunctionAreaContentAiResult />;
     } else if (orderSelectMode === "multipleOrder") {

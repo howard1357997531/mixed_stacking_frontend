@@ -145,6 +145,7 @@ export const robotControlScree_realtimeVisualReducer = (
     visualCount: 1,
     bufferCount: [],
     checkNumberlist: [],
+    bufferquanlity: [],
   },
   action
 ) => {

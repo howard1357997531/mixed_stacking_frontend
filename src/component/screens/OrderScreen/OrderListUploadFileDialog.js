@@ -28,14 +28,15 @@ function OrderListUploadFileDialog() {
   const WorkListTopUploadFileButton = styled(Button)(({ theme }) => ({
     width: "80%",
     height: "60%",
-    color: "#fff",
+    color: Colors.lightOrange,
     fontSize: "16px",
-    backgroundColor: Colors.brownHover,
+    fontWeight: 600,
+    backgroundColor: Colors.greyText,
     textTransform: "capitalize",
     "&:hover": {
       transform: "scale(1.05)",
       transition: "all 0.2s ease-in-out",
-      backgroundColor: Colors.brown500,
+      backgroundColor: Colors.greyText,
       cursor: "pointer",
     },
     "&:active": {
@@ -114,7 +115,7 @@ function OrderListUploadFileDialog() {
 
   return (
     <>
-      <WorkListTopUploadFileButton variant="outlined" onClick={handleClickOpen}>
+      <WorkListTopUploadFileButton onClick={handleClickOpen}>
         上傳
       </WorkListTopUploadFileButton>
       <BootstrapDialog

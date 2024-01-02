@@ -8,11 +8,7 @@
     100% { transform: scale(1);}
 }
 
-.ai-gif {
-    position: absolute;
-    top: 45% ;
-    left: 50% ;
-    transform: translate(-50%, -50%) ;
-    width: 400px;
-    height: 300px
-}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) hue-rotate(180deg);
+    color: aqua;
+  }

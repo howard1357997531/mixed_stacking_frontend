@@ -19,3 +19,16 @@
     width: 100% !important;
     height: 100% !important;
 }
+
+.dialog-stack-image img {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.stack-and-buffer::-webkit-scrollbar {
+    width: 0px
+}
+
+.buffer-box .buffer-content::-webkit-scrollbar {
+    width: 0px
+}

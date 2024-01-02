@@ -5,7 +5,7 @@
 
 .text-effect {
     position: relative;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
 }
 
@@ -18,7 +18,7 @@
     white-space: nowrap;
     position: absolute;
     left: 0;
-    text-shadow: 0 0 1.5px var(--purple);
+    text-shadow: 0 0 0.5px var(--purple);
     animation: text-effect 1.5s linear infinite alternate;
 }
 

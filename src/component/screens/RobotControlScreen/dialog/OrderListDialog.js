@@ -4,8 +4,6 @@ import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
 import OrderListDialogTabs from "./OrderListDialogTabs";
 import OrderListDialogExecutionList from "./OrderListDialogExecutionList";
-import { useSelector } from "react-redux";
-import { brown } from "@mui/material/colors";
 import "./css/OrderListDialog.css";
 import { Colors } from "../../../../styles/theme";
 
@@ -14,16 +12,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function OrderListDialog(props) {
-  const { isDoing, executeOrderId, queue } = props.robotExecutionData;
-
+  const { isDoing, executeOrderId } = props.robotExecutionData;
+  const { orderListDialogOpen, onOrderListDialogOpen } = props;
   const handleClose = () => {
-    props.onOrderListDialoggOpen(false);
+    props.onOrderListDialogOpen(false);
   };
 
   React.useEffect(() => {
-    if (props.orderListDialogOpen) {
-      if (executeOrderId.length == 0 && !isDoing) {
-        props.onOrderListDialoggOpen(false);
+    if (orderListDialogOpen) {
+      if (executeOrderId.length === 0 && !isDoing) {
+        onOrderListDialogOpen(false);
       }
     }
   }, [executeOrderId, isDoing]);

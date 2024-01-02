@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { orderlistSelectAction } from "../../../../redux/actions/RobotControlScreenAction";
 import { Colors } from "../../../../styles/theme";
 
-function OrderListDialogTabsSingleOrder({ onOrderListDialoggOpen }) {
+function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
   const StyleBox = styled(Box)(({ theme }) => ({
     width: "100%",
     height: "500px",
@@ -51,7 +51,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialoggOpen }) {
       (order) => order.id === orderId
     );
     dispatch(orderlistSelectAction(singalOrderSelectObject));
-    onOrderListDialoggOpen(false);
+    onOrderListDialogOpen(false);
   };
   return (
     <StyleBox className="dialog-order-box">

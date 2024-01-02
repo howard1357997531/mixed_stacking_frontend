@@ -1,8 +1,18 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import { Colors } from "../../../styles/theme";
+import { useSelector } from "react-redux";
 
 function FunctionAreaNavTitle({ orderSelectMode }) {
+  const { data } = useSelector((state) => state.orderList);
+  const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
+
+  var name = "";
+  if (data && orderId) {
+    const [temp] = data.filter((order) => order.id === orderId);
+    name = temp.name;
+  }
+
   const titleArray = [
     "orderDetail",
     "aiResult",
@@ -12,7 +22,7 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
     "delete",
   ];
   const titleName = {
-    orderDetail: "詳細資訊",
+    orderDetail: name,
     aiResult: "AI 演算結果",
     multipleOrder: "組合單",
     multipleOrderCreate: "組合單建立",

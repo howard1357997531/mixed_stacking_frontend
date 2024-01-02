@@ -36,7 +36,7 @@ function FunctionArea(props) {
     } else {
       dispatch({
         type: ORDER_SCREEN.orderSelect,
-        payload: { mode: "close" },
+        payload: { mode: "close", orderId: null },
       });
       dispatch({ type: MULTIPLE_ORDER_LIST.orderId, payload: "" });
     }

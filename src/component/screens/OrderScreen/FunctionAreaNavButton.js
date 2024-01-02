@@ -1,5 +1,8 @@
 import React from "react";
-import { FunctionAreaNavBtn } from "../../../styles/OrderScreen";
+import {
+  FunctionAreaNavBtn,
+  FunctionAreaNavIsTraining,
+} from "../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { functionAreaNavButtonAction } from "../../../redux/actions/OrderScreenAction";
 import { Colors } from "../../../styles/theme";
@@ -34,8 +37,8 @@ function FunctionAreaNavButton({ orderSelectMode }) {
   const modeData = {
     aiResult: {
       name: "清單",
-      bgColor: Colors.brownHover,
-      bgColorHover: Colors.brown500,
+      bgColor: Colors.greyText,
+      bgColorHover: Colors.greyTextBlood,
     },
     multipleOrder: {
       name: "建立",
@@ -77,7 +80,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
           <FunctionAreaNavBtn
             disableElevation
             variant="contained"
-            colorData={[blueGrey[400], blueGrey[500]]}
+            colorData={[Colors.greyText, Colors.greyTextBlood]}
             onClick={() => buttonHandler(orderSelectMode, "finish_training")}
           >
             AI 結果

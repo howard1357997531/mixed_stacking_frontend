@@ -1,6 +1,6 @@
 import React from "react";
-import "./css/TextEffect.css";
 import { Colors } from "../styles/theme";
+import "./css/TextEffect.css";
 
 function TextEffect({ text, textColor, textCoverColor }) {
   if (textCoverColor === Colors.purple400) {

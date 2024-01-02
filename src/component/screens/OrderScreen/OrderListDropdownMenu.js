@@ -40,14 +40,15 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
         sx={{
           width: "80%",
           height: "60%",
-          color: "#fff",
+          color: Colors.greyText,
           fontSize: "16px",
-          backgroundColor: Colors.grey600,
+          fontWeight: 600,
+          backgroundColor: Colors.brown200,
           textTransform: "capitalize",
           "&:hover": {
             transform: "scale(1.05)",
             transition: "all 0.2s ease-in-out",
-            backgroundColor: Colors.greyText,
+            backgroundColor: Colors.brown200,
             cursor: "pointer",
           },
           "&:active": {
