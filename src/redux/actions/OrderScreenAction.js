@@ -23,6 +23,25 @@ export const orderlistSelectAction =
     });
   };
 
+export const orderlistFilterAction = (state, value) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { mode: "close", orderId: null },
+    });
+
+    dispatch({ type: ORDER_LIST.filter.request });
+
+    const { data } = await axios.get(
+      `${domain}/api/filterOrderData?state=${state}&value=${value}`
+    );
+
+    dispatch({ type: ORDER_LIST.filter.success, payload: data });
+  } catch (error) {
+    dispatch({ type: ORDER_LIST.filter.fail });
+  }
+};
+
 export const orderEditSelectAction =
   (edit, orderListData, aiTraining_state) => (dispatch) => {
     if (aiTraining_state === "is_training") {

@@ -9,6 +9,5 @@
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1) hue-rotate(180deg);
-    color: aqua;
+    filter: invert(1) sepia(100%) saturate(10000%) hue-rotate(300deg); 
   }

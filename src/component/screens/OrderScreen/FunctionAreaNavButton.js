@@ -37,13 +37,13 @@ function FunctionAreaNavButton({ orderSelectMode }) {
   const modeData = {
     aiResult: {
       name: "清單",
-      bgColor: Colors.greyText,
-      bgColorHover: Colors.greyTextBlood,
+      bgColor: Colors.grey600,
+      bgColorHover: Colors.grey600,
     },
     multipleOrder: {
       name: "建立",
       bgColor: Colors.grey600,
-      bgColorHover: Colors.greyText,
+      bgColorHover: Colors.grey600,
     },
     multipleOrderCreate: {
       name: "創建",
@@ -69,7 +69,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
           <FunctionAreaNavBtn
             disableElevation
             variant="contained"
-            colorData={[Colors.purple, Colors.purple400]}
+            colorData={Colors.purple}
             onClick={() => buttonHandler(orderSelectMode, "no_training")}
           >
             AI 演算
@@ -80,7 +80,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
           <FunctionAreaNavBtn
             disableElevation
             variant="contained"
-            colorData={[Colors.greyText, Colors.greyTextBlood]}
+            colorData={Colors.grey600}
             onClick={() => buttonHandler(orderSelectMode, "finish_training")}
           >
             AI 結果
@@ -100,10 +100,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
         <FunctionAreaNavBtn
           disableElevation
           variant="contained"
-          colorData={[
-            modeData[orderSelectMode]["bgColor"],
-            modeData[orderSelectMode]["bgColorHover"],
-          ]}
+          colorData={modeData[orderSelectMode]["bgColor"]}
           onClick={() => buttonHandler(orderSelectMode, null)}
         >
           {modeData[orderSelectMode]["name"]}

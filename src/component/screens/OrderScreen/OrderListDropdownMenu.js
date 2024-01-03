@@ -43,12 +43,13 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
           color: Colors.greyText,
           fontSize: "16px",
           fontWeight: 600,
-          backgroundColor: Colors.brown200,
+          color: Colors.lightOrange,
+          backgroundColor: Colors.purple,
           textTransform: "capitalize",
           "&:hover": {
             transform: "scale(1.05)",
             transition: "all 0.2s ease-in-out",
-            backgroundColor: Colors.brown200,
+            backgroundColor: Colors.purple,
             cursor: "pointer",
           },
           "&:active": {

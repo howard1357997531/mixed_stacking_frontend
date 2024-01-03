@@ -88,6 +88,16 @@ export const orderListReducer = (state = { data: [] }, action) => {
         data = data.filter((order) => order.id !== action.payload.at(i));
       }
       return { ...state, data };
+
+    case ORDER_LIST.filter.request:
+      return { ...state, loading: true };
+
+    case ORDER_LIST.filter.success:
+      return { ...state, loading: false, data: action.payload };
+
+    case ORDER_LIST.filter.fail:
+      return { ...state, loading: false };
+
     default:
       return state;
   }

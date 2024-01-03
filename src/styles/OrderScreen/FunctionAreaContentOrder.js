@@ -23,7 +23,7 @@ export const DescText = styled(Typography, {
   fontWeight: !isTitle && 600,
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
-  backgroundColor: isTitle && Colors.brown200,
+  backgroundColor: isTitle && Colors.grey600,
 }));
 
 export const DescTextBox = styled(Box)(({ theme }) => ({
@@ -39,6 +39,7 @@ export const OrderContentTitleBox = styled(Box)(({ theme }) => ({
   paddingRight: "1px",
   color: Colors.greyText,
   gap: "2px",
+  marginBottom: "2px",
 }));
 
 export const OrderContentTitleSmBox = styled(Box, {
@@ -49,7 +50,8 @@ export const OrderContentTitleSmBox = styled(Box, {
   alignItems: "center",
   width: isName ? "40%" : "15%",
   height: "40px",
-  backgroundColor: Colors.brown200,
+  color: Colors.lightOrange,
+  backgroundColor: Colors.grey600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   fontWeight: 600,
 }));
@@ -69,9 +71,9 @@ export const OrderDetailBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  height: "40px",
+  height: "45px",
   gap: "2px",
-  margin: "3px 0px",
+  marginBottom: "3px",
 }));
 
 export const OrderDetailSmBox = styled(Box, {
@@ -84,6 +86,7 @@ export const OrderDetailSmBox = styled(Box, {
   height: "100%",
   backgroundColor: isName && Colors.lightOrangeHover,
   color: Colors.greyText,
+  fontSize: "18px",
   fontWeight: 600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
 }));

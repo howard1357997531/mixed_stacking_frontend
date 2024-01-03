@@ -9,6 +9,11 @@ import {
   MultipleOrderName,
   OrderListContentMsg,
   OrderListDate,
+  OrderListDetial,
+  OrderListName,
+  OrderListNameSelect,
+  OrderListState,
+  OrderListStateText,
 } from "../../../styles/OrderScreen";
 import { multipleOrderListSelectAction } from "../../../redux/actions/OrderScreenAction";
 import { Button } from "@mui/material";
@@ -21,7 +26,7 @@ function OrderListContentMultipleOrder() {
     loading: multipleOrderLoading,
     error: multipleOrderError,
     data: multipleOrderData,
-    orderId: multipleOrderId,
+    orderId,
   } = useSelector((state) => state.multipleOrderList);
 
   const multipleOrderHandler = (orderId) => {
@@ -35,9 +40,9 @@ function OrderListContentMultipleOrder() {
     });
   };
 
-  const itemSelect = (id) => {
-    return multipleOrderId && id === multipleOrderId ? true : false;
-  };
+  // const itemSelect = (id) => {
+  //   return multipleOrderId && id === multipleOrderId ? true : false;
+  // };
 
   return multipleOrderLoading ? (
     <LoadingCircle />
@@ -60,18 +65,29 @@ function OrderListContentMultipleOrder() {
     multipleOrderData.map((order, index) => (
       <Fragment key={order.id}>
         {order.is_today_latest ? (
-          <OrderListDate sx={{ borderTop: index === 0 && "none" }}>
-            {order.createdAt.slice(0, -7)}
-          </OrderListDate>
+          <OrderListDate>{order.createdAt.slice(0, -7)}</OrderListDate>
         ) : null}
-        <MultipleOrderBox
+
+        {/* <MultipleOrderBox
           itemSelect={itemSelect(order.id)}
           onClick={() => multipleOrderHandler(order.id)}
         >
           <MultipleOrderName itemSelect={itemSelect(order.id)}>
             {order.name}
           </MultipleOrderName>
-        </MultipleOrderBox>
+        </MultipleOrderBox> */}
+
+        <OrderListDetial
+          itemSelect={orderId === order.id}
+          onClick={() => multipleOrderHandler(order.id)}
+        >
+          <OrderListName itemSelect={orderId === order.id}>
+            <OrderListNameSelect itemSelect={orderId === order.id} />
+            {order.name}
+          </OrderListName>
+
+          <OrderListState>12</OrderListState>
+        </OrderListDetial>
       </Fragment>
     ))
   );

@@ -31,12 +31,12 @@ function OrderListUploadFileDialog() {
     color: Colors.lightOrange,
     fontSize: "16px",
     fontWeight: 600,
-    backgroundColor: Colors.greyText,
+    backgroundColor: Colors.grey600,
     textTransform: "capitalize",
     "&:hover": {
       transform: "scale(1.05)",
       transition: "all 0.2s ease-in-out",
-      backgroundColor: Colors.greyText,
+      backgroundColor: Colors.grey600,
       cursor: "pointer",
     },
     "&:active": {

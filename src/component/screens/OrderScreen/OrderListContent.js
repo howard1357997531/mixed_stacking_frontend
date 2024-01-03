@@ -15,7 +15,7 @@ function OrderListContent(props) {
   ];
 
   return (
-    <OrderListContentBox className="order-list">
+    <>
       {singleOrderNameArray.includes(props.orderSelectMode) ? (
         <OrderListContentSingleOrder {...props} />
       ) : null}
@@ -27,7 +27,7 @@ function OrderListContent(props) {
       {props.orderSelectMode === "multipleOrderCreate" ? (
         <OrderListContentMultipleOrderCreate {...props} />
       ) : null}
-    </OrderListContentBox>
+    </>
   );
 }
 

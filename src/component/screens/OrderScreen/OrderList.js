@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
+  BackBtnBox,
+  BackBtnIconButton,
   OrderListBox,
+  OrderListContentBox,
   OrderListDropdown,
   OrderListNav,
   OrderListSearch,
@@ -14,11 +17,16 @@ import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
 import "./css/OrderList.css";
 import OrderListContent from "./OrderListContent";
 import { useDispatch } from "react-redux";
-import { functionAreaModeAction } from "../../../redux/actions/OrderScreenAction";
-import { ORDER_SCREEN_orderList } from "../../../redux/constants";
+import {
+  functionAreaModeAction,
+  orderlistFilterAction,
+} from "../../../redux/actions/OrderScreenAction";
+import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import aos from "aos";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { orderListAction } from "../../../redux/actions/OrderActions";
 
 function OrderList(props) {
   const dispatch = useDispatch();
@@ -28,10 +36,10 @@ function OrderList(props) {
     if (mode === null || mode === orderSelectMode) {
       return;
     }
-
     dispatch(functionAreaModeAction(mode, multipleOrderListData));
   };
 
+  const [isFilter, setIsFilter] = useState(false);
   const [selectSearchName, setSelectSearchName] = useState(false);
   const [selectSearchDate, setSelectSearchDate] = useState(false);
   const [selectName, setSelectName] = useState(false);
@@ -67,11 +75,33 @@ function OrderList(props) {
     }
   };
 
+  const removeFilterHandler = () => {
+    setIsFilter(false);
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { mode: "close", orderId: null },
+    });
+    dispatch(orderListAction());
+  };
+
   useEffect(() => {
     aos.init();
     aos.refresh();
   });
 
+  const [inputName, setInputName] = useState("");
+
+  const filterNameHandler = () => {
+    if (inputName) {
+      setIsFilter(true);
+      dispatch(orderlistFilterAction("name", inputName));
+    }
+  };
+
+  const filterDateHandler = (e) => {
+    setIsFilter(true);
+    dispatch(orderlistFilterAction("date", e.target.value));
+  };
   return (
     <OrderListBox>
       <OrderListNav>
@@ -88,7 +118,7 @@ function OrderList(props) {
                 backgroundColor: Colors.greyText,
               }}
               endAdornment={
-                <InputAdornment position="end">
+                <InputAdornment position="end" onClick={filterNameHandler}>
                   <PlayArrowIcon
                     sx={{
                       width: "22px",
@@ -106,6 +136,7 @@ function OrderList(props) {
                   />
                 </InputAdornment>
               }
+              onChange={(e) => setInputName(e.target.value)}
             />
           ) : null}
 
@@ -118,6 +149,7 @@ function OrderList(props) {
                 fontWeight: 600,
                 border: `1px solid ${Colors.greyText}`,
               }}
+              onChange={filterDateHandler}
             />
           ) : null}
 
@@ -152,7 +184,15 @@ function OrderList(props) {
         </OrderListUploadFile>
       </OrderListNav>
 
-      <OrderListContent {...props} />
+      <OrderListContentBox className="order-list" isFilter={isFilter}>
+        <OrderListContent {...props} />
+      </OrderListContentBox>
+
+      {isFilter ? (
+        <BackBtnIconButton onClick={removeFilterHandler}>
+          <CancelIcon />
+        </BackBtnIconButton>
+      ) : null}
     </OrderListBox>
   );
 }

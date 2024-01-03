@@ -12,6 +12,7 @@ import {
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
 import "./css/FunctionAreaContentOrder.css";
 import { useSelector } from "react-redux";
+import { Colors } from "../../../styles/theme";
 
 function FunctionAreaContentOrder() {
   const { aiTrainingState } = useSelector(
@@ -46,6 +47,31 @@ function FunctionAreaContentOrder() {
       <DescText>總數量 : {orderCount}</DescText>
       <DescText>上傳日期 : {orderData.createdAt}</DescText>
       <DescText>修改日期 : {modifiyText}</DescText>
+      {/* <DescTextBox>
+        <DescText isTitle={true}>總數量</DescText>
+        <span
+          style={{ marginLeft: "4px", color: Colors.greyText, fontWeight: 600 }}
+        >
+          {orderCount}
+        </span>
+      </DescTextBox>
+      <DescTextBox>
+        <DescText isTitle={true}>上傳日期</DescText>
+        <span
+          style={{ marginLeft: "4px", color: Colors.greyText, fontWeight: 600 }}
+        >
+          {orderData.createdAt}
+        </span>
+      </DescTextBox>
+
+      <DescTextBox>
+        <DescText isTitle={true}>修改日期</DescText>
+        <span
+          style={{ marginLeft: "4px", color: Colors.greyText, fontWeight: 600 }}
+        >
+          {modifiyText}
+        </span>
+      </DescTextBox> */}
 
       <DescTextBox>
         <DescText isTitle={true}>詳細資訊</DescText>

@@ -44,6 +44,7 @@ export const OrderBox = styled(Box)(({ theme }) => ({
 }));
 
 export const OrderListBox = styled(Box)(({ theme }) => ({
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   width: "48%",
@@ -135,13 +136,30 @@ export const OrderListContentMsg = styled(Typography)(({ theme }) => ({
   color: Colors.greyText,
 }));
 
-export const OrderListContentBox = styled(Box)(({ theme }) => ({
+export const OrderListContentBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isFilter",
+})(({ theme, isFilter }) => ({
   position: "relative",
   width: "100%",
-  height: "90%",
+  height: isFilter ? "85%" : "90%",
+  // flex: 1,
   overflowY: "auto",
   boxSizing: "border-box",
-  padding: "0px 3px",
+  paddingLeft: "3px",
+  paddingRight: "4px",
+}));
+
+export const BackBtnBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  width: "100%",
+  height: "10%",
+}));
+
+export const BackBtnIconButton = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  bottom: "8px",
+  left: "50%",
+  transform: "translateX(-50%)",
 }));
 
 export const OrderListDateBox = styled(Box)(({ theme }) => ({
@@ -177,7 +195,9 @@ export const OrderListDetial = styled(Box, {
     : "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     backgroundColor: Colors.lightOrangeHover,
-    boxShadow: !itemSelect && `1px 1px ${Colors.purple}`,
+    boxShadow: itemSelect
+      ? `inset 1px 1px 2px ${Colors.purple}, 1px 1px ${Colors.purple}`
+      : `1px 1px ${Colors.purple}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -372,12 +392,14 @@ export const FunctionAreaNavBtn = styled(Button, {
   fontWeight: 600,
   color: Colors.lightOrange,
   textTransform: "initial",
-  backgroundColor: colorData[0],
+  backgroundColor: colorData,
   animation:
-    colorData[0] === Colors.purple &&
+    colorData === Colors.purple &&
     `${OrderListExeListWaitToExecuteAnimation} 1s infinite`,
   "&:hover": {
-    backgroundColor: colorData[1],
+    backgroundColor: colorData,
+    transform: "scale(1.05)",
+    transition: "all 0.2s ease-in-out",
   },
 }));
 

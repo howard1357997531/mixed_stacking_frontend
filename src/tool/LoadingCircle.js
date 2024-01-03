@@ -1,6 +1,7 @@
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box, styled } from "@mui/material";
+import { Colors } from "../styles/theme";
 
 function LoadingCircle() {
   const CircleBox = styled(Box)(({ theme }) => ({
@@ -11,7 +12,7 @@ function LoadingCircle() {
   }));
   return (
     <CircleBox>
-      <CircularProgress />
+      <CircularProgress sx={{ color: Colors.greyText }} />
     </CircleBox>
   );
 }
