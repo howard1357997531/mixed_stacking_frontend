@@ -6,11 +6,12 @@ import {
   OrderListContentBox,
   OrderListDropdown,
   OrderListNav,
+  OrderListNavBtn,
   OrderListSearch,
   OrderListUploadFile,
   SearchSelect,
 } from "../../../styles/OrderScreen";
-import { IconButton, Input, InputAdornment } from "@mui/material";
+import { IconButton, Input, InputAdornment, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import OrderListDropdownMenu from "./OrderListDropdownMenu";
 import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
@@ -32,11 +33,32 @@ function OrderList(props) {
   const dispatch = useDispatch();
   const { orderSelectMode, multipleOrderListData } = props;
 
+  const titleName = (mode) => {
+    if (["close", "orderDetail", "aiResult"].includes(mode)) {
+      return "我的工單";
+    } else if (["multipleOrder", "noMultipleOrder"].includes(mode)) {
+      return "組合單";
+    } else if (mode === "multipleOrderCreate") {
+      return "創建組合單";
+    } else if (mode === "edit") {
+      return "修改";
+    } else if (mode === "delete") {
+      return "刪除";
+    }
+  };
+
   const onFunctionMenuValueHandler = (mode) => {
     if (mode === null || mode === orderSelectMode) {
       return;
     }
     dispatch(functionAreaModeAction(mode, multipleOrderListData));
+  };
+
+  const createMultiOrderHandle = () => {
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { mode: "multipleOrderCreate" },
+    });
   };
 
   const [isFilter, setIsFilter] = useState(false);
@@ -104,6 +126,25 @@ function OrderList(props) {
   };
   return (
     <OrderListBox>
+      <Typography
+        sx={{
+          position: "absolute",
+          top: "-10px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          padding: "2px 15px 0px",
+          color: Colors.greyText,
+          background: Colors.lightOrange,
+          fontSize: 22,
+          fontWeight: 600,
+          zIndex: 0.5,
+          borderTopLeftRadius: "20px",
+          borderTopRightRadius: "20px",
+        }}
+      >
+        {titleName(orderSelectMode)}
+      </Typography>
+
       <OrderListNav>
         <OrderListSearch>
           <IconButton onClick={selectSearchHandler}>
@@ -139,7 +180,6 @@ function OrderList(props) {
               onChange={(e) => setInputName(e.target.value)}
             />
           ) : null}
-
           {selectDate ? (
             <input
               type="date"
@@ -152,7 +192,6 @@ function OrderList(props) {
               onChange={filterDateHandler}
             />
           ) : null}
-
           {selectSearchName ? (
             <SearchSelect
               data-aos="zoom-out"
@@ -161,7 +200,6 @@ function OrderList(props) {
               名稱
             </SearchSelect>
           ) : null}
-
           {selectSearchDate ? (
             <SearchSelect
               data-aos="zoom-out"
@@ -173,15 +211,25 @@ function OrderList(props) {
           ) : null}
         </OrderListSearch>
 
-        <OrderListDropdown>
-          <OrderListDropdownMenu
-            onFunctionMenuValue={onFunctionMenuValueHandler}
-          />
-        </OrderListDropdown>
+        <OrderListDropdownMenu
+          onFunctionMenuValue={onFunctionMenuValueHandler}
+        />
 
-        <OrderListUploadFile>
+        {["close", "orderDetail", "aiResult", "multipleOrderCreate"].includes(
+          orderSelectMode
+        ) ? (
           <OrderListUploadFileDialog />
-        </OrderListUploadFile>
+        ) : null}
+
+        {orderSelectMode === "multipleOrder" ? (
+          <OrderListNavBtn
+            disableElevation
+            variant="contained"
+            onClick={createMultiOrderHandle}
+          >
+            創建
+          </OrderListNavBtn>
+        ) : null}
       </OrderListNav>
 
       <OrderListContentBox className="order-list" isFilter={isFilter}>

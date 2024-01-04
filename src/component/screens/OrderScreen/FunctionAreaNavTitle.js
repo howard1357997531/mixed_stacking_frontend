@@ -5,11 +5,19 @@ import { useSelector } from "react-redux";
 
 function FunctionAreaNavTitle({ orderSelectMode }) {
   const { data } = useSelector((state) => state.orderList);
-  const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
+  const { mode, orderId } = useSelector(
+    (state) => state.orderScreen_orderSelect
+  );
+  const { data: multiData, orderId: multiOrderId } = useSelector(
+    (state) => state.multipleOrderList
+  );
 
   var name = "";
-  if (data && orderId) {
+  if (data && orderId && mode === "orderDetail") {
     const [temp] = data.filter((order) => order.id === orderId);
+    name = temp.name;
+  } else if (multiData && multiOrderId && mode === "multipleOrder") {
+    const [temp] = multiData.filter((order) => order.id === multiOrderId);
     name = temp.name;
   }
 
@@ -24,10 +32,10 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
   const titleName = {
     orderDetail: name,
     aiResult: "AI 演算結果",
-    multipleOrder: "組合單",
-    multipleOrderCreate: "組合單建立",
-    edit: "修改",
-    delete: "刪除",
+    multipleOrder: name,
+    multipleOrderCreate: "",
+    edit: "",
+    delete: "",
   };
 
   const Title = () => {

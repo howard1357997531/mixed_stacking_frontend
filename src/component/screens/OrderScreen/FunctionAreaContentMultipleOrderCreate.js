@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   AvatarDivider,
-  MenuFunctionBox,
-  MenuFunctionTitle,
   MultiCreateAvatar,
   MultiCreateAvatarBox,
   MultiCreateBox,
@@ -20,18 +18,12 @@ import {
   multipleOrderCreateInputChangeAction,
 } from "../../../redux/actions/OrderScreenAction";
 import { ORDER_SCREEN } from "../../../redux/constants";
-import { Typography } from "@mui/material";
-import { Colors } from "../../../styles/theme";
 import "./css/FunctionAreaContentMultipleOrderCreate.css";
 
 function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
   const dispatch = useDispatch();
-  const {
-    combineOrder,
-    combineOrderFocusIndex,
-    combineOrderFocusValue,
-    combineOrderFocusBool,
-  } = useSelector((state) => state.orderScreen_orderSelect);
+  const { combineOrder, combineOrderFocusIndex, combineOrderFocusBool } =
+    useSelector((state) => state.orderScreen_orderSelect);
 
   if (combineOrder.length !== 0) {
     const countArray = combineOrder.map((order) =>

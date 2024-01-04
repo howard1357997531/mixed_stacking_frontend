@@ -258,9 +258,24 @@ export const functionAreaNavButtonAction =
     }
 
     if (mode === "multipleOrder") {
-      dispatch({
-        type: ORDER_SCREEN.orderSelect,
-        payload: { mode: "multipleOrderCreate" },
+      confirmSwal("確定刪除?").then((result) => {
+        if (result.isConfirmed) {
+          // infoToast("error", "刪除中");
+          try {
+            axios
+              .post(`${domain}/api/deleteMultipleOrder/`, {
+                orderId: orderSelectData,
+              })
+              .then(() => {
+                dispatch({
+                  type: MULTIPLE_ORDER_LIST.deleteData,
+                  payload: orderSelectData,
+                });
+              });
+          } catch (error) {
+            console.log(error.response.data.error_msg);
+          }
+        }
       });
     }
 

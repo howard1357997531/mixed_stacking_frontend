@@ -6,7 +6,6 @@ import {
   MultiOrderAvatar,
   MultiOrderAvatarBox,
   MultiOrderBox,
-  MultiOrderCount,
   MultiOrderDeleteBtn,
   MultiOrderDetailBox,
   MultiOrderDetailSmBox,
@@ -19,6 +18,10 @@ import OrderDetailDialog from "../../dialog/orderDetail/OrderDetailDialog";
 import { useState } from "react";
 import { DIALOG } from "../../../redux/constants";
 import "./css/FunctionAreaContentMultipleOrder.css";
+import {
+  DescText,
+  DescTextBox,
+} from "../../../styles/OrderScreen/FunctionAreaContentOrder";
 
 function FunctionAreaContentMultipleOrder({ orderListData }) {
   const dispatch = useDispatch();
@@ -29,6 +32,11 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
   if (data.length !== 0 && orderId) {
     var [multipleOrderData] = data.filter((order) => order.id === orderId);
     var multipleOrderArray = multipleOrderData.orderSelectId_str.split(",");
+    var modifiyText =
+      multipleOrderData.modifiedAt === multipleOrderData.createdAt
+        ? "尚未修改過"
+        : multipleOrderData.modifiedAt;
+
     const countArray = multipleOrderArray.map((order) =>
       order.includes("*") ? parseInt(order.split("*").at(1)) : 1
     );
@@ -94,10 +102,21 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
         <MultiOrderInfo>創建時間: {multipleOrderData.createdAt}</MultiOrderInfo>
       </MultiOrderTitleBox> */}
 
-      <MultiOrderCount>
+      {/* <MultiOrderCount>
         數量: {parseCount(multipleOrderData.orderSelectId_str)}
         <MultiOrderDeleteBtn onClick={deleteHandler} />
-      </MultiOrderCount>
+      </MultiOrderCount> */}
+
+      <DescText>
+        總數量 : {parseCount(multipleOrderData.orderSelectId_str)}
+      </DescText>
+      <DescText>修改日期 : {modifiyText}</DescText>
+      <DescText>上傳日期 : {multipleOrderData.createdAt}</DescText>
+
+      <DescTextBox>
+        <DescText isTitle={true}>詳細資訊</DescText>
+        {/* <MultiOrderDeleteBtn onClick={deleteHandler} /> */}
+      </DescTextBox>
 
       <MultiOrderDetailBox className="multi-order">
         {multipleOrderArray.map((order, index) => (
@@ -118,16 +137,9 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
 
             <MultiOrderName>{parseName(parseId(order)).name}</MultiOrderName>
 
-            <MultiOrderEachCount>{parseTimes(order)}</MultiOrderEachCount>
+            <MultiOrderEachCount>{parseTimes(order)}個</MultiOrderEachCount>
           </MultiOrderDetailSmBox>
         ))}
-        {/* <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox>
-        <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox>
-        <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox>
-        <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox>
-        <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox>
-        <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox>
-        <MultiOrderDetailSmBox>12</MultiOrderDetailSmBox> */}
       </MultiOrderDetailBox>
 
       <OrderDetailDialog

@@ -53,6 +53,7 @@ export const OrderListBox = styled(Box)(({ theme }) => ({
   paddingTop: "10px",
   boxSizing: "border-box",
   borderRadius: "20px",
+  // borderTopLeftRadius: "0px",
   backgroundColor: Colors.lightOrange,
   [theme.breakpoints.down("lg")]: {
     width: "48%",
@@ -69,7 +70,6 @@ export const OrderListBox = styled(Box)(({ theme }) => ({
 
 export const OrderListNav = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "center",
   alignItems: "center",
   width: "100%",
   height: "10%",
@@ -106,17 +106,18 @@ export const SearchSelect = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const OrderListDropdown = styled(Box)(({ theme }) => ({
-  width: "15%",
-  height: "100%",
-}));
-
-export const OrderListUploadFile = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "right",
-  alignItems: "center",
-  width: "15%",
-  height: "100%",
+export const OrderListNavBtn = styled(Button)(({ theme }) => ({
+  marginLeft: "10px",
+  height: "60%",
+  color: Colors.lightOrangeHover,
+  backgroundColor: Colors.darkGreen,
+  fontSize: "16px",
+  fontWeight: 600,
+  "&:hover": {
+    backgroundColor: Colors.darkGreen,
+    transform: "scale(1.05)",
+    transition: "all 0.2s ease-in-out",
+  },
 }));
 
 export const OrderListContentErrorMsgBox = styled(Box)(({ theme }) => ({

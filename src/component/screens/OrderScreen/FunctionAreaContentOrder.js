@@ -12,7 +12,6 @@ import {
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
 import "./css/FunctionAreaContentOrder.css";
 import { useSelector } from "react-redux";
-import { Colors } from "../../../styles/theme";
 
 function FunctionAreaContentOrder() {
   const { aiTrainingState } = useSelector(

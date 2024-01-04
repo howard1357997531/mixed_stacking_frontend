@@ -24,10 +24,9 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
   return (
     <div
       style={{
-        width: "100%",
+        // width: "15%",
         height: "100%",
         display: "flex",
-        justifyContent: "right",
         alignItems: "center",
       }}
     >
@@ -38,7 +37,7 @@ function OrderListDropdownMenu({ onFunctionMenuValue }) {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         sx={{
-          width: "80%",
+          width: "100%",
           height: "60%",
           color: Colors.greyText,
           fontSize: "16px",

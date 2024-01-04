@@ -38,8 +38,8 @@ swalGreen: "#a5dc86",
 
 .infoBtnToast-button {
     font-weight: 600;
-    color: #424242;
-    background-color: #a5dc86;
+    color: #757575;
+    background-color: var(--custom-color);
     padding: 6px 8px;
     border: none
 }
@@ -51,5 +51,4 @@ swalGreen: "#a5dc86",
 
 .infoBtnToast-button:active {
     transform: scale(0.95);
-    color: rgba(97, 128, 79, 0.577);
 }

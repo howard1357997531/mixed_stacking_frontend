@@ -86,7 +86,7 @@ function OrderListContentMultipleOrder() {
             {order.name}
           </OrderListName>
 
-          <OrderListState>12</OrderListState>
+          {/* <OrderListState>12</OrderListState> */}
         </OrderListDetial>
       </Fragment>
     ))

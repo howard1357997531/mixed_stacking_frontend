@@ -43,15 +43,12 @@ export const MultiCreateName = styled(Box, {
 export const IconButtonHelp = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== "display",
 })(({ theme, display }) => ({
-  position: "absolute",
-  top: "50%",
-  right: "10px",
-  transform: "translateY(-50%)",
-  padding: "10px",
-  opacity: display ? 1 : 0,
+  marginLeft: "5px",
+  padding: "8px",
+  display: !display && "none",
   transition: "opacity .2s ease-in-out",
   "&:hover": {
-    backgroundColor: "#00968733",
+    backgroundColor: "#9575cd47",
   },
 }));
 

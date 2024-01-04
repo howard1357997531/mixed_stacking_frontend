@@ -26,8 +26,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 function OrderListUploadFileDialog() {
   const WorkListTopUploadFileButton = styled(Button)(({ theme }) => ({
-    width: "80%",
     height: "60%",
+    marginLeft: "10px",
     color: Colors.lightOrange,
     fontSize: "16px",
     fontWeight: 600,

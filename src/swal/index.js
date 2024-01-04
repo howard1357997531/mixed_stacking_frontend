@@ -75,7 +75,7 @@ export const infoToast = (icon, title) => {
     position: "bottom-end",
     showConfirmButton: false,
     timerProgressBar: true,
-    background: Colors.greyTextBlood,
+    background: Colors.grey600,
     color: parseColor(icon),
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;
@@ -86,13 +86,13 @@ export const infoToast = (icon, title) => {
   return Toast.fire({ icon, title });
 };
 
-export const InfoBtnToast = (icon, title, func, route = null) => {
+export const InfoBtnToast = (icon, title, btnName, func, route = null) => {
   const Toast = Swal.mixin({
     toast: true,
     position: "bottom-end",
     showConfirmButton: false,
     timerProgressBar: true,
-    background: Colors.greyTextBlood,
+    background: Colors.grey600,
     color: parseColor(icon),
     customClass: {
       popup: "infoBtnToast-popup",
@@ -100,8 +100,10 @@ export const InfoBtnToast = (icon, title, func, route = null) => {
     },
     didOpen: (toast) => {
       const button = document.createElement("button");
-      button.textContent = "查看";
+      button.textContent = btnName;
       button.className = "infoBtnToast-button";
+      // button.setAttribute("data-color", parseColor(icon));
+      button.style.setProperty("--custom-color", parseColor(icon));
 
       button.addEventListener("click", () => {
         if (route) {
@@ -123,7 +125,7 @@ export const timerToast = (icon, title) => {
   const timerToastSet = Swal.mixin({
     toast: true,
     position: "bottom-end",
-    background: Colors.greyTextBlood,
+    background: Colors.grey600,
     color: parseColor(icon),
     timer: 3000,
     showConfirmButton: false,

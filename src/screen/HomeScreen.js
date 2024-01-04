@@ -36,7 +36,7 @@ function HomeScreen() {
         payload: { aiTrainingToast: false },
       });
 
-      InfoBtnToast("success", "工單演算完成", btnClick, route);
+      InfoBtnToast("success", "工單演算完成", "查看", btnClick, route);
     }
   }, [aiTrainingToast]);
 

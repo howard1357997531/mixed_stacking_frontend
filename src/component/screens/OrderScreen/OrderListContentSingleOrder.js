@@ -51,7 +51,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
       ) : orderListData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
       ) : (
-        orderListData.map((order, index) => (
+        orderListData.map((order) => (
           <Fragment key={order.id}>
             {order.is_today_latest ? (
               <OrderListDate>{order.createdAt.slice(0, -7)}</OrderListDate>

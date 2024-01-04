@@ -42,25 +42,22 @@ export const MultiOrderCount = styled(Typography)(({ theme }) => ({
 
 export const MultiOrderDeleteBtn = styled(DeleteIcon)(({ theme }) => ({
   position: "absolute",
-  top: "50%",
-  right: "10px",
-  transform: "translateY(-50%)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  right: 0,
+  height: "60%",
   color: Colors.red800,
+  fontSize: 30,
   "&:hover": {
     cursor: "pointer",
-    transform: "scale(1.05) translateY(-50%)",
+    transform: "scale(1.1)",
   },
   "&:active": {
-    transform: "scale(0.95) translateY(-50%)",
+    transform: "scale(0.95)",
   },
 }));
 
 export const MultiOrderDetailBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  padding: "4px 8px",
+  paddingRight: "2px",
   flexGrow: 1,
   width: "100%",
   overflowY: "auto",
@@ -80,14 +77,10 @@ export const MultiOrderDetailSmBox = styled(Box, {
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     cursor: "pointer",
-    transform: "scale(1.01)",
-    border: `1px solid ${Colors.brownText}`,
-    boxShadow: "none",
-    // transition: "scale 0.5s ease-in-out",
+    border: `1px solid ${Colors.purple}`,
+    boxShadow: `inset 0px 0px 2px ${Colors.purple}`,
   },
-  "&:active": {
-    transform: "scale(.99)",
-  },
+  "&:active": {},
 }));
 
 export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
@@ -103,16 +96,15 @@ export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
   height: "22px",
   width: "22px",
   fontSize: "12px",
-  color: Colors.grey100,
-  backgroundColor: Colors.greyBorder,
-  border: `1px solid ${Colors.greyBorder}`,
+  color: Colors.lightOrangeHover,
+  backgroundColor: Colors.purple,
 }));
 
 export const AvatarDivider = styled(Box)(({ theme }) => ({
   height: "2px",
   width: "10px",
   margin: "0px 3px",
-  backgroundColor: Colors.greyText,
+  backgroundColor: Colors.purple,
 }));
 
 export const MultiOrderName = styled(Typography)(({ theme }) => ({
@@ -130,4 +122,5 @@ export const MultiOrderEachCount = styled(Typography)(({ theme }) => ({
   right: "15px",
   transform: "translateY(-50%)",
   color: Colors.greyText,
+  fontWeight: 600,
 }));

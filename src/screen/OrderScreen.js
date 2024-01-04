@@ -56,8 +56,10 @@ function OrderScreen() {
           type: ORDER_SCREEN.orderSelect,
           payload: { mode: "aiResult", aiTrainingState: "finish_training" },
         });
+      } else if (orderSelectMode === "multipleOrderCreate") {
+        timerToast("success", "工單演算完成");
       } else {
-        InfoBtnToast("success", "工單演算完成", btnClick);
+        InfoBtnToast("success", "工單演算完成", "查看", btnClick);
       }
     }
   }, [aiTrainingToast]);

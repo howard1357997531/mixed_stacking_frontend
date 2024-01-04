@@ -1,5 +1,5 @@
 import { InfoBtnToast, timerToast } from "../../swal";
-import { ORDER_SCREEN, TOAST } from "../constants";
+import { ORDER_SCREEN } from "../constants";
 
 export const orderScreen_orderSelectReducer = (
   state = {
