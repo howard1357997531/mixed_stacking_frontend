@@ -156,7 +156,7 @@ function OrderList(props) {
               sx={{
                 width: "200px",
                 color: Colors.lightOrangeHover,
-                backgroundColor: Colors.greyText,
+                backgroundColor: Colors.grey600,
               }}
               endAdornment={
                 <InputAdornment position="end" onClick={filterNameHandler}>
@@ -184,10 +184,10 @@ function OrderList(props) {
             <input
               type="date"
               style={{
+                width: "140px",
                 color: Colors.lightOrangeHover,
-                backgroundColor: Colors.greyText,
+                backgroundColor: Colors.grey600,
                 fontWeight: 600,
-                border: `1px solid ${Colors.greyText}`,
               }}
               onChange={filterDateHandler}
             />

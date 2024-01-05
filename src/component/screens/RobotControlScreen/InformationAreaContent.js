@@ -20,19 +20,11 @@ import {
   StyleAvatar,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Avatar,
-  Box,
-  Button,
-  IconButton,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Tooltip, Typography } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import MultipleOrderInfoDetailDialog from "./dialog/MultipleOrderInfoDetailDialog";
 import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
-import { blueGrey } from "@mui/material/colors";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import CheckIcon from "@mui/icons-material/Check";
 import WarningIcon from "@mui/icons-material/Warning";

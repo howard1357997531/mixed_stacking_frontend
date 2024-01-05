@@ -34,7 +34,7 @@ function OrderListContentMultipleOrderCreate() {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { orderId, combineOrder } = useSelector(
+  const { orderId, combineOrder, combineOrderSelectBool } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
@@ -51,6 +51,10 @@ function OrderListContentMultipleOrderCreate() {
   const multiOrderSelectHandler = (orderId, aiTraining_state) => {
     if (aiTraining_state === "finish_training") {
       dispatch(multipleOrderCreateAction(orderId));
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { combineOrderSelectBool: true },
+      });
     } else {
       dispatch({ type: ORDER_SCREEN.orderSelect, payload: { orderId } });
       InfoBtnToast("warning", "尚未演算", "去演算", () =>

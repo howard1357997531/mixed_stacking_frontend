@@ -3,12 +3,7 @@ import {
   ROBOT_CONTROL_SCREEN_API_executeRobot,
   ROBOT_CONTROL_SCREEN_API_robotSetting,
 } from "../constants";
-import {
-  basicSwal,
-  confirmSwal,
-  confirmSwal2,
-  timerSwal,
-} from "./swal/RobotControlScreenActionSwal";
+import { basicSwal, confirmSwal, confirmSwal2, timerSwal } from "../../swal";
 import { Colors } from "../../styles/theme";
 import { domain } from "../../env";
 import axios from "axios";
@@ -136,10 +131,10 @@ export const executeRobotAction =
     }
 
     if (executeLength === 0) {
-      basicSwal("warning", "請選擇工單", "#a1887f");
+      basicSwal("warning", "請選擇工單");
       return;
     } else if (robotStateMode !== "inactivate") {
-      basicSwal("warning", "手臂執行中", "#a1887f");
+      basicSwal("warning", "手臂執行中");
       return;
     } else {
       const orderQueue =

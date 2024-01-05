@@ -115,7 +115,6 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
 
       <DescTextBox>
         <DescText isTitle={true}>詳細資訊</DescText>
-        {/* <MultiOrderDeleteBtn onClick={deleteHandler} /> */}
       </DescTextBox>
 
       <MultiOrderDetailBox className="multi-order">

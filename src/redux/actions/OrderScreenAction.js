@@ -152,7 +152,11 @@ export const multipleOrderCreateDeleteAction =
     combineOrder.splice(index, 1);
     dispatch({
       type: ORDER_SCREEN.orderSelect,
-      payload: { combineOrder },
+      payload: {
+        combineOrder,
+        // -------------
+        combineOrderFocusIndex: null,
+      },
     });
   };
 
@@ -287,14 +291,15 @@ export const functionAreaNavButtonAction =
         Swal.fire({
           title: "請輸入組合單名稱",
           input: "text",
-          background: Colors.darkGreen,
-          // color: "#fff",
+          background: "#757575",
+          color: "#fff",
           inputAttributes: {
             autocapitalize: "off",
           },
           showCancelButton: true,
           confirmButtonText: "送出",
           cancelButtonText: "返回",
+          cancelButtonColor: Colors.greyText,
           showLoaderOnConfirm: true,
           preConfirm: async (inputText) => {
             if (inputText === "") {
@@ -309,6 +314,11 @@ export const functionAreaNavButtonAction =
               dispatch({
                 type: MULTIPLE_ORDER_LIST.addData,
                 payload: data,
+              });
+
+              dispatch({
+                type: ORDER_SCREEN.orderSelect,
+                payload: { combineOrderFocusIndex: 0 },
               });
             } catch (error) {
               Swal.showValidationMessage(`${error.response.data.error_msg}`);

@@ -81,6 +81,7 @@ export const Colors = {
   swalGreen: "#a5dc86",
   swalBlue: "#9de0f6",
   swalGrey: "#c9dae1",
+  swalPurple: "#7066e0",
 };
 
 const theme = createTheme({

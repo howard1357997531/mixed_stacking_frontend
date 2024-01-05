@@ -1,6 +1,5 @@
 .swal2-validation-message {
-    background-color: #a1887f;
+    background-color: #757575;
     color: #f27474;
-    /* color: #fff; */
-    font-weight: 500;
+    font-weight: 600;
 }

@@ -48,7 +48,7 @@ function OrderListUploadFileDialog() {
     width: "600px",
     height: "400px",
     padding: "0px !important",
-    backgroundColor: brown[300],
+    backgroundColor: Colors.greyText,
   }));
   const DashBox = styled(Box)(({ theme }) => ({
     position: "absolute",
@@ -60,7 +60,7 @@ function OrderListUploadFileDialog() {
     alignItems: "center",
     width: "25%",
     height: "25%",
-    border: `1px dashed ${grey[100]}`,
+    border: `1px dashed ${Colors.lightOrange}`,
   }));
   const UploadTextBox = styled(Box)(({ theme }) => ({
     display: "flex",
@@ -71,8 +71,9 @@ function OrderListUploadFileDialog() {
     left: "50%",
     transform: "translate(-50%, -50%)",
   }));
+
   const UploadText = styled(Typography)(({ theme }) => ({
-    color: grey[100],
+    color: Colors.lightOrange,
   }));
 
   const [open, setOpen] = React.useState(false);
@@ -125,7 +126,7 @@ function OrderListUploadFileDialog() {
         open={open}
       >
         <DialogTitle
-          sx={{ m: 0, p: 2, backgroundColor: Colors.brown }}
+          sx={{ m: 0, p: 2, backgroundColor: Colors.greyText }}
           id="customized-dialog-title"
         ></DialogTitle>
         <IconButton
@@ -145,7 +146,7 @@ function OrderListUploadFileDialog() {
         <StyleDialogContent className="useAfter">
           <DashBox>
             <CloudUploadIcon
-              sx={{ color: grey[100], fontSize: "40px" }}
+              sx={{ color: Colors.lightOrange, fontSize: "40px" }}
               className="uploadIconAnimation"
             />
           </DashBox>
@@ -160,7 +161,11 @@ function OrderListUploadFileDialog() {
             <label
               htmlFor="file"
               className="labelStyle"
-              style={{ fontWeight: 600 }}
+              style={{
+                fontWeight: 600,
+                color: Colors.greyText,
+                backgroundColor: Colors.lightOrange,
+              }}
             >
               瀏覽
             </label>

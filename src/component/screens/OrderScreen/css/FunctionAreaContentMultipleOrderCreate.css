@@ -14,7 +14,7 @@
     transform: translateY(-50%);
     width: 30px;
     height: 15px;
-    color: red
+    font-weight: 600;
 }
 
 .multi-create-input:focus {

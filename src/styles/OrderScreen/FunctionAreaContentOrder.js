@@ -28,7 +28,7 @@ export const DescText = styled(Typography, {
 
 export const DescTextBox = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "space-between",
+  alignItems: "center",
   fontWeight: 600,
   marginBottom: "3px",
 }));

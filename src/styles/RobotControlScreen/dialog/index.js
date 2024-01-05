@@ -211,7 +211,6 @@ export const OrderListExeListDelete = styled(DisabledByDefaultRoundedIcon)(
     fontSize: "26px",
     "&:hover": {
       cursor: "pointer",
-      color: Colors.red900,
       animation: `${OrderListExeListDeleteAnimation} .3s`,
     },
     "&:active": {

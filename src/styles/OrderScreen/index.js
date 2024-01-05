@@ -90,13 +90,10 @@ export const SearchSelect = styled(Box)(({ theme }) => ({
   margin: "0px 10px",
   padding: "0px 8px",
   height: "50%",
-  color: Colors.greyText,
-  backgroundColor: Colors.lightOrangeHover,
   color: Colors.lightOrangeHover,
-  backgroundColor: Colors.greyText,
+  backgroundColor: Colors.grey600,
   fontSize: "14px",
   fontWeight: 600,
-  // border: `2px solid ${Colors.greyText}`,
   borderRadius: "10px",
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
@@ -109,7 +106,7 @@ export const SearchSelect = styled(Box)(({ theme }) => ({
 export const OrderListNavBtn = styled(Button)(({ theme }) => ({
   marginLeft: "10px",
   height: "60%",
-  color: Colors.lightOrangeHover,
+  color: Colors.lightOrange,
   backgroundColor: Colors.darkGreen,
   fontSize: "16px",
   fontWeight: 600,

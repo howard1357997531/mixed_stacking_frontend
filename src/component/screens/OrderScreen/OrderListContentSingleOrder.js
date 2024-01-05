@@ -63,7 +63,7 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                 orderListModeHandler(order.id, order.aiTraining_state);
               }}
             >
-              <OrderListName itemSelect={orderId === order.id}>
+              <OrderListName>
                 <OrderListNameSelect itemSelect={orderId === order.id} />
                 {order.name}
               </OrderListName>

@@ -7,6 +7,7 @@ export const orderScreen_orderSelectReducer = (
     orderId: null,
     aiTrainingState: null,
     combineOrder: [],
+    combineOrderSelectBool: false,
     combineOrderFocusBool: false,
     combineOrderFocusIndex: 0,
     combineOrderFocusValue: null,
@@ -67,7 +68,12 @@ export const orderScreen_orderSelectReducer = (
         }
       }
 
-      return { ...state, combineOrder };
+      return {
+        ...state,
+        combineOrder,
+        // ---------------
+        combineOrderFocusIndex: combineOrder.length - 1,
+      };
 
     case ORDER_SCREEN.afterTrainingCheck:
       let id = action.payload.orderId;

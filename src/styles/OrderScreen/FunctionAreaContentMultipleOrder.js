@@ -80,7 +80,6 @@ export const MultiOrderDetailSmBox = styled(Box, {
     border: `1px solid ${Colors.purple}`,
     boxShadow: `inset 0px 0px 2px ${Colors.purple}`,
   },
-  "&:active": {},
 }));
 
 export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
