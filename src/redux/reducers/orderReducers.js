@@ -45,19 +45,28 @@ export const orderListReducer = (state = { data: [] }, action) => {
       return { ...state, data: afterData };
 
     case ORDER_LIST.edit:
-      const editData = state.data.map((order) => {
-        if (order.id === action.payload.id) {
-          const name = action.payload.name;
-          const orderItem = order.orderItem.map((order) => {
-            return { ...order, quantity: action.payload[order.name] };
-          });
-          return { ...order, name, orderItem };
-        } else {
-          return order;
-        }
-      });
+      if (action.payload.allData.aiTraining_state === "no_training") {
+        var editData = state.data.map((order) => {
+          if (order.id === action.payload.allData.id) {
+            return action.payload.allData;
+          } else {
+            return order;
+          }
+        });
+      } else {
+        var editData = state.data.map((order) => {
+          if (order.id === action.payload.allData.id) {
+            return { ...order, name: action.payload.allData.name };
+          } else {
+            return order;
+          }
+        });
+      }
 
       return { ...state, data: editData };
+
+    case ORDER_LIST.finishTrainingEdit:
+      return { ...state, data: [action.payload, ...state.data] };
 
     case ORDER_LIST.delete:
       var data = state.data;

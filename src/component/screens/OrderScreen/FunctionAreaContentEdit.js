@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./css/FunctionAreaContentEdit.css";
 import { useDispatch, useSelector } from "react-redux";
 import CenterText from "../../../tool/CenterText";
-import { orderEditChangeAction } from "../../../redux/actions/OrderScreenAction";
+import { orderEditAction } from "../../../redux/actions/OrderScreenAction";
 import {
   OrderBox,
   DescText,
@@ -13,76 +13,68 @@ import {
   OrderDetailBox,
   OrderDetailSmBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
-import { Input, InputAdornment, Stack } from "@mui/material";
+import { Input, Stack } from "@mui/material";
 import { Colors } from "../../../styles/theme";
+import { StyleEditIcon } from "../../../styles/OrderScreen/FunctionAreaContentEdit";
 
 function FunctionAreaContentEdit() {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.orderList);
-  const { edit, editData } = useSelector(
+  const { editId, editData } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
-  if (data && edit) {
-    var [orderData] = data.filter((order) => order.id === edit);
-    const count = orderData.orderItem.map((order) => order.quantity);
-    var orderCount = `總數: ${count.reduce((acc, cur) => acc + cur, 0)}`;
+  if (data && editId) {
+    var [orderData] = data.filter((order) => order.id === editId);
   }
 
-  const [qwe, setQWe] = useState({});
+  const [title, setTitle] = useState("");
+  const [allData, setAllData] = useState({});
 
   useEffect(() => {
-    setQWe(editData);
+    if (editData) {
+      setTitle(editData["name"]);
+      setAllData(editData);
+    }
   }, [editData]);
-
-  const titleHandler = (e) => {
-    const { name, value } = e.target;
-    setQWe((prev) => {
-      const temp = { ...prev };
-      temp[name] = value;
-      return temp;
-    });
-    // dispatch(orderEditChangeAction("name", e.target.value, editData));
-  };
 
   const countHandler = (e) => {
     const { name, value } = e.target;
-    const checkValue = value !== "" ? parseInt(value) : "";
-    setQWe((prev) => {
+    const checkValue = value !== "" ? Number(value) : "";
+    setAllData((prev) => {
       const temp = { ...prev };
       temp[name] = checkValue;
       return temp;
     });
     // dispatch(orderEditChangeAction(name, Math.abs(e.target.value), editData));
   };
-  console.log(qwe);
 
   const editBtnHandler = () => {
-    for (let key in qwe) {
-      if (qwe[key] === "") return;
-    }
-    console.log("asdasd");
+    console.log(allData);
+    dispatch(orderEditAction(editData, title, allData));
   };
 
-  return !edit ? (
+  return !editId ? (
     <CenterText text={"請選擇工單"} />
   ) : orderData.aiTraining_state === "is_training" ? (
     <CenterText text={"工單演算中..."} />
   ) : (
     <OrderBox>
-      <button onClick={editBtnHandler}>123</button>
+      <StyleEditIcon onClick={editBtnHandler} />
       <Stack direction={"row"} justifyContent="center">
         <Input
+          required
           name="name"
           autoFocus
           sx={{
             width: "200px",
             height: "40px",
-            color: Colors.lightOrangeHover,
+            color: Colors.lightOrange,
             backgroundColor: Colors.grey600,
+            fontWeight: 600,
           }}
           defaultValue={editData.name}
-          onChange={titleHandler}
+          onChange={(e) => setTitle(e.target.value)}
         />
       </Stack>
 

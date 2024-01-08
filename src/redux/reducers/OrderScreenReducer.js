@@ -11,7 +11,7 @@ export const orderScreen_orderSelectReducer = (
     combineOrderFocusBool: false,
     combineOrderFocusIndex: 0,
     combineOrderFocusValue: null,
-    edit: null,
+    editId: null,
     editData: null,
     delete: [],
   },
@@ -89,6 +89,9 @@ export const orderScreen_orderSelectReducer = (
 
         return state;
       }
+
+    case ORDER_SCREEN.finishTrainingEdit:
+      return { ...state, name: action.payload };
 
     case ORDER_SCREEN.orderSelect_reset:
       return {

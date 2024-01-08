@@ -8,6 +8,7 @@ export const ORDER_LIST = {
   aiTrainingStateChange: "ORDER_LIST_aiTrainingStateChange",
   aiTrainingOrderAdd: "ORDER_LIST_aiTrainingOrderAdd",
   edit: "ORDER_LIST_edit",
+  finishTrainingEdit: "ORDER_LIST_finishTrainingEdit",
   delete: "ORDER_LIST_delete",
   filter: {
     request: "ORDER_LIST_filter_request",
@@ -56,6 +57,7 @@ export const ORDER_SCREEN = {
   orderSelectData: "ORDER_SCREEN_orderSelectData",
   multiOrderCreateSelectData: "ORDER_SCREEN_multiOrderCreateSelectData",
   afterTrainingCheck: "ORDER_SCREEN_afterTrainingCheck",
+  finishTrainingEdit: "ORDER_SCREEN_finishTrainingEdit",
   // reset
   orderSelect_reset: "ORDER_SCREEN_orderSelect_reset",
 };

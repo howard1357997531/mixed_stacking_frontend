@@ -43,20 +43,20 @@ export const orderlistFilterAction = (state, value) => async (dispatch) => {
 };
 
 export const orderEditSelectAction =
-  (edit, orderListData, aiTraining_state) => (dispatch) => {
+  (editId, orderListData, aiTraining_state) => (dispatch) => {
     if (aiTraining_state === "is_training") {
       timerToast("warning", "演算中，不能修改");
       return;
     }
-    const [dataTemp] = orderListData.filter((order) => order.id === edit);
+    const [dataTemp] = orderListData.filter((order) => order.id === editId);
     const editData = dataTemp.orderItem.reduce((obj, item) => {
       obj[item.name] = item.quantity;
       return obj;
     }, {});
-    editData["id"] = edit;
+    editData["id"] = editId;
     editData["name"] = dataTemp.name;
     editData["aiTraining_state"] = dataTemp.aiTraining_state;
-    dispatch({ type: ORDER_SCREEN.orderSelect, payload: { edit, editData } });
+    dispatch({ type: ORDER_SCREEN.orderSelect, payload: { editId, editData } });
   };
 
 export const orderEditChangeAction = (name, value, data) => (dispatch) => {
@@ -67,6 +67,119 @@ export const orderEditChangeAction = (name, value, data) => (dispatch) => {
     payload: { editData },
   });
 };
+
+function deepEqual(obj1, obj2) {
+  // 检查对象引用是否相同
+  if (obj1 === obj2) {
+    return true;
+  }
+
+  // 检查对象类型是否相同
+  if (
+    typeof obj1 !== "object" ||
+    typeof obj2 !== "object" ||
+    obj1 === null ||
+    obj2 === null
+  ) {
+    return false;
+  }
+
+  // 获取对象的属性名称
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  // 检查属性数量是否相同
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  // 递归比较每个属性的值
+  for (const key of keys1) {
+    if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
+      return false;
+    }
+  }
+
+  // 如果所有属性都相等，则对象相等
+  return true;
+}
+
+export const orderEditAction =
+  (editData, title, allData) => async (dispatch) => {
+    if (editData.name === title && deepEqual(allData, editData)) {
+      return timerToast("info", "尚未改變內容");
+    }
+
+    const tempData = { ...allData };
+    delete tempData.id;
+    delete tempData.name;
+    delete tempData.aiTraining_state;
+
+    for (let key in tempData) {
+      if (tempData[key] === "" && title === "")
+        return timerToast("info", "名稱、數量不能空白");
+      if (tempData[key] === "") return timerToast("info", "數量不能空白");
+      if (tempData[key] < 0) return timerToast("info", "數量不能為負數");
+      if (!Number.isInteger(tempData[key]))
+        return timerToast("info", "數量不能為小數");
+    }
+
+    if (title === "") return timerToast("info", "名稱不能空白");
+
+    var orderData = { ...allData };
+    orderData["name"] = title;
+    orderData["count_change"] = !deepEqual(allData, editData);
+
+    if (
+      editData.aiTraining_state === "finish_training" &&
+      !deepEqual(allData, editData)
+    ) {
+      confirmSwal(
+        "此工單已演算過",
+        "如果要修改已演算工單(任意貨物的數量)，系統會自動生成新的工單，然後必須去重新演算"
+      ).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .post(`${domain}/api/editOrder/`, {
+              orderData,
+            })
+            .then((res) => {
+              const data = res.data;
+              dispatch({
+                type: ORDER_LIST.finishTrainingEdit,
+                payload: data.allData,
+              });
+
+              dispatch({
+                type: ORDER_LIST.edit,
+                payload: { allData: data.editData },
+              });
+
+              dispatch({
+                type: ORDER_SCREEN.finishTrainingEdit,
+                payload: editData.name,
+              });
+            });
+        } else return;
+      });
+      return;
+    }
+
+    const { data } = await axios.post(`${domain}/api/editOrder/`, {
+      orderData,
+    });
+    timerToast("success", "修改成功");
+
+    dispatch({
+      type: ORDER_LIST.edit,
+      payload: { allData: data.allData },
+    });
+
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { editData: data.editData },
+    });
+  };
 
 export const orderDeleteSelectAction =
   (orderId, orderDelete, aiTraining_state) => (dispatch) => {

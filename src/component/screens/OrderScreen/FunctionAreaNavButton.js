@@ -46,10 +46,6 @@ function FunctionAreaNavButton({ orderSelectMode }) {
       name: "創建",
       bgColor: Colors.darkGreen,
     },
-    edit: {
-      name: "修改",
-      bgColor: Colors.brown,
-    },
     delete: {
       name: "刪除",
       bgColor: Colors.brown,
@@ -88,7 +84,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
         />
       ) : null}
 
-      {["aiResult", "multipleOrderCreate", "edit", "delete"].includes(
+      {["aiResult", "multipleOrderCreate", "delete"].includes(
         orderSelectMode
       ) ? (
         <FunctionAreaNavBtn

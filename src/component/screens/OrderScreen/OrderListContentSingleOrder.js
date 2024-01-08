@@ -28,9 +28,20 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { orderId, delete: orderDelete } = useSelector(
-    (state) => state.orderScreen_orderSelect
-  );
+  const {
+    orderId,
+    editId,
+    delete: orderDelete,
+  } = useSelector((state) => state.orderScreen_orderSelect);
+
+  const selectId = () => {
+    if (["orderDetail", "aiResult"].includes(orderSelectMode)) {
+      return orderId;
+    } else if (orderSelectMode === "edit") {
+      return editId;
+    } else if (orderSelectMode === "delete") {
+    }
+  };
 
   const orderListModeHandler = (orderId, aiTraining_state) => {
     if (["close", "orderDetail", "aiResult"].includes(orderSelectMode)) {
@@ -58,13 +69,13 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
             ) : null}
 
             <OrderListDetial
-              itemSelect={orderId === order.id}
+              itemSelect={order.id === selectId()}
               onClick={() => {
                 orderListModeHandler(order.id, order.aiTraining_state);
               }}
             >
               <OrderListName>
-                <OrderListNameSelect itemSelect={orderId === order.id} />
+                <OrderListNameSelect itemSelect={order.id === selectId()} />
                 {order.name}
               </OrderListName>
 

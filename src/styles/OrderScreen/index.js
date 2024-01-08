@@ -335,6 +335,7 @@ export const StyleHelpRoundedIcon = styled(HelpRoundedIcon)(({ theme }) => ({
 export const FunctionAreaBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "orderSelectMode",
 })(({ theme, orderSelectMode }) => ({
+  position: "relative",
   display: ["close", "noMultipleOrder"].includes(orderSelectMode)
     ? "none"
     : "flex",
@@ -404,7 +405,7 @@ export const FunctionAreaNavBtn = styled(Button, {
 export const FunctionAreaContentBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "orderSelectMode",
 })(({ theme, orderSelectMode }) => ({
-  position: "relative",
+  // position: "relative",
   width: "100%",
   height: "90%",
   overflowY: "auto",
