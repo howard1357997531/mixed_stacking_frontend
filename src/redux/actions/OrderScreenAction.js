@@ -23,24 +23,37 @@ export const orderlistSelectAction =
     });
   };
 
-export const orderlistFilterAction = (state, value) => async (dispatch) => {
-  try {
-    dispatch({
-      type: ORDER_SCREEN.orderSelect,
-      payload: { mode: "close", orderId: null },
-    });
+export const orderlistFilterAction =
+  (state, value, mode) => async (dispatch) => {
+    try {
+      // dispatch({
+      //   type: ORDER_SCREEN.orderSelect,
+      //   payload: { mode: "close", orderId: null },
+      // });
 
-    dispatch({ type: ORDER_LIST.filter.request });
+      dispatch({ type: ORDER_LIST.filter.request });
 
-    const { data } = await axios.get(
-      `${domain}/api/filterOrderData?state=${state}&value=${value}`
-    );
+      const { data } = await axios.get(
+        `${domain}/api/filterOrderData?state=${state}&value=${value}`
+      );
 
-    dispatch({ type: ORDER_LIST.filter.success, payload: data });
-  } catch (error) {
-    dispatch({ type: ORDER_LIST.filter.fail });
-  }
-};
+      dispatch({ type: ORDER_LIST.filter.success, payload: data });
+
+      if (data.length !== 0 && ["orderDetail", "aiResult"].includes(mode)) {
+        dispatch({
+          type: ORDER_SCREEN.orderSelect,
+          payload: { orderId: data.at(0).id },
+        });
+      } else {
+        dispatch({
+          type: ORDER_SCREEN.orderSelect,
+          payload: { orderId: null },
+        });
+      }
+    } catch (error) {
+      dispatch({ type: ORDER_LIST.filter.fail });
+    }
+  };
 
 export const orderEditSelectAction =
   (editId, orderListData, aiTraining_state) => (dispatch) => {
@@ -136,7 +149,7 @@ export const orderEditAction =
     ) {
       confirmSwal(
         "此工單已演算過",
-        "如果要修改已演算工單(任意貨物的數量)，系統會自動生成新的工單，然後必須去重新演算"
+        "已演算工單是不能被修改貨物數量的(但名稱可以修改)，但目前已自動偵測到您想修改貨物的數量，如果要修改(已演算工單的任意貨物的數量)，系統會自動生成剛剛您想修改的新工單，然後必須去重新演算"
       ).then((result) => {
         if (result.isConfirmed) {
           axios
@@ -188,14 +201,14 @@ export const orderDeleteSelectAction =
       return;
     }
     if (orderDelete.includes(orderId)) {
-      var deleteArray = orderDelete.filter((id) => id !== orderId);
+      var deleteIdArray = orderDelete.filter((id) => id !== orderId);
     } else {
-      var deleteArray = [...orderDelete, orderId];
+      var deleteIdArray = [...orderDelete, orderId];
     }
 
     dispatch({
       type: ORDER_SCREEN.orderSelect,
-      payload: { delete: deleteArray },
+      payload: { deleteIdArray },
     });
   };
 
@@ -451,27 +464,6 @@ export const functionAreaNavButtonAction =
       }
     }
 
-    if (mode === "edit") {
-      if (!orderSelectData) {
-        timerToast("info", "尚未選擇工單");
-        return;
-      }
-      confirmSwal("確定修改?").then((result) => {
-        if (result.isConfirmed) {
-          infoToast("warning", "修改中");
-          try {
-            axios
-              .post(`${domain}/api/editOrder/`, { orderSelectData })
-              .then((res) => {
-                Swal.close();
-                timerToast("success", "修改成功");
-                dispatch({ type: ORDER_LIST.edit, payload: orderSelectData });
-              });
-          } catch (error) {}
-        }
-      });
-    }
-
     if (mode === "delete") {
       if (orderSelectData.length === 0) {
         timerToast("info", "尚未選擇工單");
@@ -487,7 +479,7 @@ export const functionAreaNavButtonAction =
                 Swal.close();
                 dispatch({
                   type: ORDER_SCREEN.orderSelect,
-                  payload: { delete: [] },
+                  payload: { deleteIdArray: [] },
                 });
                 dispatch({ type: ORDER_LIST.delete, payload: orderSelectData });
                 timerToast("success", "刪除成功");

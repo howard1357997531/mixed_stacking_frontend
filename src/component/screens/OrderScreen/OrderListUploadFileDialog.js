@@ -14,6 +14,10 @@ import axios from "axios";
 import "./css/OrderListUploadFileDialog.css";
 import Swal from "sweetalert2";
 import { Colors } from "../../../styles/theme";
+import { domain } from "../../../env";
+import { timerToast } from "../../../swal";
+import { ORDER_LIST } from "../../../redux/constants";
+import { useDispatch } from "react-redux";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -48,7 +52,7 @@ function OrderListUploadFileDialog() {
     width: "600px",
     height: "400px",
     padding: "0px !important",
-    backgroundColor: Colors.greyText,
+    backgroundColor: Colors.grey600,
   }));
   const DashBox = styled(Box)(({ theme }) => ({
     position: "absolute",
@@ -76,6 +80,7 @@ function OrderListUploadFileDialog() {
     color: Colors.lightOrange,
   }));
 
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -98,20 +103,31 @@ function OrderListUploadFileDialog() {
       position: "center",
       width: "16em",
       icon: "warning",
-      title: "Upload. . .",
-      background: brown[400],
+      title: "上傳中",
+      background: Colors.grey600,
       showConfirmButton: false,
-      timer: 5000,
+      timer: 10000,
     });
-    axios
-      .post("http://127.0.0.1:8000/api/uploadCsv/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        window.location.reload();
-      });
+    try {
+      axios
+        .post(`${domain}/api/uploadCsv/`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          Swal.close();
+          timerToast("success", "上傳成功");
+          console.log(res.data);
+          dispatch({
+            type: ORDER_LIST.afterUpload,
+            payload: res.data,
+          });
+        });
+    } catch (error) {
+      Swal.close();
+      timerToast("error", "上傳失敗");
+    }
   };
 
   return (
@@ -126,7 +142,7 @@ function OrderListUploadFileDialog() {
         open={open}
       >
         <DialogTitle
-          sx={{ m: 0, p: 2, backgroundColor: Colors.greyText }}
+          sx={{ m: 0, p: 2, backgroundColor: Colors.grey600 }}
           id="customized-dialog-title"
         ></DialogTitle>
         <IconButton
@@ -137,13 +153,13 @@ function OrderListUploadFileDialog() {
             right: 8,
             top: 8,
             zIndex: 88,
-            color: (theme) => theme.palette.grey[700],
+            color: Colors.lightOrange,
           }}
         >
           <CloseIcon />
         </IconButton>
 
-        <StyleDialogContent className="useAfter">
+        <StyleDialogContent className="uploadAfter">
           <DashBox>
             <CloudUploadIcon
               sx={{ color: Colors.lightOrange, fontSize: "40px" }}

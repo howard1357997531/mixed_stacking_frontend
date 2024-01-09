@@ -6,7 +6,6 @@ import {
   MultiOrderAvatar,
   MultiOrderAvatarBox,
   MultiOrderBox,
-  MultiOrderDeleteBtn,
   MultiOrderDetailBox,
   MultiOrderDetailSmBox,
   MultiOrderEachCount,

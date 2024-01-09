@@ -212,6 +212,11 @@ export const OrderListName = styled(Box)(({ theme }) => ({
   color: Colors.greyText,
 }));
 
+export const NewText = styled(Typography)(({ theme }) => ({
+  marginRight: "5px",
+  color: Colors.red800,
+}));
+
 export const OrderListNameSelect = styled(Box, {
   shouldForwardProp: (prop) => prop !== "itemSelect",
 })(({ theme, itemSelect }) => ({

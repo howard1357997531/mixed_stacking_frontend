@@ -116,13 +116,13 @@ function OrderList(props) {
   const filterNameHandler = () => {
     if (inputName) {
       setIsFilter(true);
-      dispatch(orderlistFilterAction("name", inputName));
+      dispatch(orderlistFilterAction("name", inputName, orderSelectMode));
     }
   };
 
   const filterDateHandler = (e) => {
     setIsFilter(true);
-    dispatch(orderlistFilterAction("date", e.target.value));
+    dispatch(orderlistFilterAction("date", e.target.value, orderSelectMode));
   };
   return (
     <OrderListBox>

@@ -13,12 +13,8 @@ function FunctionAreaNavButton({ orderSelectMode }) {
     (state) => state.multipleOrderList
   );
 
-  const {
-    aiTrainingState,
-    combineOrder,
-    editData,
-    delete: deleteArray,
-  } = useSelector((state) => state.orderScreen_orderSelect);
+  const { aiTrainingState, combineOrder, editData, deleteIdArray } =
+    useSelector((state) => state.orderScreen_orderSelect);
 
   const buttonHandler = (mode, aiTraining_state) => {
     if (mode === "orderDetail") {
@@ -27,10 +23,8 @@ function FunctionAreaNavButton({ orderSelectMode }) {
       var orderSelectData = multiOrderId;
     } else if (mode === "multipleOrderCreate") {
       var orderSelectData = combineOrder;
-    } else if (mode === "edit") {
-      var orderSelectData = editData;
     } else if (mode === "delete") {
-      var orderSelectData = deleteArray;
+      var orderSelectData = deleteIdArray;
     }
     dispatch(
       functionAreaNavButtonAction(mode, orderSelectData, aiTraining_state)
@@ -78,15 +72,13 @@ function FunctionAreaNavButton({ orderSelectMode }) {
         </FunctionAreaNavBtn>
       ) : null}
 
-      {orderSelectMode === "multipleOrder" ? (
+      {["multipleOrder", "delete"].includes(orderSelectMode) ? (
         <MultiOrderDeleteBtn
           onClick={() => buttonHandler(orderSelectMode, null)}
         />
       ) : null}
 
-      {["aiResult", "multipleOrderCreate", "delete"].includes(
-        orderSelectMode
-      ) ? (
+      {["aiResult", "multipleOrderCreate"].includes(orderSelectMode) ? (
         <FunctionAreaNavBtn
           disableElevation
           variant="contained"

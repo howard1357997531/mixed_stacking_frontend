@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import {
+  NewText,
   OrderListContentMsg,
   OrderListDate,
-  OrderListDateBox,
   OrderListDetial,
   OrderListName,
   OrderListNameSelect,
@@ -28,18 +28,28 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const {
-    orderId,
-    editId,
-    delete: orderDelete,
-  } = useSelector((state) => state.orderScreen_orderSelect);
+  const { orderId, editId, deleteIdArray } = useSelector(
+    (state) => state.orderScreen_orderSelect
+  );
+
+  if (orderListData.length > 0) {
+    var groupedData = orderListData.reduce((acc, item) => {
+      const date = item.createdAt.slice(0, -7);
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(item);
+      return acc;
+    }, {});
+  }
 
   const selectId = () => {
-    if (["orderDetail", "aiResult"].includes(orderSelectMode)) {
-      return orderId;
+    if (["close", "orderDetail", "aiResult"].includes(orderSelectMode)) {
+      return [orderId];
     } else if (orderSelectMode === "edit") {
-      return editId;
+      return [editId];
     } else if (orderSelectMode === "delete") {
+      return deleteIdArray;
     }
   };
 
@@ -49,7 +59,9 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
     } else if (orderSelectMode === "edit") {
       dispatch(orderEditSelectAction(orderId, orderListData, aiTraining_state));
     } else if (orderSelectMode === "delete") {
-      dispatch(orderDeleteSelectAction(orderId, orderDelete, aiTraining_state));
+      dispatch(
+        orderDeleteSelectAction(orderId, deleteIdArray, aiTraining_state)
+      );
     }
   };
 
@@ -62,41 +74,45 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
       ) : orderListData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
       ) : (
-        orderListData.map((order) => (
-          <Fragment key={order.id}>
-            {order.is_today_latest ? (
-              <OrderListDate>{order.createdAt.slice(0, -7)}</OrderListDate>
-            ) : null}
+        Object.keys(groupedData).map((date) => (
+          <Fragment key={date}>
+            <OrderListDate>{date}</OrderListDate>
 
-            <OrderListDetial
-              itemSelect={order.id === selectId()}
-              onClick={() => {
-                orderListModeHandler(order.id, order.aiTraining_state);
-              }}
-            >
-              <OrderListName>
-                <OrderListNameSelect itemSelect={order.id === selectId()} />
-                {order.name}
-              </OrderListName>
+            {groupedData[date].map((order) => (
+              <OrderListDetial
+                key={order.id}
+                itemSelect={selectId().includes(order.id)}
+                onClick={() => {
+                  orderListModeHandler(order.id, order.aiTraining_state);
+                }}
+              >
+                <OrderListName>
+                  {order.is_new && <NewText>New</NewText>}
+                  <OrderListNameSelect
+                    itemSelect={selectId().includes(order.id)}
+                  />
+                  {order.name}
+                </OrderListName>
 
-              <OrderListState>
-                {order.aiTraining_state === "no_training" && (
-                  <OrderListStateText sx={{ color: Colors.purple }}>
-                    尚未演算
-                  </OrderListStateText>
-                )}
+                <OrderListState>
+                  {order.aiTraining_state === "no_training" && (
+                    <OrderListStateText sx={{ color: Colors.purple }}>
+                      尚未演算
+                    </OrderListStateText>
+                  )}
 
-                {order.aiTraining_state === "is_training" && (
-                  <TextEffect text={"AI演算中"} textColor={Colors.greyText} />
-                )}
+                  {order.aiTraining_state === "is_training" && (
+                    <TextEffect text={"AI演算中"} textColor={Colors.greyText} />
+                  )}
 
-                {order.aiTraining_state === "finish_training" && (
-                  <OrderListStateText sx={{ color: Colors.greyText }}>
-                    已演算
-                  </OrderListStateText>
-                )}
-              </OrderListState>
-            </OrderListDetial>
+                  {order.aiTraining_state === "finish_training" && (
+                    <OrderListStateText sx={{ color: Colors.greyText }}>
+                      已演算
+                    </OrderListStateText>
+                  )}
+                </OrderListState>
+              </OrderListDetial>
+            ))}
           </Fragment>
         ))
       )}

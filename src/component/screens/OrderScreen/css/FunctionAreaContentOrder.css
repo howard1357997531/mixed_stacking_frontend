@@ -1,3 +1,11 @@
 .function-order-box::-webkit-scrollbar {
     width: 0px
 }
+
+.is-training-gif {
+    position: absolute;
+    right: 20px;
+    transform: translate(35%, -35%) ;
+    width: 300px;
+    height: 225px
+}

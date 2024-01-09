@@ -10,7 +10,7 @@ export const OrderBox = styled(Box)(({ theme }) => ({
 
 export const IsTrainingText = styled(Typography)(({ theme }) => ({
   position: "absolute",
-  right: 0,
+  right: "20px",
   transform: "translate(-40%, 270%)",
   color: Colors.blue700,
   fontWeight: 600,

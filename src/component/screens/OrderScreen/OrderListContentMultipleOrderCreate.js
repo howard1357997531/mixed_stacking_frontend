@@ -24,7 +24,7 @@ import { DIALOG, ORDER_SCREEN } from "../../../redux/constants";
 import OrderDetailDialog from "../../dialog/orderDetail/OrderDetailDialog";
 import { Colors } from "../../../styles/theme";
 import TextEffect from "../../../tool/TextEffect";
-import { InfoBtnToast } from "../../../swal";
+import { InfoBtnToast, timerToast } from "../../../swal";
 
 function OrderListContentMultipleOrderCreate() {
   const dispatch = useDispatch();
@@ -34,9 +34,20 @@ function OrderListContentMultipleOrderCreate() {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { orderId, combineOrder, combineOrderSelectBool } = useSelector(
+  const { orderId, combineOrder } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
+
+  if (orderListData.length > 0) {
+    var groupedData = orderListData.reduce((acc, item) => {
+      const date = item.createdAt.slice(0, -7);
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(item);
+      return acc;
+    }, {});
+  }
 
   if (combineOrder) {
     var checkItemSelect = combineOrder.map((order) =>
@@ -55,6 +66,8 @@ function OrderListContentMultipleOrderCreate() {
         type: ORDER_SCREEN.orderSelect,
         payload: { combineOrderSelectBool: true },
       });
+    } else if (aiTraining_state === "is_training") {
+      timerToast("warning", "演算中，不能選擇");
     } else {
       dispatch({ type: ORDER_SCREEN.orderSelect, payload: { orderId } });
       InfoBtnToast("warning", "尚未演算", "去演算", () =>
@@ -95,60 +108,59 @@ function OrderListContentMultipleOrderCreate() {
     <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
   ) : (
     <>
-      {orderListData.map((order) => (
-        <Fragment key={order.id}>
-          {order.is_today_latest ? (
-            <OrderListDate>{order.createdAt.slice(0, -7)}</OrderListDate>
-          ) : null}
+      {Object.keys(groupedData).map((date) => (
+        <Fragment key={date}>
+          <OrderListDate>{date}</OrderListDate>
 
-          <OrderListDetial
-            itemSelect={checkItemSelect.includes(order.id)}
-            onMouseEnter={() => mouseEnterHandler(order.id)}
-            onMouseLeave={mouseLeaveHandler}
-            onClick={() => {
-              multiOrderSelectHandler(order.id, order.aiTraining_state);
-            }}
-          >
-            <OrderListName>
-              <OrderListNameSelect
-                itemSelect={checkItemSelect.includes(order.id)}
-              />
-              {order.name}
-            </OrderListName>
+          {groupedData[date].map((order) => (
+            <OrderListDetial
+              itemSelect={checkItemSelect.includes(order.id)}
+              onMouseEnter={() => mouseEnterHandler(order.id)}
+              onMouseLeave={mouseLeaveHandler}
+              onClick={() => {
+                multiOrderSelectHandler(order.id, order.aiTraining_state);
+              }}
+            >
+              <OrderListName>
+                <OrderListNameSelect
+                  itemSelect={checkItemSelect.includes(order.id)}
+                />
+                {order.name}
+              </OrderListName>
 
-            <OrderListState>
-              {order.aiTraining_state === "no_training" && (
-                <OrderListStateText sx={{ color: Colors.purple }}>
-                  尚未演算
-                </OrderListStateText>
-              )}
+              <OrderListState>
+                {order.aiTraining_state === "no_training" && (
+                  <OrderListStateText sx={{ color: Colors.purple }}>
+                    尚未演算
+                  </OrderListStateText>
+                )}
 
-              {order.aiTraining_state === "is_training" && (
-                <TextEffect text={"AI演算中"} textColor={Colors.greyText} />
-              )}
+                {order.aiTraining_state === "is_training" && (
+                  <TextEffect text={"AI演算中"} textColor={Colors.greyText} />
+                )}
 
-              {order.aiTraining_state === "finish_training" && (
-                <OrderListStateText sx={{ color: Colors.greyText }}>
-                  已演算
-                </OrderListStateText>
-              )}
+                {order.aiTraining_state === "finish_training" && (
+                  <OrderListStateText sx={{ color: Colors.greyText }}>
+                    已演算
+                  </OrderListStateText>
+                )}
 
-              {order.aiTraining_state === "finish_training" ? (
-                <Tooltip title="詳細資料" placement="top" arrow>
-                  <IconButtonHelp
-                    className="iconBtn-help-orderlist"
-                    display={detailHover && detailId === order.id}
-                    onClick={(e) => multiOrderDetailHandler(e, order.id)}
-                  >
-                    <StyleHelpRoundedIcon className="icon-help-orderlist" />
-                  </IconButtonHelp>
-                </Tooltip>
-              ) : null}
-            </OrderListState>
-          </OrderListDetial>
+                {order.aiTraining_state === "finish_training" ? (
+                  <Tooltip title="詳細資料" placement="top" arrow>
+                    <IconButtonHelp
+                      className="iconBtn-help-orderlist"
+                      display={detailHover && detailId === order.id}
+                      onClick={(e) => multiOrderDetailHandler(e, order.id)}
+                    >
+                      <StyleHelpRoundedIcon className="icon-help-orderlist" />
+                    </IconButtonHelp>
+                  </Tooltip>
+                ) : null}
+              </OrderListState>
+            </OrderListDetial>
+          ))}
         </Fragment>
       ))}
-
       <OrderDetailDialog
         openDialog={openDialog}
         onCloseDialog={onCloseDialog}

@@ -1,19 +1,13 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { multipleOrderListAction } from "../../../redux/actions/OrderActions";
 import LoadingCircle from "../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import {
-  MultipleOrderBox,
-  MultipleOrderDate,
-  MultipleOrderName,
   OrderListContentMsg,
   OrderListDate,
   OrderListDetial,
   OrderListName,
   OrderListNameSelect,
-  OrderListState,
-  OrderListStateText,
 } from "../../../styles/OrderScreen";
 import { multipleOrderListSelectAction } from "../../../redux/actions/OrderScreenAction";
 import { Button } from "@mui/material";
@@ -29,6 +23,17 @@ function OrderListContentMultipleOrder() {
     orderId,
   } = useSelector((state) => state.multipleOrderList);
 
+  if (multipleOrderData.length > 0) {
+    var groupedData = multipleOrderData.reduce((acc, item) => {
+      const date = item.createdAt.slice(0, -7);
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(item);
+      return acc;
+    }, {});
+  }
+
   const multipleOrderHandler = (orderId) => {
     dispatch(multipleOrderListSelectAction(orderId));
   };
@@ -39,10 +44,6 @@ function OrderListContentMultipleOrder() {
       payload: "multipleOrderCreate",
     });
   };
-
-  // const itemSelect = (id) => {
-  //   return multipleOrderId && id === multipleOrderId ? true : false;
-  // };
 
   return multipleOrderLoading ? (
     <LoadingCircle />
@@ -62,34 +63,41 @@ function OrderListContentMultipleOrder() {
       </Button>
     </OrderListContentMsg>
   ) : (
-    multipleOrderData.map((order, index) => (
-      <Fragment key={order.id}>
-        {order.is_today_latest ? (
-          <OrderListDate>{order.createdAt.slice(0, -7)}</OrderListDate>
-        ) : null}
+    Object.keys(groupedData).map((date) => (
+      <Fragment key={date}>
+        <OrderListDate>{date}</OrderListDate>
 
-        {/* <MultipleOrderBox
-          itemSelect={itemSelect(order.id)}
-          onClick={() => multipleOrderHandler(order.id)}
-        >
-          <MultipleOrderName itemSelect={itemSelect(order.id)}>
-            {order.name}
-          </MultipleOrderName>
-        </MultipleOrderBox> */}
-
-        <OrderListDetial
-          itemSelect={orderId === order.id}
-          onClick={() => multipleOrderHandler(order.id)}
-        >
-          <OrderListName itemSelect={orderId === order.id}>
-            <OrderListNameSelect itemSelect={orderId === order.id} />
-            {order.name}
-          </OrderListName>
-
-          {/* <OrderListState>12</OrderListState> */}
-        </OrderListDetial>
+        {groupedData[date].map((order) => (
+          <OrderListDetial
+            itemSelect={order.id === orderId}
+            onClick={() => multipleOrderHandler(order.id)}
+          >
+            <OrderListName itemSelect={order.id === orderId}>
+              <OrderListNameSelect itemSelect={order.id === orderId} />
+              {order.name}
+            </OrderListName>
+          </OrderListDetial>
+        ))}
       </Fragment>
     ))
+
+    // multipleOrderData.map((order, index) => (
+    //   <Fragment key={order.id}>
+    //     {order.is_today_latest ? (
+    //       <OrderListDate>{order.createdAt.slice(0, -7)}</OrderListDate>
+    //     ) : null}
+
+    //     <OrderListDetial
+    //       itemSelect={orderId === order.id}
+    //       onClick={() => multipleOrderHandler(order.id)}
+    //     >
+    //       <OrderListName itemSelect={orderId === order.id}>
+    //         <OrderListNameSelect itemSelect={orderId === order.id} />
+    //         {order.name}
+    //       </OrderListName>
+    //     </OrderListDetial>
+    //   </Fragment>
+    // ))
   );
 }
 

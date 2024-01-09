@@ -37,7 +37,7 @@ function FunctionAreaContentOrder() {
           <img
             src={"loading.gif"}
             alt={"loading.gif"}
-            className="isTraining-gif"
+            className="is-training-gif"
           ></img>
           <IsTrainingText>演算中</IsTrainingText>
         </Fragment>

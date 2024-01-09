@@ -21,6 +21,9 @@ export const orderListReducer = (state = { data: [] }, action) => {
         error: action.payload,
       };
 
+    case ORDER_LIST.afterUpload:
+      return { ...state, data: [...action.payload, ...state.data] };
+
     case ORDER_LIST.beforeTraining:
       const beforeData = state.data.map((data) =>
         data.id === action.payload.orderId
@@ -69,34 +72,10 @@ export const orderListReducer = (state = { data: [] }, action) => {
       return { ...state, data: [action.payload, ...state.data] };
 
     case ORDER_LIST.delete:
-      var data = state.data;
-
-      for (let i = 0; i < action.payload.length; i++) {
-        var deleteData;
-        var deleteIndex;
-        data.forEach((order, index) => {
-          if (order.id === action.payload.at(i)) {
-            deleteData = order;
-            deleteIndex = index;
-          }
-        });
-
-        if (deleteData.is_today_latest) {
-          data = data.map((order, index) => {
-            if (
-              index === deleteIndex + 1 &&
-              order.createdAt.slice(8, 10) === deleteData.createdAt.slice(8, 10)
-            ) {
-              return { ...order, is_today_latest: true };
-            } else {
-              return order;
-            }
-          });
-        }
-
-        data = data.filter((order) => order.id !== action.payload.at(i));
-      }
-      return { ...state, data };
+      const deleteTemp = state.data.filter(
+        (order) => !action.payload.includes(order.id)
+      );
+      return { ...state, data: deleteTemp };
 
     case ORDER_LIST.filter.request:
       return { ...state, loading: true };

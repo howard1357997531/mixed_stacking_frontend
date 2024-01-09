@@ -1,4 +1,4 @@
-.useAfter::after {
+.uploadAfter::after {
     content: "允許格式 : .csv";
     position: absolute;
     top: 80%;
@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #424242;
+    color: #FFDDB0;
     background-color: #616161;
     font-weight: 600;
     z-index: 2;

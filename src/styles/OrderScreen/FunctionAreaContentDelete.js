@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import { Colors } from "../theme";
 
 export const DeleteBox = styled(Box)(({ theme }) => ({
@@ -8,73 +8,63 @@ export const DeleteBox = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
+export const DeleteTitle = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  marginBottom: "5px",
+}));
+
 export const DeleteCount = styled(Typography)(({ theme }) => ({
-  position: "relative",
-  color: "#fff",
+  color: Colors.greyText,
+  marginRight: "10px",
+  padding: "0px 1px",
   fontWeight: 600,
-  backgroundColor: Colors.greyBorder,
-  padding: "5px 10px",
-  textAlign: "center",
 }));
 
 export const DeleteResetBtn = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  right: "10px",
-  transform: "translateY(-50%)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  color: Colors.greyTextBlood,
-  backgroundColor: Colors.purple,
+  color: Colors.lightOrange,
+  backgroundColor: Colors.grey600,
+  borderRadius: "10px",
   width: "40px",
-  height: "75%",
+  height: "25px",
   fontSize: "12px",
   "&:hover": {
     cursor: "pointer",
-    transform: "scale(1.05) translateY(-50%)",
+    transform: "scale(1.05)",
   },
   "&:active": {
-    transform: "scale(0.95) translateY(-50%)",
+    transform: "scale(0.95)",
   },
 }));
 
 export const DeleteSelectBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  paddingRight: "2px",
   flexGrow: 1,
+  width: "100%",
   overflowY: "auto",
 }));
 
-export const DeleteSelectSmBox = styled(Box)(({ theme }) => ({
+export const DeleteSelectSmBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isFirst",
+})(({ theme, isFirst }) => ({
+  boxSizing: "border-box",
   position: "relative",
   display: "flex",
   width: "100%",
   height: "60px",
-  borderBottom: `1px solid ${Colors.greyBorder}`,
-}));
-
-export const DeleteAvatarBox = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  left: "15px",
-  transform: "translateY(-50%)",
-  display: "flex",
-  alignItems: "center",
-}));
-
-export const DeleteAvatar = styled(Avatar)(({ theme }) => ({
-  height: "22px",
-  width: "22px",
-  fontSize: "12px",
-  color: Colors.grey100,
-  backgroundColor: Colors.greyBorder,
-  border: `1px solid ${Colors.greyBorder}`,
-}));
-
-export const AvatarDivider = styled(Box)(({ theme }) => ({
-  height: "2px",
-  width: "10px",
-  margin: "0px 3px",
-  backgroundColor: Colors.greyText,
+  marginTop: !isFirst ? "4px" : "0px",
+  borderRadius: "5px",
+  backgroundColor: Colors.lightOrangeHover,
+  boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  // "&:hover": {
+  //   cursor: "pointer",
+  //   border: `1px solid ${Colors.purple}`,
+  //   boxShadow: `inset 0px 0px 2px ${Colors.purple}`,
+  // },
 }));
 
 export const DeleteOrderName = styled(Typography)(({ theme }) => ({
@@ -84,16 +74,4 @@ export const DeleteOrderName = styled(Typography)(({ theme }) => ({
   width: "100%",
   height: "inherit",
   color: Colors.greyText,
-}));
-
-export const DeletePlusBox = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  right: "40px",
-  transform: "translateY(-50%)",
-  display: "flex",
-  flexDirection: "cloumn",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "90%",
 }));

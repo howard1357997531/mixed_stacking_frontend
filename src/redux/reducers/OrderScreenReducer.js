@@ -13,7 +13,7 @@ export const orderScreen_orderSelectReducer = (
     combineOrderFocusValue: null,
     editId: null,
     editData: null,
-    delete: [],
+    deleteIdArray: [],
   },
   action
 ) => {

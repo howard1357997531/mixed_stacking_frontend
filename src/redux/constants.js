@@ -3,6 +3,7 @@ export const ORDER_LIST = {
   request: "ORDER_LIST_request",
   success: "ORDER_LIST_success",
   fail: "ORDER_LIST_fail",
+  afterUpload: "ORDER_LIST_afterUpload",
   beforeTraining: "ORDER_LIST_beforeTraining",
   afterTraining: "ORDER_LIST_afterTraining",
   aiTrainingStateChange: "ORDER_LIST_aiTrainingStateChange",
