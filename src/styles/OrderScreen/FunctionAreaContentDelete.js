@@ -54,24 +54,17 @@ export const DeleteSelectSmBox = styled(Box, {
   boxSizing: "border-box",
   position: "relative",
   display: "flex",
+  alignItems: "center",
   width: "100%",
   height: "60px",
   marginTop: !isFirst ? "4px" : "0px",
   borderRadius: "5px",
   backgroundColor: Colors.lightOrangeHover,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
-  // "&:hover": {
-  //   cursor: "pointer",
-  //   border: `1px solid ${Colors.purple}`,
-  //   boxShadow: `inset 0px 0px 2px ${Colors.purple}`,
-  // },
 }));
 
-export const DeleteOrderName = styled(Typography)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "inherit",
+export const DeleteOrderName = styled(Box)(({ theme }) => ({
+  marginLeft: "20px",
   color: Colors.greyText,
+  fontWeight: 600,
 }));

@@ -93,6 +93,22 @@ export const orderScreen_orderSelectReducer = (
     case ORDER_SCREEN.finishTrainingEdit:
       return { ...state, name: action.payload };
 
+    case ORDER_SCREEN.selectDelete:
+      let orderId = action.payload.selectId;
+      let name = action.payload.name;
+      const idArray = state.deleteIdArray.map((order) =>
+        parseInt(Object.keys(order).at(0))
+      );
+      if (idArray.includes(orderId)) {
+        var deleteIdArray = state.deleteIdArray.filter(
+          (order) => parseInt(Object.keys(order).at(0)) !== orderId
+        );
+      } else {
+        // [orderId] 可以根據變數的值來動態設定屬性名稱
+        var deleteIdArray = [...state.deleteIdArray, { [orderId]: name }];
+      }
+      return { ...state, deleteIdArray };
+
     case ORDER_SCREEN.orderSelect_reset:
       return {
         mode: "close",

@@ -59,6 +59,7 @@ export const ORDER_SCREEN = {
   multiOrderCreateSelectData: "ORDER_SCREEN_multiOrderCreateSelectData",
   afterTrainingCheck: "ORDER_SCREEN_afterTrainingCheck",
   finishTrainingEdit: "ORDER_SCREEN_finishTrainingEdit",
+  selectDelete: "ORDER_SCREEN_selectDelete",
   // reset
   orderSelect_reset: "ORDER_SCREEN_orderSelect_reset",
 };

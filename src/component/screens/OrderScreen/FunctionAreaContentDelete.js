@@ -21,10 +21,6 @@ function FunctionAreaContentDelete({ orderListData }) {
     (state) => state.orderScreen_orderSelect
   );
 
-  const parseName = (id) => {
-    const [data] = orderListData.filter((order) => order.id === id);
-    return data.name;
-  };
   const resetHandler = () => {
     dispatch({
       type: ORDER_SCREEN.orderSelect,
@@ -33,7 +29,7 @@ function FunctionAreaContentDelete({ orderListData }) {
   };
 
   const deleteHandler = (id) => {
-    dispatch(orderDeleteSelectAction(id, deleteIdArray));
+    dispatch(orderDeleteSelectAction(parseInt(id)));
   };
   return deleteIdArray.length === 0 ? (
     <CenterText text={"尚未選擇"} />
@@ -44,14 +40,14 @@ function FunctionAreaContentDelete({ orderListData }) {
         <DeleteResetBtn onClick={resetHandler}>重置</DeleteResetBtn>
       </DeleteTitle>
 
-      <DeleteSelectBox className="function-order-box">
-        {deleteIdArray.map((id, index) => (
+      <DeleteSelectBox className="multi-create-select-box">
+        {deleteIdArray.map((order, index) => (
           <DeleteSelectSmBox key={index} isFirst={index === 0}>
-            <DeleteOrderName>{parseName(id)}</DeleteOrderName>
+            <DeleteOrderName>{Object.values(order).at(0)}</DeleteOrderName>
 
             <OrderListExeListDelete
               sx={{ color: Colors.grey600 }}
-              onClick={() => deleteHandler(id)}
+              onClick={() => deleteHandler(Object.keys(order).at(0))}
             />
           </DeleteSelectSmBox>
         ))}

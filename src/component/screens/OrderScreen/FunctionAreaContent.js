@@ -49,7 +49,7 @@ function FunctionAreaContent({ orderSelectMode }) {
       orderSelectMode={orderSelectMode}
       className="functionArea-box"
     >
-      {orderListLoading ? (
+      {orderListLoading && orderSelectMode !== "delete" ? (
         <LoadingCircle />
       ) : orderListError ? (
         <ErrorMsgBox />

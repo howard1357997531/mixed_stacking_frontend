@@ -4,7 +4,7 @@ import { Colors } from "../../../styles/theme";
 import { useSelector } from "react-redux";
 
 function FunctionAreaNavTitle({ orderSelectMode }) {
-  const { data } = useSelector((state) => state.orderList);
+  const { loading, data } = useSelector((state) => state.orderList);
   const { mode, orderId } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
@@ -51,7 +51,7 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
     }
   };
 
-  return <Title></Title>;
+  return loading ? null : <Title></Title>;
 }
 
 export default FunctionAreaNavTitle;

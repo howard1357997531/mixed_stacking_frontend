@@ -3,9 +3,10 @@ import {
   AiResultAvatar,
   AiResultBox,
   AiResultSmallBox,
+  AiResultText,
 } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { AiResultAvatarBgcolor } from "../../../tool/func";
 import "./css/FunctionAreaContent.css";
 
@@ -20,18 +21,25 @@ function FunctionAreaContentAiResult() {
   return (
     <AiResultBox>
       {aiResultData.map((result, index) => (
-        <AiResultSmallBox key={index}>
-          <AiResultAvatar
-            sx={{
-              backgroundColor: AiResultAvatarBgcolor(index + 1),
-            }}
-          >
-            {index + 1}
-          </AiResultAvatar>
-          <Typography sx={{ flexGrow: 1, textAlign: "center" }}>
-            {result}
-          </Typography>
-        </AiResultSmallBox>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "33.3%",
+          }}
+        >
+          <AiResultSmallBox key={index}>
+            <AiResultAvatar
+              sx={{
+                backgroundColor: AiResultAvatarBgcolor(index + 1),
+              }}
+            >
+              {index + 1}
+            </AiResultAvatar>
+            <AiResultText>{result}</AiResultText>
+          </AiResultSmallBox>
+        </Box>
       ))}
     </AiResultBox>
   );

@@ -90,7 +90,7 @@ export const SearchSelect = styled(Box)(({ theme }) => ({
   margin: "0px 10px",
   padding: "0px 8px",
   height: "50%",
-  color: Colors.lightOrangeHover,
+  color: Colors.lightOrange,
   backgroundColor: Colors.grey600,
   fontSize: "14px",
   fontWeight: 600,
@@ -188,14 +188,11 @@ export const OrderListDetial = styled(Box, {
   color: Colors.greyText,
   fontWeight: 600,
   backgroundColor: Colors.lightOrangeHover,
-  boxShadow: itemSelect
-    ? `inset 1px 1px 2px ${Colors.purple}, 1px 1px ${Colors.purple}`
-    : "1px 1px rgba(0, 0, 0, 0.2)",
+  border: itemSelect ? `2px solid ${Colors.purple}` : "none",
+  boxShadow: itemSelect ? `none` : "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
-    backgroundColor: Colors.lightOrangeHover,
-    boxShadow: itemSelect
-      ? `inset 1px 1px 2px ${Colors.purple}, 1px 1px ${Colors.purple}`
-      : `1px 1px ${Colors.purple}`,
+    border: itemSelect ? `2px solid ${Colors.purple}` : "none",
+    boxShadow: itemSelect ? `none` : `1px 1px ${Colors.purple}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -467,12 +464,27 @@ export const AiResultBox = styled(Box)(({ theme }) => ({
 export const AiResultSmallBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  width: "33.3%",
-  height: "70px",
+  marginTop: "10px",
+  width: "95%",
+  height: "60px",
+  borderRadius: "10px",
+  backgroundColor: Colors.lightOrangeHover,
 }));
 
 export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   marginLeft: "20px",
+  width: "30px",
+  height: "30px",
+  fontSize: "14px",
+  color: "#fff",
+}));
+
+export const AiResultText = styled(Typography)(({ theme }) => ({
+  flexGrow: 1,
+  textAlign: "center",
+  color: Colors.greyText,
+  fontSize: 18,
+  fontWeight: 600,
 }));
 
 export const MultiCreateBox = styled(Box)(({ theme }) => ({

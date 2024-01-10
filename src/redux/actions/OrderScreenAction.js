@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { domain } from "../../env";
 import { Colors } from "../../styles/theme";
 import { confirmSwal, infoBtnToast, infoToast, timerToast } from "../../swal";
+import { orderListAction } from "./OrderActions";
 
 export const orderlistSelectAction =
   (orderId, aiTrainingState) => (dispatch) => {
@@ -26,34 +27,44 @@ export const orderlistSelectAction =
 export const orderlistFilterAction =
   (state, value, mode) => async (dispatch) => {
     try {
-      // dispatch({
-      //   type: ORDER_SCREEN.orderSelect,
-      //   payload: { mode: "close", orderId: null },
-      // });
-
       dispatch({ type: ORDER_LIST.filter.request });
 
       const { data } = await axios.get(
-        `${domain}/api/filterOrderData?state=${state}&value=${value}`
+        `${domain}/api/filterOrderData?state=${state}&value=${value}&mode=${mode}`
       );
 
-      dispatch({ type: ORDER_LIST.filter.success, payload: data });
-
-      if (data.length !== 0 && ["orderDetail", "aiResult"].includes(mode)) {
-        dispatch({
-          type: ORDER_SCREEN.orderSelect,
-          payload: { orderId: data.at(0).id },
-        });
+      if (mode === "MultipleOrder") {
       } else {
-        dispatch({
-          type: ORDER_SCREEN.orderSelect,
-          payload: { orderId: null },
-        });
+        dispatch({ type: ORDER_LIST.filter.success, payload: data });
+      }
+
+      if (data.length !== 0) {
+        if (mode === "close") {
+          dispatch({
+            type: ORDER_SCREEN.orderSelect,
+            payload: { orderId: null },
+          });
+        } else if (["orderDetail", "aiResult"].includes(mode)) {
+          dispatch({
+            type: ORDER_SCREEN.orderSelect,
+            payload: { orderId: data.at(0).id },
+          });
+        } else if (mode === "edit") {
+          dispatch({
+            type: ORDER_SCREEN.orderSelect,
+            payload: { editId: null, editData: null },
+          });
+        } else if (mode === "delete") {
+        }
       }
     } catch (error) {
       dispatch({ type: ORDER_LIST.filter.fail });
     }
   };
+
+export const removeFilterAction = (mode) => (dispatch) => {
+  dispatch(orderListAction());
+};
 
 export const orderEditSelectAction =
   (editId, orderListData, aiTraining_state) => (dispatch) => {
@@ -195,21 +206,19 @@ export const orderEditAction =
   };
 
 export const orderDeleteSelectAction =
-  (orderId, orderDelete, aiTraining_state) => (dispatch) => {
+  (selectId, name = null, aiTraining_state = null) =>
+  (dispatch) => {
     if (aiTraining_state === "is_training") {
       timerToast("warning", "演算中，不能刪除");
       return;
     }
-    if (orderDelete.includes(orderId)) {
-      var deleteIdArray = orderDelete.filter((id) => id !== orderId);
-    } else {
-      var deleteIdArray = [...orderDelete, orderId];
-    }
+    // if (orderDelete.includes(orderId)) {
+    //   var deleteIdArray = orderDelete.filter((id) => id !== orderId);
+    // } else {
+    //   var deleteIdArray = [...orderDelete, orderId];
+    // }
 
-    dispatch({
-      type: ORDER_SCREEN.orderSelect,
-      payload: { deleteIdArray },
-    });
+    dispatch({ type: ORDER_SCREEN.selectDelete, payload: { selectId, name } });
   };
 
 export const orderDeleteAction = (orderId) => async (dispatch) => {

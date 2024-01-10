@@ -49,19 +49,22 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
     } else if (orderSelectMode === "edit") {
       return [editId];
     } else if (orderSelectMode === "delete") {
-      return deleteIdArray;
+      const deleteArray = deleteIdArray.map((order) =>
+        parseInt(Object.keys(order).at(0))
+      );
+      return deleteArray;
     }
   };
 
-  const orderListModeHandler = (orderId, aiTraining_state) => {
+  const orderListModeHandler = (selectId, name, aiTraining_state) => {
     if (["close", "orderDetail", "aiResult"].includes(orderSelectMode)) {
-      dispatch(orderlistSelectAction(orderId, aiTraining_state));
+      dispatch(orderlistSelectAction(selectId, aiTraining_state));
     } else if (orderSelectMode === "edit") {
-      dispatch(orderEditSelectAction(orderId, orderListData, aiTraining_state));
-    } else if (orderSelectMode === "delete") {
       dispatch(
-        orderDeleteSelectAction(orderId, deleteIdArray, aiTraining_state)
+        orderEditSelectAction(selectId, orderListData, aiTraining_state)
       );
+    } else if (orderSelectMode === "delete") {
+      dispatch(orderDeleteSelectAction(selectId, name, aiTraining_state));
     }
   };
 
@@ -83,7 +86,11 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
                 key={order.id}
                 itemSelect={selectId().includes(order.id)}
                 onClick={() => {
-                  orderListModeHandler(order.id, order.aiTraining_state);
+                  orderListModeHandler(
+                    order.id,
+                    order.name,
+                    order.aiTraining_state
+                  );
                 }}
               >
                 <OrderListName>

@@ -101,9 +101,9 @@ function OrderList(props) {
     setIsFilter(false);
     dispatch({
       type: ORDER_SCREEN.orderSelect,
-      payload: { mode: "close", orderId: null },
+      payload: { orderId: null },
     });
-    dispatch(orderListAction());
+    dispatch(orderListAction(orderSelectMode));
   };
 
   useEffect(() => {
@@ -129,7 +129,7 @@ function OrderList(props) {
       <Typography
         sx={{
           position: "absolute",
-          top: "-10px",
+          top: "-17px",
           left: "50%",
           transform: "translateX(-50%)",
           padding: "2px 15px 0px",
@@ -138,8 +138,8 @@ function OrderList(props) {
           fontSize: 22,
           fontWeight: 600,
           zIndex: 0.5,
-          borderTopLeftRadius: "20px",
-          borderTopRightRadius: "20px",
+          borderTopLeftRadius: "25px",
+          borderTopRightRadius: "25px",
         }}
       >
         {titleName(orderSelectMode)}
@@ -155,7 +155,7 @@ function OrderList(props) {
             <Input
               sx={{
                 width: "200px",
-                color: Colors.lightOrangeHover,
+                color: Colors.lightOrange,
                 backgroundColor: Colors.grey600,
               }}
               endAdornment={
@@ -164,7 +164,7 @@ function OrderList(props) {
                     sx={{
                       width: "22px",
                       height: "22px",
-                      backgroundColor: Colors.lightOrangeHover,
+                      backgroundColor: Colors.lightOrange,
                       marginRight: "6px",
                       "&:hover": {
                         cursor: "pointer",
@@ -185,7 +185,7 @@ function OrderList(props) {
               type="date"
               style={{
                 width: "140px",
-                color: Colors.lightOrangeHover,
+                color: Colors.lightOrange,
                 backgroundColor: Colors.grey600,
                 fontWeight: 600,
               }}

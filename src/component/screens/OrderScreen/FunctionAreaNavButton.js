@@ -7,14 +7,16 @@ import { MultiOrderDeleteBtn } from "../../../styles/OrderScreen/FunctionAreaCon
 
 function FunctionAreaNavButton({ orderSelectMode }) {
   const dispatch = useDispatch();
-  const { orderId } = useSelector((state) => state.orderScreen_orderSelect);
+  const { loading, data } = useSelector((state) => state.orderList);
+  const { orderId, aiTrainingState, combineOrder, deleteIdArray } = useSelector(
+    (state) => state.orderScreen_orderSelect
+  );
+
+  const loadingNotShow = loading && orderSelectMode !== "delete";
 
   const { orderId: multiOrderId } = useSelector(
     (state) => state.multipleOrderList
   );
-
-  const { aiTrainingState, combineOrder, editData, deleteIdArray } =
-    useSelector((state) => state.orderScreen_orderSelect);
 
   const buttonHandler = (mode, aiTraining_state) => {
     if (mode === "orderDetail") {
@@ -24,7 +26,9 @@ function FunctionAreaNavButton({ orderSelectMode }) {
     } else if (mode === "multipleOrderCreate") {
       var orderSelectData = combineOrder;
     } else if (mode === "delete") {
-      var orderSelectData = deleteIdArray;
+      var orderSelectData = deleteIdArray.map((order) =>
+        parseInt(Object.keys(order).at(0))
+      );
     }
     dispatch(
       functionAreaNavButtonAction(mode, orderSelectData, aiTraining_state)
@@ -46,10 +50,11 @@ function FunctionAreaNavButton({ orderSelectMode }) {
     },
   };
 
-  return (
+  return loadingNotShow ? null : (
     <Fragment>
       {orderSelectMode === "orderDetail" &&
-      aiTrainingState === "no_training" ? (
+      aiTrainingState === "no_training" &&
+      orderId ? (
         <FunctionAreaNavBtn
           disableElevation
           variant="contained"
@@ -61,7 +66,8 @@ function FunctionAreaNavButton({ orderSelectMode }) {
       ) : null}
 
       {orderSelectMode === "orderDetail" &&
-      aiTrainingState === "finish_training" ? (
+      aiTrainingState === "finish_training" &&
+      orderId ? (
         <FunctionAreaNavBtn
           disableElevation
           variant="contained"

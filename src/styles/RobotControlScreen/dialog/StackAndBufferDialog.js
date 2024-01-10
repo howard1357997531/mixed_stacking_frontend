@@ -76,4 +76,5 @@ export const BufferInfoSmBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "50%",
   height: "100%",
+  fontSize: "20px",
 }));

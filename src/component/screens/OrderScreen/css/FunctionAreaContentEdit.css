@@ -1,18 +1,8 @@
-.edit-title-input {
-    width: 100px;
-    height: 16px;
-    color: #424242;
-    margin-left: 10px;
-    /* padding-bottom: 6px; */
-    font-size: large;
-    /* border: none;
-    border-bottom: 1px solid #424242; */
-}
-
 .edit-item-input {
     width: 30px;
     height: 15px;
-    color: #424242;
+    border: none;
+    font-weight: 600;
 }
 
 .edit-item-input::-webkit-inner-spin-button,

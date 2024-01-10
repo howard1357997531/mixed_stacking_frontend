@@ -13,9 +13,10 @@ import {
   OrderDetailBox,
   OrderDetailSmBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
-import { Input, Stack } from "@mui/material";
+import { Input, Stack, Tooltip } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { StyleEditIcon } from "../../../styles/OrderScreen/FunctionAreaContentEdit";
+import InfoIcon from "@mui/icons-material/Info";
 
 function FunctionAreaContentEdit() {
   const dispatch = useDispatch();
@@ -70,7 +71,7 @@ function FunctionAreaContentEdit() {
             width: "200px",
             height: "40px",
             color: Colors.lightOrange,
-            backgroundColor: Colors.grey600,
+            backgroundColor: Colors.darkGreen,
             fontWeight: 600,
           }}
           defaultValue={editData.name}
@@ -80,6 +81,9 @@ function FunctionAreaContentEdit() {
 
       <DescTextBox mt={1}>
         <DescText isTitle={true}>詳細資訊</DescText>
+        <Tooltip title="綠色部分為可修改部分" placement="right" arrow>
+          <InfoIcon sx={{ marginLeft: "4px", color: Colors.darkGreen }} />
+        </Tooltip>
       </DescTextBox>
 
       <OrderContentTitleBox>
@@ -104,6 +108,10 @@ function FunctionAreaContentEdit() {
                 className={`edit-item-input ${order.name}`}
                 defaultValue={editData[order.name]}
                 onChange={countHandler}
+                style={{
+                  color: Colors.lightOrange,
+                  backgroundColor: Colors.darkGreen,
+                }}
               ></input>
             </OrderDetailSmBox>
           </OrderDetailBox>
