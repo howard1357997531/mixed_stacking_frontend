@@ -23,15 +23,17 @@ function OrderDetailDialogTabsAiResult({ source, orderId, orderSelectData }) {
     <OrderBox className="order-dialog">
       {orderData.aiTraining_order.split(",").map((order, index) => (
         <AiResultBox key={index}>
-          <AiResultSmBox cumColor={AiResultAvatarBgcolor(index + 1)}>
-            <AiResultOrder cumColor={AiResultAvatarBgcolor(index + 1)}>
-              <StyleAvatar cumColor={AiResultAvatarBgcolor(index + 1)}>
+          <AiResultSmBox>
+            <AiResultOrder>
+              <StyleAvatar
+                sx={{
+                  backgroundColor: AiResultAvatarBgcolor(index + 1),
+                }}
+              >
                 {index + 1}
               </StyleAvatar>
             </AiResultOrder>
-            <AiResultName cumColor={AiResultAvatarBgcolor(index + 1)}>
-              {order}
-            </AiResultName>
+            <AiResultName>{order}</AiResultName>
           </AiResultSmBox>
         </AiResultBox>
       ))}

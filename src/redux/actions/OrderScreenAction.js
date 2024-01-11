@@ -9,11 +9,13 @@ import {
 import Swal from "sweetalert2";
 import { domain } from "../../env";
 import { Colors } from "../../styles/theme";
-import { confirmSwal, infoBtnToast, infoToast, timerToast } from "../../swal";
+import { confirmSwal, infoToast, timerToast } from "../../swal";
 import { orderListAction } from "./OrderActions";
 
 export const orderlistSelectAction =
-  (orderId, aiTrainingState) => (dispatch) => {
+  (orderId, name, aiTrainingState) => (dispatch) => {
+    dispatch({ type: ORDER_LIST.revise, payload: { name } });
+
     dispatch({
       type: ORDER_SCREEN.orderSelect,
       payload: {
@@ -27,13 +29,27 @@ export const orderlistSelectAction =
 export const orderlistFilterAction =
   (state, value, mode) => async (dispatch) => {
     try {
-      dispatch({ type: ORDER_LIST.filter.request });
+      if (mode === "multipleOrder") {
+        dispatch({
+          type: MULTIPLE_ORDER_LIST.revise,
+          payload: { orderId: null },
+        });
+        dispatch({ type: MULTIPLE_ORDER_LIST.filter.request });
+      } else {
+        dispatch({
+          type: ORDER_SCREEN.orderSelect,
+          payload: { orderId: null },
+        });
+
+        dispatch({ type: ORDER_LIST.filter.request });
+      }
 
       const { data } = await axios.get(
         `${domain}/api/filterOrderData?state=${state}&value=${value}&mode=${mode}`
       );
 
-      if (mode === "MultipleOrder") {
+      if (mode === "multipleOrder") {
+        dispatch({ type: MULTIPLE_ORDER_LIST.filter.success, payload: data });
       } else {
         dispatch({ type: ORDER_LIST.filter.success, payload: data });
       }
@@ -46,6 +62,10 @@ export const orderlistFilterAction =
           });
         } else if (["orderDetail", "aiResult"].includes(mode)) {
           dispatch({
+            type: ORDER_LIST.revise,
+            payload: { name: data.at(0).name },
+          });
+          dispatch({
             type: ORDER_SCREEN.orderSelect,
             payload: { orderId: data.at(0).id },
           });
@@ -55,6 +75,16 @@ export const orderlistFilterAction =
             payload: { editId: null, editData: null },
           });
         } else if (mode === "delete") {
+        } else if (mode === "multipleOrder") {
+          dispatch({
+            type: MULTIPLE_ORDER_LIST.revise,
+            payload: { orderId: data.at(0).id, name: data.at(0).name },
+          });
+
+          dispatch({
+            type: DIALOG.order,
+            payload: { multiOrderId: data.at(0).id },
+          });
         }
       }
     } catch (error) {
@@ -225,14 +255,15 @@ export const orderDeleteAction = (orderId) => async (dispatch) => {
   const { data } = axios.post(`${domain}/api/deleteOrder/`, { orderId });
 };
 
-export const multipleOrderListSelectAction = (multiOrderId) => (dispatch) => {
-  dispatch({
-    type: MULTIPLE_ORDER_LIST.orderId,
-    payload: multiOrderId,
-  });
+export const multipleOrderListSelectAction =
+  (multiOrderId, name) => (dispatch) => {
+    dispatch({
+      type: MULTIPLE_ORDER_LIST.revise,
+      payload: { orderId: multiOrderId, name },
+    });
 
-  dispatch({ type: DIALOG.order, payload: { multiOrderId } });
-};
+    dispatch({ type: DIALOG.order, payload: { multiOrderId } });
+  };
 
 export const multipleOrderDeleteAction = (orderId) => (dispatch) => {
   confirmSwal("確定刪除?").then((result) => {
@@ -256,16 +287,15 @@ export const multipleOrderDeleteAction = (orderId) => (dispatch) => {
   });
 };
 
-export const multipleOrderCreateAction = (orderId) => (dispatch) => {
+export const multipleOrderCreateAction = (orderId, name) => (dispatch) => {
   dispatch({
     type: ORDER_SCREEN.multiOrderCreateSelectData,
-    payload: orderId,
+    payload: { orderId, name },
   });
 };
 
 export const multipleOrderCreateInputChangeAction =
   (index, times, combineOrderTemp) => (dispatch) => {
-    // console.log(inedx, times, combineOrder);
     const orderTemp = [...combineOrderTemp].at(index).split("*");
     if (times === "1") {
       orderTemp.splice(1, 1);
@@ -357,19 +387,20 @@ export const functionAreaModeAction =
       });
       return;
     }
+
     dispatch({
       type: ORDER_SCREEN.orderSelect,
       payload: { mode: mode === "orderDetail" ? "close" : mode },
     });
 
-    if (mode === "multipleOrder") {
-      dispatch({
-        type: MULTIPLE_ORDER_LIST.orderId,
-        payload: multipleOrderListData[0].id,
-      });
-      const multiOrderId = multipleOrderListData[0].id;
-      dispatch({ type: DIALOG.order, payload: { multiOrderId } });
-    }
+    // if (mode === "multipleOrder") {
+    //   dispatch({
+    //     type: MULTIPLE_ORDER_LIST.orderId,
+    //     payload: multipleOrderListData[0].id,
+    //   });
+    //   const multiOrderId = multipleOrderListData[0].id;
+    //   dispatch({ type: DIALOG.order, payload: { multiOrderId } });
+    // }
   };
 
 export const functionAreaNavButtonAction =

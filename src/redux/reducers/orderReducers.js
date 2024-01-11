@@ -1,6 +1,6 @@
 import { MULTIPLE_ORDER_LIST, ORDER_LIST } from "../constants";
 
-export const orderListReducer = (state = { data: [] }, action) => {
+export const orderListReducer = (state = { data: [], name: "" }, action) => {
   switch (action.type) {
     case ORDER_LIST.request:
       return {
@@ -20,6 +20,9 @@ export const orderListReducer = (state = { data: [] }, action) => {
         loading: false,
         error: action.payload,
       };
+
+    case ORDER_LIST.revise:
+      return { ...state, ...action.payload };
 
     case ORDER_LIST.afterUpload:
       return { ...state, data: [...action.payload, ...state.data] };
@@ -92,7 +95,7 @@ export const orderListReducer = (state = { data: [] }, action) => {
 };
 
 export const multipleOrderListReducer = (
-  state = { data: [], orderId: "" },
+  state = { data: [], orderId: "", name: "" },
   action
 ) => {
   switch (action.type) {
@@ -182,6 +185,14 @@ export const multipleOrderListReducer = (
 
       return { ...state, data, orderId: null };
 
+    case MULTIPLE_ORDER_LIST.filter.request:
+      return { ...state, loading: true };
+
+    case MULTIPLE_ORDER_LIST.filter.success:
+      return { ...state, loading: false, data: action.payload };
+
+    case MULTIPLE_ORDER_LIST.filter.fail:
+      return { ...state, loading: false };
     default:
       return state;
   }

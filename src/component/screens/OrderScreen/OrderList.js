@@ -27,7 +27,10 @@ import { Colors } from "../../../styles/theme";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import aos from "aos";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { orderListAction } from "../../../redux/actions/OrderActions";
+import {
+  multipleOrderListAction,
+  orderListAction,
+} from "../../../redux/actions/OrderActions";
 
 function OrderList(props) {
   const dispatch = useDispatch();
@@ -99,11 +102,11 @@ function OrderList(props) {
 
   const removeFilterHandler = () => {
     setIsFilter(false);
-    dispatch({
-      type: ORDER_SCREEN.orderSelect,
-      payload: { orderId: null },
-    });
-    dispatch(orderListAction(orderSelectMode));
+    if (orderSelectMode === "multipleOrder") {
+      dispatch(multipleOrderListAction());
+    } else {
+      dispatch(orderListAction(orderSelectMode));
+    }
   };
 
   useEffect(() => {

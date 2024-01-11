@@ -7,6 +7,7 @@ export const orderScreen_orderSelectReducer = (
     orderId: null,
     aiTrainingState: null,
     combineOrder: [],
+    combineOrderName: [],
     combineOrderSelectBool: false,
     combineOrderFocusBool: false,
     combineOrderFocusIndex: 0,
@@ -51,26 +52,35 @@ export const orderScreen_orderSelectReducer = (
       return { ...state, ...action.payload };
 
     case ORDER_SCREEN.multiOrderCreateSelectData:
+      let multiOrderId = action.payload.orderId;
+      let multiName = action.payload.name;
       var combineOrder = [...state.combineOrder];
       if (combineOrder.length === 0) {
-        return { ...state, combineOrder: [String(action.payload)] };
+        return {
+          ...state,
+          combineOrder: [String(multiOrderId)],
+          combineOrderName: [multiName],
+        };
       } else {
         const lastNum = combineOrder.at(-1).split("*").at(0);
-        if (parseInt(lastNum) === action.payload) {
+        if (parseInt(lastNum) === multiOrderId) {
           if (combineOrder.at(-1).includes("*")) {
             const times = parseInt(combineOrder.at(-1).split("*").at(1)) + 1;
             combineOrder.splice(-1, 1, lastNum + "*" + String(times));
           } else {
             combineOrder.splice(-1, 1, lastNum + "*2");
           }
+          var combineOrderName = state.combineOrderName;
         } else {
-          combineOrder.push(String(action.payload));
+          combineOrder.push(String(multiOrderId));
+          var combineOrderName = [...state.combineOrderName, multiName];
         }
       }
 
       return {
         ...state,
         combineOrder,
+        combineOrderName,
         // ---------------
         combineOrderFocusIndex: combineOrder.length - 1,
       };

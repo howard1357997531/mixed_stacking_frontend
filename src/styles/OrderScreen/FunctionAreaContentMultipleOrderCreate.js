@@ -58,7 +58,7 @@ export const MultiCreateSelectSmBox = styled(Box, {
   height: "60px",
   marginBottom: "5px",
   borderRadius: "5px",
-  backgroundColor: isFouce ? Colors.purple : Colors.lightOrangeHover,
+  backgroundColor: Colors.lightOrangeHover,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
 }));
 
@@ -71,34 +71,29 @@ export const MultiCreateAvatarBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
 }));
 
-export const MultiCreateAvatar = styled(Avatar, {
-  shouldForwardProp: (prop) => prop !== "isFouce",
-})(({ theme, isFouce }) => ({
+export const MultiCreateAvatar = styled(Avatar)(({ theme }) => ({
   height: "22px",
   width: "22px",
   fontSize: "12px",
-  color: isFouce ? Colors.purple : Colors.lightOrangeHover,
-  backgroundColor: isFouce ? Colors.lightOrangeHover : Colors.purple,
+  color: Colors.lightOrangeHover,
+  backgroundColor: Colors.purple,
 }));
 
-export const AvatarDivider = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isFouce",
-})(({ theme, isFouce }) => ({
+export const AvatarDivider = styled(Box)(({ theme }) => ({
   height: "2px",
   width: "10px",
   margin: "0px 3px",
-  backgroundColor: isFouce ? Colors.lightOrangeHover : Colors.purple,
+  backgroundColor: Colors.purple,
 }));
 
-export const MultiCreateOrderName = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== "isFouce",
-})(({ theme, isFouce }) => ({
+export const MultiCreateOrderName = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
   height: "inherit",
-  color: isFouce ? Colors.lightOrangeHover : Colors.greyText,
+  color: Colors.greyText,
+  fontWeight: 600,
 }));
 
 export const MultiCreatePlusBox = styled(Box)(({ theme }) => ({

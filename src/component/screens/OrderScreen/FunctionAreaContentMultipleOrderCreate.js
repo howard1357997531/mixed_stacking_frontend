@@ -22,10 +22,11 @@ import { ORDER_SCREEN } from "../../../redux/constants";
 import "./css/FunctionAreaContentMultipleOrderCreate.css";
 import { Colors } from "../../../styles/theme";
 
-function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
+function FunctionAreaContentMultipleOrderCreate() {
   const dispatch = useDispatch();
   const {
     combineOrder,
+    combineOrderName,
     combineOrderSelectBool,
     combineOrderFocusBool,
     combineOrderFocusIndex,
@@ -44,17 +45,8 @@ function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
     var parseIndex2 = (index) => indexArray[index];
   }
 
-  const parseId = (id) => {
-    return parseInt(id.split("*").at(0));
-  };
-
   const parseTimes = (times) => {
     return times.includes("*") ? parseInt(times.split("*").at(1)) : 1;
-  };
-
-  const parseName = (orderId) => {
-    let [filterData] = orderListData.filter((order) => order.id === orderId);
-    return filterData;
   };
 
   const parseCount = (orders) => {
@@ -79,61 +71,42 @@ function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
     }
   };
 
-  const [focusValue, setFocusValue] = useState(0);
-
   // focus blur 單一動作只會觸發一次
   // 不知為啥 fouce 裡面不能使用 dispatch
   const inputFocusHandler = (e, index) => {
     if (e.target.value !== "") {
-      setFocusValue(index);
+      // setFocusValue(index);
     }
   };
 
-  // useEffect(() => {
-  //   console.log(focusValue);
-  //   if (focusValue !== "") {
-  //     dispatch({
-  //       type: ORDER_SCREEN.orderSelect,
-  //       payload: {
-  //         combineOrderFocusIndex: focusValue,
-  //       },
-  //     });
-  //   }
-  // }, [focusValue]);
-
   const inputBlurHandler = (e, index) => {
-    setFocusValue(null);
     if (e.target.value === "") {
       dispatch(multipleOrderCreateInputChangeAction(index, "1", combineOrder));
     }
   };
 
   const resetHandler = () => {
-    // combineOrderFocusIndex要歸0,因為預設是會fouce第一個
     dispatch({
       type: ORDER_SCREEN.orderSelect,
-      payload: { combineOrder: [], combineOrderFocusIndex: 0 },
+      payload: {
+        combineOrder: [],
+        combineOrderName: [],
+        combineOrderFocusIndex: 0, // 要歸0,因為預設是會fouce第一個
+      },
     });
   };
 
   const deleteHandler = (index) => {
-    console.log(focusValue);
     dispatch(multipleOrderCreateDeleteAction(index, combineOrder));
   };
 
   const inputFocusRef = useRef(null);
   const inputNoFocusRef = useRef(null);
   useEffect(() => {
-    if (combineOrder.length !== 0 && combineOrderFocusIndex) {
+    if (combineOrder.length !== 0 && combineOrderFocusIndex !== null) {
       inputFocusRef.current.focus();
     }
   }, [combineOrderFocusBool]);
-
-  useEffect(() => {
-    if (combineOrder.length !== 0) {
-      setFocusValue(combineOrderFocusIndex);
-    }
-  }, [combineOrderFocusIndex]);
 
   return combineOrder.length === 0 ? (
     <CenterText text={"尚未選擇工單"} />
@@ -146,23 +119,19 @@ function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
 
       <MultiCreateSelectBox className="multi-create-select-box">
         {combineOrder.map((order, index) => (
-          <MultiCreateSelectSmBox key={index} isFouce={index === focusValue}>
+          <MultiCreateSelectSmBox key={index}>
             <MultiCreateAvatarBox>
-              <MultiCreateAvatar isFouce={index === focusValue}>
-                {parseIndex(index)}
-              </MultiCreateAvatar>
+              <MultiCreateAvatar>{parseIndex(index)}</MultiCreateAvatar>
               {order.includes("*") ? (
                 <>
-                  <AvatarDivider isFouce={index === focusValue} />
-                  <MultiCreateAvatar isFouce={index === focusValue}>
-                    {parseIndex2(index)}
-                  </MultiCreateAvatar>
+                  <AvatarDivider />
+                  <MultiCreateAvatar>{parseIndex2(index)}</MultiCreateAvatar>
                 </>
               ) : null}
             </MultiCreateAvatarBox>
 
-            <MultiCreateOrderName isFouce={index === focusValue}>
-              {parseName(parseId(order)).name}
+            <MultiCreateOrderName>
+              {combineOrderName[index]}
             </MultiCreateOrderName>
 
             <input
@@ -178,24 +147,13 @@ function FunctionAreaContentMultipleOrderCreate({ orderListData }) {
                   : inputNoFocusRef
               }
               style={{
-                color:
-                  index === focusValue
-                    ? Colors.lightOrangeHover
-                    : Colors.purple,
-                border:
-                  index === focusValue
-                    ? `2px solid ${Colors.lightOrangeHover}`
-                    : `2px solid ${Colors.purple}`,
+                color: Colors.grey600,
+                border: `1px solid ${Colors.grey600}`,
               }}
             ></input>
 
             <OrderListExeListDelete
-              sx={{
-                color:
-                  index === focusValue
-                    ? Colors.lightOrangeHover
-                    : Colors.purple,
-              }}
+              sx={{ color: Colors.grey600 }}
               onClick={() => deleteHandler(index)}
             />
           </MultiCreateSelectSmBox>

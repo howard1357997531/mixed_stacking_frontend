@@ -4,22 +4,11 @@ import { Colors } from "../../../styles/theme";
 import { useSelector } from "react-redux";
 
 function FunctionAreaNavTitle({ orderSelectMode }) {
-  const { loading, data } = useSelector((state) => state.orderList);
+  const { loading, data, name } = useSelector((state) => state.orderList);
   const { mode, orderId } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
-  const { data: multiData, orderId: multiOrderId } = useSelector(
-    (state) => state.multipleOrderList
-  );
-
-  var name = "";
-  if (data && orderId && mode === "orderDetail") {
-    const [temp] = data.filter((order) => order.id === orderId);
-    name = temp.name;
-  } else if (multiData && multiOrderId && mode === "multipleOrder") {
-    const [temp] = multiData.filter((order) => order.id === multiOrderId);
-    name = temp.name;
-  }
+  const { name: multiName } = useSelector((state) => state.multipleOrderList);
 
   const titleArray = [
     "orderDetail",
@@ -32,7 +21,7 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
   const titleName = {
     orderDetail: name,
     aiResult: "AI 演算結果",
-    multipleOrder: name,
+    multipleOrder: multiName,
     multipleOrderCreate: "",
     edit: "",
     delete: "",

@@ -3,6 +3,7 @@ export const ORDER_LIST = {
   request: "ORDER_LIST_request",
   success: "ORDER_LIST_success",
   fail: "ORDER_LIST_fail",
+  revise: "ORDER_LIST_revise",
   afterUpload: "ORDER_LIST_afterUpload",
   beforeTraining: "ORDER_LIST_beforeTraining",
   afterTraining: "ORDER_LIST_afterTraining",
@@ -20,13 +21,18 @@ export const ORDER_LIST = {
 
 // multipleOrderList
 export const MULTIPLE_ORDER_LIST = {
-  revise: "MULTIPLE_ORDER_LIST_revise",
   request: "MULTIPLE_ORDER_LIST_request",
   success: "MULTIPLE_ORDER_LIST_success",
   fail: "MULTIPLE_ORDER_LIST_fail",
+  revise: "MULTIPLE_ORDER_LIST_revise",
   orderId: "MULTIPLE_ORDER_LIST_orderId",
   addData: "MULTIPLE_ORDER_LIST_addData",
   deleteData: "MULTIPLE_ORDER_LIST_deleteData",
+  filter: {
+    request: "MULTIPLE_ORDER_LIST_filter_request",
+    success: "MULTIPLE_ORDER_LIST_filter_success",
+    fail: "MULTIPLE_ORDER_LIST_filter_fail",
+  },
 };
 
 // dialog

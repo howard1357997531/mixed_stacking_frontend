@@ -49,7 +49,8 @@ function FunctionAreaContent({ orderSelectMode }) {
       orderSelectMode={orderSelectMode}
       className="functionArea-box"
     >
-      {orderListLoading && orderSelectMode !== "delete" ? (
+      {orderListLoading &&
+      !["multipleOrderCreate", "delete"].includes(orderSelectMode) ? (
         <LoadingCircle />
       ) : orderListError ? (
         <ErrorMsgBox />

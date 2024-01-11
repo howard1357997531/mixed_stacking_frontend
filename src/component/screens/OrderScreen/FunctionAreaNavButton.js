@@ -7,16 +7,16 @@ import { MultiOrderDeleteBtn } from "../../../styles/OrderScreen/FunctionAreaCon
 
 function FunctionAreaNavButton({ orderSelectMode }) {
   const dispatch = useDispatch();
-  const { loading, data } = useSelector((state) => state.orderList);
+  const { loading } = useSelector((state) => state.orderList);
   const { orderId, aiTrainingState, combineOrder, deleteIdArray } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
-
-  const loadingNotShow = loading && orderSelectMode !== "delete";
-
   const { orderId: multiOrderId } = useSelector(
     (state) => state.multipleOrderList
   );
+
+  const loadingNotShow =
+    loading && !["multipleOrderCreate", "delete"].includes(orderSelectMode);
 
   const buttonHandler = (mode, aiTraining_state) => {
     if (mode === "orderDetail") {
@@ -33,21 +33,6 @@ function FunctionAreaNavButton({ orderSelectMode }) {
     dispatch(
       functionAreaNavButtonAction(mode, orderSelectData, aiTraining_state)
     );
-  };
-
-  const modeData = {
-    aiResult: {
-      name: "清單",
-      bgColor: Colors.grey600,
-    },
-    multipleOrderCreate: {
-      name: "創建",
-      bgColor: Colors.darkGreen,
-    },
-    delete: {
-      name: "刪除",
-      bgColor: Colors.brown,
-    },
   };
 
   return loadingNotShow ? null : (
@@ -78,20 +63,38 @@ function FunctionAreaNavButton({ orderSelectMode }) {
         </FunctionAreaNavBtn>
       ) : null}
 
-      {["multipleOrder", "delete"].includes(orderSelectMode) ? (
+      {orderSelectMode === "multipleOrder" && multiOrderId ? (
         <MultiOrderDeleteBtn
           onClick={() => buttonHandler(orderSelectMode, null)}
         />
       ) : null}
 
-      {["aiResult", "multipleOrderCreate"].includes(orderSelectMode) ? (
+      {orderSelectMode === "delete" && deleteIdArray.length !== 0 ? (
+        <MultiOrderDeleteBtn
+          onClick={() => buttonHandler(orderSelectMode, null)}
+        />
+      ) : null}
+
+      {orderSelectMode === "aiResult" ? (
         <FunctionAreaNavBtn
           disableElevation
           variant="contained"
-          colorData={modeData[orderSelectMode]["bgColor"]}
+          colorData={Colors.grey600}
           onClick={() => buttonHandler(orderSelectMode, null)}
         >
-          {modeData[orderSelectMode]["name"]}
+          清單
+        </FunctionAreaNavBtn>
+      ) : null}
+
+      {orderSelectMode === "multipleOrderCreate" &&
+      combineOrder.length !== 0 ? (
+        <FunctionAreaNavBtn
+          disableElevation
+          variant="contained"
+          colorData={Colors.darkGreen}
+          onClick={() => buttonHandler(orderSelectMode, null)}
+        >
+          創建
         </FunctionAreaNavBtn>
       ) : null}
     </Fragment>

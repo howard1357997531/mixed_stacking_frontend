@@ -1,21 +1,28 @@
 import axios from "axios";
-import { MULTIPLE_ORDER_LIST, ORDER_LIST, ORDER_SCREEN } from "../constants";
+import {
+  DIALOG,
+  MULTIPLE_ORDER_LIST,
+  ORDER_LIST,
+  ORDER_SCREEN,
+} from "../constants";
 import { domain } from "../../env";
 
 export const orderListAction =
   (mode = null) =>
   async (dispatch) => {
     try {
-      dispatch({
-        type: ORDER_LIST.request,
-      });
+      dispatch({ type: ORDER_LIST.request });
 
       const { data } = await axios.get(`${domain}/api/getOrderData/`);
 
-      dispatch({
-        type: ORDER_LIST.success,
-        payload: data,
-      });
+      dispatch({ type: ORDER_LIST.success, payload: data });
+
+      if (data.length !== 0) {
+        dispatch({
+          type: ORDER_LIST.revise,
+          payload: { name: data.at(0).name },
+        });
+      }
 
       if (mode === "close") {
         var output = { orderId: null };
@@ -51,6 +58,18 @@ export const multipleOrderListAction = () => async (dispatch) => {
       type: MULTIPLE_ORDER_LIST.success,
       payload: data,
     });
+
+    if (data.length !== 0) {
+      dispatch({
+        type: MULTIPLE_ORDER_LIST.revise,
+        payload: { orderId: data.at(0).id, name: data.at(0).name },
+      });
+
+      dispatch({
+        type: DIALOG.order,
+        payload: { multiOrderId: data.at(0).id },
+      });
+    }
   } catch (error) {
     dispatch({
       type: MULTIPLE_ORDER_LIST.fail,

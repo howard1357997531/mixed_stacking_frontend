@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import OrderDetailDialogTabsOriginal from "./OrderDetailDialogTabsOriginal";
 import OrderDetailDialogTabsAiResult from "./OrderDetailDialogTabsAiResult";
+import { ThemeProvider, createTheme, styled } from "@mui/material";
+import { Colors } from "../../../styles/theme";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -63,26 +65,34 @@ function OrderDetailDialogTabs(props) {
 
   const addProps = { ...props, orderId, orderSelectData };
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: `${Colors.grey600}`,
+      },
+    },
+  });
+
+  const StyleTab = styled(Tab)({
+    color: Colors.grey600,
+    fontWeight: 600,
+    fontSize: "16px",
+  });
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          variant="fullWidth"
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab
-            label="原始工單"
-            sx={{ fontWeight: 600, fontSize: "16px" }}
-            {...a11yProps(0)}
-          />
-          <Tab
-            label="演算結果"
-            sx={{ fontWeight: 600, fontSize: "16px" }}
-            {...a11yProps(1)}
-          />
-        </Tabs>
+        <ThemeProvider theme={theme}>
+          <Tabs
+            variant="fullWidth"
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <StyleTab label="原始工單" {...a11yProps(0)} />
+            <StyleTab label="演算結果" {...a11yProps(1)} />
+          </Tabs>
+        </ThemeProvider>
       </Box>
       <CustomTabPanel value={value} index={0}>
         <OrderDetailDialogTabsOriginal {...addProps} />

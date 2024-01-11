@@ -16,11 +16,11 @@ import { multipleOrderDeleteAction } from "../../../redux/actions/OrderScreenAct
 import OrderDetailDialog from "../../dialog/orderDetail/OrderDetailDialog";
 import { useState } from "react";
 import { DIALOG } from "../../../redux/constants";
-import "./css/FunctionAreaContentMultipleOrder.css";
 import {
   DescText,
   DescTextBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
+import "./css/FunctionAreaContentMultipleOrder.css";
 
 function FunctionAreaContentMultipleOrder({ orderListData }) {
   const dispatch = useDispatch();
@@ -96,16 +96,6 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
     <OrderListContentMsg variant="h5">已刪除資料</OrderListContentMsg>
   ) : (
     <MultiOrderBox>
-      {/* <MultiOrderTitleBox>
-        <MultiOrderTitle>{multipleOrderData.name}</MultiOrderTitle>
-        <MultiOrderInfo>創建時間: {multipleOrderData.createdAt}</MultiOrderInfo>
-      </MultiOrderTitleBox> */}
-
-      {/* <MultiOrderCount>
-        數量: {parseCount(multipleOrderData.orderSelectId_str)}
-        <MultiOrderDeleteBtn onClick={deleteHandler} />
-      </MultiOrderCount> */}
-
       <DescText>
         總數量 : {parseCount(multipleOrderData.orderSelectId_str)}
       </DescText>
@@ -122,20 +112,29 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
             key={index}
             isFirst={index === 0}
             onClick={() => orderDetailHandler(parseId(order))}
+            className="multiOrder-detail-box"
           >
             <MultiOrderAvatarBox>
-              <MultiOrderAvatar>{parseIndex(index)}</MultiOrderAvatar>
+              <MultiOrderAvatar className="multiOrder-detail-smbox-avatar">
+                {parseIndex(index)}
+              </MultiOrderAvatar>
               {order.includes("*") ? (
                 <>
-                  <AvatarDivider />
-                  <MultiOrderAvatar>{parseIndex2(index)}</MultiOrderAvatar>
+                  <AvatarDivider className="multiOrder-detail-smbox-avatar" />
+                  <MultiOrderAvatar className="multiOrder-detail-smbox-avatar">
+                    {parseIndex2(index)}
+                  </MultiOrderAvatar>
                 </>
               ) : null}
             </MultiOrderAvatarBox>
 
-            <MultiOrderName>{parseName(parseId(order)).name}</MultiOrderName>
+            <MultiOrderName className="multiOrder-detail-smbox-text">
+              {parseName(parseId(order)).name}
+            </MultiOrderName>
 
-            <MultiOrderEachCount>{parseTimes(order)}個</MultiOrderEachCount>
+            <MultiOrderEachCount className="multiOrder-detail-smbox-text">
+              {parseTimes(order)}個
+            </MultiOrderEachCount>
           </MultiOrderDetailSmBox>
         ))}
       </MultiOrderDetailBox>

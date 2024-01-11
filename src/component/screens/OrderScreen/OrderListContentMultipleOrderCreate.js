@@ -34,7 +34,7 @@ function OrderListContentMultipleOrderCreate() {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { orderId, combineOrder } = useSelector(
+  const { combineOrder } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
@@ -59,9 +59,9 @@ function OrderListContentMultipleOrderCreate() {
     return dispatch(aiTrainingAction(orderId, "is_training"));
   };
 
-  const multiOrderSelectHandler = (orderId, aiTraining_state) => {
+  const multiOrderSelectHandler = (orderId, name, aiTraining_state) => {
     if (aiTraining_state === "finish_training") {
-      dispatch(multipleOrderCreateAction(orderId));
+      dispatch(multipleOrderCreateAction(orderId, name));
       dispatch({
         type: ORDER_SCREEN.orderSelect,
         payload: { combineOrderSelectBool: true },
@@ -118,7 +118,11 @@ function OrderListContentMultipleOrderCreate() {
               onMouseEnter={() => mouseEnterHandler(order.id)}
               onMouseLeave={mouseLeaveHandler}
               onClick={() => {
-                multiOrderSelectHandler(order.id, order.aiTraining_state);
+                multiOrderSelectHandler(
+                  order.id,
+                  order.name,
+                  order.aiTraining_state
+                );
               }}
             >
               <OrderListName>

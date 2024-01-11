@@ -17,19 +17,18 @@ export const AiResultBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "33.33%",
-  height: "70px",
+  height: "60px",
+  marginBottom: "10px",
 }));
 
-export const AiResultSmBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "cumColor",
-})(({ theme, cumColor }) => ({
+export const AiResultSmBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "90%",
-  height: "80%",
-  backgroundColor: cumColor,
-  borderRadius: "20px",
+  width: "92%",
+  height: "100%",
+  backgroundColor: Colors.lightOrangeHover,
+  borderRadius: "10px",
 }));
 
 export const AiResultOrder = styled(Box)(({ theme }) => ({
@@ -40,22 +39,23 @@ export const AiResultOrder = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
-export const StyleAvatar = styled(Avatar, {
-  shouldForwardProp: (prop) => prop !== "cumColor",
-})(({ theme, cumColor }) => ({
-  width: "35px",
-  height: "35px",
+export const StyleAvatar = styled(Avatar)(({ theme }) => ({
+  width: "28px",
+  height: "28px",
   backgroundColor: Colors.greyTextBlood,
-  color: cumColor,
-  fontSize: 16,
+  color: "#fff",
+  fontSize: 14,
 }));
 
 export const AiResultName = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "65%",
   height: "100%",
   color: Colors.greyTextBlood,
+  paddingRight: "30px",
+  fontSize: 18,
   fontWeight: 600,
 }));

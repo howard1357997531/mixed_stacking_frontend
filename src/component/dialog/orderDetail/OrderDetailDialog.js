@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { DIALOG } from "../../../redux/constants";
 import OrderDetailDialogTabs from "./OrderDetailDialogTabs";
 import "./css/OrderDetailDialog.css";
+import { Colors } from "../../../styles/theme";
 
 function OrderDetailDialog(props) {
   const dispatch = useDispatch();
@@ -22,7 +23,11 @@ function OrderDetailDialog(props) {
         onClose={handleClose}
       >
         <DialogContent
-          sx={{ backgroundColor: brown[300], padding: 0, width: "600px" }}
+          sx={{
+            backgroundColor: Colors.lightOrange,
+            padding: 0,
+            width: "600px",
+          }}
         >
           <OrderDetailDialogTabs {...props} />
         </DialogContent>

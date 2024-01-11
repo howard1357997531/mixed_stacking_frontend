@@ -11,7 +11,7 @@ import {
 } from "../../../styles/OrderScreen";
 import { multipleOrderListSelectAction } from "../../../redux/actions/OrderScreenAction";
 import { Button } from "@mui/material";
-import { ORDER_SCREEN_orderList } from "../../../redux/constants";
+import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 
 function OrderListContentMultipleOrder() {
@@ -34,34 +34,29 @@ function OrderListContentMultipleOrder() {
     }, {});
   }
 
-  const multipleOrderHandler = (orderId) => {
-    dispatch(multipleOrderListSelectAction(orderId));
-  };
-
-  const createMultipleOrder = () => {
-    dispatch({
-      type: ORDER_SCREEN_orderList.mode,
-      payload: "multipleOrderCreate",
-    });
+  const multipleOrderHandler = (orderId, name) => {
+    dispatch(multipleOrderListSelectAction(orderId, name));
   };
 
   return multipleOrderLoading ? (
     <LoadingCircle />
   ) : multipleOrderError ? (
     <ErrorMsgBox />
-  ) : multipleOrderData.length === 0 ? (
-    <OrderListContentMsg variant="h5">
-      <Button
-        variant="contained"
-        sx={{
-          backgroundColor: Colors.greyBorder,
-          "&:hover": { backgroundColor: Colors.greyText },
-        }}
-        onClick={createMultipleOrder}
-      >
-        建立組合單
-      </Button>
-    </OrderListContentMsg>
+  ) : // ) : !orderId && multipleOrderData.length === 0 ? (
+  //   <OrderListContentMsg variant="h5">
+  //     <Button
+  //       variant="contained"
+  //       sx={{
+  //         backgroundColor: Colors.greyBorder,
+  //         "&:hover": { backgroundColor: Colors.greyText },
+  //       }}
+  //       onClick={createMultipleOrder}
+  //     >
+  //       建立組合單
+  //     </Button>
+  //   </OrderListContentMsg>
+  !orderId ? (
+    <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
   ) : (
     Object.keys(groupedData).map((date) => (
       <Fragment key={date}>
@@ -70,7 +65,7 @@ function OrderListContentMultipleOrder() {
         {groupedData[date].map((order) => (
           <OrderListDetial
             itemSelect={order.id === orderId}
-            onClick={() => multipleOrderHandler(order.id)}
+            onClick={() => multipleOrderHandler(order.id, order.name)}
           >
             <OrderListName itemSelect={order.id === orderId}>
               <OrderListNameSelect itemSelect={order.id === orderId} />

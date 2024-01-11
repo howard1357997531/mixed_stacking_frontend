@@ -38,7 +38,6 @@ function FunctionArea(props) {
         type: ORDER_SCREEN.orderSelect,
         payload: { mode: "close", orderId: null },
       });
-      dispatch({ type: MULTIPLE_ORDER_LIST.orderId, payload: "" });
     }
   };
 

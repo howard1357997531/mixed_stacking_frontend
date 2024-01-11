@@ -77,8 +77,7 @@ export const MultiOrderDetailSmBox = styled(Box, {
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     cursor: "pointer",
-    border: `1px solid ${Colors.purple}`,
-    boxShadow: `inset 0px 0px 2px ${Colors.purple}`,
+    backgroundColor: Colors.purple,
   },
 }));
 
@@ -106,13 +105,14 @@ export const AvatarDivider = styled(Box)(({ theme }) => ({
   backgroundColor: Colors.purple,
 }));
 
-export const MultiOrderName = styled(Typography)(({ theme }) => ({
+export const MultiOrderName = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
   height: "inherit",
   color: Colors.greyText,
+  fontWeight: 600,
 }));
 
 export const MultiOrderEachCount = styled(Typography)(({ theme }) => ({
