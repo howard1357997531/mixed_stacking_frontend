@@ -17,8 +17,100 @@ import {
   OrderListExeListDeleteAnimation,
   OrderListExeListWaitToExecuteAnimation,
 } from "../../../animation";
-import { teal } from "@mui/material/colors";
 
+export const OrderDialogBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  width: "100%",
+  height: "500px",
+}));
+
+export const OrderDialogSearchBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "left",
+  alignItems: " center",
+  paddingLeft: "7px",
+  width: "100%",
+  height: "9%",
+}));
+
+export const OrderDialogSearchSelect = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  margin: "0px 10px",
+  padding: "0px 8px",
+  height: "50%",
+  color: Colors.brown,
+  backgroundColor: Colors.greyText,
+  fontSize: "14px",
+  fontWeight: 600,
+  borderRadius: "10px",
+  boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  "&:hover": {
+    cursor: "pointer",
+    transform: "scale(1.1)",
+    transition: "all .1s ease-in-out",
+  },
+  "&:active": {
+    transform: "scale(.95)",
+  },
+}));
+
+export const OrderDialogListBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  flex: 1,
+  padding: "0px 7px",
+  width: "100%",
+  height: "90%",
+  overflowY: "auto",
+}));
+
+export const OrderDialogDate = styled(Box)(({ theme }) => ({
+  color: Colors.greyTextBlood,
+  padding: "0px 1px",
+  color: Colors.greyTextBlood,
+  fontWeight: 600,
+}));
+
+export const OrderDialogDetial = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "itemSelect",
+})(({ theme, itemSelect }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  height: "60px",
+  margin: "5px 0px",
+  padding: "0px 10px",
+  color: Colors.greyText,
+  fontWeight: 600,
+  backgroundColor: Colors.lightbrown,
+  border: itemSelect ? `3px solid ${Colors.blue700}` : "none",
+  boxShadow: itemSelect ? `none` : "1px 1px rgba(0, 0, 0, 0.2)",
+  "&:hover": {
+    border: itemSelect ? `3px solid ${Colors.blue700}` : "none",
+    boxShadow: itemSelect ? `none` : `1px 1px ${Colors.blue700}`,
+    cursor: "pointer",
+    transform: "scale(1.01)",
+    transition: "scale 0.2s ease-in-out",
+  },
+}));
+
+export const OrderDialogName = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  color: Colors.greyTextBlood,
+  fontWeight: 600,
+}));
+
+export const OrderDialogTime = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  color: Colors.greyTextBlood,
+  fontWeight: 600,
+}));
+
+//
 export const OrderListExeListBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
@@ -243,53 +335,4 @@ export const OrderListExeListButton = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "50%",
-}));
-
-export const SwiperBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "100%",
-}));
-
-export const SwiperTopBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "80%",
-}));
-
-export const SwiperPrevBtn = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "15%",
-  height: "100%",
-}));
-
-export const SwiperNameBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "70%",
-  height: "100%",
-}));
-
-export const SwiperNextBtn = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "15%",
-  height: "100%",
-}));
-
-export const SwiperIndexBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "20%",
 }));

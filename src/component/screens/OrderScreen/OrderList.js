@@ -12,7 +12,6 @@ import {
   SearchSelect,
 } from "../../../styles/OrderScreen";
 import { IconButton, Input, InputAdornment, Typography } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import OrderListDropdownMenu from "./OrderListDropdownMenu";
 import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
 import "./css/OrderList.css";
@@ -25,12 +24,13 @@ import {
 import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import aos from "aos";
+import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
 import {
   multipleOrderListAction,
   orderListAction,
 } from "../../../redux/actions/OrderActions";
+import aos from "aos";
 
 function OrderList(props) {
   const dispatch = useDispatch();
@@ -183,6 +183,7 @@ function OrderList(props) {
               onChange={(e) => setInputName(e.target.value)}
             />
           ) : null}
+
           {selectDate ? (
             <input
               type="date"
@@ -195,6 +196,7 @@ function OrderList(props) {
               onChange={filterDateHandler}
             />
           ) : null}
+
           {selectSearchName ? (
             <SearchSelect
               data-aos="zoom-out"

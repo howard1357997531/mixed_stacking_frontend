@@ -37,7 +37,12 @@ function OrderListDialog(props) {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogContent
-          sx={{ backgroundColor: Colors.brown, padding: 0, width: "400px" }}
+          sx={{
+            backgroundColor: Colors.brown,
+            padding: 0,
+            width: "400px",
+            overflow: "hidden",
+          }}
         >
           {["inactivate", "reset"].includes(props.robotStateMode) &&
           !isDoing ? (

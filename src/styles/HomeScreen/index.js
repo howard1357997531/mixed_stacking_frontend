@@ -6,7 +6,7 @@ export const HomeContainer = styled(Container)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-
+  overflow: "hidden",
   "@media (orientation: landscape)": {
     height: "calc(100vh - 100px)",
   },
@@ -156,4 +156,54 @@ export const HomeDescriptionMobile = styled(Box)(({ theme }) => ({
     width: "100%",
     fontSize: "16px",
   },
+}));
+
+export const HomeHoverArea = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  display: "flex",
+  justifyContent: "center",
+  width: "100%",
+  height: "100%",
+}));
+
+export const LeftArea = styled(Box)(({ theme }) => ({
+  width: "36%",
+  height: "68.5%",
+  marginTop: "70px",
+  cursor: "pointer",
+  // backgroundColor: "blue",
+  // opacity: 0.2,
+}));
+
+export const RightArea = styled(Box)(({ theme }) => ({
+  width: "36%",
+  height: "68.5%",
+  marginTop: "70px",
+  cursor: "pointer",
+  // backgroundColor: "green",
+  // opacity: 0.2,
+}));
+
+export const AllArea = styled(Box)(({ theme }) => ({
+  width: "72%",
+  height: "68.5%",
+  marginTop: "70px",
+  cursor: "pointer",
+  // backgroundColor: "red",
+  // opacity: 0.2,
+}));
+
+export const HomeDescBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  bottom: "10%",
+  left: "50%",
+  transform: "translateX(-50%)",
+  textAlign: "center",
+}));
+
+export const DescText = styled(Typography)(({ theme }) => ({
+  color: Colors.grey600,
+  fontSize: 26,
+  fontWeight: 600,
+  width: "700px",
 }));

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ORDER_SCREEN, TOAST } from "../redux/constants";
 import { InfoBtnToast } from "../swal";
+import HomeImage from "../component/screens/HomeScreen/HomeImage";
 
 function HomeScreen() {
   const theme = useTheme();
@@ -43,7 +44,8 @@ function HomeScreen() {
   return (
     <>
       {matches ? (
-        <HomeDesktop matches={matches} />
+        // <HomeDesktop matches={matches} />
+        <HomeImage />
       ) : (
         <HomeMobile matches={matches} />
       )}
