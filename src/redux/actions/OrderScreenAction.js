@@ -30,17 +30,8 @@ export const orderlistFilterAction =
   (state, value, mode) => async (dispatch) => {
     try {
       if (mode === "multipleOrder") {
-        dispatch({
-          type: MULTIPLE_ORDER_LIST.revise,
-          payload: { orderId: null },
-        });
         dispatch({ type: MULTIPLE_ORDER_LIST.filter.request });
       } else {
-        dispatch({
-          type: ORDER_SCREEN.orderSelect,
-          payload: { orderId: null },
-        });
-
         dispatch({ type: ORDER_LIST.filter.request });
       }
 
@@ -49,9 +40,19 @@ export const orderlistFilterAction =
       );
 
       if (mode === "multipleOrder") {
-        dispatch({ type: MULTIPLE_ORDER_LIST.filter.success, payload: data });
+        dispatch({ type: MULTIPLE_ORDER_LIST.filter.success });
+
+        dispatch({
+          type: ORDER_SCREEN.orderSelect,
+          payload: { multiOrderSearch: data },
+        });
       } else {
-        dispatch({ type: ORDER_LIST.filter.success, payload: data });
+        dispatch({ type: ORDER_LIST.filter.success });
+
+        dispatch({
+          type: ORDER_SCREEN.orderSelect,
+          payload: { orderSearch: data },
+        });
       }
 
       if (data.length !== 0) {
@@ -242,12 +243,6 @@ export const orderDeleteSelectAction =
       timerToast("warning", "演算中，不能刪除");
       return;
     }
-    // if (orderDelete.includes(orderId)) {
-    //   var deleteIdArray = orderDelete.filter((id) => id !== orderId);
-    // } else {
-    //   var deleteIdArray = [...orderDelete, orderId];
-    // }
-
     dispatch({ type: ORDER_SCREEN.selectDelete, payload: { selectId, name } });
   };
 

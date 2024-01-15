@@ -378,60 +378,71 @@ export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
-export const MultipleOrderListBox = styled(Box)(({ theme }) => ({
+export const MultiOrderDetailBox = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "100%",
   overflowY: "auto",
 }));
 
-export const MultipleOrderListDetailBox = styled(Box, {
+export const MultiOrderDetailSmBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isDoing",
 })(({ theme, isDoing }) => ({
+  boxSizing: "border-box",
+  position: "relative",
   display: "flex",
   width: "100%",
   height: "60px",
   backgroundColor: isDoing ? Colors.lightbrown300 : "transparent",
-  // borderBottom: `1px solid ${Colors.lightbrown200}`,
 }));
 
-export const MultipleOrderListDetailOrder = styled(Box)(({ theme }) => ({
-  boxSizing: "border-box",
+export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "15px",
+  transform: "translateY(-50%)",
   display: "flex",
   alignItems: "center",
-  paddingLeft: "20px",
-  width: "25%",
-  height: "100%",
 }));
 
-export const StyleAvatar = styled(Avatar, {
-  shouldForwardProp: (prop) => prop !== "isDoing",
-})(({ theme, isDoing }) => ({
-  color: isDoing && Colors.lightbrown300,
-  backgroundColor: isDoing && Colors.lightYellow,
-  width: "33px",
-  height: "33px",
+export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
+  height: "22px",
+  width: "22px",
+  fontSize: "12px",
+  color: Colors.lightOrange,
+  backgroundColor: Colors.greyText,
 }));
 
-export const MultipleOrderListDetailName = styled(Box, {
+export const AvatarDivider = styled(Box)(({ theme }) => ({
+  height: "2px",
+  width: "10px",
+  margin: "0px 3px",
+  backgroundColor: Colors.greyText,
+}));
+
+export const MultiOrderName = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isDoing",
 })(({ theme, isDoing }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "50%",
-  height: "100%",
+  width: "100%",
+  height: "inherit",
   color: isDoing ? Colors.lightYellow : Colors.greyText,
   fontWeight: 600,
 }));
 
-export const MultipleOrderListDetailInfo = styled(Box)(({ theme }) => ({
+export const MultipleOrderInfo = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  right: "15px",
+  transform: "translateY(-50%)",
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "right",
   alignItems: "center",
-  paddingRight: "10px",
-  width: "25%",
-  height: "100%",
+  // paddingRight: "10px",
+  // width: "25%",
+  // height: "100%",
 }));
 
 export const MultipleOrderListIconButton = styled(IconButton)(({ theme }) => ({

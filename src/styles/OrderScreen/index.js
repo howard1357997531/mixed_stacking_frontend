@@ -132,6 +132,7 @@ export const OrderListContentMsg = styled(Typography)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   color: Colors.greyText,
+  fontWeight: 600,
 }));
 
 export const OrderListContentBox = styled(Box, {
@@ -140,7 +141,6 @@ export const OrderListContentBox = styled(Box, {
   position: "relative",
   width: "100%",
   height: isFilter ? "85%" : "90%",
-  // flex: 1,
   overflowY: "auto",
   boxSizing: "border-box",
   paddingLeft: "3px",

@@ -1,13 +1,15 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import LoadingCircle from "../../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
 import { OrderListContentMsg } from "../../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { orderlistSelectAction } from "../../../../redux/actions/RobotControlScreenAction";
+import {
+  dialogOrderFilterAction,
+  orderlistSelectAction,
+} from "../../../../redux/actions/RobotControlScreenAction";
 import { Colors } from "../../../../styles/theme";
 import {
   OrderDialogBox,
-  orderDialogSearchBox,
   OrderDialogDate,
   OrderDialogDetial,
   OrderDialogName,
@@ -15,10 +17,13 @@ import {
   OrderDialogListBox,
   OrderDialogSearchBox,
   OrderDialogSearchSelect,
+  OrderDialogBackBox,
 } from "../../../../styles/RobotControlScreen/dialog";
 import { IconButton, Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import CancelIcon from "@mui/icons-material/Cancel";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 
 function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
   const dispatch = useDispatch();
@@ -28,12 +33,14 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { data: selectData } = useSelector(
+  const { data: selectData, searchData } = useSelector(
     (state) => state.robotControlScreen_orderSelect
   );
 
   if (orderListData.length > 0) {
-    var groupedData = orderListData.reduce((acc, item) => {
+    const tempData = searchData !== null ? searchData : orderListData;
+
+    var groupedData = tempData.reduce((acc, item) => {
       const date = item.createdAt.slice(0, -7);
       if (!acc[date]) {
         acc[date] = [];
@@ -101,84 +108,112 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
   const filterNameHandler = () => {
     if (inputName) {
       setIsFilter(true);
-      // dispatch(orderlistFilterAction("name", inputName, orderSelectMode));
+      dispatch(dialogOrderFilterAction("name", inputName, "orderDetail"));
     }
   };
 
   const filterDateHandler = (e) => {
     setIsFilter(true);
-    // dispatch(orderlistFilterAction("date", e.target.value, orderSelectMode));
+    dispatch(dialogOrderFilterAction("date", e.target.value, "orderDetail"));
   };
+
+  const removeFilterHandler = () => {
+    setIsFilter(false);
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.orderSelect,
+      payload: { searchData: null },
+    });
+  };
+
+  useEffect(() => {
+    if (searchData !== null) {
+      setIsFilter(true);
+    }
+  }, [searchData]);
 
   return (
     <OrderDialogBox>
+      <OrderDialogSearchBox>
+        <IconButton onClick={selectSearchHandler}>
+          <SearchIcon sx={{ color: Colors.greyText }} />
+        </IconButton>
+
+        {selectName ? (
+          <Input
+            sx={{
+              width: "170px",
+              marginRight: "10px",
+              color: Colors.brown,
+              backgroundColor: Colors.greyText,
+            }}
+            endAdornment={
+              <InputAdornment position="end" onClick={filterNameHandler}>
+                <PlayArrowIcon
+                  sx={{
+                    width: "22px",
+                    height: "22px",
+                    backgroundColor: Colors.lightbrown,
+                    marginRight: "6px",
+                    "&:hover": {
+                      cursor: "pointer",
+                      transform: "scale(1.1)",
+                    },
+                    "&:active": {
+                      transform: "scale(0.9)",
+                    },
+                  }}
+                />
+              </InputAdornment>
+            }
+            onChange={(e) => setInputName(e.target.value)}
+          />
+        ) : null}
+
+        {selectDate ? (
+          <input
+            type="date"
+            className="orderlist-dialog-input-date"
+            style={{
+              width: "140px",
+              marginRight: "10px",
+              color: Colors.brown,
+              backgroundColor: Colors.greyText,
+              fontWeight: 600,
+            }}
+            onChange={filterDateHandler}
+          />
+        ) : null}
+
+        {selectSearchName ? (
+          <OrderDialogSearchSelect onClick={() => selectCondition("name")}>
+            名稱
+          </OrderDialogSearchSelect>
+        ) : null}
+        {selectSearchDate ? (
+          <OrderDialogSearchSelect onClick={() => selectCondition("date")}>
+            日期
+          </OrderDialogSearchSelect>
+        ) : null}
+      </OrderDialogSearchBox>
+
       {orderListLoading ? (
         <LoadingCircle />
       ) : orderListError ? (
         <ErrorMsgBox />
       ) : orderListData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
+      ) : searchData !== null && searchData.length === 0 ? (
+        <Fragment>
+          <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
+          {isFilter ? (
+            <OrderDialogBackBox onClick={removeFilterHandler}>
+              <CancelIcon />
+            </OrderDialogBackBox>
+          ) : null}
+        </Fragment>
       ) : (
-        <>
-          <OrderDialogSearchBox>
-            <SearchIcon sx={{ color: Colors.greyText }} />
-
-            {selectName ? (
-              <Input
-                sx={{
-                  width: "200px",
-                  color: Colors.blue700,
-                  backgroundColor: Colors.greyText,
-                }}
-                endAdornment={
-                  <InputAdornment position="end" onClick={filterNameHandler}>
-                    <PlayArrowIcon
-                      sx={{
-                        width: "22px",
-                        height: "22px",
-                        backgroundColor: Colors.lightbrown,
-                        marginRight: "6px",
-                        "&:hover": {
-                          cursor: "pointer",
-                          transform: "scale(1.1)",
-                        },
-                        "&:active": {
-                          transform: "scale(0.9)",
-                        },
-                      }}
-                    />
-                  </InputAdornment>
-                }
-                onChange={(e) => setInputName(e.target.value)}
-              />
-            ) : null}
-
-            {selectDate ? (
-              <input
-                type="date"
-                style={{
-                  width: "140px",
-                  color: Colors.blue700,
-                  backgroundColor: Colors.greyText,
-                  fontWeight: 600,
-                }}
-                onChange={filterDateHandler}
-              />
-            ) : null}
-
-            {selectSearchName ? (
-              <OrderDialogSearchSelect onClick={() => selectCondition("name")}>
-                名稱
-              </OrderDialogSearchSelect>
-            ) : null}
-            {selectSearchDate ? (
-              <OrderDialogSearchSelect onClick={() => selectCondition("date")}>
-                日期
-              </OrderDialogSearchSelect>
-            ) : null}
-          </OrderDialogSearchBox>
-
-          <OrderDialogListBox className="dialog-order-box">
+        <Fragment>
+          <OrderDialogListBox className="dialog-order-box" isFilter={isFilter}>
             {Object.keys(groupedData).map((date) => (
               <Fragment key={date}>
                 <OrderDialogDate>{date}</OrderDialogDate>
@@ -198,7 +233,13 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
               </Fragment>
             ))}
           </OrderDialogListBox>
-        </>
+
+          {isFilter ? (
+            <OrderDialogBackBox onClick={removeFilterHandler}>
+              <CancelIcon />
+            </OrderDialogBackBox>
+          ) : null}
+        </Fragment>
       )}
     </OrderDialogBox>
   );

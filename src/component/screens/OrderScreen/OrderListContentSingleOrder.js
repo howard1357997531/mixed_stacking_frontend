@@ -28,12 +28,13 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
     data: orderListData,
   } = useSelector((state) => state.orderList);
 
-  const { orderId, editId, deleteIdArray } = useSelector(
+  const { orderId, editId, deleteIdArray, orderSearch } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
   if (orderListData.length > 0) {
-    var groupedData = orderListData.reduce((acc, item) => {
+    const tempData = orderSearch !== null ? orderSearch : orderListData;
+    var groupedData = tempData.reduce((acc, item) => {
       const date = item.createdAt.slice(0, -7);
       if (!acc[date]) {
         acc[date] = [];

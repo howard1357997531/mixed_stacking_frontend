@@ -14,6 +14,8 @@ function OrderScreen() {
     (state) => state.orderScreen_orderSelect
   );
 
+  const { data: orderListData } = useSelector((state) => state.orderList);
+
   const { data: multipleOrderListData } = useSelector(
     (state) => state.multipleOrderList
   );
@@ -22,6 +24,7 @@ function OrderScreen() {
     matches,
     orderSelectMode,
     orderSelectIdArray,
+    orderListData,
     multipleOrderListData,
   };
 

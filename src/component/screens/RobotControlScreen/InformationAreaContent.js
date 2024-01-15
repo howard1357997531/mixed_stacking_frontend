@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
+  AvatarDivider,
   InformationAreaContentBox,
-  MultipleOrderListBox,
-  MultipleOrderListDetailBox,
-  MultipleOrderListDetailInfo,
-  MultipleOrderListDetailName,
-  MultipleOrderListDetailOrder,
+  MultiOrderAvatar,
+  MultiOrderAvatarBox,
+  MultiOrderDetailBox,
+  MultiOrderDetailSmBox,
+  MultiOrderName,
+  MultipleOrderInfo,
   MultipleOrderListIconButton,
   NoSelectOrderText,
   OrderListBox,
@@ -17,18 +19,17 @@ import {
   RobotSuccessBox,
   RobotSuccessSubTitle,
   RobotSuccessTitle,
-  StyleAvatar,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Box, Tooltip, Typography } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
-import MultipleOrderInfoDetailDialog from "./dialog/MultipleOrderInfoDetailDialog";
-import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
+import { DIALOG } from "../../../redux/constants";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import CheckIcon from "@mui/icons-material/Check";
 import WarningIcon from "@mui/icons-material/Warning";
 import "./css/InformationAreaContent.css";
+import OrderDetailDialog from "../../dialog/orderDetail/OrderDetailDialog";
 
 function InformationAreaContent({
   orderSelectData,
@@ -50,6 +51,10 @@ function InformationAreaContent({
   } = useSelector((state) => state.robotControlScreen_robotExecutionList);
   // console.log("asd:", executeOrderIdArray);
   // console.log("asd:", queue - 1);
+
+  const { data: multipleOrderSelectData } = useSelector(
+    (state) => state.robotControlScreen_multipleOrderSelect
+  );
 
   const itemSize = {
     "16A": "70 * 52 * 32 (mm)",
@@ -111,21 +116,14 @@ function InformationAreaContent({
   };
 
   // 多單細節Dialog
-  const [
-    multipleOrderInfoDetailDialogOpen,
-    setMultipleOrderInfoDetailDialogOpen,
-  ] = useState(false);
-
-  const onMultipleOrderInfoDetailDialogOpen = (state) => {
-    setMultipleOrderInfoDetailDialogOpen(state);
+  const [openDialog, setOpenDialog] = useState(false);
+  const onCloseDialog = () => {
+    setOpenDialog(false);
   };
 
-  const multipleOrderDetailHandler = (multipleOrderSelectId) => {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.informationArea,
-      payload: { multipleOrderSelectId },
-    });
-    setMultipleOrderInfoDetailDialogOpen(true);
+  const multipleOrderDetailHandler = (orderId) => {
+    dispatch({ type: DIALOG.order, payload: { orderId } });
+    setOpenDialog(true);
   };
 
   // mode:"order" 自動scroll到指定位置
@@ -141,6 +139,37 @@ function InformationAreaContent({
   const hasOrderList = executeOrderIdArray.length !== 0;
   const mode = !["inactivate", "reset"].includes(robotStateMode);
 
+  // multipleOrder
+  if (multipleOrderSelectData.length !== 0) {
+    var multipleOrderArray =
+      multipleOrderSelectData.orderSelectId_str.split(",");
+
+    const countArray = multipleOrderArray.map((order) =>
+      order.includes("*") ? parseInt(order.split("*").at(1)) : 1
+    );
+
+    const indexArray = countArray.map((count, index) =>
+      countArray.slice(0, index + 1).reduce((acc, cur) => acc + cur)
+    );
+
+    var parseIndex = (index) => (index === 0 ? 1 : indexArray[index - 1] + 1);
+    var parseIndex2 = (index) => indexArray[index];
+  }
+  const parseId = (order) => {
+    return parseInt(order.split("*").at(0));
+  };
+
+  const parseTimes = (times) => {
+    return times.includes("*") ? parseInt(times.split("*").at(1)) : 1;
+  };
+
+  const parseName = (id) => {
+    let [filterData] = multipleOrderSelectData.multipleOrder.filter(
+      (order) => order.order.id === id
+    );
+    return filterData.order;
+  };
+
   return (
     <InformationAreaContentBox data={[hasOrderList, mode]}>
       {informationAreaMode === "initial" ? (
@@ -153,7 +182,6 @@ function InformationAreaContent({
             position: "absolute",
             width: "100%",
             height: "100%",
-            // border: `1px solid ${Colors.brown}`,
             backgroundColor: Colors.lightOrange,
             zIndex: 2,
           }}
@@ -203,6 +231,9 @@ function InformationAreaContent({
                 <OrderListContentSmBox width="20%">
                   <Avatar
                     sx={{
+                      width: "35px",
+                      height: "35px",
+                      fontSize: "16px",
                       backgroundColor:
                         realtimeItemCount === index + 1 && Colors.lightYellow,
                       color: realtimeItemCount === index + 1 && Colors.brown,
@@ -235,27 +266,29 @@ function InformationAreaContent({
       ) : null}
 
       {informationAreaMode === "multipleOrder" ? (
-        <MultipleOrderListBox>
-          {robotExecutionAllData.map((order, index) => (
-            <MultipleOrderListDetailBox
+        <MultiOrderDetailBox className="orderlist">
+          {multipleOrderArray.map((order, index) => (
+            <MultiOrderDetailSmBox
               key={order.id}
               isDoing={index === queue && isDoing}
             >
-              <MultipleOrderListDetailOrder>
-                <StyleAvatar isDoing={index === queue && isDoing}>
-                  {index + 1}
-                </StyleAvatar>
-              </MultipleOrderListDetailOrder>
+              <MultiOrderAvatarBox>
+                <MultiOrderAvatar>{parseIndex(index)}</MultiOrderAvatar>
+                {order.includes("*") ? (
+                  <>
+                    <AvatarDivider />
+                    <MultiOrderAvatar>{parseIndex2(index)}</MultiOrderAvatar>
+                  </>
+                ) : null}
+              </MultiOrderAvatarBox>
 
-              <MultipleOrderListDetailName isDoing={index === queue && isDoing}>
-                {order.name}
-              </MultipleOrderListDetailName>
+              <MultiOrderName>{parseName(parseId(order)).name}</MultiOrderName>
 
-              <MultipleOrderListDetailInfo>
+              <MultipleOrderInfo>
                 <Tooltip title="詳細資料" placement="left" arrow>
                   <MultipleOrderListIconButton
                     className="infoAreaMultiIconButton"
-                    onClick={() => multipleOrderDetailHandler(order.id)}
+                    onClick={() => multipleOrderDetailHandler(parseId(order))}
                   >
                     <HelpRoundedIcon
                       className="infoAreaMultiIcon"
@@ -263,10 +296,10 @@ function InformationAreaContent({
                     />
                   </MultipleOrderListIconButton>
                 </Tooltip>
-              </MultipleOrderListDetailInfo>
-            </MultipleOrderListDetailBox>
+              </MultipleOrderInfo>
+            </MultiOrderDetailSmBox>
           ))}
-        </MultipleOrderListBox>
+        </MultiOrderDetailBox>
       ) : null}
 
       {realtimeVisualMode && informationAreaMode === "picture" && (
@@ -281,11 +314,10 @@ function InformationAreaContent({
         ></img>
       )}
 
-      <MultipleOrderInfoDetailDialog
-        multipleOrderInfoDetailDialogOpen={multipleOrderInfoDetailDialogOpen}
-        onMultipleOrderInfoDetailDialogOpen={
-          onMultipleOrderInfoDetailDialogOpen
-        }
+      <OrderDetailDialog
+        openDialog={openDialog}
+        onCloseDialog={onCloseDialog}
+        source={"multiOrder"}
       />
     </InformationAreaContentBox>
   );

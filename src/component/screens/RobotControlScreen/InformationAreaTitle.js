@@ -23,7 +23,7 @@ function InformationAreaTitle({
 
   const dispatch = useDispatch();
 
-  const { name: multipleOrderSelectName } = useSelector(
+  const { data: multipleOrderSelectData } = useSelector(
     (state) => state.robotControlScreen_multipleOrderSelect
   );
 
@@ -52,7 +52,7 @@ function InformationAreaTitle({
       ) : null}
 
       {informationAreaMode === "multipleOrder" && !isDoing ? (
-        <Title>{multipleOrderSelectName}</Title>
+        <Title>{multipleOrderSelectData.name}</Title>
       ) : null}
 
       {informationAreaMode === "multipleOrder" && isDoing ? (

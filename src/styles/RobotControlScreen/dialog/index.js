@@ -29,7 +29,7 @@ export const OrderDialogSearchBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "left",
   alignItems: " center",
-  paddingLeft: "7px",
+  paddingLeft: "5px",
   width: "100%",
   height: "9%",
 }));
@@ -38,7 +38,7 @@ export const OrderDialogSearchSelect = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  margin: "0px 10px",
+  marginRight: "15px",
   padding: "0px 8px",
   height: "50%",
   color: Colors.brown,
@@ -50,19 +50,20 @@ export const OrderDialogSearchSelect = styled(Box)(({ theme }) => ({
   "&:hover": {
     cursor: "pointer",
     transform: "scale(1.1)",
-    transition: "all .1s ease-in-out",
   },
   "&:active": {
     transform: "scale(.95)",
   },
 }));
 
-export const OrderDialogListBox = styled(Box)(({ theme }) => ({
+export const OrderDialogListBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isFilter",
+})(({ theme, isFilter }) => ({
   boxSizing: "border-box",
   flex: 1,
-  padding: "0px 7px",
+  padding: "0px 10px",
   width: "100%",
-  height: "90%",
+  height: isFilter ? "82%" : "90%",
   overflowY: "auto",
 }));
 
@@ -108,6 +109,13 @@ export const OrderDialogTime = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   color: Colors.greyTextBlood,
   fontWeight: 600,
+}));
+
+export const OrderDialogBackBox = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  bottom: "3px",
+  left: "50%",
+  transform: "translateX(-50%)",
 }));
 
 //

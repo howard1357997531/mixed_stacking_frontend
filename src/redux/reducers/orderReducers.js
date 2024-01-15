@@ -83,8 +83,11 @@ export const orderListReducer = (state = { data: [], name: "" }, action) => {
     case ORDER_LIST.filter.request:
       return { ...state, loading: true };
 
+    // case ORDER_LIST.filter.success:
+    //   return { ...state, loading: false, data: action.payload };
+
     case ORDER_LIST.filter.success:
-      return { ...state, loading: false, data: action.payload };
+      return { ...state, loading: false };
 
     case ORDER_LIST.filter.fail:
       return { ...state, loading: false };
@@ -188,8 +191,11 @@ export const multipleOrderListReducer = (
     case MULTIPLE_ORDER_LIST.filter.request:
       return { ...state, loading: true };
 
+    // case MULTIPLE_ORDER_LIST.filter.success:
+    //   return { ...state, loading: false, data: action.payload };
+
     case MULTIPLE_ORDER_LIST.filter.success:
-      return { ...state, loading: false, data: action.payload };
+      return { ...state, loading: false };
 
     case MULTIPLE_ORDER_LIST.filter.fail:
       return { ...state, loading: false };

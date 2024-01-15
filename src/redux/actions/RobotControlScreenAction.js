@@ -1,4 +1,6 @@
 import {
+  MULTIPLE_ORDER_LIST,
+  ORDER_LIST,
   ROBOT_CONTROL_SCREEN,
   ROBOT_CONTROL_SCREEN_API_executeRobot,
   ROBOT_CONTROL_SCREEN_API_robotSetting,
@@ -22,6 +24,11 @@ export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
   dispatch({
     type: ROBOT_CONTROL_SCREEN.orderSelect,
     payload: { data: selectOrderObject },
+  });
+
+  dispatch({
+    type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
+    payload: { data: [] },
   });
 
   dispatch({
@@ -72,15 +79,24 @@ const parseAllData = (data) => {
 export const multipleOrderlistSelectAction =
   (multipleOrderSelectData) => (dispatch) => {
     console.log(multipleOrderSelectData);
-    const orderSelectData = multipleOrderSelectData.multipleOrder.at(0).order;
+    const firstId = multipleOrderSelectData.orderSelectId_str
+      .split(",")
+      .at(0)
+      .split("*")
+      .at(0);
+
+    const [orderSelectData] = multipleOrderSelectData.multipleOrder.filter(
+      (order) => order.order.id === parseInt(firstId)
+    );
+
     dispatch({
       type: ROBOT_CONTROL_SCREEN.orderSelect,
-      payload: { data: orderSelectData },
+      payload: { data: [] },
     });
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
-      payload: { name: multipleOrderSelectData.name },
+      payload: { data: multipleOrderSelectData },
     });
 
     dispatch({
@@ -114,13 +130,46 @@ export const multipleOrderlistSelectAction =
     });
   };
 
+export const dialogOrderFilterAction =
+  (state, value, mode) => async (dispatch) => {
+    try {
+      if (mode === "multipleOrder") {
+        dispatch({ type: MULTIPLE_ORDER_LIST.filter.request });
+      } else {
+        dispatch({ type: ORDER_LIST.filter.request });
+      }
+
+      const { data } = await axios.get(
+        `${domain}/api/filterOrderData?state=${state}&value=${value}&mode=${mode}`
+      );
+
+      if (mode === "multipleOrder") {
+        dispatch({ type: MULTIPLE_ORDER_LIST.filter.success });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
+          payload: { searchData: data },
+        });
+      } else {
+        dispatch({ type: ORDER_LIST.filter.success });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.orderSelect,
+          payload: { searchData: data },
+        });
+      }
+    } catch (error) {
+      dispatch({ type: ORDER_LIST.filter.fail });
+    }
+  };
+
 const replaceInsertName = (name) => {
   return name.endsWith("_insert") ? name.replace("_insert", "") : name;
 };
 
 export const executeRobotAction =
   (robotStateMode, informationAreaMode, robotExecutionData) => (dispatch) => {
-    const { executeOrderId, name } = robotExecutionData;
+    const { executeOrderId, name, allData } = robotExecutionData;
     const executeLength = executeOrderId.length;
     const tempQueue = robotExecutionData.queue;
 
@@ -149,6 +198,12 @@ export const executeRobotAction =
             dispatch({
               type: ROBOT_CONTROL_SCREEN.robotState,
               payload: { mode: "activate" },
+            });
+
+            //
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.orderSelect,
+              payload: { data: allData.at(tempQueue - 1) },
             });
 
             dispatch({

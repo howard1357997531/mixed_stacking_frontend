@@ -8,7 +8,7 @@ import {
 } from "../constants";
 
 export const robotControlScreen_orderSelectReducer = (
-  state = { data: [] },
+  state = { data: [], searchData: null },
   action
 ) => {
   switch (action.type) {
@@ -26,7 +26,7 @@ export const robotControlScreen_orderSelectReducer = (
 };
 
 export const robotControlScreen_multipleOrderSelectReducer = (
-  state = { name: "" },
+  state = { data: [], searchData: null },
   action
 ) => {
   switch (action.type) {

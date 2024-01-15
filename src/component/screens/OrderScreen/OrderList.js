@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
 import {
-  BackBtnBox,
   BackBtnIconButton,
   OrderListBox,
   OrderListContentBox,
-  OrderListDropdown,
   OrderListNav,
   OrderListNavBtn,
   OrderListSearch,
-  OrderListUploadFile,
   SearchSelect,
 } from "../../../styles/OrderScreen";
 import { IconButton, Input, InputAdornment, Typography } from "@mui/material";
 import OrderListDropdownMenu from "./OrderListDropdownMenu";
 import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
-import "./css/OrderList.css";
 import OrderListContent from "./OrderListContent";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   functionAreaModeAction,
   orderlistFilterAction,
 } from "../../../redux/actions/OrderScreenAction";
-import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../../../redux/constants";
+import { ORDER_SCREEN } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SearchIcon from "@mui/icons-material/Search";
@@ -31,10 +27,19 @@ import {
   orderListAction,
 } from "../../../redux/actions/OrderActions";
 import aos from "aos";
+import "./css/OrderList.css";
 
 function OrderList(props) {
   const dispatch = useDispatch();
-  const { orderSelectMode, multipleOrderListData } = props;
+  const { orderSelectMode, orderListData, multipleOrderListData } = props;
+
+  const { loading: orderListLoading } = useSelector((state) => state.orderList);
+  const { loading: multipleOrderListLoading } = useSelector(
+    (state) => state.multipleOrderList
+  );
+  const { orderSearch, multiOrderSearch } = useSelector(
+    (state) => state.orderScreen_orderSelect
+  );
 
   const titleName = (mode) => {
     if (["close", "orderDetail", "aiResult"].includes(mode)) {
@@ -100,15 +105,6 @@ function OrderList(props) {
     }
   };
 
-  const removeFilterHandler = () => {
-    setIsFilter(false);
-    if (orderSelectMode === "multipleOrder") {
-      dispatch(multipleOrderListAction());
-    } else {
-      dispatch(orderListAction(orderSelectMode));
-    }
-  };
-
   useEffect(() => {
     aos.init();
     aos.refresh();
@@ -127,6 +123,37 @@ function OrderList(props) {
     setIsFilter(true);
     dispatch(orderlistFilterAction("date", e.target.value, orderSelectMode));
   };
+
+  const removeFilterHandler = () => {
+    setIsFilter(false);
+    if (orderSelectMode === "multipleOrder") {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { multiOrderSearch: null },
+      });
+    } else {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { orderSearch: null },
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (orderSelectMode === "multipleOrder") {
+      if (multiOrderSearch !== null) {
+        setIsFilter(true);
+      } else {
+        setIsFilter(false);
+      }
+    } else {
+      if (orderSearch !== null) {
+        setIsFilter(true);
+      } else {
+        setIsFilter(false);
+      }
+    }
+  }, [orderSelectMode, orderSearch, multiOrderSearch]);
   return (
     <OrderListBox>
       <Typography
@@ -187,6 +214,7 @@ function OrderList(props) {
           {selectDate ? (
             <input
               type="date"
+              className="orderlist-input-date"
               style={{
                 width: "140px",
                 color: Colors.lightOrange,
@@ -205,6 +233,7 @@ function OrderList(props) {
               名稱
             </SearchSelect>
           ) : null}
+
           {selectSearchDate ? (
             <SearchSelect
               data-aos="zoom-out"
@@ -241,7 +270,7 @@ function OrderList(props) {
         <OrderListContent {...props} />
       </OrderListContentBox>
 
-      {isFilter ? (
+      {isFilter && !orderListLoading && !multipleOrderListLoading ? (
         <BackBtnIconButton onClick={removeFilterHandler}>
           <CancelIcon />
         </BackBtnIconButton>

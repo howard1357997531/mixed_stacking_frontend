@@ -23,8 +23,14 @@ function OrderListContentMultipleOrder() {
     orderId,
   } = useSelector((state) => state.multipleOrderList);
 
+  const { multiOrderSearch } = useSelector(
+    (state) => state.orderScreen_orderSelect
+  );
+
   if (multipleOrderData.length > 0) {
-    var groupedData = multipleOrderData.reduce((acc, item) => {
+    const tempData =
+      multiOrderSearch !== null ? multiOrderSearch : multipleOrderData;
+    var groupedData = tempData.reduce((acc, item) => {
       const date = item.createdAt.slice(0, -7);
       if (!acc[date]) {
         acc[date] = [];
