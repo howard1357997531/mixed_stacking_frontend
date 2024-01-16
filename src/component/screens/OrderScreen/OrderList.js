@@ -5,6 +5,7 @@ import {
   OrderListContentBox,
   OrderListNav,
   OrderListNavBtn,
+  OrderListNavBtn2,
   OrderListSearch,
   SearchSelect,
 } from "../../../styles/OrderScreen";
@@ -16,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   functionAreaModeAction,
   orderlistFilterAction,
+  removeFilterAction,
 } from "../../../redux/actions/OrderScreenAction";
 import { ORDER_SCREEN } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
@@ -126,17 +128,11 @@ function OrderList(props) {
 
   const removeFilterHandler = () => {
     setIsFilter(false);
-    if (orderSelectMode === "multipleOrder") {
-      dispatch({
-        type: ORDER_SCREEN.orderSelect,
-        payload: { multiOrderSearch: null },
-      });
-    } else {
-      dispatch({
-        type: ORDER_SCREEN.orderSelect,
-        payload: { orderSearch: null },
-      });
-    }
+    let data =
+      orderSelectMode === "multipleOrder"
+        ? multipleOrderListData
+        : orderListData;
+    dispatch(removeFilterAction(orderSelectMode, data));
   };
 
   useEffect(() => {
@@ -154,6 +150,19 @@ function OrderList(props) {
       }
     }
   }, [orderSelectMode, orderSearch, multiOrderSearch]);
+
+  // navBtn
+  const changeMode = (mode) => {
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { mode },
+    });
+  };
+  // upload
+  const [open, setOpen] = useState(false);
+  const onCloseDialog = () => {
+    setOpen(false);
+  };
   return (
     <OrderListBox>
       <Typography
@@ -249,20 +258,67 @@ function OrderList(props) {
           onFunctionMenuValue={onFunctionMenuValueHandler}
         />
 
+        <OrderListNavBtn onClick={() => changeMode("edit")}>
+          <img
+            style={{ width: "21px", height: "24px" }}
+            src="edit.png"
+            alt="edit.png"
+          />
+          <Typography
+            sx={{ color: Colors.greyTextBlood, fontSize: 14, fontWeight: 600 }}
+          >
+            修改
+          </Typography>
+        </OrderListNavBtn>
+
+        <OrderListNavBtn
+          sx={{ marginLeft: "5px" }}
+          onClick={() => changeMode("delete")}
+        >
+          <img
+            style={{ width: "21px", height: "24px" }}
+            src="delete.png"
+            alt="delete.png"
+          />
+          <Typography
+            sx={{ color: Colors.greyTextBlood, fontSize: 14, fontWeight: 600 }}
+          >
+            刪除
+          </Typography>
+        </OrderListNavBtn>
+
         {["close", "orderDetail", "aiResult", "multipleOrderCreate"].includes(
           orderSelectMode
         ) ? (
-          <OrderListUploadFileDialog />
+          <OrderListNavBtn
+            sx={{ marginLeft: "5px" }}
+            onClick={() => setOpen(true)}
+          >
+            <img
+              style={{ width: "33px", height: "24px" }}
+              src="upload.png"
+              alt="upload.png"
+            />
+            <Typography
+              sx={{
+                color: Colors.greyTextBlood,
+                fontSize: 14,
+                fontWeight: 600,
+              }}
+            >
+              上傳
+            </Typography>
+          </OrderListNavBtn>
         ) : null}
 
         {orderSelectMode === "multipleOrder" ? (
-          <OrderListNavBtn
+          <OrderListNavBtn2
             disableElevation
             variant="contained"
             onClick={createMultiOrderHandle}
           >
             創建
-          </OrderListNavBtn>
+          </OrderListNavBtn2>
         ) : null}
       </OrderListNav>
 
@@ -275,6 +331,8 @@ function OrderList(props) {
           <CancelIcon />
         </BackBtnIconButton>
       ) : null}
+
+      <OrderListUploadFileDialog open={open} onCloseDialog={onCloseDialog} />
     </OrderListBox>
   );
 }

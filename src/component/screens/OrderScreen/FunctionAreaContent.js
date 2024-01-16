@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  FunctionAreaContentBox,
-  OrderListContentMsg,
-} from "../../../styles/OrderScreen";
+import { FunctionAreaContentBox } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
-import ErrorMsgBox from "../../../tool/ErrorMsgBox";
 import FunctionAreaContentMultipleOrder from "./FunctionAreaContentMultipleOrder";
 import FunctionAreaContentMultipleOrderCreate from "./FunctionAreaContentMultipleOrderCreate";
 import FunctionAreaContentOrder from "./FunctionAreaContentOrder";
@@ -13,18 +8,9 @@ import FunctionAreaContentAiResult from "./FunctionAreaContentAiResult";
 import FunctionAreaContentDelete from "./FunctionAreaContentDelete";
 import FunctionAreaContentEdit from "./FunctionAreaContentEdit";
 import "./css/FunctionAreaContent.css";
-import LoadingCircle from "../../../tool/LoadingCircle";
 
 function FunctionAreaContent({ orderSelectMode }) {
-  const {
-    loading: orderListLoading,
-    error: orderListError,
-    data: orderListData,
-  } = useSelector((state) => state.orderList);
-
-  const { orderId, editId, deleteIdArray } = useSelector(
-    (state) => state.orderScreen_orderSelect
-  );
+  const { data: orderListData } = useSelector((state) => state.orderList);
 
   const Content = () => {
     if (orderSelectMode === "orderDetail") {
@@ -49,16 +35,7 @@ function FunctionAreaContent({ orderSelectMode }) {
       orderSelectMode={orderSelectMode}
       className="functionArea-box"
     >
-      {orderListLoading &&
-      !["multipleOrderCreate", "delete"].includes(orderSelectMode) ? (
-        <LoadingCircle />
-      ) : orderListError ? (
-        <ErrorMsgBox />
-      ) : ["orderDetail", "aiResult"].includes(orderSelectMode) && !orderId ? (
-        <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
-      ) : (
-        <Content></Content>
-      )}
+      <Content></Content>
     </FunctionAreaContentBox>
   );
 }

@@ -77,6 +77,8 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
         <ErrorMsgBox />
       ) : orderListData.length === 0 ? (
         <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
+      ) : orderSearch !== null && orderSearch.length === 0 ? (
+        <OrderListContentMsg variant="h5">查無此資料</OrderListContentMsg>
       ) : (
         Object.keys(groupedData).map((date) => (
           <Fragment key={date}>

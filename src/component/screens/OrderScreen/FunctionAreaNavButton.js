@@ -7,16 +7,12 @@ import { MultiOrderDeleteBtn } from "../../../styles/OrderScreen/FunctionAreaCon
 
 function FunctionAreaNavButton({ orderSelectMode }) {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.orderList);
   const { orderId, aiTrainingState, combineOrder, deleteIdArray } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
   const { orderId: multiOrderId } = useSelector(
     (state) => state.multipleOrderList
   );
-
-  const loadingNotShow =
-    loading && !["multipleOrderCreate", "delete"].includes(orderSelectMode);
 
   const buttonHandler = (mode, aiTraining_state) => {
     if (mode === "orderDetail") {
@@ -35,7 +31,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
     );
   };
 
-  return loadingNotShow ? null : (
+  return (
     <Fragment>
       {orderSelectMode === "orderDetail" &&
       aiTrainingState === "no_training" &&

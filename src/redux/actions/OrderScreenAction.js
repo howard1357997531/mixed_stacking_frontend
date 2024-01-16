@@ -93,8 +93,52 @@ export const orderlistFilterAction =
     }
   };
 
-export const removeFilterAction = (mode) => (dispatch) => {
-  dispatch(orderListAction());
+export const removeFilterAction = (mode, data) => (dispatch) => {
+  if (mode === "multipleOrder") {
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { multiOrderSearch: null },
+    });
+  } else {
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { orderSearch: null },
+    });
+  }
+
+  if (data.length !== 0) {
+    if (mode === "close") {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { orderId: null },
+      });
+    } else if (["orderDetail", "aiResult"].includes(mode)) {
+      dispatch({
+        type: ORDER_LIST.revise,
+        payload: { name: data.at(0).name },
+      });
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { orderId: data.at(0).id },
+      });
+    } else if (mode === "edit") {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { editId: null, editData: null },
+      });
+    } else if (mode === "delete") {
+    } else if (mode === "multipleOrder") {
+      dispatch({
+        type: MULTIPLE_ORDER_LIST.revise,
+        payload: { orderId: data.at(0).id, name: data.at(0).name },
+      });
+
+      dispatch({
+        type: DIALOG.order,
+        payload: { multiOrderId: data.at(0).id },
+      });
+    }
+  }
 };
 
 export const orderEditSelectAction =

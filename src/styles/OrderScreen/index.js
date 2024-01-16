@@ -103,7 +103,22 @@ export const SearchSelect = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const OrderListNavBtn = styled(Button)(({ theme }) => ({
+export const OrderListNavBtn = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "5px 5px 0px",
+  height: "90%",
+  borderRadius: "10px",
+  "&:hover": {
+    cursor: "pointer",
+    backgroundColor: Colors.lightOrangeHover,
+    transform: "scale(1.1)",
+  },
+}));
+
+export const OrderListNavBtn2 = styled(Button)(({ theme }) => ({
   marginLeft: "10px",
   height: "60%",
   color: Colors.lightOrange,

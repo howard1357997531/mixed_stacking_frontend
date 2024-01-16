@@ -20,7 +20,7 @@ function OrderDetailDialogTabsAiResult({ source, orderId, orderSelectData }) {
   }
 
   return orderId ? (
-    <OrderBox className="order-dialog">
+    <OrderBox className="order-dialog" sx={{ paddingTop: "10px" }}>
       {orderData.aiTraining_order.split(",").map((order, index) => (
         <AiResultBox key={index}>
           <AiResultSmBox>

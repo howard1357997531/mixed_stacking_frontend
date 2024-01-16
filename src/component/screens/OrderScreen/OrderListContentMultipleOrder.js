@@ -48,21 +48,10 @@ function OrderListContentMultipleOrder() {
     <LoadingCircle />
   ) : multipleOrderError ? (
     <ErrorMsgBox />
-  ) : // ) : !orderId && multipleOrderData.length === 0 ? (
-  //   <OrderListContentMsg variant="h5">
-  //     <Button
-  //       variant="contained"
-  //       sx={{
-  //         backgroundColor: Colors.greyBorder,
-  //         "&:hover": { backgroundColor: Colors.greyText },
-  //       }}
-  //       onClick={createMultipleOrder}
-  //     >
-  //       建立組合單
-  //     </Button>
-  //   </OrderListContentMsg>
-  !orderId ? (
+  ) : !orderId ? (
     <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
+  ) : multiOrderSearch !== null && multiOrderSearch.length === 0 ? (
+    <OrderListContentMsg variant="h5">查無此資料</OrderListContentMsg>
   ) : (
     Object.keys(groupedData).map((date) => (
       <Fragment key={date}>

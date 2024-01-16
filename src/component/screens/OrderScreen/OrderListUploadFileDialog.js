@@ -7,7 +7,6 @@ import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { brown, grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
@@ -28,7 +27,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-function OrderListUploadFileDialog() {
+function OrderListUploadFileDialog({ open, onCloseDialog }) {
   const WorkListTopUploadFileButton = styled(Button)(({ theme }) => ({
     height: "60%",
     marginLeft: "10px",
@@ -81,18 +80,18 @@ function OrderListUploadFileDialog() {
   }));
 
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = () => {
-    setOpen(false);
+    onCloseDialog();
   };
 
   const fileChangeHandler = (e) => {
-    setOpen(false);
+    onCloseDialog();
     const formData = new FormData();
     formData.append(`csv_file_length`, e.target.files.length);
     for (let i = 0; i < e.target.files.length; i++) {
@@ -132,9 +131,9 @@ function OrderListUploadFileDialog() {
 
   return (
     <>
-      <WorkListTopUploadFileButton onClick={handleClickOpen}>
+      {/* <WorkListTopUploadFileButton onClick={handleClickOpen}>
         上傳
-      </WorkListTopUploadFileButton>
+      </WorkListTopUploadFileButton> */}
       <BootstrapDialog
         maxWidth={false}
         onClose={handleClose}

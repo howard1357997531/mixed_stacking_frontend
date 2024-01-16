@@ -68,13 +68,13 @@ function OrderDetailDialogTabs(props) {
   const theme = createTheme({
     palette: {
       primary: {
-        main: `${Colors.grey600}`,
+        main: `${Colors.greyTextBlood}`,
       },
     },
   });
 
   const StyleTab = styled(Tab)({
-    color: Colors.grey600,
+    color: Colors.greyTextBlood,
     fontWeight: 600,
     fontSize: "16px",
   });

@@ -4,10 +4,8 @@ import { Colors } from "../../../styles/theme";
 import { useSelector } from "react-redux";
 
 function FunctionAreaNavTitle({ orderSelectMode }) {
-  const { loading, data, name } = useSelector((state) => state.orderList);
-  const { mode, orderId } = useSelector(
-    (state) => state.orderScreen_orderSelect
-  );
+  const { name } = useSelector((state) => state.orderList);
+
   const { name: multiName } = useSelector((state) => state.multipleOrderList);
 
   const titleArray = [
@@ -40,7 +38,7 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
     }
   };
 
-  return loading ? null : <Title></Title>;
+  return <Title></Title>;
 }
 
 export default FunctionAreaNavTitle;

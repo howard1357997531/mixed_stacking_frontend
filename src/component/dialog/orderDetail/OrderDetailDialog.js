@@ -24,7 +24,7 @@ function OrderDetailDialog(props) {
       >
         <DialogContent
           sx={{
-            backgroundColor: Colors.lightOrange,
+            backgroundColor: Colors.brown,
             padding: 0,
             width: "600px",
           }}

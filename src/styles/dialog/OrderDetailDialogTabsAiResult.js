@@ -27,7 +27,7 @@ export const AiResultSmBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "92%",
   height: "100%",
-  backgroundColor: Colors.lightOrangeHover,
+  backgroundColor: Colors.brownHover,
   borderRadius: "10px",
 }));
 
@@ -40,10 +40,9 @@ export const AiResultOrder = styled(Box)(({ theme }) => ({
 }));
 
 export const StyleAvatar = styled(Avatar)(({ theme }) => ({
-  width: "28px",
-  height: "28px",
-  backgroundColor: Colors.greyTextBlood,
-  color: "#fff",
+  width: "30px",
+  height: "30px",
+  color: Colors.greyTextBlood,
   fontSize: 14,
 }));
 
@@ -56,6 +55,6 @@ export const AiResultName = styled(Box)(({ theme }) => ({
   height: "100%",
   color: Colors.greyTextBlood,
   paddingRight: "30px",
-  fontSize: 18,
+  fontSize: 20,
   fontWeight: 600,
 }));

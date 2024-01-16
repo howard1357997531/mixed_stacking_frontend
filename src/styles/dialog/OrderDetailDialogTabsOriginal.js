@@ -13,11 +13,11 @@ export const OrderBox = styled(Box)(({ theme }) => ({
 export const DescText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isTitle",
 })(({ theme, isTitle }) => ({
-  color: isTitle ? Colors.lightOrange : Colors.greyText,
-  fontWeight: !isTitle && 600,
+  color: isTitle ? Colors.brown : Colors.greyTextBlood,
+  fontWeight: 600,
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
-  backgroundColor: isTitle && Colors.grey600,
+  backgroundColor: isTitle && Colors.greyTextBlood,
 }));
 
 export const DescTextBox = styled(Box)(({ theme }) => ({
@@ -33,7 +33,6 @@ export const OrderContentTitleBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   paddingRight: "1px",
-  color: Colors.greyText,
   gap: "2px",
   marginBottom: "2px",
 }));
@@ -46,8 +45,8 @@ export const OrderContentTitleSmBox = styled(Box, {
   alignItems: "center",
   width: isName ? "40%" : "15%",
   height: "35px",
-  color: Colors.lightOrange,
-  backgroundColor: Colors.grey600,
+  color: Colors.brown,
+  backgroundColor: Colors.greyTextBlood,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   fontWeight: 600,
 }));
@@ -80,8 +79,8 @@ export const OrderDetailSmBox = styled(Box, {
   alignItems: "center",
   width: isName ? "40%" : "15%",
   height: "100%",
-  backgroundColor: isName && Colors.lightOrangeHover,
-  color: Colors.greyText,
+  backgroundColor: isName && Colors.brownHover,
+  color: Colors.greyTextBlood,
   fontSize: "18px",
   fontWeight: 600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
