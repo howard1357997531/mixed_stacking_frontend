@@ -43,18 +43,18 @@ export const OrderBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const OrderListBox = styled(Box)(({ theme }) => ({
+export const OrderListBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
   position: "relative",
   display: "flex",
   flexDirection: "column",
   width: "48%",
   height: "100%",
-  padding: "25px",
-  paddingTop: "10px",
+  padding: "5px 25px 20px",
   boxSizing: "border-box",
-  borderRadius: "20px",
-  // borderTopLeftRadius: "0px",
-  backgroundColor: Colors.lightOrange,
+  borderRadius: "10px",
+  backgroundColor: mode ? Colors.green : Colors.lightOrange,
   [theme.breakpoints.down("lg")]: {
     width: "48%",
   },
@@ -65,6 +65,36 @@ export const OrderListBox = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     width: "80vw",
+  },
+}));
+
+export const OrderSwitchBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "-37px",
+  left: "0%",
+  display: "flex",
+  gap: "4px",
+  zIndex: 0.5,
+}));
+
+export const OrderSwitchBtn = styled(Box)(({ theme }) => ({
+  padding: "5px 10px",
+  color: Colors.greyText,
+  background: Colors.lightOrange,
+  fontSize: 18,
+  fontWeight: 600,
+  borderRadius: "10px",
+  // border: `1px solid ${Colors.greyText}`,
+  // borderTopLeftRadius: "20px",
+  // borderTopRightRadius: "20px",
+  boxShadow: "1px 1px rgba(0, 0, 0, 0.2)",
+  "&:hover": {
+    cursor: "pointer",
+    transform: "scale(1.03)",
+    transition: "all .2s ease-in-out",
+  },
+  "&:active": {
+    transform: "scale(.95)",
   },
 }));
 
@@ -83,14 +113,16 @@ export const OrderListSearch = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
-export const SearchSelect = styled(Box)(({ theme }) => ({
+export const SearchSelect = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   margin: "0px 10px",
   padding: "0px 8px",
   height: "50%",
-  color: Colors.lightOrange,
+  color: mode ? Colors.green : Colors.lightOrange,
   backgroundColor: Colors.grey600,
   fontSize: "14px",
   fontWeight: 600,
@@ -98,9 +130,21 @@ export const SearchSelect = styled(Box)(({ theme }) => ({
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     cursor: "pointer",
-    color: Colors.lightOrangeHover,
     backgroundColor: Colors.greyText,
   },
+}));
+
+export const OrderListNavBtnBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "noPadding",
+})(({ theme, noPadding }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "right",
+  paddingTop: "15px",
+  paddingRight: noPadding ? "0px" : "10px",
+  width: "200px",
+  height: "100%",
+  gap: "5px",
 }));
 
 export const OrderListNavBtn = styled(Box)(({ theme }) => ({
@@ -108,14 +152,32 @@ export const OrderListNavBtn = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  padding: "5px 5px 0px",
-  height: "90%",
+  marginRight: "15px",
   borderRadius: "10px",
   "&:hover": {
     cursor: "pointer",
-    backgroundColor: Colors.lightOrangeHover,
     transform: "scale(1.1)",
   },
+}));
+
+export const OrderListNavRowBtn = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "0px 7px",
+  borderRadius: "10px",
+  // backgroundColor: Colors.greyText,
+  border: `2px solid ${Colors.blue500}`,
+  "&:hover": {
+    cursor: "pointer",
+    transform: "scale(1.1)",
+  },
+}));
+
+export const OrderListNavBtnText = styled(Typography)(({ theme }) => ({
+  color: Colors.greyTextBlood,
+  fontSize: 14,
+  fontWeight: 600,
 }));
 
 export const OrderListNavBtn2 = styled(Button)(({ theme }) => ({
@@ -203,11 +265,11 @@ export const OrderListDetial = styled(Box, {
   color: Colors.greyText,
   fontWeight: 600,
   backgroundColor: Colors.lightOrangeHover,
-  border: itemSelect ? `2px solid ${Colors.purple}` : "none",
+  border: itemSelect ? `2px solid ${Colors.blue500}` : "none",
   boxShadow: itemSelect ? `none` : "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
-    border: itemSelect ? `2px solid ${Colors.purple}` : "none",
-    boxShadow: itemSelect ? `none` : `1px 1px ${Colors.purple}`,
+    border: itemSelect ? `2px solid ${Colors.blue500}` : "none",
+    boxShadow: itemSelect ? `none` : `1px 1px ${Colors.blue500}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -235,7 +297,7 @@ export const OrderListNameSelect = styled(Box, {
   marginRight: "10px",
   width: "15px",
   height: "15px",
-  backgroundColor: itemSelect && Colors.purple,
+  backgroundColor: itemSelect && Colors.blue500,
   borderRadius: "50%",
   border: `1px solid ${Colors.brown200}`,
 }));
@@ -350,23 +412,21 @@ export const StyleHelpRoundedIcon = styled(HelpRoundedIcon)(({ theme }) => ({
 
 // functionArea
 export const FunctionAreaBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "orderSelectMode",
-})(({ theme, orderSelectMode }) => ({
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
   position: "relative",
-  display: ["close", "noMultipleOrder"].includes(orderSelectMode)
-    ? "none"
-    : "flex",
+  display: ["close", "noMultipleOrder"].includes(mode) ? "none" : "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   width: "48%",
   height: "100%",
-  padding: "20px",
   boxSizing: "border-box",
-  borderRadius: "20px",
-  padding: "25px",
-  paddingTop: "10px",
-  backgroundColor: Colors.lightOrange,
+  borderRadius: "10px",
+  padding: "5px 25px 20px",
+  backgroundColor: ["multipleOrder", "multipleOrderCreate"].includes(mode)
+    ? Colors.green
+    : Colors.lightOrange,
   // opacity: functionBoxOpen ? 100 : 0,
   opacity: 100,
   transition: "opacity 0.5s ease-in-out",
@@ -386,7 +446,7 @@ export const FunctionAreaBox = styled(Box, {
 export const FunctionAreaNav = styled(Box)(({ theme }) => ({
   position: "relative",
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "right",
   alignItems: "center",
   gap: "5px",
   width: "100%",

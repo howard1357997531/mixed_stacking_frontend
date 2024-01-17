@@ -106,13 +106,13 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
 
                 <OrderListState>
                   {order.aiTraining_state === "no_training" && (
-                    <OrderListStateText sx={{ color: Colors.purple }}>
+                    <OrderListStateText sx={{ color: Colors.blue500 }}>
                       尚未演算
                     </OrderListStateText>
                   )}
 
                   {order.aiTraining_state === "is_training" && (
-                    <TextEffect text={"AI演算中"} textColor={Colors.greyText} />
+                    <TextEffect text={"AI演算中"} textColor={Colors.blue500} />
                   )}
 
                   {order.aiTraining_state === "finish_training" && (

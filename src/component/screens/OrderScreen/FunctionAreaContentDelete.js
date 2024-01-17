@@ -21,13 +21,6 @@ function FunctionAreaContentDelete({ orderListData }) {
     (state) => state.orderScreen_orderSelect
   );
 
-  const resetHandler = () => {
-    dispatch({
-      type: ORDER_SCREEN.orderSelect,
-      payload: { deleteIdArray: [] },
-    });
-  };
-
   const deleteHandler = (id) => {
     dispatch(orderDeleteSelectAction(parseInt(id)));
   };
@@ -37,7 +30,6 @@ function FunctionAreaContentDelete({ orderListData }) {
     <DeleteBox>
       <DeleteTitle>
         <DeleteCount>數量: {deleteIdArray.length}</DeleteCount>
-        <DeleteResetBtn onClick={resetHandler}>重置</DeleteResetBtn>
       </DeleteTitle>
 
       <DeleteSelectBox className="multi-create-select-box">

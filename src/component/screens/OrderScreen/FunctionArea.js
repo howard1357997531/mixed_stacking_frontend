@@ -37,6 +37,12 @@ function FunctionArea(props) {
     (state) => state.orderScreen_orderSelect
   );
 
+  const orderMode = !["multipleOrder", "multipleOrderCreate"].includes(
+    orderSelectMode
+  )
+    ? true
+    : false;
+
   if (orderSelectMode === "multipleOrder") {
     var loading = multipleOrderListLoading;
     var error = multipleOrderListError;
@@ -78,7 +84,7 @@ function FunctionArea(props) {
   };
 
   return (
-    <FunctionAreaBox orderSelectMode={orderSelectMode}>
+    <FunctionAreaBox mode={orderSelectMode}>
       {loading ? (
         <LoadingCircle />
       ) : error ? (

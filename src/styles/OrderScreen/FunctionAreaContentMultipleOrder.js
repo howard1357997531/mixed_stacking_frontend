@@ -73,11 +73,11 @@ export const MultiOrderDetailSmBox = styled(Box, {
   height: "60px",
   marginTop: !isFirst ? "4px" : "0px",
   borderRadius: "5px",
-  backgroundColor: Colors.lightOrangeHover,
+  backgroundColor: Colors.greenHover,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     cursor: "pointer",
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.white,
   },
 }));
 
@@ -91,18 +91,18 @@ export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
 }));
 
 export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
-  height: "22px",
-  width: "22px",
-  fontSize: "12px",
-  color: Colors.lightOrangeHover,
-  backgroundColor: Colors.purple,
+  height: "25px",
+  width: "25px",
+  fontSize: "14px",
+  color: Colors.greenHover,
+  backgroundColor: Colors.white,
 }));
 
 export const AvatarDivider = styled(Box)(({ theme }) => ({
   height: "2px",
   width: "10px",
   margin: "0px 3px",
-  backgroundColor: Colors.purple,
+  backgroundColor: Colors.white,
 }));
 
 export const MultiOrderName = styled(Box)(({ theme }) => ({

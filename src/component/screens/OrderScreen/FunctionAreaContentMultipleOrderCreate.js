@@ -85,17 +85,6 @@ function FunctionAreaContentMultipleOrderCreate() {
     }
   };
 
-  const resetHandler = () => {
-    dispatch({
-      type: ORDER_SCREEN.orderSelect,
-      payload: {
-        combineOrder: [],
-        combineOrderName: [],
-        combineOrderFocusIndex: 0, // 要歸0,因為預設是會fouce第一個
-      },
-    });
-  };
-
   const deleteHandler = (index) => {
     dispatch(multipleOrderCreateDeleteAction(index, combineOrder));
   };
@@ -114,7 +103,6 @@ function FunctionAreaContentMultipleOrderCreate() {
     <MultiCreateBox>
       <MultiCreateTitle>
         <MultiCreateCount>數量: {parseCount(combineOrder)}</MultiCreateCount>
-        <MultiCreateResetBtn onClick={resetHandler}>重置</MultiCreateResetBtn>
       </MultiCreateTitle>
 
       <MultiCreateSelectBox className="multi-create-select-box">

@@ -21,6 +21,7 @@ import {
   DescTextBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
 import "./css/FunctionAreaContentMultipleOrder.css";
+import { Colors } from "../../../styles/theme";
 
 function FunctionAreaContentMultipleOrder({ orderListData }) {
   const dispatch = useDispatch();
@@ -103,7 +104,9 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
       <DescText>上傳日期 : {multipleOrderData.createdAt}</DescText>
 
       <DescTextBox>
-        <DescText isTitle={true}>詳細資訊</DescText>
+        <DescText sx={{ color: Colors.green }} isTitle={true}>
+          詳細資訊
+        </DescText>
       </DescTextBox>
 
       <MultiOrderDetailBox className="multi-order">

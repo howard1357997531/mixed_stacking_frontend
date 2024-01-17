@@ -17,6 +17,10 @@ import { Input, Stack, Tooltip } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { StyleEditIcon } from "../../../styles/OrderScreen/FunctionAreaContentEdit";
 import InfoIcon from "@mui/icons-material/Info";
+import {
+  OrderListNavBtn,
+  OrderListNavBtnText,
+} from "../../../styles/OrderScreen";
 
 function FunctionAreaContentEdit() {
   const dispatch = useDispatch();
@@ -61,7 +65,18 @@ function FunctionAreaContentEdit() {
     <CenterText text={"工單演算中..."} />
   ) : (
     <OrderBox>
-      <StyleEditIcon onClick={editBtnHandler} />
+      {/* <StyleEditIcon onClick={editBtnHandler} /> */}
+      <OrderListNavBtn
+        sx={{ position: "absolute", top: "21px", right: "20px" }}
+        onClick={editBtnHandler}
+      >
+        <img
+          style={{ width: "24px", height: "24px" }}
+          src={"ok.png"}
+          alt={"ok.png"}
+        />
+        <OrderListNavBtnText>確認修改</OrderListNavBtnText>
+      </OrderListNavBtn>
       <Stack direction={"row"} justifyContent="center">
         <Input
           required

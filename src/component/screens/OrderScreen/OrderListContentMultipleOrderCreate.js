@@ -117,6 +117,20 @@ function OrderListContentMultipleOrderCreate() {
 
           {groupedData[date].map((order) => (
             <OrderListDetial
+              sx={{
+                backgroundColor: Colors.greenHover,
+                border: checkItemSelect.includes(order.id)
+                  ? `2px solid ${Colors.white}`
+                  : "none",
+                "&:hover": {
+                  border: checkItemSelect.includes(order.id)
+                    ? `2px solid ${Colors.white}`
+                    : "none",
+                  boxShadow: checkItemSelect.includes(order.id)
+                    ? `none`
+                    : `1px 1px ${Colors.white}`,
+                },
+              }}
               itemSelect={checkItemSelect.includes(order.id)}
               onMouseEnter={() => mouseEnterHandler(order.id)}
               onMouseLeave={mouseLeaveHandler}
@@ -130,6 +144,10 @@ function OrderListContentMultipleOrderCreate() {
             >
               <OrderListName>
                 <OrderListNameSelect
+                  sx={{
+                    backgroundColor:
+                      checkItemSelect.includes(order.id) && Colors.white,
+                  }}
                   itemSelect={checkItemSelect.includes(order.id)}
                 />
                 {order.name}
@@ -137,13 +155,13 @@ function OrderListContentMultipleOrderCreate() {
 
               <OrderListState>
                 {order.aiTraining_state === "no_training" && (
-                  <OrderListStateText sx={{ color: Colors.purple }}>
+                  <OrderListStateText sx={{ color: Colors.white }}>
                     尚未演算
                   </OrderListStateText>
                 )}
 
                 {order.aiTraining_state === "is_training" && (
-                  <TextEffect text={"AI演算中"} textColor={Colors.greyText} />
+                  <TextEffect text={"AI演算中"} textColor={Colors.white} />
                 )}
 
                 {order.aiTraining_state === "finish_training" && (

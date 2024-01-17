@@ -4,14 +4,14 @@
 
 .multi-order::-webkit-scrollbar-thumb {
     background-color: aquamarine;
-    color: #f2cd9d
+    color: #05e49d
 }
 
 .multiOrder-detail-box:hover .multiOrder-detail-smbox-avatar {
-    color: #9575cd;
-    background-color: #f2cd9d;
+    color: #ffffffd7;
+    background-color: #05e49d;
 }
 
 .multiOrder-detail-box:hover .multiOrder-detail-smbox-text {
-    color: #f2cd9d;
+    color: #05e49d;
 }

@@ -30,7 +30,14 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
       return (
         <Typography
           variant="h6"
-          sx={{ fontWeight: 600, color: Colors.greyText }}
+          sx={{
+            position: "absolute",
+            top: "55%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontWeight: 600,
+            color: Colors.greyText,
+          }}
         >
           {titleName[orderSelectMode]}
         </Typography>

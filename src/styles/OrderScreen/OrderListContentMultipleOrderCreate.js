@@ -48,7 +48,7 @@ export const IconButtonHelp = styled(IconButton, {
   display: !display && "none",
   transition: "opacity .2s ease-in-out",
   "&:hover": {
-    backgroundColor: "#9575cd47",
+    backgroundColor: "#ffffff55",
   },
 }));
 

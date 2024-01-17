@@ -6,7 +6,11 @@ import {
   OrderListNav,
   OrderListNavBtn,
   OrderListNavBtn2,
+  OrderListNavBtnBox,
+  OrderListNavBtnText,
   OrderListSearch,
+  OrderSwitchBox,
+  OrderSwitchBtn,
   SearchSelect,
 } from "../../../styles/OrderScreen";
 import { IconButton, Input, InputAdornment, Typography } from "@mui/material";
@@ -43,19 +47,11 @@ function OrderList(props) {
     (state) => state.orderScreen_orderSelect
   );
 
-  const titleName = (mode) => {
-    if (["close", "orderDetail", "aiResult"].includes(mode)) {
-      return "我的工單";
-    } else if (["multipleOrder", "noMultipleOrder"].includes(mode)) {
-      return "組合單";
-    } else if (mode === "multipleOrderCreate") {
-      return "創建組合單";
-    } else if (mode === "edit") {
-      return "修改";
-    } else if (mode === "delete") {
-      return "刪除";
-    }
-  };
+  const colorMode = ["multipleOrder", "multipleOrderCreate"].includes(
+    orderSelectMode
+  )
+    ? true
+    : false;
 
   const onFunctionMenuValueHandler = (mode) => {
     if (mode === null || mode === orderSelectMode) {
@@ -68,6 +64,22 @@ function OrderList(props) {
     dispatch({
       type: ORDER_SCREEN.orderSelect,
       payload: { mode: "multipleOrderCreate" },
+    });
+  };
+
+  const orderSwitchHandler = (mode) => {
+    if (orderSelectMode === mode) return;
+    if (orderSelectMode === "close" && mode === "orderDetail") return;
+
+    if (mode === "orderDetail") {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { orderId: orderListData.at(0).id },
+      });
+    }
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { mode },
     });
   };
 
@@ -164,25 +176,28 @@ function OrderList(props) {
     setOpen(false);
   };
   return (
-    <OrderListBox>
-      <Typography
-        sx={{
-          position: "absolute",
-          top: "-17px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          padding: "2px 15px 0px",
-          color: Colors.greyText,
-          background: Colors.lightOrange,
-          fontSize: 22,
-          fontWeight: 600,
-          zIndex: 0.5,
-          borderTopLeftRadius: "25px",
-          borderTopRightRadius: "25px",
-        }}
-      >
-        {titleName(orderSelectMode)}
-      </Typography>
+    <OrderListBox mode={colorMode}>
+      <OrderSwitchBox>
+        <OrderSwitchBtn onClick={() => orderSwitchHandler("orderDetail")}>
+          <img
+            style={{ width: "24px", height: "15px", marginRight: "2px" }}
+            src="order.png"
+            alt="order.png"
+          />
+          上傳工單
+        </OrderSwitchBtn>
+        <OrderSwitchBtn
+          sx={{ backgroundColor: Colors.green }}
+          onClick={() => orderSwitchHandler("multipleOrder")}
+        >
+          <img
+            style={{ width: "24px", height: "15px", marginRight: "2px" }}
+            src="combineOrder.png"
+            alt="combineOrder.png"
+          />
+          合併工單
+        </OrderSwitchBtn>
+      </OrderSwitchBox>
 
       <OrderListNav>
         <OrderListSearch>
@@ -194,7 +209,7 @@ function OrderList(props) {
             <Input
               sx={{
                 width: "200px",
-                color: Colors.lightOrange,
+                color: colorMode ? Colors.green : Colors.lightOrange,
                 backgroundColor: Colors.grey600,
               }}
               endAdornment={
@@ -203,7 +218,9 @@ function OrderList(props) {
                     sx={{
                       width: "22px",
                       height: "22px",
-                      backgroundColor: Colors.lightOrange,
+                      backgroundColor: colorMode
+                        ? Colors.green
+                        : Colors.lightOrange,
                       marginRight: "6px",
                       "&:hover": {
                         cursor: "pointer",
@@ -226,7 +243,7 @@ function OrderList(props) {
               className="orderlist-input-date"
               style={{
                 width: "140px",
-                color: Colors.lightOrange,
+                color: colorMode ? Colors.green : Colors.lightOrange,
                 backgroundColor: Colors.grey600,
                 fontWeight: 600,
               }}
@@ -236,6 +253,7 @@ function OrderList(props) {
 
           {selectSearchName ? (
             <SearchSelect
+              mode={colorMode}
               data-aos="zoom-out"
               onClick={() => selectCondition("name")}
             >
@@ -245,6 +263,7 @@ function OrderList(props) {
 
           {selectSearchDate ? (
             <SearchSelect
+              mode={colorMode}
               data-aos="zoom-out"
               data-aos-delay="100"
               onClick={() => selectCondition("date")}
@@ -254,72 +273,96 @@ function OrderList(props) {
           ) : null}
         </OrderListSearch>
 
-        <OrderListDropdownMenu
+        {/* <OrderListDropdownMenu
           onFunctionMenuValue={onFunctionMenuValueHandler}
-        />
+        /> */}
 
-        <OrderListNavBtn onClick={() => changeMode("edit")}>
-          <img
-            style={{ width: "21px", height: "24px" }}
-            src="edit.png"
-            alt="edit.png"
-          />
-          <Typography
-            sx={{ color: Colors.greyTextBlood, fontSize: 14, fontWeight: 600 }}
-          >
-            修改
-          </Typography>
-        </OrderListNavBtn>
+        <OrderListNavBtnBox>
+          {!["multipleOrder", "multipleOrderCreate"].includes(
+            orderSelectMode
+          ) ? (
+            <OrderListNavBtn onClick={() => changeMode("edit")}>
+              <img
+                style={{ width: "24px", height: "24px" }}
+                src={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
+                alt={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
+              />
+              <OrderListNavBtnText
+                sx={{ color: orderSelectMode === "edit" && "#FF494B" }}
+              >
+                修改
+              </OrderListNavBtnText>
+            </OrderListNavBtn>
+          ) : null}
 
-        <OrderListNavBtn
-          sx={{ marginLeft: "5px" }}
-          onClick={() => changeMode("delete")}
-        >
-          <img
-            style={{ width: "21px", height: "24px" }}
-            src="delete.png"
-            alt="delete.png"
-          />
-          <Typography
-            sx={{ color: Colors.greyTextBlood, fontSize: 14, fontWeight: 600 }}
-          >
-            刪除
-          </Typography>
-        </OrderListNavBtn>
-
-        {["close", "orderDetail", "aiResult", "multipleOrderCreate"].includes(
-          orderSelectMode
-        ) ? (
-          <OrderListNavBtn
-            sx={{ marginLeft: "5px" }}
-            onClick={() => setOpen(true)}
-          >
-            <img
-              style={{ width: "33px", height: "24px" }}
-              src="upload.png"
-              alt="upload.png"
-            />
-            <Typography
-              sx={{
-                color: Colors.greyTextBlood,
-                fontSize: 14,
-                fontWeight: 600,
-              }}
+          {!["multipleOrder", "multipleOrderCreate"].includes(
+            orderSelectMode
+          ) ? (
+            <OrderListNavBtn
+              sx={{ marginLeft: "5px" }}
+              onClick={() => changeMode("delete")}
             >
-              上傳
-            </Typography>
-          </OrderListNavBtn>
-        ) : null}
+              <img
+                style={{ width: "20px", height: "24px" }}
+                src={
+                  orderSelectMode === "delete" ? "delete2.png" : "delete.png"
+                }
+                alt={
+                  orderSelectMode === "delete" ? "delete2.png" : "delete.png"
+                }
+              />
+              <OrderListNavBtnText
+                sx={{ color: orderSelectMode === "delete" && "#FF494B" }}
+              >
+                刪除
+              </OrderListNavBtnText>
+            </OrderListNavBtn>
+          ) : null}
 
-        {orderSelectMode === "multipleOrder" ? (
-          <OrderListNavBtn2
-            disableElevation
-            variant="contained"
-            onClick={createMultiOrderHandle}
-          >
-            創建
-          </OrderListNavBtn2>
-        ) : null}
+          {["multipleOrder"].includes(orderSelectMode) ? (
+            <OrderListNavBtn
+              sx={{ marginLeft: "5px", marginRight: 0 }}
+              // onClick={() => changeMode("delete")}
+              onClick={createMultiOrderHandle}
+            >
+              <img
+                style={{ width: "20px", height: "24px" }}
+                src={
+                  orderSelectMode === "multipleOrderCreate"
+                    ? "createCombineOrder2.png"
+                    : "createCombineOrder.png"
+                }
+                alt={
+                  orderSelectMode === "multipleOrderCreate"
+                    ? "createCombineOrder2.png"
+                    : "createCombineOrder.png"
+                }
+              />
+              <OrderListNavBtnText>創建</OrderListNavBtnText>
+            </OrderListNavBtn>
+          ) : null}
+
+          {[
+            "close",
+            "orderDetail",
+            "aiResult",
+            "edit",
+            "delete",
+            "multipleOrderCreate",
+          ].includes(orderSelectMode) ? (
+            <OrderListNavBtn
+              sx={{ marginLeft: "5px", marginRight: 0 }}
+              onClick={() => setOpen(true)}
+            >
+              <img
+                style={{ width: "33px", height: "24px" }}
+                src="upload.png"
+                alt="upload.png"
+              />
+              <OrderListNavBtnText>上傳</OrderListNavBtnText>
+            </OrderListNavBtn>
+          ) : null}
+        </OrderListNavBtnBox>
       </OrderListNav>
 
       <OrderListContentBox className="order-list" isFilter={isFilter}>

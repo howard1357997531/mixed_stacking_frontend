@@ -59,11 +59,25 @@ function OrderListContentMultipleOrder() {
 
         {groupedData[date].map((order) => (
           <OrderListDetial
+            sx={{
+              backgroundColor: Colors.greenHover,
+              border:
+                order.id === orderId ? `2px solid ${Colors.white}` : "none",
+              "&:hover": {
+                border:
+                  order.id === orderId ? `2px solid ${Colors.white}` : "none",
+                boxShadow:
+                  order.id === orderId ? `none` : `1px 1px ${Colors.white}`,
+              },
+            }}
             itemSelect={order.id === orderId}
             onClick={() => multipleOrderHandler(order.id, order.name)}
           >
-            <OrderListName itemSelect={order.id === orderId}>
-              <OrderListNameSelect itemSelect={order.id === orderId} />
+            <OrderListName>
+              <OrderListNameSelect
+                sx={{ backgroundColor: order.id === orderId && Colors.white }}
+                itemSelect={order.id === orderId}
+              />
               {order.name}
             </OrderListName>
           </OrderListDetial>
