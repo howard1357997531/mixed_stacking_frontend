@@ -26,9 +26,9 @@ function OrderDetailDialogTabsAiResult({ source, orderId, orderSelectData }) {
           <AiResultSmBox>
             <AiResultOrder>
               <StyleAvatar
-                sx={{
-                  backgroundColor: AiResultAvatarBgcolor(index + 1),
-                }}
+              // sx={{
+              //   backgroundColor: AiResultAvatarBgcolor(index + 1),
+              // }}
               >
                 {index + 1}
               </StyleAvatar>

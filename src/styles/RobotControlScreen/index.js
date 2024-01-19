@@ -348,7 +348,7 @@ export const OrderListTitle = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "8%",
-  backgroundColor: blueGrey[500],
+  backgroundColor: Colors.grey600,
 }));
 
 export const OrderListTitleText = styled(Typography)(({ theme }) => ({
@@ -380,7 +380,7 @@ export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
 
 export const MultiOrderDetailBox = styled(Box)(({ theme }) => ({
   width: "100%",
-  height: "100%",
+  height: "92%",
   overflowY: "auto",
 }));
 
@@ -396,20 +396,17 @@ export const MultiOrderDetailSmBox = styled(Box, {
 }));
 
 export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  left: "15px",
-  transform: "translateY(-50%)",
   display: "flex",
+  justifyContent: "center",
   alignItems: "center",
+  width: "20%",
 }));
 
 export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
-  height: "22px",
-  width: "22px",
-  fontSize: "12px",
-  color: Colors.lightOrange,
-  backgroundColor: Colors.greyText,
+  height: "25px",
+  width: "25px",
+  fontSize: "11px",
+  backgroundColor: Colors.grey600,
 }));
 
 export const AvatarDivider = styled(Box)(({ theme }) => ({
@@ -425,24 +422,17 @@ export const MultiOrderName = styled(Box, {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "100%",
+  width: "60%",
   height: "inherit",
   color: isDoing ? Colors.lightYellow : Colors.greyText,
   fontWeight: 600,
 }));
 
 export const MultipleOrderInfo = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  right: "15px",
-  transform: "translateY(-50%)",
-  boxSizing: "border-box",
   display: "flex",
-  justifyContent: "right",
+  justifyContent: "center",
   alignItems: "center",
-  // paddingRight: "10px",
-  // width: "25%",
-  // height: "100%",
+  width: "20%",
 }));
 
 export const MultipleOrderListIconButton = styled(IconButton)(({ theme }) => ({

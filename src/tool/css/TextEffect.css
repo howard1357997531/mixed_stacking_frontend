@@ -46,7 +46,7 @@
     white-space: nowrap;
     position: absolute;
     left: 0;
-    text-shadow: 0 0 1.5px var(--purple400);
+    text-shadow: 0 0 0.5px var(--purple400);
     animation: text-effect 1.5s linear infinite alternate;
 }
 

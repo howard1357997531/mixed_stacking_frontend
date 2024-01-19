@@ -12,6 +12,7 @@ import {
   StyleHelpRoundedIcon,
 } from "../../../styles/OrderScreen/OrderListContentMultipleOrderCreate";
 import {
+  NewText,
   OrderListContentMsg,
   OrderListDate,
   OrderListDetial,
@@ -117,21 +118,11 @@ function OrderListContentMultipleOrderCreate() {
 
           {groupedData[date].map((order) => (
             <OrderListDetial
-              sx={{
-                backgroundColor: Colors.greenHover,
-                border: checkItemSelect.includes(order.id)
-                  ? `2px solid ${Colors.white}`
-                  : "none",
-                "&:hover": {
-                  border: checkItemSelect.includes(order.id)
-                    ? `2px solid ${Colors.white}`
-                    : "none",
-                  boxShadow: checkItemSelect.includes(order.id)
-                    ? `none`
-                    : `1px 1px ${Colors.white}`,
-                },
-              }}
-              itemSelect={checkItemSelect.includes(order.id)}
+              data={[
+                checkItemSelect.includes(order.id),
+                Colors.greenHover,
+                Colors.white,
+              ]}
               onMouseEnter={() => mouseEnterHandler(order.id)}
               onMouseLeave={mouseLeaveHandler}
               onClick={() => {
@@ -143,10 +134,12 @@ function OrderListContentMultipleOrderCreate() {
               }}
             >
               <OrderListName>
+                {order.is_new && <NewText>New</NewText>}
                 <OrderListNameSelect
                   sx={{
                     backgroundColor:
                       checkItemSelect.includes(order.id) && Colors.white,
+                    border: `1px solid ${Colors.white}`,
                   }}
                   itemSelect={checkItemSelect.includes(order.id)}
                 />

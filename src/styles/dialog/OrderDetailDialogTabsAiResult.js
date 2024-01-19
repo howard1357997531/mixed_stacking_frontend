@@ -27,7 +27,7 @@ export const AiResultSmBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "92%",
   height: "100%",
-  backgroundColor: Colors.brownHover,
+  backgroundColor: Colors.greenDialogHover,
   borderRadius: "10px",
 }));
 
@@ -42,7 +42,8 @@ export const AiResultOrder = styled(Box)(({ theme }) => ({
 export const StyleAvatar = styled(Avatar)(({ theme }) => ({
   width: "30px",
   height: "30px",
-  color: Colors.greyTextBlood,
+  color: Colors.greenDialog,
+  backgroundColor: Colors.greyText,
   fontSize: 14,
 }));
 

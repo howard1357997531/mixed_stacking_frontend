@@ -33,7 +33,7 @@ function FunctionArea(props) {
     data: multipleOrderListData,
   } = useSelector((state) => state.multipleOrderList);
 
-  const { orderSearch, multiOrderSearch } = useSelector(
+  const { orderId, orderSearch, multiOrderSearch } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
@@ -75,10 +75,22 @@ function FunctionArea(props) {
           payload: { mode: "multipleOrder" },
         });
       }
+    } else if (["edit", "delete"].includes(orderSelectMode)) {
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { mode: "orderDetail" },
+      });
+
+      if (!orderId && orderListData.length !== 0) {
+        dispatch({
+          type: ORDER_SCREEN.orderSelect,
+          payload: { orderId: orderListData.at(0).id },
+        });
+      }
     } else {
       dispatch({
         type: ORDER_SCREEN.orderSelect,
-        payload: { mode: "close", orderId: null },
+        payload: { mode: "close", orderId: null, editId: null, editData: null },
       });
     }
   };
@@ -97,7 +109,9 @@ function FunctionArea(props) {
         <>
           <FunctionAreaNav>
             <CloseIconButton onClick={closeBoxHandler}>
-              {orderSelectMode === "multipleOrderCreate" ? (
+              {["edit", "delete", "multipleOrderCreate"].includes(
+                orderSelectMode
+              ) ? (
                 <ChevronLeftIcon />
               ) : (
                 <CloseIcon />

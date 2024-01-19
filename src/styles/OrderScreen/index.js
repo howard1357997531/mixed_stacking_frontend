@@ -140,7 +140,7 @@ export const OrderListNavBtnBox = styled(Box, {
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "right",
-  paddingTop: "15px",
+  paddingTop: noPadding ? "15px" : "15px",
   paddingRight: noPadding ? "0px" : "10px",
   width: "200px",
   height: "100%",
@@ -158,19 +158,23 @@ export const OrderListNavBtn = styled(Box)(({ theme }) => ({
     cursor: "pointer",
     transform: "scale(1.1)",
   },
+  "&:active": {
+    transform: "scale(.95)",
+  },
 }));
 
 export const OrderListNavRowBtn = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  padding: "0px 7px",
+  height: "75%",
+  padding: "0px 5px",
   borderRadius: "10px",
-  // backgroundColor: Colors.greyText,
   border: `2px solid ${Colors.blue500}`,
   "&:hover": {
     cursor: "pointer",
-    transform: "scale(1.1)",
+    transform: "scale(1.05)",
+    // backgroundColor: Colors.greyText,
   },
 }));
 
@@ -253,8 +257,8 @@ export const OrderListDate = styled(Typography)(({ theme }) => ({
 }));
 
 export const OrderListDetial = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "itemSelect",
-})(({ theme, itemSelect }) => ({
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
   boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
@@ -264,12 +268,12 @@ export const OrderListDetial = styled(Box, {
   padding: "0px 10px",
   color: Colors.greyText,
   fontWeight: 600,
-  backgroundColor: Colors.lightOrangeHover,
-  border: itemSelect ? `2px solid ${Colors.blue500}` : "none",
-  boxShadow: itemSelect ? `none` : "1px 1px rgba(0, 0, 0, 0.2)",
+  backgroundColor: data[1],
+  border: data[0] ? `2px solid ${data[2]}` : "none",
+  boxShadow: data[0] ? `none` : "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
-    border: itemSelect ? `2px solid ${Colors.blue500}` : "none",
-    boxShadow: itemSelect ? `none` : `1px 1px ${Colors.blue500}`,
+    border: data[0] ? `2px solid ${data[2]}` : "none",
+    boxShadow: data[0] ? `none` : `1px 1px ${data[2]}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -284,6 +288,7 @@ export const OrderListName = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "100%",
   color: Colors.greyText,
+  // fontSize: "18px",
 }));
 
 export const NewText = styled(Typography)(({ theme }) => ({

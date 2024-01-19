@@ -60,7 +60,7 @@ function FunctionAreaContentEdit() {
   };
 
   return !editId ? (
-    <CenterText text={"請選擇工單"} />
+    <CenterText text={"尚未選擇"} />
   ) : orderData.aiTraining_state === "is_training" ? (
     <CenterText text={"工單演算中..."} />
   ) : (
@@ -99,6 +99,8 @@ function FunctionAreaContentEdit() {
         <Tooltip title="綠色部分為可修改部分" placement="right" arrow>
           <InfoIcon sx={{ marginLeft: "4px", color: Colors.darkGreen }} />
         </Tooltip>
+        {/* <InfoIcon sx={{ marginLeft: "4px", color: Colors.darkGreen }} />
+        <span style={{ color: Colors.darkGreen }}>綠色部分為可修改部分</span> */}
       </DescTextBox>
 
       <OrderContentTitleBox>

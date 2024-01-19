@@ -13,11 +13,11 @@ export const OrderBox = styled(Box)(({ theme }) => ({
 export const DescText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isTitle",
 })(({ theme, isTitle }) => ({
-  color: isTitle ? Colors.brown : Colors.greyTextBlood,
+  color: isTitle ? Colors.greenDialog : Colors.greyTextBlood,
   fontWeight: 600,
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
-  backgroundColor: isTitle && Colors.greyTextBlood,
+  backgroundColor: isTitle && Colors.greyText,
 }));
 
 export const DescTextBox = styled(Box)(({ theme }) => ({
@@ -45,8 +45,8 @@ export const OrderContentTitleSmBox = styled(Box, {
   alignItems: "center",
   width: isName ? "40%" : "15%",
   height: "35px",
-  color: Colors.brown,
-  backgroundColor: Colors.greyTextBlood,
+  color: Colors.greenDialog,
+  backgroundColor: Colors.greyText,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   fontWeight: 600,
 }));
@@ -79,7 +79,7 @@ export const OrderDetailSmBox = styled(Box, {
   alignItems: "center",
   width: isName ? "40%" : "15%",
   height: "100%",
-  backgroundColor: isName && Colors.brownHover,
+  backgroundColor: isName && Colors.greenDialogHover,
   color: Colors.greyTextBlood,
   fontSize: "18px",
   fontWeight: 600,

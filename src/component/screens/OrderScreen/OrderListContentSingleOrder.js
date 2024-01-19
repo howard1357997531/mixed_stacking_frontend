@@ -87,7 +87,11 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
             {groupedData[date].map((order) => (
               <OrderListDetial
                 key={order.id}
-                itemSelect={selectId().includes(order.id)}
+                data={[
+                  selectId().includes(order.id),
+                  Colors.lightOrangeHover,
+                  Colors.blue500,
+                ]}
                 onClick={() => {
                   orderListModeHandler(
                     order.id,

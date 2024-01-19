@@ -155,11 +155,17 @@ export const multipleOrderListReducer = (
 
       return {
         ...state,
-        data: [action.payload, ...dataTemp],
+        data: [action.payload, ...state.data],
         orderId: action.payload.id,
+        name: action.payload.name,
       };
 
     case MULTIPLE_ORDER_LIST.deleteData:
+      const ddata = state.data.filter((order) => order.id !== action.payload);
+      if (ddata.length !== 0) {
+        var did = ddata.at(0).id;
+        var dname = ddata.at(0).name;
+      }
       var deleteData;
       var deleteIndex;
       state.data.forEach((order, index) => {
@@ -186,7 +192,7 @@ export const multipleOrderListReducer = (
         var data = state.data.filter((order) => order.id !== action.payload);
       }
 
-      return { ...state, data, orderId: null };
+      return { ...state, data: ddata, orderId: did, name: dname };
 
     case MULTIPLE_ORDER_LIST.filter.request:
       return { ...state, loading: true };

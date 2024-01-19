@@ -142,7 +142,8 @@ export const removeFilterAction = (mode, data) => (dispatch) => {
 };
 
 export const orderEditSelectAction =
-  (editId, orderListData, aiTraining_state) => (dispatch) => {
+  (editId, orderListData, aiTraining_state = null) =>
+  (dispatch) => {
     if (aiTraining_state === "is_training") {
       timerToast("warning", "演算中，不能修改");
       return;
@@ -155,7 +156,11 @@ export const orderEditSelectAction =
     editData["id"] = editId;
     editData["name"] = dataTemp.name;
     editData["aiTraining_state"] = dataTemp.aiTraining_state;
-    dispatch({ type: ORDER_SCREEN.orderSelect, payload: { editId, editData } });
+    dispatch({ type: ORDER_LIST.revise, payload: { name: dataTemp.name } });
+    dispatch({
+      type: ORDER_SCREEN.orderSelect,
+      payload: { orderId: editId, editId, editData },
+    });
   };
 
 export const orderEditChangeAction = (name, value, data) => (dispatch) => {
@@ -480,6 +485,7 @@ export const functionAreaNavButtonAction =
                   type: MULTIPLE_ORDER_LIST.deleteData,
                   payload: orderSelectData,
                 });
+                timerToast("success", "已刪除");
               });
           } catch (error) {
             console.log(error.response.data.error_msg);

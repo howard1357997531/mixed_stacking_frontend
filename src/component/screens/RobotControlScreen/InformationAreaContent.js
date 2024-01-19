@@ -21,7 +21,7 @@ import {
   RobotSuccessTitle,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, Tooltip, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import { DIALOG } from "../../../redux/constants";
@@ -30,6 +30,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import WarningIcon from "@mui/icons-material/Warning";
 import "./css/InformationAreaContent.css";
 import OrderDetailDialog from "../../dialog/orderDetail/OrderDetailDialog";
+import InfoIcon from "@mui/icons-material/Info";
 
 function InformationAreaContent({
   orderSelectData,
@@ -231,11 +232,13 @@ function InformationAreaContent({
                 <OrderListContentSmBox width="20%">
                   <Avatar
                     sx={{
-                      width: "35px",
-                      height: "35px",
-                      fontSize: "16px",
+                      width: "30px",
+                      height: "30px",
+                      fontSize: "14px",
                       backgroundColor:
-                        realtimeItemCount === index + 1 && Colors.lightYellow,
+                        realtimeItemCount === index + 1
+                          ? Colors.lightYellow
+                          : Colors.grey600,
                       color: realtimeItemCount === index + 1 && Colors.brown,
                     }}
                   >
@@ -266,40 +269,47 @@ function InformationAreaContent({
       ) : null}
 
       {informationAreaMode === "multipleOrder" ? (
-        <MultiOrderDetailBox className="orderlist">
-          {multipleOrderArray.map((order, index) => (
-            <MultiOrderDetailSmBox
-              key={order.id}
-              isDoing={index === queue && isDoing}
-            >
-              <MultiOrderAvatarBox>
-                <MultiOrderAvatar>{parseIndex(index)}</MultiOrderAvatar>
-                {order.includes("*") ? (
-                  <>
-                    <AvatarDivider />
-                    <MultiOrderAvatar>{parseIndex2(index)}</MultiOrderAvatar>
-                  </>
-                ) : null}
-              </MultiOrderAvatarBox>
+        <>
+          <OrderListTitle>
+            <OrderListTitleText width="20%">次序</OrderListTitleText>
+            <OrderListTitleText sx={{ flexGrow: 1 }}>名稱</OrderListTitleText>
+            {/* <OrderListTitleText width="25%">辨識</OrderListTitleText> */}
+            <OrderListTitleText width="20%">資訊</OrderListTitleText>
+          </OrderListTitle>
 
-              <MultiOrderName>{parseName(parseId(order)).name}</MultiOrderName>
+          <MultiOrderDetailBox className="orderlist">
+            {multipleOrderArray.map((order, index) => (
+              <MultiOrderDetailSmBox
+                key={order.id}
+                isDoing={index === queue && isDoing}
+              >
+                <MultiOrderAvatarBox>
+                  <MultiOrderAvatar>{parseIndex(index)}</MultiOrderAvatar>
+                  {order.includes("*") ? (
+                    <>
+                      <AvatarDivider />
+                      <MultiOrderAvatar>{parseIndex2(index)}</MultiOrderAvatar>
+                    </>
+                  ) : null}
+                </MultiOrderAvatarBox>
 
-              <MultipleOrderInfo>
-                <Tooltip title="詳細資料" placement="left" arrow>
-                  <MultipleOrderListIconButton
-                    className="infoAreaMultiIconButton"
+                <MultiOrderName>
+                  {parseName(parseId(order)).name}
+                </MultiOrderName>
+
+                <MultipleOrderInfo>
+                  <IconButton
                     onClick={() => multipleOrderDetailHandler(parseId(order))}
                   >
-                    <HelpRoundedIcon
-                      className="infoAreaMultiIcon"
-                      sx={{ fontSize: "20px" }}
+                    <InfoIcon
+                      sx={{ fontSize: "20px", color: Colors.darkGreen }}
                     />
-                  </MultipleOrderListIconButton>
-                </Tooltip>
-              </MultipleOrderInfo>
-            </MultiOrderDetailSmBox>
-          ))}
-        </MultiOrderDetailBox>
+                  </IconButton>
+                </MultipleOrderInfo>
+              </MultiOrderDetailSmBox>
+            ))}
+          </MultiOrderDetailBox>
+        </>
       ) : null}
 
       {realtimeVisualMode && informationAreaMode === "picture" && (

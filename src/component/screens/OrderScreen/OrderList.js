@@ -20,6 +20,7 @@ import OrderListContent from "./OrderListContent";
 import { useDispatch, useSelector } from "react-redux";
 import {
   functionAreaModeAction,
+  orderEditSelectAction,
   orderlistFilterAction,
   removeFilterAction,
 } from "../../../redux/actions/OrderScreenAction";
@@ -43,7 +44,7 @@ function OrderList(props) {
   const { loading: multipleOrderListLoading } = useSelector(
     (state) => state.multipleOrderList
   );
-  const { orderSearch, multiOrderSearch } = useSelector(
+  const { orderId, orderSearch, multiOrderSearch } = useSelector(
     (state) => state.orderScreen_orderSelect
   );
 
@@ -169,6 +170,12 @@ function OrderList(props) {
       type: ORDER_SCREEN.orderSelect,
       payload: { mode },
     });
+
+    if (mode === "edit") {
+      if (orderId) {
+        dispatch(orderEditSelectAction(orderId, orderListData));
+      }
+    }
   };
   // upload
   const [open, setOpen] = useState(false);
@@ -288,7 +295,7 @@ function OrderList(props) {
                 alt={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
               />
               <OrderListNavBtnText
-                sx={{ color: orderSelectMode === "edit" && "#FF494B" }}
+                sx={{ color: orderSelectMode === "edit" && Colors.darkGreen }}
               >
                 修改
               </OrderListNavBtnText>

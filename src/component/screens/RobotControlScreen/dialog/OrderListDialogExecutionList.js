@@ -118,8 +118,7 @@ function OrderListDialogExecutionList(props) {
                       ) ? (
                         <TextEffect
                           text={"進行中"}
-                          textColor={Colors.greyTextBlood}
-                          textCoverColor={Colors.purple400}
+                          textColor={Colors.purple400}
                         />
                       ) : null}
                     </OrderListExeListInProgress>
