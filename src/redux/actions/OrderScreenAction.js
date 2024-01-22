@@ -564,7 +564,12 @@ export const functionAreaNavButtonAction =
                 Swal.close();
                 dispatch({
                   type: ORDER_SCREEN.orderSelect,
-                  payload: { deleteIdArray: [] },
+                  payload: {
+                    orderId: null,
+                    editId: null,
+                    editData: null,
+                    deleteIdArray: [],
+                  },
                 });
                 dispatch({ type: ORDER_LIST.delete, payload: orderSelectData });
                 timerToast("success", "刪除成功");

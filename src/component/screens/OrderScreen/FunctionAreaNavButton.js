@@ -57,11 +57,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
   };
 
   return (
-    <OrderListNavBtnBox
-      noPadding={
-        orderSelectMode === "orderDetail" && aiTrainingState === "no_training"
-      }
-    >
+    <OrderListNavBtnBox noPadding={["orderDetail"].includes(orderSelectMode)}>
       {orderSelectMode === "orderDetail" &&
       aiTrainingState === "no_training" &&
       orderId ? (
@@ -99,26 +95,28 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             src={"aiResult.png"}
             alt={"aiResult.png"}
           />
-          <OrderListNavBtnText sx={{ color: Colors.purple }}>
+          <OrderListNavBtnText sx={{ color: Colors.blue500 }}>
             演算結果
           </OrderListNavBtnText>
         </OrderListNavBtn>
       ) : null}
 
       {orderSelectMode === "aiResult" ? (
-        <OrderListNavBtn
-          sx={{ marginLeft: "5px", marginRight: 0 }}
-          onClick={() => buttonHandler(orderSelectMode, null)}
-        >
-          <img
-            style={{ width: "24px", height: "24px" }}
-            src={"orderList.png"}
-            alt={"orderList.png"}
-          />
-          <OrderListNavBtnText sx={{ color: Colors.blue500 }}>
-            清單
-          </OrderListNavBtnText>
-        </OrderListNavBtn>
+        <Fragment>
+          <OrderListNavBtn
+            sx={{ marginLeft: "5px", marginRight: 0 }}
+            onClick={() => buttonHandler(orderSelectMode, null)}
+          >
+            <img
+              style={{ width: "24px", height: "24px" }}
+              src={"orderList.png"}
+              alt={"orderList.png"}
+            />
+            <OrderListNavBtnText sx={{ color: Colors.blue500 }}>
+              清單
+            </OrderListNavBtnText>
+          </OrderListNavBtn>
+        </Fragment>
       ) : null}
 
       {orderSelectMode === "delete" && deleteIdArray.length !== 0 ? (

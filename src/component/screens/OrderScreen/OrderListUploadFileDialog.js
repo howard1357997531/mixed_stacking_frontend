@@ -10,13 +10,13 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
-import "./css/OrderListUploadFileDialog.css";
 import Swal from "sweetalert2";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import { timerToast } from "../../../swal";
 import { ORDER_LIST } from "../../../redux/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import "./css/OrderListUploadFileDialog.css";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -53,18 +53,20 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
     padding: "0px !important",
     backgroundColor: Colors.grey600,
   }));
-  const DashBox = styled(Box)(({ theme }) => ({
-    position: "absolute",
-    top: "25%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "25%",
-    height: "25%",
-    border: `1px dashed ${Colors.lightOrange}`,
-  }));
+  const DashBox = styled(Box, { shouldForwardProp: (prop) => prop !== "mode" })(
+    ({ theme, mode }) => ({
+      position: "absolute",
+      top: "25%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "25%",
+      height: "25%",
+      border: `1px dashed ${mode ? Colors.greenHover : Colors.lightOrange}`,
+    })
+  );
   const UploadTextBox = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
@@ -75,17 +77,16 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
     transform: "translate(-50%, -50%)",
   }));
 
-  const UploadText = styled(Typography)(({ theme }) => ({
-    color: Colors.lightOrange,
+  const UploadText = styled(Typography, {
+    shouldForwardProp: (prop) => prop !== "mode",
+  })(({ theme, mode }) => ({
+    color: mode ? Colors.greenHover : Colors.lightOrange,
+    fontWeight: 600,
   }));
 
   const dispatch = useDispatch();
-  // const [open, setOpen] = React.useState(false);
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
+  const { mode } = useSelector((state) => state.orderScreen_orderSelect);
+  const modeCheck = mode === "multipleOrderCreate" ? true : false;
   const handleClose = () => {
     onCloseDialog();
   };
@@ -152,16 +153,21 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
             right: 8,
             top: 8,
             zIndex: 88,
-            color: Colors.lightOrange,
+            color: modeCheck ? Colors.greenHover : Colors.lightOrange,
           }}
         >
           <CloseIcon />
         </IconButton>
 
-        <StyleDialogContent className="uploadAfter">
-          <DashBox>
+        <StyleDialogContent
+          className={modeCheck ? "uploadAfter2" : "uploadAfter"}
+        >
+          <DashBox mode={modeCheck}>
             <CloudUploadIcon
-              sx={{ color: Colors.lightOrange, fontSize: "40px" }}
+              sx={{
+                color: modeCheck ? Colors.greenHover : Colors.lightOrange,
+                fontSize: "40px",
+              }}
               className="uploadIconAnimation"
             />
           </DashBox>
@@ -179,14 +185,18 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
               style={{
                 fontWeight: 600,
                 color: Colors.greyText,
-                backgroundColor: Colors.lightOrange,
+                backgroundColor: modeCheck
+                  ? Colors.greenHover
+                  : Colors.lightOrange,
               }}
             >
               瀏覽
             </label>
             {/* Browse */}
             {/* or drag images here */}
-            <UploadText variant="body1">或拖曳檔案至此</UploadText>
+            <UploadText variant="body1" mode={modeCheck}>
+              或拖曳檔案至此
+            </UploadText>
           </UploadTextBox>
         </StyleDialogContent>
       </BootstrapDialog>

@@ -487,11 +487,8 @@ export const FunctionAreaNavBtn = styled(Button, {
 export const FunctionAreaContentBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "orderSelectMode",
 })(({ theme, orderSelectMode }) => ({
-  // position: "relative",
   width: "100%",
   height: "90%",
-  overflowY: "auto",
-  // border: `1px solid ${Colors.greyBorder}`,
   boxSizing: "border-box",
   // padding: ["orderDetail"].includes(orderSelectMode) ? 10 : 0,
 }));
@@ -535,20 +532,59 @@ export const OrderListDetailSmallBox = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
-export const AiResultBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexWrap: "wrap",
-  width: "100%",
+export const AiResultImage = styled(Box)(({ theme }) => ({
+  marginLeft: "10px",
+  padding: "3px 6px",
+  fontSize: "15px",
+  color: Colors.lightOrange,
+  backgroundColor: Colors.blue500,
+  borderRadius: "10px",
+  "&:hover": {
+    cursor: "pointer",
+    transform: "scale(1.05)",
+  },
+  "&:active": {
+    transform: "scale(.95)",
+  },
 }));
 
-export const AiResultSmallBox = styled(Box)(({ theme }) => ({
+export const AiResultBox = styled(Box)(({ theme }) => ({
+  flexGrow: 1,
+  width: "100%",
+  overflowY: "auto",
+}));
+
+export const AiResultIndex = styled(Typography)(({ theme }) => ({
+  marginBottom: "5px",
+  color: Colors.greyText,
+  fomtSize: 18,
+  fontWeight: 600,
+}));
+
+export const AiResultDataBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "10px",
+  width: "100%",
+  marginBottom: "10px",
+}));
+
+export const AiResultDataSmBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "calc(33% - 8px)",
+}));
+
+export const AiResultDataSmmBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginTop: "10px",
-  width: "95%",
+  // marginBottom: "8px",
+  width: "100%",
   height: "60px",
   borderRadius: "10px",
   backgroundColor: Colors.lightOrangeHover,
+  boxShadow: "1px 1px rgba(0, 0, 0, 0.2)",
 }));
 
 export const AiResultAvatar = styled(Avatar)(({ theme }) => ({

@@ -62,6 +62,7 @@ export const Colors = {
   red800: red[800],
   red900: red[900],
   blue: blue[700],
+  blue400: blue[400],
   blue500: blue[500],
   blue600: blue[600],
   blue700: blue[700],
