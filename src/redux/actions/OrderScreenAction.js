@@ -391,7 +391,8 @@ export const aiTrainingAction =
         type: ORDER_LIST.afterTraining,
         payload: {
           orderId,
-          data: data.aiResult_str,
+          aiTrainingOrder: data.aiResult_str,
+          aiLayerOrder: data.aiLayer_order,
           aiTrainingState: "finish_training",
         },
       });

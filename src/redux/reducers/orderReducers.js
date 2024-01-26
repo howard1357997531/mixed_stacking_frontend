@@ -44,7 +44,8 @@ export const orderListReducer = (state = { data: [], name: "" }, action) => {
           ? {
               ...data,
               aiTraining_state: action.payload.aiTrainingState,
-              aiTraining_order: action.payload.data,
+              aiTraining_order: action.payload.aiTrainingOrder,
+              aiLayer_order: action.payload.aiLayerOrder,
             }
           : data
       );

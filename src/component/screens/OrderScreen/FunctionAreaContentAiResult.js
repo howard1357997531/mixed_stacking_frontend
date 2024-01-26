@@ -5,12 +5,13 @@ import {
   AiResultDataBox,
   AiResultDataSmBox,
   AiResultDataSmmBox,
-  AiResultImage,
+  AiResultImageBtn,
+  AiResultImageBox,
   AiResultIndex,
   AiResultText,
+  AiResultImageBackBtn,
 } from "../../../styles/OrderScreen";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
 import { AiResultAvatarBgcolor } from "../../../tool/func";
 import "./css/FunctionAreaContent.css";
 import {
@@ -27,6 +28,7 @@ function FunctionAreaContentAiResult() {
   if (data) {
     var [orderData] = data.filter((order) => order.id === orderId);
     var aiResultData = orderData.aiTraining_order.split(",");
+    var orderCount = aiResultData.length;
     const aiLayerCount = orderData.aiLayer_order;
     var aiLayerCountArray = aiLayerCount.split(",").map((num) => parseInt(num));
     var index = [];
@@ -65,16 +67,26 @@ function FunctionAreaContentAiResult() {
   return (
     <OrderBox>
       {imageOpen ? (
-        <img
-          src={`${domain}/static/media/ai_figure/Figures_${120}/box_${33}_bin_1.png`}
-          alt={`${domain}/static/media/ai_figure/Figures_${120}/box_${33}_bin_1.png`}
-          className="box-photo"
-        ></img>
+        <AiResultImageBox>
+          <img
+            src={`${domain}/static/media/ai_figure/Figures_${orderId}/box_${orderCount}_bin_1.png`}
+            alt={`${domain}/static/media/ai_figure/Figures_${orderId}/box_${orderCount}_bin_1.png`}
+            // className="box-photo"
+            style={{ marginTop: "29.5px", width: "90%" }}
+          ></img>
+          <AiResultImageBackBtn
+            variant="contained"
+            disableElevation
+            onClick={() => setImageOpen(!imageOpen)}
+          >
+            返回
+          </AiResultImageBackBtn>
+        </AiResultImageBox>
       ) : (
         <>
           <DescTextBox sx={{ marginBottom: "8px" }}>
             <DescText isTitle={true}>堆疊順序</DescText>
-            <AiResultImage onClick={aiImageHandler}>圖片</AiResultImage>
+            <AiResultImageBtn onClick={aiImageHandler}>圖片</AiResultImageBtn>
           </DescTextBox>
 
           <AiResultBox className="function-order-box">

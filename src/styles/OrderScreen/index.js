@@ -532,7 +532,24 @@ export const OrderListDetailSmallBox = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
-export const AiResultImage = styled(Box)(({ theme }) => ({
+export const AiResultImageBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  width: "100%",
+  height: "100%",
+}));
+
+export const AiResultImageBackBtn = styled(Button)(({ theme }) => ({
+  marginTop: "30px",
+  width: "20%",
+  backgroundColor: Colors.grey600,
+  "&:hover": {
+    backgroundColor: Colors.greyText,
+  },
+}));
+
+export const AiResultImageBtn = styled(Box)(({ theme }) => ({
   marginLeft: "10px",
   padding: "3px 6px",
   fontSize: "15px",

@@ -44,8 +44,8 @@ function FunctionAreaContentOrder() {
       ) : null}
 
       <DescText>總數量 : {orderCount}</DescText>
-      <DescText>上傳日期 : {orderData.createdAt}</DescText>
       <DescText>修改日期 : {modifiyText}</DescText>
+      <DescText>上傳日期 : {orderData.createdAt}</DescText>
 
       <DescTextBox>
         <DescText isTitle={true}>詳細資訊</DescText>

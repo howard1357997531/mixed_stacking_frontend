@@ -85,14 +85,14 @@ export const OrderDialogDetial = styled(Box, {
   height: "60px",
   margin: "5px 0px",
   padding: "0px 10px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
   backgroundColor: Colors.lightbrown,
-  border: itemSelect ? `3px solid ${Colors.blue700}` : "none",
+  border: itemSelect ? `3px solid ${Colors.blue600}` : "none",
   boxShadow: itemSelect ? `none` : "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
-    border: itemSelect ? `3px solid ${Colors.blue700}` : "none",
-    boxShadow: itemSelect ? `none` : `1px 1px ${Colors.blue700}`,
+    border: itemSelect ? `3px solid ${Colors.blue600}` : "none",
+    boxShadow: itemSelect ? `none` : `2px 2px ${Colors.blue600}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -101,13 +101,11 @@ export const OrderDialogDetial = styled(Box, {
 
 export const OrderDialogName = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  color: Colors.greyTextBlood,
   fontWeight: 600,
 }));
 
 export const OrderDialogTime = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  color: Colors.greyTextBlood,
   fontWeight: 600,
 }));
 

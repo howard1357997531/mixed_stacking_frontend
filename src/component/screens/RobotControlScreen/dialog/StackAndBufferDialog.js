@@ -112,19 +112,23 @@ function StackAndBufferDialog(props) {
                 ></img>
               ) : null}
               {/* <img
-                src={`${domain}/static/media/ai_figure/Figures_${77}/box_${1}_bin_1.png`}
-                alt={`${domain}/static/media/ai_figure/Figures_${77}/box_${1}_bin_1.png`}
+                src={`${domain}/static/media/ai_figure/Figures_${139}/box_${33}_bin_1.png`}
+                alt={`${domain}/static/media/ai_figure/Figures_${139}/box_${33}_bin_1.png`}
               ></img> */}
             </Content>
           </ImageBox>
 
-          <ImageBox
+          {/* <ImageBox
             className="buffer-box"
+            sx={{ borderLeft: `1px solid ${Colors.greyTextBlood}` }}
+          > */}
+          <ImageBox
+            className="dialog-stack-image"
             sx={{ borderLeft: `1px solid ${Colors.greyTextBlood}` }}
           >
             <Title>Buffer 區</Title>
             <Content sx={{ gap: "8px" }}>
-              <BufferBox>
+              {/* <BufferBox>
                 <BufferTitle>Buffer 1</BufferTitle>
                 <BufferContent className="buffer-content">
                   {buffer1.map((data, index) =>
@@ -158,7 +162,11 @@ function StackAndBufferDialog(props) {
                     ) : null
                   )}
                 </BufferContent>
-              </BufferBox>
+              </BufferBox> */}
+              <img
+                src={`${domain}/static/media/step_4.png`}
+                alt={`${domain}/static/media/step_4.png`}
+              ></img>
             </Content>
           </ImageBox>
         </DialogContent>
