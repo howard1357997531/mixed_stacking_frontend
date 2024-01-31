@@ -80,9 +80,9 @@ function OrderListContentSingleOrder({ orderSelectMode, orderSelectIdArray }) {
       ) : orderSearch !== null && orderSearch.length === 0 ? (
         <OrderListContentMsg variant="h5">查無此資料</OrderListContentMsg>
       ) : (
-        Object.keys(groupedData).map((date) => (
+        Object.keys(groupedData).map((date, index) => (
           <Fragment key={date}>
-            <OrderListDate>{date}</OrderListDate>
+            <OrderListDate isFirst={index === 0}>{date}</OrderListDate>
 
             {groupedData[date].map((order) => (
               <OrderListDetial

@@ -15,7 +15,6 @@ import {
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
 import { Input, Stack, Tooltip } from "@mui/material";
 import { Colors } from "../../../styles/theme";
-import { StyleEditIcon } from "../../../styles/OrderScreen/FunctionAreaContentEdit";
 import InfoIcon from "@mui/icons-material/Info";
 import {
   OrderListNavBtn,
@@ -99,8 +98,6 @@ function FunctionAreaContentEdit() {
         <Tooltip title="綠色部分為可修改部分" placement="right" arrow>
           <InfoIcon sx={{ marginLeft: "4px", color: Colors.darkGreen }} />
         </Tooltip>
-        {/* <InfoIcon sx={{ marginLeft: "4px", color: Colors.darkGreen }} />
-        <span style={{ color: Colors.darkGreen }}>綠色部分為可修改部分</span> */}
       </DescTextBox>
 
       <OrderContentTitleBox>

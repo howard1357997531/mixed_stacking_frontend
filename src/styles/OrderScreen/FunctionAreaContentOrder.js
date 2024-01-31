@@ -51,7 +51,7 @@ export const OrderContentTitleSmBox = styled(Box, {
   justifyContent: "center",
   alignItems: "center",
   width: isName ? "40%" : "15%",
-  height: "40px",
+  height: "35px",
   color: Colors.lightOrange,
   backgroundColor: Colors.grey600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",

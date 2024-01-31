@@ -5,7 +5,6 @@ import {
   OrderListContentBox,
   OrderListNav,
   OrderListNavBtn,
-  OrderListNavBtn2,
   OrderListNavBtnBox,
   OrderListNavBtnText,
   OrderListSearch,
@@ -13,7 +12,7 @@ import {
   OrderSwitchBtn,
   SearchSelect,
 } from "../../../styles/OrderScreen";
-import { IconButton, Input, InputAdornment, Typography } from "@mui/material";
+import { IconButton, Input, InputAdornment } from "@mui/material";
 import OrderListDropdownMenu from "./OrderListDropdownMenu";
 import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
 import OrderListContent from "./OrderListContent";
@@ -250,6 +249,7 @@ function OrderList(props) {
               className="orderlist-input-date"
               style={{
                 width: "140px",
+                padding: "7.5px",
                 color: colorMode ? Colors.green : Colors.lightOrange,
                 backgroundColor: Colors.grey600,
                 fontWeight: 600,

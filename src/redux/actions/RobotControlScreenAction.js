@@ -35,6 +35,7 @@ export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
     type: ROBOT_CONTROL_SCREEN.robotExecutionList,
     payload: {
       executeOrderId: [selectOrderObject.id],
+      executeOrderStr: [String(selectOrderObject.id)],
       name: [selectOrderObject.name],
       allData: [selectOrderObject],
     },
@@ -53,6 +54,23 @@ const parseOrderId = (data) => {
         .forEach((id) => output.push(id));
     } else {
       output.push(parseInt(id));
+    }
+  });
+  return output;
+};
+
+const parseOrderIdStr = (data) => {
+  var output = [];
+  const orderArray = data.orderSelectId_str.split(",");
+  orderArray.forEach((order) => {
+    const id = parseInt(order.split("*").at(0));
+    const times = parseInt(order.split("*").at(1));
+    if (order.includes("*")) {
+      Array(times)
+        .fill(id)
+        .forEach((id) => output.push(String(id)));
+    } else {
+      output.push(String(id));
     }
   });
   return output;
@@ -85,10 +103,6 @@ export const multipleOrderlistSelectAction =
       .split("*")
       .at(0);
 
-    const [orderSelectData] = multipleOrderSelectData.multipleOrder.filter(
-      (order) => order.order.id === parseInt(firstId)
-    );
-
     dispatch({
       type: ROBOT_CONTROL_SCREEN.orderSelect,
       payload: { data: [] },
@@ -109,24 +123,14 @@ export const multipleOrderlistSelectAction =
       payload: { mode: "multipleOrder" },
     });
 
-    // const executeOrderId = multipleOrderSelectData.orderSelectId_str
-    //   .split(",")
-    //   .map((order) => parseInt(order));
-
-    // const name = multipleOrderSelectData.multipleOrder.map(
-    //   (order) => order.order.name
-    // );
-    // const allData = multipleOrderSelectData.multipleOrder.map(
-    //   (order) => order.order
-    // );
-
     const executeOrderId = parseOrderId(multipleOrderSelectData);
+    const executeOrderStr = parseOrderIdStr(multipleOrderSelectData);
     const name = parseOrderName(multipleOrderSelectData);
     const allData = parseAllData(multipleOrderSelectData);
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-      payload: { executeOrderId, name, allData },
+      payload: { executeOrderId, executeOrderStr, name, allData },
     });
   };
 
@@ -428,10 +432,12 @@ export const selectInsertOrderAction =
     // 去做 executeOrderId.splice(insertIndex, 0, order.id); 會error
     // 但是複製過後就可以 ...??
     const executeOrderId = [...robotExecutionData.executeOrderId];
+    const executeOrderStr = [...robotExecutionData.executeOrderStr];
     const name = [...robotExecutionData.name];
     const allData = [...robotExecutionData.allData];
 
     executeOrderId.splice(insertIndex, 0, order.id);
+    executeOrderStr.splice(insertIndex, 0, String(order.id) + "_insert");
     name.splice(insertIndex, 0, order.name + "_insert");
     allData.splice(insertIndex, 0, order);
 
@@ -448,7 +454,13 @@ export const selectInsertOrderAction =
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-      payload: { executeOrderId, name, allData, insertOrderOpen: false },
+      payload: {
+        executeOrderId,
+        executeOrderStr,
+        name,
+        allData,
+        insertOrderOpen: false,
+      },
     });
 
     try {

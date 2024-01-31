@@ -251,8 +251,12 @@ export const OrderListDateBox = styled(Box)(({ theme }) => ({
   // borderBottom: `1px solid ${Colors.greyBorder}`,
 }));
 
-export const OrderListDate = styled(Typography)(({ theme }) => ({
+export const OrderListDate = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== "isFirst",
+})(({ theme, isFirst }) => ({
   color: Colors.greyText,
+  marginTop: isFirst ? "0px" : "8px",
+  marginBottom: "5px",
   padding: "0px 1px",
 }));
 
@@ -264,7 +268,7 @@ export const OrderListDetial = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "60px",
-  margin: "5px 0px",
+  marginBottom: "5px",
   padding: "0px 10px",
   color: Colors.greyText,
   fontWeight: 600,

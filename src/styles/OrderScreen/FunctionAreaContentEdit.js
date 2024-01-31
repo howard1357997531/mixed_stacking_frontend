@@ -17,8 +17,4 @@ export const StyleEditIcon = styled(EditIcon)(({ theme }) => ({
   "&:active": {
     transform: "scale(.95)",
   },
-  // display: "flex",
-  // flexDirection: "column",
-  // width: "100%",
-  // height: "100%",
 }));

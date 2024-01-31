@@ -6,6 +6,7 @@ import OrderScreen from "./screen/OrderScreen";
 import CreateOrderListScreen from "./component/screen/CreateOrderListScreen";
 import ControlRobotScreen_socket from "./component/screen/ControlRobotScreen_socket";
 import RobotControlScreen from "./screen/RobotControlScreen";
+import HistoryScreen from "./screen/HistoryScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { ROBOT_CONTROL_SCREEN } from "./redux/constants";
 import { webSocketDomain } from "./env";
@@ -241,6 +242,7 @@ function App() {
           element={<ControlRobotScreen_socket />}
         />
         <Route path="demo1-select-item" element={<Demo1SelectItemsScreen />} />
+        <Route path="/history" element={<HistoryScreen />} />
       </Routes>
     </Router>
   );
