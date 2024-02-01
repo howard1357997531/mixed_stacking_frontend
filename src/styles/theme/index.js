@@ -40,7 +40,7 @@ export const Colors = {
   greenDialog: "#04c688",
   greenDialogHover: "#02a974",
   lightGreen: "#01FCAC",
-  softGreen: "#61d1c68b",
+  softGreen: "#5cc0b6",
   darkGreen: "#14BF9C",
   darkGreenHover: teal[500],
   green600: teal[600],

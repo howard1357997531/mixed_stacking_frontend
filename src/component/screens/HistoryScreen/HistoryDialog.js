@@ -37,7 +37,6 @@ export default function HistoryDialog({ open, closeOpen }) {
   const handleClose = () => {
     closeOpen();
   };
-
   return (
     <React.Fragment>
       <BootstrapDialog

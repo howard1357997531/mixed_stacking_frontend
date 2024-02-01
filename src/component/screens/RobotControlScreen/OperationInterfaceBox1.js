@@ -168,7 +168,7 @@ function OperationInterfaceBox1({
         customColor={[Colors.darkPink, Colors.darkPinkHover]}
         onClick={stackAndBufferDialogOpenHandler}
       >
-        {["inactivate", "reset"].includes(robotStateMode) ? (
+        {["inactivate", "success", "reset"].includes(robotStateMode) ? (
           <>
             <OperationInterfaceButtonLogo>
               <img src="visual.png" alt="visual.png"></img>
@@ -180,7 +180,7 @@ function OperationInterfaceBox1({
           </>
         ) : null}
 
-        {!["inactivate", "reset"].includes(robotStateMode) ? (
+        {!["inactivate", "success", "reset"].includes(robotStateMode) ? (
           <img
             src={`${domain}/static/media/ai_figure/Figures_${
               executeOrderIdArray[queue - 1]

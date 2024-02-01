@@ -173,20 +173,35 @@ const replaceInsertName = (name) => {
 
 export const executeRobotAction =
   (robotStateMode, informationAreaMode, robotExecutionData) => (dispatch) => {
-    const { executeOrderId, name, allData } = robotExecutionData;
+    const { startTime, executeOrderId, name, allData } = robotExecutionData;
     const executeLength = executeOrderId.length;
     const tempQueue = robotExecutionData.queue;
+
+    if (!startTime) {
+      const date = new Date();
+      const monthTemp = parseInt(date.getMonth()) + 1;
+      const month = monthTemp >= 10 ? monthTemp : `0${monthTemp}`;
+      const day =
+        parseInt(date.getDate()) >= 10 ? date.getDate() : `0${date.getDate()}`;
+      const dateInfo = `${date.getFullYear()}/${month}/${day} ${date.getHours()}:${date.getMinutes()}`;
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+        payload: { startTime: dateInfo },
+      });
+    }
 
     if (informationAreaMode === "multipleOrder") {
       var queue = tempQueue;
     } else {
+      // executeLength > 1 代表不是第一次點這邊進來
       var queue = executeLength === 1 ? tempQueue : tempQueue + 1;
     }
 
     if (executeLength === 0) {
       basicSwal("warning", "請選擇工單");
       return;
-    } else if (robotStateMode !== "inactivate") {
+    } else if (!["inactivate", "success", "reset"].includes(robotStateMode)) {
       basicSwal("warning", "手臂執行中");
       return;
     } else {
@@ -377,6 +392,7 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotState_reset,
+            payload: is_finish,
           });
 
           dispatch({
@@ -406,6 +422,21 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
     }
   });
 };
+
+export const executeRobotFinishAction =
+  (robotExecutionData) => async (dispatch) => {
+    try {
+      const startTime = robotExecutionData.startTime;
+      const executeOrderStr = robotExecutionData.executeOrderStr;
+      const { _ } = axios.post(`${domain}/api/executeRobotFinish/`, {
+        startTime,
+        executeOrderStr,
+      });
+    } catch (error) {}
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
+    });
+  };
 
 // index不對
 export const hasNextExecutionOrderAction =
@@ -477,10 +508,12 @@ export const selectInsertOrderAction =
 export const deleteExecutionListAction =
   (index, deleteName, robotExecutionData) => (dispatch) => {
     const executeOrderId = [...robotExecutionData.executeOrderId];
+    const executeOrderStr = [...robotExecutionData.executeOrderStr];
     const name = [...robotExecutionData.name];
     const allData = [...robotExecutionData.allData];
 
     executeOrderId.splice(index, 1);
+    executeOrderStr.splice(index, 1);
     name.splice(index, 1);
     allData.splice(index, 1);
 
@@ -488,13 +521,10 @@ export const deleteExecutionListAction =
       if (result.isConfirmed) {
         dispatch({
           type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-          payload: { executeOrderId, name, allData },
+          payload: { executeOrderId, executeOrderStr, name, allData },
         });
       }
     });
-    console.log(executeOrderId);
-    console.log(name);
-    console.log(allData);
   };
 
 export const swiperChangeAction = (mode, CurrentIndex) => (dispatch) => {

@@ -133,7 +133,7 @@ export const OrderListExeListTitleBox = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "8%",
   borderBottom: `1px solid ${Colors.brownHover}`,
-  color: Colors.brownText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
 }));
 
@@ -160,7 +160,9 @@ export const OrderListExeListNameBox = styled(Box)(({ theme }) => ({
   overflow: "auto",
 }));
 
-export const OrderListExeListName = styled(Box)(({ theme }) => ({
+export const OrderListExeListName = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
   position: "relative",
   display: "flex",
   justifyContent: "center",
@@ -168,6 +170,8 @@ export const OrderListExeListName = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "60px",
   borderTop: `1px solid ${Colors.brownHover}`,
+  backgroundColor: data[0] ? Colors.softGreen : "transparent",
+  borderTop: data[1] ? "none" : `1px solid ${Colors.brownHover}`,
 }));
 
 export const IndexText = styled(Avatar, {
@@ -181,31 +185,33 @@ export const IndexText = styled(Avatar, {
   height: "24px",
   fontSize: "16px",
   fontWeight: 600,
-  color: Colors.brown,
+  color: finish ? Colors.softGreen : Colors.brown,
   backgroundColor: finish ? Colors.greyTextBlood : Colors.greyTextBlood,
-  // border: `1px solid ${finish ? Colors.green800 : Colors.greyTextBlood}`,
 }));
 
-export const InsertText = styled(Typography)(({ theme }) => ({
+export const InsertText = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== "finish",
+})(({ theme, finish }) => ({
   position: "absolute",
   top: "50%",
   left: "44px",
   transform: "translateY(-50%)",
   padding: "1px 3px 0px",
-  color: Colors.brown,
-  backgroundColor: Colors.lightYellow,
+  color: finish ? Colors.softGreen : Colors.brown,
+  backgroundColor: finish ? Colors.green600 : Colors.lightYellow,
+  fontWeight: 600,
   // border: `1px solid ${Colors.lightYellow}`,
 }));
 
 export const OrderText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "finish",
 })(({ theme, finish }) => ({
-  color: finish ? Colors.green800 : Colors.greyTextBlood,
+  color: finish ? Colors.green600 : Colors.greyTextBlood,
   fontWeight: 600,
 }));
 
 export const WaitToExecuteText = styled(Typography)(({ theme }) => ({
-  color: Colors.brown,
+  color: Colors.greyTextBlood,
   backgroundColor: Colors.purple400,
   fontWeight: 600,
   padding: "1px 3px 0px",
@@ -219,9 +225,9 @@ export const InsertNowText = styled(Typography)(({ theme }) => ({
   marginLeft: "50%",
   transform: "translateX(-50%)",
   color: Colors.lightYellow,
-  // fontWeight: 600,
+  fontWeight: 600,
   padding: "2px 4px 0px",
-  border: `1px solid ${Colors.lightYellow}`,
+  border: `2px solid ${Colors.lightYellow}`,
   "&:hover": {
     color: Colors.brown,
     backgroundColor: Colors.lightYellow,

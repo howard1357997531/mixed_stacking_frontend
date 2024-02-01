@@ -35,7 +35,7 @@ function OperationInterfaceBox3({
       color: Colors.darkGreenHover,
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
-    finish: { text: "已結束", color: Colors.greyTextBlood },
+    success: { text: "已結束", color: Colors.greyTextBlood },
     buffer: { text: "錯誤!! 夾至 Buffer 區", color: Colors.red800 },
     buffer_to_main: {
       text: `從 Buffer 夾第${realtimeItemCount}個物件至棧板`,
@@ -55,7 +55,7 @@ function OperationInterfaceBox3({
         )}
 
         {executeOrderIdArray.length !== 0 &&
-          ["inactivate", "reset"].includes(robotStateMode) && (
+          ["inactivate", "success", "reset"].includes(robotStateMode) && (
             <>
               <TextShowBoardText
                 sx={{ color: boxText[robotStateMode]["color"] }}

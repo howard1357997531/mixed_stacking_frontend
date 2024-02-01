@@ -138,7 +138,7 @@ function InformationAreaContent({
     }
   }, [realtimeItemCount]);
   const hasOrderList = executeOrderIdArray.length !== 0;
-  const mode = !["inactivate", "reset"].includes(robotStateMode);
+  const mode = !["inactivate", "success", "reset"].includes(robotStateMode);
 
   // multipleOrder
   if (multipleOrderSelectData.length !== 0) {

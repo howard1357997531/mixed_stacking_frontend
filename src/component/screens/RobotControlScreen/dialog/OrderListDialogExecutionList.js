@@ -53,8 +53,7 @@ function OrderListDialogExecutionList(props) {
 
   const robotStateMode = props.robotStateMode;
   const queue = props.robotExecutionData.queue;
-  const executionListQueue =
-    robotStateMode === "inactivate" ? queue : queue - 1;
+  const executionListQueue = robotStateMode === "success" ? queue : queue - 1;
 
   return (
     <>
@@ -76,21 +75,16 @@ function OrderListDialogExecutionList(props) {
             {executeOrderNameArray.map((name, index) => (
               <Fragment key={index}>
                 <OrderListExeListName
-                  sx={{
-                    backgroundColor:
-                      index < executionListQueue
-                        ? Colors.softGreen
-                        : "transparent",
-                    borderTop:
-                      index === 0 ? "none" : `1px solid ${Colors.brownHover}`,
-                  }}
+                  data={[index < executionListQueue, index === 0]}
                 >
                   <IndexText finish={index < executionListQueue}>
                     {index + 1}
                   </IndexText>
 
                   {name.endsWith("_insert") ? (
-                    <InsertText>插單</InsertText>
+                    <InsertText finish={index < executionListQueue}>
+                      插單
+                    </InsertText>
                   ) : null}
 
                   <OrderText finish={index < executionListQueue}>
@@ -103,7 +97,7 @@ function OrderListDialogExecutionList(props) {
 
                   {index == executionListQueue ? (
                     <OrderListExeListInProgress>
-                      {props.robotStateMode === "inactivate" ? (
+                      {props.robotStateMode === "success" ? (
                         <WaitToExecuteText>待執行</WaitToExecuteText>
                       ) : null}
 
@@ -113,7 +107,7 @@ function OrderListDialogExecutionList(props) {
                         </Typography>
                       ) : null}
 
-                      {!["inactivate", "pause"].includes(
+                      {!["inactivate", "success", "pause"].includes(
                         props.robotStateMode
                       ) ? (
                         <TextEffect
@@ -133,7 +127,7 @@ function OrderListDialogExecutionList(props) {
 
                 {/* 可以在待執行單前面插單 */}
                 {index + 1 == executionListQueue &&
-                props.robotStateMode === "inactivate" ? (
+                props.robotStateMode === "success" ? (
                   <Box sx={{ borderTop: `1px solid ${Colors.brownHover}` }}>
                     <InsertNowText
                       onClick={() => insertOrderHandler(index + 1)}

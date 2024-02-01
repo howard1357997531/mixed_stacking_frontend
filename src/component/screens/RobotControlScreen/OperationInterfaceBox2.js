@@ -35,13 +35,13 @@ function OperationInterfaceBox2() {
   };
 
   const robotSettingHandler = () => {
-    if (!["inactivate", "reset"].includes(robotStateMode)) {
+    if (!["inactivate", "success", "reset"].includes(robotStateMode)) {
       setRobotSettingDialogOpen(true);
     }
   };
 
   useEffect(() => {
-    if (["inactivate", "reset"].includes(robotStateMode)) {
+    if (["inactivate", "success", "reset"].includes(robotStateMode)) {
       setRobotSettingDialogOpen(false);
     }
   }, [robotStateMode]);
@@ -63,7 +63,9 @@ function OperationInterfaceBox2() {
         </OperationInterfaceButtonLogo>
 
         <OperationInterfaceButtonText>
-          {robotStateMode === "inactivate" ? "執行" : "執行中"}
+          {["inactivate", "success", "reset"].includes(robotStateMode)
+            ? "執行"
+            : "執行中"}
         </OperationInterfaceButtonText>
       </SixtyRadioWidthButton>
 

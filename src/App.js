@@ -15,6 +15,7 @@ import {
   orderListAction,
 } from "./redux/actions/OrderActions";
 import {
+  executeRobotFinishAction,
   hasNextExecutionOrderAction,
   robotExecutionAlertAction,
 } from "./redux/actions/RobotControlScreenAction";
@@ -205,9 +206,7 @@ function App() {
           dispatch(robotExecutionAlertAction(robotExecutionData));
         }, 2000);
       } else {
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
-        });
+        dispatch(executeRobotFinishAction(robotExecutionData));
       }
     }
   }, [robotExecutionData.check]);

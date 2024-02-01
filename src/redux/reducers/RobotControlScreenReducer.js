@@ -53,6 +53,7 @@ export const robotControlScreen_informationAreaReducer = (
 
 export const robotControlScreen_robotExecutionListReducer = (
   state = {
+    startTime: null,
     check: false,
     isDoing: false,
     executeOrderId: [],
@@ -105,7 +106,7 @@ export const robotControlScreen_robotStateReducer = (
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN.robotState_reset:
-      const mode = action.payload === "success" ? "inactivate" : "reset";
+      const mode = action.payload === "success" ? "success" : "reset";
       return {
         mode,
         text: "尚未選擇工單",
