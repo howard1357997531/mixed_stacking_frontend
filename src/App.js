@@ -132,13 +132,12 @@ function App() {
             checkNumberlist: realtimeData.check_numberlist,
           },
         });
-        // console.log("websocket: ", {
-        //   // visualResult: realtimeData.visual_result,
-        //   // visualCount: realtimeData.visual_count,
-        //   // bufferOrder: realtimeData.buffer_order,
-        //   // checkNumberlist: realtimeData.check_numberlist,
-        //   bufferquanlity: realtimeData.bufferquanlity,
-        // });
+        console.log("websocket: ", {
+          visualResult: realtimeData.visual_result,
+          visualCount: realtimeData.visual_count,
+          bufferOrder: realtimeData.buffer_order,
+          checkNumberlist: realtimeData.check_numberlist,
+        });
       }
 
       if (realtimeData.bufferquanlity) {

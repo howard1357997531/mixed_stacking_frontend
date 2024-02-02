@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   HistoryBox,
   HistoryContainer,
@@ -16,6 +16,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./css/HistoryDesktop.css";
 import { Colors } from "../../../styles/theme";
 import HistoryDialog from "./HistoryDialog";
+import { domain } from "../../../env";
+import axios from "axios";
 
 function HistoryDesktop() {
   const [date, setDate] = useState(false);
@@ -24,6 +26,13 @@ function HistoryDesktop() {
   const dateHandler = (e) => {
     console.log(e.target.value);
   };
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios.get(`${domain}/api/history_record/`).then((res) => {
+      setData(res.data);
+    });
+  }, []);
   return (
     <HistoryContainer>
       <StyleBox>
