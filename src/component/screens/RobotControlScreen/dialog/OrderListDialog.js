@@ -44,7 +44,7 @@ function OrderListDialog(props) {
             overflow: "hidden",
           }}
         >
-          {["inactivate", "reset"].includes(props.robotStateMode) &&
+          {["inactivate", "success", "reset"].includes(props.robotStateMode) &&
           !isDoing ? (
             <OrderListDialogTabs {...props} />
           ) : (

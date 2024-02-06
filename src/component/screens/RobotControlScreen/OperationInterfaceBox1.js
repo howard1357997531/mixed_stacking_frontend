@@ -156,7 +156,7 @@ function OperationInterfaceBox1({
         </OperationInterfaceButtonLogo>
 
         <OperationInterfaceButtonText>
-          {["inactivate", "reset"].includes(robotStateMode) &&
+          {["inactivate", "success", "reset"].includes(robotStateMode) &&
           !robotExecutionData.isDoing
             ? "工單"
             : "刪 / 插單"}

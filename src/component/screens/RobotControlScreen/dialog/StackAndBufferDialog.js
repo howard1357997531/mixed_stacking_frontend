@@ -40,7 +40,8 @@ function StackAndBufferDialog(props) {
   const { bufferquanlity } = useSelector(
     (state) => state.robotControlScreen_realtimeVisual
   );
-  console.log("bufferquanlity:", bufferquanlity);
+  // const bufferquanlity = [4, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0];
+  // console.log("bufferquanlity:", bufferquanlity);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const handleClose = () => {
@@ -128,7 +129,7 @@ function StackAndBufferDialog(props) {
           >
             <Title>Buffer 區</Title>
             <Content sx={{ gap: "8px" }}>
-              {/* <BufferBox>
+              <BufferBox>
                 <BufferTitle>Buffer 1</BufferTitle>
                 <BufferContent className="buffer-content">
                   {buffer1.map((data, index) =>
@@ -162,11 +163,11 @@ function StackAndBufferDialog(props) {
                     ) : null
                   )}
                 </BufferContent>
-              </BufferBox> */}
-              <img
+              </BufferBox>
+              {/* <img
                 src={`${domain}/static/media/step_4.png`}
                 alt={`${domain}/static/media/step_4.png`}
-              ></img>
+              ></img> */}
             </Content>
           </ImageBox>
         </DialogContent>
