@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
   IconButtonAdd,
@@ -30,6 +30,7 @@ import OrderListDialogExecutionListInsertDetail from "./OrderListDialogExecution
 function OrderListDialogExecutionList(props) {
   const dispatch = useDispatch();
   const {
+    isOpenBool,
     executeOrderId: executeOrderIdArray,
     name: executeOrderNameArray,
     insertOrderOpen,
@@ -55,6 +56,16 @@ function OrderListDialogExecutionList(props) {
   const queue = props.robotExecutionData.queue;
   const executionListQueue = robotStateMode === "success" ? queue : queue - 1;
 
+  const insertRef = useRef();
+  useEffect(() => {
+    if (insertRef.current) {
+      insertRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [isOpenBool, queue]);
+
   return (
     <>
       {insertOrderOpen ? (
@@ -76,6 +87,7 @@ function OrderListDialogExecutionList(props) {
               <Fragment key={index}>
                 <OrderListExeListName
                   data={[index < executionListQueue, index === 0]}
+                  ref={queue - 2 === index ? insertRef : null}
                 >
                   <IndexText finish={index < executionListQueue}>
                     {index + 1}

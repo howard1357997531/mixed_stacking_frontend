@@ -20,15 +20,20 @@ import { domain } from "../../../env";
 import axios from "axios";
 
 function HistoryDesktop() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [dateInput, setDateInput] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogData, setDialogData] = useState([]);
 
   const dateHandler = (e) => {
     console.log(e.target.value);
   };
 
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dialogOpenHandler = (order) => {
+    setDialogOpen(true);
+    setDialogData(order);
+  };
 
   const parseCount = (orders) => {
     const count = orders
@@ -50,7 +55,7 @@ function HistoryDesktop() {
     }, {});
     // console.log(Object.keys(groupedData));
   }
-
+  console.log(dialogData);
   useEffect(() => {
     axios.get(`${domain}/api/history_record/`).then((res) => {
       setData(res.data);
@@ -83,9 +88,11 @@ function HistoryDesktop() {
           </HistoryTitleBox>
 
           <HistoryContent className="history-content">
-            {loading
-              ? "asd"
-              : Object.keys(groupedData).map((date, index) => (
+            {loading ? (
+              "asd"
+            ) : (
+              <>
+                {Object.keys(groupedData).map((date, index) => (
                   <Fragment key={index}>
                     <HistoryListDate isFirst={index === 0}>
                       {date}
@@ -94,7 +101,7 @@ function HistoryDesktop() {
                     {groupedData[date].map((order) => (
                       <HistoryListDetial
                         key={order.id}
-                        onClick={() => setDialogOpen(true)}
+                        onClick={() => dialogOpenHandler(order)}
                       >
                         <HistoryName>
                           {parseCount(order.order_id)} 單
@@ -107,10 +114,16 @@ function HistoryDesktop() {
                     ))}
                   </Fragment>
                 ))}
+                <HistoryDialog
+                  open={dialogOpen}
+                  closeOpen={() => setDialogOpen(false)}
+                  data={dialogData}
+                />
+              </>
+            )}
           </HistoryContent>
         </HistoryBox>
       </StyleBox>
-      <HistoryDialog open={dialogOpen} closeOpen={() => setDialogOpen(false)} />
     </HistoryContainer>
   );
 }

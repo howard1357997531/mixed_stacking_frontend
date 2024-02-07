@@ -98,7 +98,7 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
   backgroundColor: Colors.lightOrangeHover,
   boxShadow: "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
-    boxShadow: `1px 1px ${Colors.purple}`,
+    boxShadow: `1px 1px ${Colors.blue500}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -126,7 +126,7 @@ export const StyleDialogTitle = styled(DialogTitle)(({ theme }) => ({
   boxSizing: "border-box",
   width: "500px",
   padding: "8px 15px 5px",
-  fontSize: 20,
+  fontSize: 18,
   color: Colors.greyText,
   backgroundColor: Colors.lightOrangeHover,
   textAlign: "center",
@@ -159,9 +159,10 @@ export const DescText = styled(Typography, {
 export const HistoryDetailBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   width: "100%",
-  height: "300px",
+  maxHeight: "300px",
   overflow: "auto",
   border: `1px solid ${Colors.greyText}`,
+  // borderBottom: `1px solid ${Colors.greyText}`,
 }));
 
 export const HistoryDetailSmBox = styled(Box, {
@@ -174,6 +175,32 @@ export const HistoryDetailSmBox = styled(Box, {
   height: "50px",
   borderTop: !isFirst && `1px solid ${Colors.greyText}`,
   borderRight: `1px solid ${Colors.greyText}`,
+}));
+
+export const InsertBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "6%",
+  height: "100%",
+  color: Colors.lightOrange,
+  backgroundColor: Colors.blue500,
+  borderRight: `1px solid ${Colors.greyText}`,
+  fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    width: "8%",
+  },
+}));
+
+export const InsertSmBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "40%",
 }));
 
 export const AvatarBox = styled(Box)(({ theme }) => ({
@@ -189,20 +216,24 @@ export const AvatarBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyleAvatar = styled(Avatar)(({ theme }) => ({
+export const StyleAvatar = styled(Avatar, {
+  shouldForwardProp: (prop) => prop !== "isInsert",
+})(({ theme, isInsert }) => ({
   width: "25px",
   height: "25px",
-  fontSize: 14,
+  fontSize: 12,
   color: Colors.lightOrangeHover,
-  backgroundColor: Colors.greyText,
+  backgroundColor: isInsert ? Colors.blue500 : Colors.greyText,
 }));
 
-export const AvatarDivider = styled(Box)({
+export const AvatarDivider = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isInsert",
+})(({ theme, isInsert }) => ({
   width: "6px",
   height: "2px",
   margin: "0px 4px",
-  backgroundColor: Colors.greyText,
-});
+  backgroundColor: isInsert ? Colors.blue500 : Colors.greyText,
+}));
 
 export const NameBox = styled(Box)({
   display: "flex",
@@ -210,4 +241,5 @@ export const NameBox = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   color: Colors.greyText,
+  fontWeight: 600,
 });

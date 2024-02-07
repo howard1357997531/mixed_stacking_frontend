@@ -25,7 +25,6 @@ import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import { DIALOG } from "../../../redux/constants";
-import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import CheckIcon from "@mui/icons-material/Check";
 import WarningIcon from "@mui/icons-material/Warning";
 import "./css/InformationAreaContent.css";

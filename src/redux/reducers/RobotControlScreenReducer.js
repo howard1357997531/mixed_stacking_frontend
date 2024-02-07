@@ -56,6 +56,7 @@ export const robotControlScreen_robotExecutionListReducer = (
     startTime: null,
     check: false,
     isDoing: false,
+    isOpenBool: false,
     executeOrderId: [],
     executeOrderStr: [],
     name: [],

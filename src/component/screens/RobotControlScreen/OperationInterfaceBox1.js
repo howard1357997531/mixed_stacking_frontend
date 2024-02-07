@@ -20,10 +20,11 @@ import OrderListDialog from "./dialog/OrderListDialog";
 import TextEffect2 from "../../../tool/TextEffect2";
 import { Box, Slide } from "@mui/material";
 import { domain } from "../../../env";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./css/OperationInterfaceBox1.css";
 import StackAndBufferDialog from "./dialog/StackAndBufferDialog";
 import { timerToast } from "../../../swal";
+import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
 
 // demo1 可能要把 realtime-Visual-Count 改成 realtimeItemCount
 // 視覺辨識區要改 30% 70% fontSize: 26
@@ -41,6 +42,7 @@ function OperationInterfaceBox1({
   objectNextName,
   robotExecutionData,
 }) {
+  const dispatch = useDispatch();
   // orderListDialog
   const [orderListDialogOpen, setOrderListDialogOpen] = useState(false);
   const onOrderListDialogOpen = (state) => {
@@ -60,9 +62,11 @@ function OperationInterfaceBox1({
     setStackAndBufferOpen(true);
   };
 
-  const { executeOrderId: executeOrderIdArray, queue } = useSelector(
-    (state) => state.robotControlScreen_robotExecutionList
-  );
+  const {
+    isOpenBool,
+    executeOrderId: executeOrderIdArray,
+    queue,
+  } = useSelector((state) => state.robotControlScreen_robotExecutionList);
 
   const itemCount = realtimeItemCount ? realtimeItemCount : 1;
 
@@ -145,11 +149,18 @@ function OperationInterfaceBox1({
     }, 600);
   }, [realtimeVisualCount]);
 
+  const dialogOpenHandler = () => {
+    setOrderListDialogOpen(true);
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+      payload: { isOpenBool: !isOpenBool },
+    });
+  };
   return (
     <FortyRadioHeightBox>
       <FortyRadioWidthButton
         customColor={[Colors.lightOrange, orange[200]]}
-        onClick={() => setOrderListDialogOpen(true)}
+        onClick={dialogOpenHandler}
       >
         <OperationInterfaceButtonLogo>
           <img src="list.png" alt="list.png"></img>
