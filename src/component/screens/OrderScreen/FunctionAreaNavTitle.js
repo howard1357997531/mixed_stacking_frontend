@@ -35,6 +35,7 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
             top: "55%",
             left: "50%",
             transform: "translate(-50%, -50%)",
+            fontSize: "18px",
             fontWeight: 600,
             color: Colors.greyText,
           }}

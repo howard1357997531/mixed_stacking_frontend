@@ -61,14 +61,6 @@ function FunctionAreaNavButton({ orderSelectMode }) {
       {orderSelectMode === "orderDetail" &&
       aiTrainingState === "no_training" &&
       orderId ? (
-        // <FunctionAreaNavBtn
-        //   disableElevation
-        //   variant="contained"
-        //   colorData={Colors.purple}
-        //   onClick={() => buttonHandler(orderSelectMode, "no_training")}
-        // >
-        //   AI 演算
-        // </FunctionAreaNavBtn>
         <OrderListNavRowBtn
           onClick={() => buttonHandler(orderSelectMode, "no_training")}
         >
@@ -91,7 +83,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
           onClick={() => buttonHandler(orderSelectMode, "finish_training")}
         >
           <img
-            style={{ width: "30px", height: "30px" }}
+            style={{ width: "28px", height: "20px" }}
             src={"aiResult.png"}
             alt={"aiResult.png"}
           />
@@ -108,7 +100,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             onClick={() => buttonHandler(orderSelectMode, null)}
           >
             <img
-              style={{ width: "24px", height: "24px" }}
+              style={{ width: "20px", height: "20px" }}
               src={"orderList.png"}
               alt={"orderList.png"}
             />
@@ -123,7 +115,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
         <Fragment>
           <OrderListNavBtn onClick={orderDeleteResetHandler}>
             <img
-              style={{ width: "24px", height: "24px" }}
+              style={{ width: "20px", height: "20px" }}
               src={"reset.png"}
               alt={"reset.png"}
             />
@@ -138,7 +130,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             onClick={() => buttonHandler(orderSelectMode, null)}
           >
             <img
-              style={{ width: "24px", height: "24px" }}
+              style={{ width: "20px", height: "20px" }}
               src={"ok.png"}
               alt={"ok.png"}
             />
@@ -160,7 +152,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
           onClick={() => buttonHandler(orderSelectMode, null)}
         >
           <img
-            style={{ width: "24px", height: "24px" }}
+            style={{ width: "20px", height: "20px" }}
             src={"ok.png"}
             alt={"ok.png"}
           />
@@ -177,7 +169,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
         <Fragment>
           <OrderListNavBtn onClick={multiCreateResetHandler}>
             <img
-              style={{ width: "24px", height: "24px" }}
+              style={{ width: "20px", height: "20px" }}
               src={"reset.png"}
               alt={"reset.png"}
             />
@@ -192,7 +184,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             onClick={() => buttonHandler(orderSelectMode, null)}
           >
             <img
-              style={{ width: "24px", height: "24px" }}
+              style={{ width: "20px", height: "20px" }}
               src={"ok.png"}
               alt={"ok.png"}
             />

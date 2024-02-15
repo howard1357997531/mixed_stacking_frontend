@@ -12,7 +12,7 @@ import {
   OrderSwitchBtn,
   SearchSelect,
 } from "../../../styles/OrderScreen";
-import { IconButton, Input, InputAdornment } from "@mui/material";
+import { IconButton, Input, InputAdornment, useTheme } from "@mui/material";
 import OrderListDropdownMenu from "./OrderListDropdownMenu";
 import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
 import OrderListContent from "./OrderListContent";
@@ -181,6 +181,14 @@ function OrderList(props) {
   const onCloseDialog = () => {
     setOpen(false);
   };
+
+  const theme = useTheme();
+
+  const orderListClassName = ["multipleOrder", "multipleOrderCreate"].includes(
+    orderSelectMode
+  )
+    ? "multi-order-list"
+    : "order-list";
   return (
     <OrderListBox mode={colorMode}>
       <OrderSwitchBox>
@@ -210,24 +218,29 @@ function OrderList(props) {
           <IconButton onClick={selectSearchHandler}>
             <SearchIcon sx={{ color: Colors.greyText }} />
           </IconButton>
-
           {selectName ? (
             <Input
               sx={{
-                width: "200px",
+                width: "170px",
                 color: colorMode ? Colors.green : Colors.lightOrange,
                 backgroundColor: Colors.grey600,
+                [theme.breakpoints.down("lg")]: {
+                  width: "140px",
+                },
+                [theme.breakpoints.down("md")]: {
+                  width: "120px",
+                },
               }}
               endAdornment={
                 <InputAdornment position="end" onClick={filterNameHandler}>
                   <PlayArrowIcon
                     sx={{
-                      width: "22px",
+                      width: "20px",
                       height: "22px",
                       backgroundColor: colorMode
                         ? Colors.green
                         : Colors.lightOrange,
-                      marginRight: "6px",
+                      marginRight: "4px",
                       "&:hover": {
                         cursor: "pointer",
                         transform: "scale(1.1)",
@@ -242,14 +255,15 @@ function OrderList(props) {
               onChange={(e) => setInputName(e.target.value)}
             />
           ) : null}
-
           {selectDate ? (
             <input
               type="date"
               className="orderlist-input-date"
               style={{
-                width: "140px",
-                padding: "7.5px",
+                // boxSizing: "border-box",
+                width: "110px",
+                padding: "7.5px 0px",
+                paddingRight: "7.5px",
                 color: colorMode ? Colors.green : Colors.lightOrange,
                 backgroundColor: Colors.grey600,
                 fontWeight: 600,
@@ -257,9 +271,9 @@ function OrderList(props) {
               onChange={filterDateHandler}
             />
           ) : null}
-
           {selectSearchName ? (
             <SearchSelect
+              sx={{ marginLeft: !selectName && !selectDate ? "2px" : "6px" }}
               mode={colorMode}
               data-aos="zoom-out"
               onClick={() => selectCondition("name")}
@@ -267,9 +281,9 @@ function OrderList(props) {
               名稱
             </SearchSelect>
           ) : null}
-
           {selectSearchDate ? (
             <SearchSelect
+              sx={{ marginLeft: !selectName && !selectDate ? "12px" : "6px" }}
               mode={colorMode}
               data-aos="zoom-out"
               data-aos-delay="100"
@@ -290,7 +304,7 @@ function OrderList(props) {
           ) ? (
             <OrderListNavBtn onClick={() => changeMode("edit")}>
               <img
-                style={{ width: "24px", height: "24px" }}
+                style={{ width: "20px", height: "20px" }}
                 src={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
                 alt={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
               />
@@ -305,12 +319,9 @@ function OrderList(props) {
           {!["multipleOrder", "multipleOrderCreate"].includes(
             orderSelectMode
           ) ? (
-            <OrderListNavBtn
-              sx={{ marginLeft: "5px" }}
-              onClick={() => changeMode("delete")}
-            >
+            <OrderListNavBtn onClick={() => changeMode("delete")}>
               <img
-                style={{ width: "20px", height: "24px" }}
+                style={{ width: "16px", height: "20px" }}
                 src={
                   orderSelectMode === "delete" ? "delete2.png" : "delete.png"
                 }
@@ -327,13 +338,9 @@ function OrderList(props) {
           ) : null}
 
           {["multipleOrder"].includes(orderSelectMode) ? (
-            <OrderListNavBtn
-              sx={{ marginLeft: "5px", marginRight: 0 }}
-              // onClick={() => changeMode("delete")}
-              onClick={createMultiOrderHandle}
-            >
+            <OrderListNavBtn onClick={createMultiOrderHandle}>
               <img
-                style={{ width: "20px", height: "24px" }}
+                style={{ width: "24px", height: "24px" }}
                 src={
                   orderSelectMode === "multipleOrderCreate"
                     ? "createCombineOrder2.png"
@@ -357,12 +364,9 @@ function OrderList(props) {
             "delete",
             "multipleOrderCreate",
           ].includes(orderSelectMode) ? (
-            <OrderListNavBtn
-              sx={{ marginLeft: "5px", marginRight: 0 }}
-              onClick={() => setOpen(true)}
-            >
+            <OrderListNavBtn onClick={() => setOpen(true)}>
               <img
-                style={{ width: "33px", height: "24px" }}
+                style={{ width: "26px", height: "20px" }}
                 src="upload.png"
                 alt="upload.png"
               />
@@ -372,7 +376,7 @@ function OrderList(props) {
         </OrderListNavBtnBox>
       </OrderListNav>
 
-      <OrderListContentBox className="order-list" isFilter={isFilter}>
+      <OrderListContentBox className={orderListClassName} isFilter={isFilter}>
         <OrderListContent {...props} />
       </OrderListContentBox>
 

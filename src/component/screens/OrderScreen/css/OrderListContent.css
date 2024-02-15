@@ -1,6 +1,22 @@
-.order-list::-webkit-scrollbar {
-    width: 0px;
+.order-list::-webkit-scrollbar, 
+.multi-order-list::-webkit-scrollbar {
+    width: 4px;
 }
+
+.order-list::-webkit-scrollbar-thumb {
+    background-color: #2196f3;
+    border-radius: 30px; 
+}
+
+.multi-order-list::-webkit-scrollbar-thumb {
+    background-color: #ffffffee;
+    border-radius: 30px; 
+}
+
+.order-list::-webkit-scrollbar-track, 
+.multi-order-list::-webkit-scrollbar-track {
+    margin-top: 25px; /* 下降捲動條軌道的初始位置 */
+  }
 
 .iconBtn-help-orderlist:hover .icon-help-orderlist{
     color: #ffffffd7;

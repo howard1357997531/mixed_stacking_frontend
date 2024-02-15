@@ -72,7 +72,8 @@ function OrderScreen() {
       {matches ? (
         <OrderDesktop {...propsData} />
       ) : (
-        <OrderMobile {...propsData} />
+        <OrderDesktop {...propsData} />
+        // <OrderMobile {...propsData} />
       )}
     </>
   );
