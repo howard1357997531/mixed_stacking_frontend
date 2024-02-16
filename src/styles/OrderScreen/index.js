@@ -58,7 +58,7 @@ export const OrderListBox = styled(Box, {
   gap: "5px",
   backgroundColor: mode ? Colors.green : Colors.lightOrange,
   [theme.breakpoints.down("md")]: {
-    width: "60vw",
+    width: "70vw",
     height: "75vh",
   },
   [theme.breakpoints.down("sm")]: {
@@ -75,7 +75,7 @@ export const OrderSwitchBox = styled(Box)(({ theme }) => ({
   zIndex: 0.5,
   [theme.breakpoints.down("md")]: {
     display: "flex",
-    width: "60vw",
+    width: "70vw",
   },
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
@@ -181,7 +181,7 @@ export const OrderListNavRowBtn = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   height: "75%",
-  padding: "0px 5px",
+  padding: "1px 5px",
   borderRadius: "10px",
   border: `2px solid ${Colors.blue500}`,
   "&:hover": {
@@ -235,7 +235,7 @@ export const OrderListContentBox = styled(Box, {
   position: "relative",
   width: "100%",
   // height: isFilter ? "87%" : "92%",
-  height: isFilter ? "calc(95% - 45px)" : "calc(100% - 45px)",
+  height: isFilter ? "calc(93% - 45px)" : "calc(100% - 45px)",
   overflowY: "auto",
   boxSizing: "border-box",
   paddingLeft: "3px",
@@ -274,17 +274,21 @@ export const OrderListDetial = styled(Box, {
   display: "flex",
   alignItems: "center",
   width: "100%",
-  height: "60px",
-  marginBottom: "5px",
+  height: "55px",
+  marginBottom: "7px",
   padding: "0px 10px",
   color: Colors.greyText,
   fontWeight: 600,
   backgroundColor: data[1],
   border: data[0] ? `2px solid ${data[2]}` : "none",
-  boxShadow: data[0] ? `none` : "1px 1px rgba(0, 0, 0, 0.2)",
+  boxShadow: data[0]
+    ? `0.5px 0.5px ${data[2]}, -0.5px -0.5px ${data[2]}`
+    : "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     border: data[0] ? `2px solid ${data[2]}` : "none",
-    boxShadow: data[0] ? `none` : `1.5px 1.5px ${data[2]}`,
+    boxShadow: data[0]
+      ? `0.5px 0.5px ${data[2]}, -0.5px -0.5px ${data[2]}`
+      : `1.5px 1.5px ${data[2]}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -448,7 +452,7 @@ export const FunctionAreaBox = styled(Box, {
   opacity: 100,
   transition: "opacity 0.5s ease-in-out",
   [theme.breakpoints.down("md")]: {
-    width: "60vw",
+    width: "70vw",
     height: "75vh",
   },
   [theme.breakpoints.down("sm")]: {

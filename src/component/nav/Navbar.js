@@ -15,62 +15,27 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { Stack, Typography, styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { grey } from "@mui/material/colors";
 import "./css/nav.css";
-import QRcodeDialog from "./QRcodeDialog";
+import {
+  NavLeftBox,
+  NavMiddleBox,
+  NavRightBox,
+  NavLinkImageBox,
+  NavLinkImageSmallBox,
+  NavLinkImageBoxText,
+} from "../../styles/nav";
+import { useMediaQuery, useTheme } from "@mui/material";
+import { Colors } from "../../styles/theme";
 
-function Navbar({ onQRcodeNavId }) {
+function Navbar() {
   const navigate = useNavigate();
   const routeName = [
     { name: "首頁", url: "/" },
-    { name: "手臂控制台", url: "/control-robot" },
-    { name: "選擇紙箱類型", url: "/select-item" },
-    { name: "AI 演算", url: "/ai-training" },
+    { name: "手臂控制台", url: "/robot-control" },
+    { name: "選擇紙箱類型", url: "/order" },
+    { name: "歷史紀錄", url: "/history" },
   ];
-  const StyleSecondStack = styled(Stack)({
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    flexGrow: 1,
-    height: "100%",
-  });
-  const StyleSideStack = styled(Stack)({
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    width: "18%",
-    height: "100%",
-  });
-  const StyleLinkImageBox = styled(Box)({
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    width: "40%",
-  });
-  const StyleLinkImageSmallBox = styled(Box)({
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "4px 2px 0px",
-    width: "100%",
-    "&:hover": {
-      transform: "scale(1.1)",
-      backgroundColor: grey[300],
-      cursor: "pointer",
-    },
-    "&:active": {
-      transform: "scale(.95)",
-      backgroundColor: grey[400],
-    },
-  });
-  const StyleLinkImageBoxText = styled(Typography)({
-    fontSize: "14px",
-    fontWeight: 600,
-    color: grey[800],
-  });
 
   const routeHandler = (route) => {
     navigate(route);
@@ -93,21 +58,6 @@ function Navbar({ onQRcodeNavId }) {
     }
 
     setState({ ...state, [anchor]: open });
-  };
-
-  // QRcode
-  const [qrcodeOpen, setQRcodeOpen] = React.useState(false);
-
-  const qrCodeDialogOpenHandler = () => {
-    setQRcodeOpen(true);
-  };
-
-  const onQRcodeOpen = (mode) => {
-    setQRcodeOpen(mode);
-  };
-
-  const onQRcodeId = (id) => {
-    onQRcodeNavId(id);
   };
 
   const list = (anchor) => (
@@ -145,89 +95,111 @@ function Navbar({ onQRcodeNavId }) {
     </Box>
   );
 
+  const theme = useTheme();
+  const matches_nine = useMediaQuery(theme.breakpoints.up("md"));
+  const matches_six = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "red",
           backgroundColor: "#FFF7EC",
           height: "100px",
           boxShadow: "none",
+          padding: "0px 50px",
+          [theme.breakpoints.down("lg")]: {
+            padding: "0px 0px",
+          },
         }}
       >
         <Toolbar sx={{ height: "100%" }}>
-          <StyleSideStack>
-            {/* <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer("left", true)}
-            >
-              <MenuIcon />
-            </IconButton> */}
+          <NavLeftBox>
             <Link to={"/"}>
-              <img src={"logo.png"} alt={"logo.png"} className="logo-img"></img>
+              {matches_nine ? (
+                <img
+                  src={"logo.png"}
+                  alt={"logo.png"}
+                  className="logo-img"
+                ></img>
+              ) : (
+                <img
+                  src={"mixStackLogo.png"}
+                  alt={"mixStackLogo.png"}
+                  className="mixStackLogo-img-900"
+                ></img>
+              )}
             </Link>
-          </StyleSideStack>
+          </NavLeftBox>
 
-          <StyleSecondStack>
-            {/* <Typography variant="h6">混料堆疊</Typography> */}
+          <NavMiddleBox>
             <Link to={"/"}>
-              <img
-                src={"mixStackLogo.png"}
-                alt={"mixStackLogo.png"}
-                className="mixStackLogo-img"
-              ></img>
+              {matches_nine ? (
+                <img
+                  src={"mixStackLogo.png"}
+                  alt={"mixStackLogo.png"}
+                  className="mixStackLogo-img"
+                ></img>
+              ) : null}
             </Link>
-          </StyleSecondStack>
+          </NavMiddleBox>
 
-          <StyleSideStack className="linkBox-img">
-            {window.location.pathname === "/control-robot" ||
-            window.location.pathname === "/control-robot-socket" ||
-            window.location.pathname === "/create-orderlist" ? (
-              <StyleLinkImageBox onClick={qrCodeDialogOpenHandler}>
-                <Box sx={{ display: "inline-block" }}>
-                  <StyleLinkImageSmallBox>
-                    <img src={"qrcode.png"} alt={"qrcode.png"}></img>
-                    <StyleLinkImageBoxText>QRcode</StyleLinkImageBoxText>
-                  </StyleLinkImageSmallBox>
-                </Box>
-              </StyleLinkImageBox>
-            ) : null}
+          {/* 工單 控制台 歷史紀錄 */}
+          <NavRightBox className="linkBox-img">
+            {matches_six ? (
+              <>
+                <NavLinkImageBox>
+                  <Link to={"/demo1-select-item"}>
+                    <NavLinkImageSmallBox>
+                      <img
+                        src={"workListSearch.png"}
+                        alt={"workListSearch.png"}
+                      ></img>
+                      <NavLinkImageBoxText>工單</NavLinkImageBoxText>
+                    </NavLinkImageSmallBox>
+                  </Link>
+                </NavLinkImageBox>
 
-            <QRcodeDialog
-              qrcodeOpen={qrcodeOpen}
-              onQRcodeOpen={onQRcodeOpen}
-              onQRcodeId={onQRcodeId}
-            ></QRcodeDialog>
-            {/* 工單設定 工單查詢 */}
-            <StyleLinkImageBox>
-              <Link to={"/robot-control"}>
-                <StyleLinkImageSmallBox>
-                  <img
-                    src={"workListSetting.png"}
-                    alt={"workListSetting.png"}
-                  ></img>
-                  <StyleLinkImageBoxText>控制台</StyleLinkImageBoxText>
-                </StyleLinkImageSmallBox>
-              </Link>
-            </StyleLinkImageBox>
+                <NavLinkImageBox>
+                  <Link to={"/robot-control"}>
+                    <NavLinkImageSmallBox>
+                      <img
+                        src={"workListSetting.png"}
+                        alt={"workListSetting.png"}
+                      ></img>
+                      <NavLinkImageBoxText>控制台</NavLinkImageBoxText>
+                    </NavLinkImageSmallBox>
+                  </Link>
+                </NavLinkImageBox>
 
-            <StyleLinkImageBox>
-              <Link to={"/demo1-select-item"}>
-                <StyleLinkImageSmallBox>
-                  <img
-                    src={"workListSearch.png"}
-                    alt={"workListSearch.png"}
-                  ></img>
-                  <StyleLinkImageBoxText>工單</StyleLinkImageBoxText>
-                </StyleLinkImageSmallBox>
-              </Link>
-            </StyleLinkImageBox>
-          </StyleSideStack>
+                <NavLinkImageBox>
+                  <Link to={"/history"}>
+                    <NavLinkImageSmallBox>
+                      <img src={"history.png"} alt={"history.png"}></img>
+                      <NavLinkImageBoxText>歷史</NavLinkImageBoxText>
+                    </NavLinkImageSmallBox>
+                  </Link>
+                </NavLinkImageBox>
+              </>
+            ) : (
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer("left", true)}
+                sx={{
+                  marginRight: "7.5%",
+                  backgroundColor: Colors.grey300,
+                  "&:hover": {
+                    backgroundColor: Colors.grey400,
+                  },
+                }}
+              >
+                <MenuIcon sx={{ color: Colors.greyTextBlood }} />
+              </IconButton>
+            )}
+          </NavRightBox>
         </Toolbar>
       </AppBar>
 

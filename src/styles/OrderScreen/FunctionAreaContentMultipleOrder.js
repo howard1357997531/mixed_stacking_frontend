@@ -57,7 +57,7 @@ export const MultiOrderDeleteBtn = styled(DeleteIcon)(({ theme }) => ({
 
 export const MultiOrderDetailBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  paddingRight: "2px",
+  padding: "0px 4px 0px 1px",
   flexGrow: 1,
   width: "100%",
   overflowY: "auto",
@@ -70,8 +70,8 @@ export const MultiOrderDetailSmBox = styled(Box, {
   position: "relative",
   display: "flex",
   width: "100%",
-  height: "60px",
-  marginTop: !isFirst ? "4px" : "0px",
+  height: "55px",
+  marginTop: !isFirst ? "5px" : "0px",
   borderRadius: "5px",
   backgroundColor: Colors.greenHover,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
@@ -91,9 +91,9 @@ export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
 }));
 
 export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
-  height: "25px",
-  width: "25px",
-  fontSize: "14px",
+  height: "23px",
+  width: "23px",
+  fontSize: "13px",
   color: Colors.greenHover,
   backgroundColor: Colors.white,
 }));

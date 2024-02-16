@@ -57,17 +57,17 @@ function InformationAreaContent({
   );
 
   const itemSize = {
-    "16A": "70 * 52 * 32 (mm)",
-    "18A": "70 * 52 * 36 (mm)",
-    33: "88 * 42 * 36 (mm)",
-    "7A": "70 * 52 * 40 (mm)",
-    13: "112 * 50 * 28 (mm)",
-    22: "90 * 52 * 36 (mm)",
-    20: "106 * 68 * 26 (mm)",
-    29: "130 * 50 * 36 (mm)",
-    9: "86 * 64 * 46 (mm)",
-    26: "144 * 50 * 40 (mm)",
-    35: "204 * 92 * 36 (mm)",
+    "16A": "70 * 52 * 32",
+    "18A": "70 * 52 * 36",
+    33: "88 * 42 * 36",
+    "7A": "70 * 52 * 40",
+    13: "112 * 50 * 28",
+    22: "90 * 52 * 36",
+    20: "106 * 68 * 26",
+    29: "130 * 50 * 36",
+    9: "86 * 64 * 46",
+    26: "144 * 50 * 40",
+    35: "204 * 92 * 36",
   };
 
   var compare = [];
@@ -93,7 +93,6 @@ function InformationAreaContent({
     });
     detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
   }
-  // console.log(detectState);
 
   const compareResult = (index) => {
     if (index + 1 < realtimeVisualCount) {
@@ -218,7 +217,9 @@ function InformationAreaContent({
             <OrderListTitleText width="20%">次序</OrderListTitleText>
             <OrderListTitleText sx={{ flexGrow: 1 }}>名稱</OrderListTitleText>
             {/* <OrderListTitleText width="25%">辨識</OrderListTitleText> */}
-            <OrderListTitleText width="40%">尺寸</OrderListTitleText>
+            <OrderListTitleText width="35%">
+              尺寸<span style={{ fontSize: 12 }}>(長寬高)</span>
+            </OrderListTitleText>
           </OrderListTitle>
 
           <OrderListContent className="orderlist">
@@ -231,8 +232,8 @@ function InformationAreaContent({
                 <OrderListContentSmBox width="20%">
                   <Avatar
                     sx={{
-                      width: "30px",
-                      height: "30px",
+                      width: "28px",
+                      height: "28px",
                       fontSize: "14px",
                       backgroundColor:
                         realtimeItemCount === index + 1
@@ -252,7 +253,7 @@ function InformationAreaContent({
                   <Typography sx={{ marginLeft: "5px" }}>{order}</Typography>
                 </OrderListContentSmBox>
 
-                <OrderListContentSmBox width="40%">
+                <OrderListContentSmBox width="35%">
                   {itemSize[order]}
                 </OrderListContentSmBox>
 
@@ -272,7 +273,6 @@ function InformationAreaContent({
           <OrderListTitle>
             <OrderListTitleText width="20%">次序</OrderListTitleText>
             <OrderListTitleText sx={{ flexGrow: 1 }}>名稱</OrderListTitleText>
-            {/* <OrderListTitleText width="25%">辨識</OrderListTitleText> */}
             <OrderListTitleText width="20%">資訊</OrderListTitleText>
           </OrderListTitle>
 

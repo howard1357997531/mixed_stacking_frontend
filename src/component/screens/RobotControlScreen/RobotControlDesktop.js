@@ -157,7 +157,6 @@ function RobotControlDesktop(props) {
   }
   // console.log("motionList:", motionList);
   // console.log("boxColor:", boxColor);
-  const is_buffer = ["suc", "err"];
   const orderSelectData = props.orderSelectData;
   const realtimeVisualCount = props.realtimeVisualCount;
   var compare = [];

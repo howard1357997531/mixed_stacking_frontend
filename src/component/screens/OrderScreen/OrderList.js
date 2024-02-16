@@ -23,7 +23,7 @@ import {
   orderlistFilterAction,
   removeFilterAction,
 } from "../../../redux/actions/OrderScreenAction";
-import { ORDER_SCREEN } from "../../../redux/constants";
+import { ORDER_LIST, ORDER_SCREEN } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SearchIcon from "@mui/icons-material/Search";
@@ -74,7 +74,15 @@ function OrderList(props) {
     if (mode === "orderDetail") {
       dispatch({
         type: ORDER_SCREEN.orderSelect,
-        payload: { orderId: orderListData.at(0).id },
+        payload: {
+          orderId: orderListData.at(0).id,
+          aiTrainingState: orderListData.at(0).aiTraining_state,
+        },
+      });
+
+      dispatch({
+        type: ORDER_LIST.revise,
+        payload: { name: orderListData.at(0).name },
       });
     }
     dispatch({
@@ -224,10 +232,11 @@ function OrderList(props) {
                 width: "170px",
                 color: colorMode ? Colors.green : Colors.lightOrange,
                 backgroundColor: Colors.grey600,
+                fontWeight: 600,
                 [theme.breakpoints.down("lg")]: {
                   width: "140px",
                 },
-                [theme.breakpoints.down("md")]: {
+                [theme.breakpoints.down("sm")]: {
                   width: "120px",
                 },
               }}
@@ -309,7 +318,7 @@ function OrderList(props) {
                 alt={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
               />
               <OrderListNavBtnText
-                sx={{ color: orderSelectMode === "edit" && Colors.darkGreen }}
+                sx={{ color: orderSelectMode === "edit" && Colors.blue400 }}
               >
                 修改
               </OrderListNavBtnText>
@@ -330,7 +339,7 @@ function OrderList(props) {
                 }
               />
               <OrderListNavBtnText
-                sx={{ color: orderSelectMode === "delete" && "#FF494B" }}
+                sx={{ color: orderSelectMode === "delete" && Colors.red }}
               >
                 刪除
               </OrderListNavBtnText>

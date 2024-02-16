@@ -53,9 +53,9 @@ function OrderListContentMultipleOrder() {
   ) : multiOrderSearch !== null && multiOrderSearch.length === 0 ? (
     <OrderListContentMsg variant="h5">查無此資料</OrderListContentMsg>
   ) : (
-    Object.keys(groupedData).map((date) => (
+    Object.keys(groupedData).map((date, index) => (
       <Fragment key={date}>
-        <OrderListDate>{date}</OrderListDate>
+        <OrderListDate isFirst={index === 0}>{date}</OrderListDate>
 
         {groupedData[date].map((order) => (
           <OrderListDetial
@@ -76,24 +76,6 @@ function OrderListContentMultipleOrder() {
         ))}
       </Fragment>
     ))
-
-    // multipleOrderData.map((order, index) => (
-    //   <Fragment key={order.id}>
-    //     {order.is_today_latest ? (
-    //       <OrderListDate>{order.createdAt.slice(0, -7)}</OrderListDate>
-    //     ) : null}
-
-    //     <OrderListDetial
-    //       itemSelect={orderId === order.id}
-    //       onClick={() => multipleOrderHandler(order.id)}
-    //     >
-    //       <OrderListName itemSelect={orderId === order.id}>
-    //         <OrderListNameSelect itemSelect={orderId === order.id} />
-    //         {order.name}
-    //       </OrderListName>
-    //     </OrderListDetial>
-    //   </Fragment>
-    // ))
   );
 }
 

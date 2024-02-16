@@ -19,6 +19,9 @@ export const DeleteCount = styled(Typography)(({ theme }) => ({
   marginRight: "10px",
   padding: "0px 1px",
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "14px",
+  },
 }));
 
 export const DeleteResetBtn = styled(Box)(({ theme }) => ({
@@ -56,11 +59,15 @@ export const DeleteSelectSmBox = styled(Box, {
   display: "flex",
   alignItems: "center",
   width: "100%",
-  height: "60px",
-  marginTop: !isFirst ? "4px" : "0px",
+  height: "55px",
+  marginTop: !isFirst ? "7px" : "0px",
   borderRadius: "5px",
   backgroundColor: Colors.lightOrangeHover,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  [theme.breakpoints.down("md")]: {
+    height: "50px",
+    fontSize: "14px",
+  },
 }));
 
 export const DeleteOrderName = styled(Box)(({ theme }) => ({

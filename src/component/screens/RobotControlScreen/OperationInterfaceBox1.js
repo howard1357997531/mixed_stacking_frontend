@@ -21,7 +21,6 @@ import TextEffect2 from "../../../tool/TextEffect2";
 import { Box, Slide } from "@mui/material";
 import { domain } from "../../../env";
 import { useDispatch, useSelector } from "react-redux";
-import "./css/OperationInterfaceBox1.css";
 import StackAndBufferDialog from "./dialog/StackAndBufferDialog";
 import { timerToast } from "../../../swal";
 import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";

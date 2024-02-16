@@ -7,7 +7,6 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
 import { Colors } from "../theme";
 
 export const RobotControlContainer = styled(Stack)(({ theme }) => ({
@@ -15,14 +14,16 @@ export const RobotControlContainer = styled(Stack)(({ theme }) => ({
   alignItems: "center",
   height: "calc(100vh - 100px)",
   padding: "0px 100px",
-  //   backgroundColor: "#888",
   [theme.breakpoints.down("lg")]: {
     padding: "0px 20px",
   },
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     height: "initial",
-    padding: "30px 20px",
+    padding: "30px 0px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: "0px",
   },
 }));
 
@@ -33,13 +34,17 @@ export const OperationInterface = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   height: "70vh",
   width: "50%",
-  padding: "0px 50px",
-  //   backgroundColor: red[50],
+  padding: "0px 40px",
+  [theme.breakpoints.down("lg")]: {
+    padding: "0px 20px",
+  },
   [theme.breakpoints.down("md")]: {
-    height: "80vh",
+    width: "75%",
+    height: "60vh",
+    marginBottom: "50px",
   },
   [theme.breakpoints.down("sm")]: {
-    height: "60vh",
+    width: "95%",
   },
 }));
 
@@ -104,6 +109,9 @@ export const OperationInterfaceButtonText = styled(Typography)(({ theme }) => ({
   fontSize: "24px",
   fontWeight: 600,
   color: Colors.greyTextBlood,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 18,
+  },
 }));
 
 export const VisualIdentityBox = styled(Box)(({ theme }) => ({
@@ -206,8 +214,11 @@ export const TextShowBoardTextBox = styled(Box)(({ theme }) => ({
 
 export const TextShowBoardText = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  fontSize: "36px",
+  fontSize: "30px",
   fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 20,
+  },
 }));
 
 export const StyleDotBox = styled(Box)(({ theme }) => ({
@@ -224,12 +235,17 @@ export const InformationArea = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   height: "70vh",
   width: "50%",
-  padding: "0px 50px",
+  padding: "0px 40px",
+  [theme.breakpoints.down("lg")]: {
+    padding: "0px 20px",
+  },
   [theme.breakpoints.down("md")]: {
-    height: "80vh",
+    width: "75%",
+    height: "75vh",
+    marginBottom: "50px",
   },
   [theme.breakpoints.down("sm")]: {
-    height: "60vh",
+    width: "95%",
   },
 }));
 
@@ -262,6 +278,10 @@ export const InformationAreaContentBox = styled(Box, {
   width: "80%",
   height: data[1] ? "85%" : "80%",
   border: `1px ${data[0] ? "solid" : "dashed"} ${Colors.brown}`,
+  [theme.breakpoints.down("sm")]: {
+    width: "90%",
+    height: "85%",
+  },
 }));
 
 export const InformationAreaBottomBox = styled(Box)(({ theme }) => ({
@@ -403,16 +423,26 @@ export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
 }));
 
 export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
-  height: "25px",
-  width: "25px",
+  height: "23px",
+  width: "23px",
   fontSize: "11px",
   backgroundColor: Colors.grey600,
+  [theme.breakpoints.down("lg")]: {
+    height: "22px",
+    width: "22px",
+    fontSize: "10px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "20px",
+    width: "20px",
+    fontSize: "9px",
+  },
 }));
 
 export const AvatarDivider = styled(Box)(({ theme }) => ({
   height: "2px",
-  width: "10px",
-  margin: "0px 3px",
+  width: "7px",
+  margin: "0px 2px",
   backgroundColor: Colors.greyText,
 }));
 

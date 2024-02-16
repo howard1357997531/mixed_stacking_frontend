@@ -64,18 +64,18 @@ function FunctionAreaContentEdit() {
     <CenterText text={"工單演算中..."} />
   ) : (
     <OrderBox>
-      {/* <StyleEditIcon onClick={editBtnHandler} /> */}
       <OrderListNavBtn
-        sx={{ position: "absolute", top: "21px", right: "20px" }}
+        sx={{ position: "absolute", top: "18px", right: "23px" }}
         onClick={editBtnHandler}
       >
         <img
-          style={{ width: "24px", height: "24px" }}
+          style={{ width: "20px", height: "20px" }}
           src={"ok.png"}
           alt={"ok.png"}
         />
         <OrderListNavBtnText>確認修改</OrderListNavBtnText>
       </OrderListNavBtn>
+
       <Stack direction={"row"} justifyContent="center">
         <Input
           required
@@ -85,7 +85,7 @@ function FunctionAreaContentEdit() {
             width: "200px",
             height: "40px",
             color: Colors.lightOrange,
-            backgroundColor: Colors.darkGreen,
+            backgroundColor: Colors.blue500,
             fontWeight: 600,
           }}
           defaultValue={editData.name}
@@ -93,10 +93,10 @@ function FunctionAreaContentEdit() {
         />
       </Stack>
 
-      <DescTextBox mt={1}>
+      <DescTextBox sx={{ justifyContent: "left" }} mt={1}>
         <DescText isTitle={true}>詳細資訊</DescText>
-        <Tooltip title="綠色部分為可修改部分" placement="right" arrow>
-          <InfoIcon sx={{ marginLeft: "4px", color: Colors.darkGreen }} />
+        <Tooltip title="藍色區域為可修改部分" placement="right" arrow>
+          <InfoIcon sx={{ marginLeft: "4px", color: Colors.grey600 }} />
         </Tooltip>
       </DescTextBox>
 
@@ -124,7 +124,8 @@ function FunctionAreaContentEdit() {
                 onChange={countHandler}
                 style={{
                   color: Colors.lightOrange,
-                  backgroundColor: Colors.darkGreen,
+                  backgroundColor: Colors.blue500,
+                  borderRadius: "10px",
                 }}
               ></input>
             </OrderDetailSmBox>

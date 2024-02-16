@@ -24,13 +24,18 @@ export const DescText = styled(Typography, {
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
   backgroundColor: isTitle && Colors.grey600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const DescTextBox = styled(Box)(({ theme }) => ({
   display: "flex",
+  justifyContent: "space-between",
   alignItems: "center",
   fontWeight: 600,
   marginBottom: "3px",
+  paddingRight: "2px",
 }));
 
 export const OrderContentTitleBox = styled(Box)(({ theme }) => ({
@@ -51,11 +56,13 @@ export const OrderContentTitleSmBox = styled(Box, {
   justifyContent: "center",
   alignItems: "center",
   width: isName ? "40%" : "15%",
-  height: "35px",
+  height: "30px",
   color: Colors.lightOrange,
   backgroundColor: Colors.grey600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
-  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const OrderContentBox = styled(Box)(({ theme }) => ({
@@ -73,7 +80,7 @@ export const OrderDetailBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  height: "45px",
+  height: "40px",
   gap: "2px",
   marginBottom: "3px",
 }));
@@ -91,4 +98,7 @@ export const OrderDetailSmBox = styled(Box, {
   fontSize: "18px",
   fontWeight: 600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  [theme.breakpoints.down("md")]: {
+    fontSize: 16,
+  },
 }));

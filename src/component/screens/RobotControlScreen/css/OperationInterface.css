@@ -5,6 +5,13 @@
     height: 70px !important;
 }
 
+@media screen and (max-width: 900px) {
+    .operation-interface img {
+        width: 55px !important;
+        height: 55px !important;
+    }
+}
+
 .operation-interface .board {
     width: 100% !important;
     height: 100% !important;

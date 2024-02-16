@@ -17,7 +17,7 @@ function InformationAreaTitle({
 }) {
   const Title = styled(Box)(({ theme }) => ({
     fontWeight: 600,
-    fontSize: "24px",
+    fontSize: "20px",
     color: Colors.greyText,
   }));
 
@@ -37,18 +37,8 @@ function InformationAreaTitle({
   };
   return (
     <InformationAreaTitleBox>
-      {informationAreaMode === "order" ? (
-        <>
-          {/* {realtimeItemMode && (
-            <OrderListTitleButton onClick={() => changeModeHandler("picture")}>
-              圖片
-            </OrderListTitleButton>
-          )} */}
-
-          {robotStateMode !== "activate" ? (
-            <Title>{orderSelectData.name}</Title>
-          ) : null}
-        </>
+      {informationAreaMode === "order" && robotStateMode !== "activate" ? (
+        <Title>{orderSelectData.name}</Title>
       ) : null}
 
       {informationAreaMode === "multipleOrder" && !isDoing ? (

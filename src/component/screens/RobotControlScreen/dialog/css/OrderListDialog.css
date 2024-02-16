@@ -1,13 +1,15 @@
 .dialog-order-box::-webkit-scrollbar {
-    width: 3px
-}
-
-.dialog-order-box::-webkit-scrollbar-track {
-    background-color: #a1887f;
+    width: 4px
 }
 
 .dialog-order-box::-webkit-scrollbar-thumb{
     background-color: #1e88e5;
+    border-radius: 30px;
+}
+
+.dialog-order-box::-webkit-scrollbar-track {
+    margin-top: 20px;
+    background-color: #a1887f;
 }
 
 .dialog-order-box img {

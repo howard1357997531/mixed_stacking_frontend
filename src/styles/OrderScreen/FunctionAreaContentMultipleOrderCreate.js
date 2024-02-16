@@ -43,7 +43,7 @@ export const MultiCreateResetBtn = styled(Box)(({ theme }) => ({
 export const MultiCreateSelectBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   margin: "3px 0px",
-  paddingRight: "2px",
+  padding: "0px 6px 0px 2px",
   flexGrow: 1,
   width: "100%",
   overflowY: "auto",
@@ -56,8 +56,8 @@ export const MultiCreateSelectSmBox = styled(Box, {
   position: "relative",
   display: "flex",
   width: "100%",
-  height: "60px",
-  marginBottom: "5px",
+  height: "55px",
+  marginBottom: "7px",
   borderRadius: "5px",
   backgroundColor: Colors.greenHover,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
@@ -73,9 +73,9 @@ export const MultiCreateAvatarBox = styled(Box)(({ theme }) => ({
 }));
 
 export const MultiCreateAvatar = styled(Avatar)(({ theme }) => ({
-  height: "25px",
-  width: "25px",
-  fontSize: "14px",
+  height: "23px",
+  width: "23px",
+  fontSize: "13px",
   color: Colors.greenHover,
   backgroundColor: Colors.white,
 }));

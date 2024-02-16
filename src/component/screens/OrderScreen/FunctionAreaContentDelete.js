@@ -38,7 +38,7 @@ function FunctionAreaContentDelete({ orderListData }) {
             <DeleteOrderName>{Object.values(order).at(0)}</DeleteOrderName>
 
             <OrderListExeListDelete
-              sx={{ color: Colors.grey600 }}
+              sx={{ color: Colors.red }}
               onClick={() => deleteHandler(Object.keys(order).at(0))}
             />
           </DeleteSelectSmBox>

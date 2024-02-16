@@ -34,7 +34,7 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
     var multipleOrderArray = multipleOrderData.orderSelectId_str.split(",");
     var modifiyText =
       multipleOrderData.modifiedAt === multipleOrderData.createdAt
-        ? "尚未修改過"
+        ? "(尚未修改過)"
         : multipleOrderData.modifiedAt;
 
     const countArray = multipleOrderArray.map((order) =>
@@ -97,15 +97,15 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
     <OrderListContentMsg variant="h5">已刪除資料</OrderListContentMsg>
   ) : (
     <MultiOrderBox>
-      <DescText>
-        總數量 : {parseCount(multipleOrderData.orderSelectId_str)}
-      </DescText>
-      <DescText>修改日期 : {modifiyText}</DescText>
       <DescText>上傳日期 : {multipleOrderData.createdAt}</DescText>
+      <DescText>修改日期 : {modifiyText}</DescText>
 
       <DescTextBox>
         <DescText sx={{ color: Colors.green }} isTitle={true}>
           詳細資訊
+        </DescText>
+        <DescText>
+          數量: {parseCount(multipleOrderData.orderSelectId_str)}
         </DescText>
       </DescTextBox>
 

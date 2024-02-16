@@ -84,7 +84,7 @@ function FunctionAreaContentAiResult() {
         </AiResultImageBox>
       ) : (
         <>
-          <DescTextBox sx={{ marginBottom: "8px" }}>
+          <DescTextBox sx={{ marginBottom: "8px", justifyContent: "left" }}>
             <DescText isTitle={true}>堆疊順序</DescText>
             <AiResultImageBtn onClick={aiImageHandler}>圖片</AiResultImageBtn>
           </DescTextBox>

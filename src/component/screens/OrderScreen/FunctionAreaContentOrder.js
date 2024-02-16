@@ -26,7 +26,7 @@ function FunctionAreaContentOrder() {
     var orderCount = `${count.reduce((acc, cur) => acc + cur)}`;
     var modifiyText =
       orderData.modifiedAt === orderData.createdAt
-        ? "尚未修改過"
+        ? "(尚未修改過)"
         : orderData.modifiedAt;
   }
 
@@ -43,13 +43,14 @@ function FunctionAreaContentOrder() {
         </Fragment>
       ) : null}
 
-      <DescText>總數量 : {orderCount}</DescText>
-      <DescText>修改日期 : {modifiyText}</DescText>
       <DescText>上傳日期 : {orderData.createdAt}</DescText>
+      <DescText>修改日期 : {modifiyText}</DescText>
 
       <DescTextBox>
         <DescText isTitle={true}>詳細資訊</DescText>
+        <DescText>總數: {orderCount}</DescText>
       </DescTextBox>
+
       <OrderContentTitleBox>
         <OrderContentTitleSmBox isName={true}>名稱</OrderContentTitleSmBox>
         <OrderContentTitleSmBox>寬度</OrderContentTitleSmBox>

@@ -65,11 +65,11 @@ function FunctionAreaNavButton({ orderSelectMode }) {
           onClick={() => buttonHandler(orderSelectMode, "no_training")}
         >
           <img
-            style={{ width: "24px", height: "24px", marginRight: "5px" }}
+            style={{ width: "20px", height: "20px", marginRight: "5px" }}
             src={"ai.png"}
             alt={"ai.png"}
           />
-          <OrderListNavBtnText sx={{ color: Colors.blue500, fontSize: "18px" }}>
+          <OrderListNavBtnText sx={{ color: Colors.blue500 }}>
             AI演算
           </OrderListNavBtnText>
         </OrderListNavRowBtn>
@@ -87,7 +87,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             src={"aiResult.png"}
             alt={"aiResult.png"}
           />
-          <OrderListNavBtnText sx={{ color: Colors.blue500 }}>
+          <OrderListNavBtnText sx={{ color: Colors.blue500, fontSize: 13 }}>
             演算結果
           </OrderListNavBtnText>
         </OrderListNavBtn>

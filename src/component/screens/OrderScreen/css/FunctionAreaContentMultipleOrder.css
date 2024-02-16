@@ -1,17 +1,17 @@
 .multi-order::-webkit-scrollbar {
-    width: 0px
+    width: 4px
 }
 
 .multi-order::-webkit-scrollbar-thumb {
-    background-color: aquamarine;
-    color: #06d896
+    background-color: #ffffffee;
+    border-radius: 30px;
 }
 
 .multiOrder-detail-box:hover .multiOrder-detail-smbox-avatar {
     color: #ffffffd7;
-    background-color: #06d896;
+    background-color: #86d2b2;
 }
 
 .multiOrder-detail-box:hover .multiOrder-detail-smbox-text {
-    color: #06d896;
+    color: #86d2b2;
 }
