@@ -45,7 +45,7 @@ export const DeleteResetBtn = styled(Box)(({ theme }) => ({
 
 export const DeleteSelectBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  paddingRight: "2px",
+  paddingRight: "6px",
   flexGrow: 1,
   width: "100%",
   overflowY: "auto",

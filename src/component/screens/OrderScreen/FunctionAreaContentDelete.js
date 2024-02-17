@@ -2,7 +2,6 @@ import React from "react";
 import {
   DeleteBox,
   DeleteCount,
-  DeleteResetBtn,
   DeleteSelectBox,
   DeleteSelectSmBox,
   DeleteOrderName,
@@ -11,7 +10,6 @@ import {
 import { OrderListExeListDelete } from "../../../styles/RobotControlScreen/dialog";
 import { useDispatch, useSelector } from "react-redux";
 import CenterText from "../../../tool/CenterText";
-import { ORDER_SCREEN } from "../../../redux/constants";
 import { orderDeleteSelectAction } from "../../../redux/actions/OrderScreenAction";
 import { Colors } from "../../../styles/theme";
 
@@ -32,7 +30,7 @@ function FunctionAreaContentDelete({ orderListData }) {
         <DeleteCount>數量: {deleteIdArray.length}</DeleteCount>
       </DeleteTitle>
 
-      <DeleteSelectBox className="multi-create-select-box">
+      <DeleteSelectBox className="delete-order-box">
         {deleteIdArray.map((order, index) => (
           <DeleteSelectSmBox key={index} isFirst={index === 0}>
             <DeleteOrderName>{Object.values(order).at(0)}</DeleteOrderName>

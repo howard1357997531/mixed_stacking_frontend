@@ -7,8 +7,13 @@ export const HomeContainer = styled(Container)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   overflow: "hidden",
-  "@media (orientation: landscape)": {
-    height: "calc(100vh - 100px)",
+  height: "calc(100vh - 100px)",
+  [theme.breakpoints.down("md")]: {
+    marginTop: "calc(100px)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "calc(70px + 10px)",
+    height: "calc(100vh - 70px - 10px)",
   },
 }));
 
@@ -195,7 +200,7 @@ export const AllArea = styled(Box)(({ theme }) => ({
 
 export const HomeDescBox = styled(Box)(({ theme }) => ({
   position: "absolute",
-  bottom: "10%",
+  bottom: "13%",
   left: "50%",
   transform: "translateX(-50%)",
   textAlign: "center",
@@ -206,4 +211,10 @@ export const DescText = styled(Typography)(({ theme }) => ({
   fontSize: 26,
   fontWeight: 600,
   width: "700px",
+  [theme.breakpoints.down("md")]: {
+    fontSize: 20,
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 16,
+  },
 }));

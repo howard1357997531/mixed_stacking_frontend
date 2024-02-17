@@ -1,10 +1,18 @@
 .order-list::-webkit-scrollbar, 
-.multi-order-list::-webkit-scrollbar {
+.multi-order-list::-webkit-scrollbar,
+.delete-order-box::-webkit-scrollbar,
+.aiResult-box::-webkit-scrollbar {
     width: 4px;
 }
 
-.order-list::-webkit-scrollbar-thumb {
+.order-list::-webkit-scrollbar-thumb,
+.aiResult-box::-webkit-scrollbar-thumb {
     background-color: #2196f3;
+    border-radius: 30px; 
+}
+
+.delete-order-box::-webkit-scrollbar-thumb {
+    background-color: #FF494B;
     border-radius: 30px; 
 }
 
@@ -14,9 +22,10 @@
 }
 
 .order-list::-webkit-scrollbar-track, 
-.multi-order-list::-webkit-scrollbar-track {
+.multi-order-list::-webkit-scrollbar-track,
+.aiResult-box::-webkit-scrollbar-track {
     margin-top: 25px; /* 下降捲動條軌道的初始位置 */
-  }
+}
 
 .iconBtn-help-orderlist:hover .icon-help-orderlist{
     color: #ffffffd7;

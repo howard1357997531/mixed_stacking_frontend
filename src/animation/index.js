@@ -1,5 +1,11 @@
 import { keyframes } from "@emotion/react";
 
+export const aiTrainingBtnAnimation = keyframes`
+  0% { transform : scale(1) }
+  50% { transform : scale(1.05) }
+  100% { transform : scale(1) }
+`;
+
 export const errorMsgIconButtonAnimation = keyframes`
   0% {
     -webkit-transform: rotate(0);

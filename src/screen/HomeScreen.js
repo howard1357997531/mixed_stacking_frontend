@@ -47,7 +47,8 @@ function HomeScreen() {
         // <HomeDesktop matches={matches} />
         <HomeImage />
       ) : (
-        <HomeMobile matches={matches} />
+        // <HomeMobile matches={matches} />
+        <HomeImage />
       )}
     </>
   );

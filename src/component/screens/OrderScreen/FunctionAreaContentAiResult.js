@@ -89,7 +89,7 @@ function FunctionAreaContentAiResult() {
             <AiResultImageBtn onClick={aiImageHandler}>圖片</AiResultImageBtn>
           </DescTextBox>
 
-          <AiResultBox className="function-order-box">
+          <AiResultBox className="aiResult-box">
             {allData.map((datas, index) => (
               <Fragment key={index}>
                 <AiResultIndex>第 {index + 1} 層</AiResultIndex>

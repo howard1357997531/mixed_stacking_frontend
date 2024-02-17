@@ -240,7 +240,7 @@ export const orderEditAction =
     ) {
       confirmSwal(
         "此工單已演算過",
-        "已演算工單是不能被修改貨物數量的(但名稱可以修改)，但目前已自動偵測到您想修改貨物的數量，如果要修改(已演算工單的任意貨物的數量)，系統會自動生成剛剛您想修改的新工單，然後必須去重新演算"
+        `已演算工單是不能被修改"貨物數量"的(但名稱可以改)，而目前已自動偵測到您想修改貨物的數量，如果要修改(已演算工單的任意貨物的數量)，系統會自動生成剛剛您想修改的新工單，然後必須去重新演算~`
       ).then((result) => {
         if (result.isConfirmed) {
           axios
@@ -379,12 +379,17 @@ export const aiTrainingAction =
 
     dispatch({
       type: ORDER_SCREEN.orderSelect,
-      payload: { aiTrainingState },
+      payload: { aiTrainingState, isTraining: true },
     });
 
     try {
       var { data } = await axios.post(`${domain}/api/aiTraining/`, {
         orderId,
+      });
+
+      dispatch({
+        type: ORDER_SCREEN.orderSelect,
+        payload: { isTraining: false },
       });
 
       dispatch({
@@ -416,7 +421,7 @@ export const aiTrainingAction =
 
       dispatch({
         type: ORDER_SCREEN.orderSelect,
-        payload: { aiTrainingState: "no_training" },
+        payload: { aiTrainingState: "no_training", isTraining: false },
       });
     }
   };

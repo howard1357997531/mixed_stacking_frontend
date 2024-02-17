@@ -18,12 +18,13 @@ export const RobotControlContainer = styled(Stack)(({ theme }) => ({
     padding: "0px 20px",
   },
   [theme.breakpoints.down("md")]: {
+    marginTop: "calc(100px + 10px)",
     flexDirection: "column",
     height: "initial",
-    padding: "30px 0px",
+    padding: "0px",
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "0px",
+    marginTop: "calc(70px + 10px)",
   },
 }));
 
@@ -32,8 +33,8 @@ export const OperationInterface = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   flexDirection: "column",
-  height: "70vh",
   width: "50%",
+  height: "70vh",
   padding: "0px 40px",
   [theme.breakpoints.down("lg")]: {
     padding: "0px 20px",
@@ -41,10 +42,11 @@ export const OperationInterface = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     width: "75%",
     height: "60vh",
-    marginBottom: "50px",
+    marginBottom: "20px",
   },
   [theme.breakpoints.down("sm")]: {
     width: "95%",
+    height: "calc(80vh - 70px)",
   },
 }));
 
@@ -246,6 +248,7 @@ export const InformationArea = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     width: "95%",
+    height: "calc(80vh - 70px)",
   },
 }));
 
@@ -280,7 +283,7 @@ export const InformationAreaContentBox = styled(Box, {
   border: `1px ${data[0] ? "solid" : "dashed"} ${Colors.brown}`,
   [theme.breakpoints.down("sm")]: {
     width: "90%",
-    height: "85%",
+    height: data[0] ? "85%" : "80%",
   },
 }));
 
@@ -301,6 +304,11 @@ export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
   color: Colors.greyText,
   fontWeight: 600,
   fontSize: "26px",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    textAlign: "center",
+    fontSize: 20,
+  },
 }));
 
 export const RobotSuccessBox = styled(Box)(({ theme }) => ({

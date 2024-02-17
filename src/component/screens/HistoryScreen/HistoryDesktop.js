@@ -13,11 +13,11 @@ import {
 } from "../../../styles/HistoryScreen/HistoryDesktop";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import "./css/HistoryDesktop.css";
 import { Colors } from "../../../styles/theme";
 import HistoryDialog from "./HistoryDialog";
 import { domain } from "../../../env";
 import axios from "axios";
+import "./css/HistoryDesktop.css";
 
 function HistoryDesktop() {
   const [data, setData] = useState([]);
@@ -28,6 +28,11 @@ function HistoryDesktop() {
 
   const dateHandler = (e) => {
     console.log(e.target.value);
+    axios
+      .get(`${domain}/api/filter_history_record?date=${e.target.value}`)
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   const dialogOpenHandler = (order) => {
@@ -53,7 +58,6 @@ function HistoryDesktop() {
       acc[dateTemp].push(item);
       return acc;
     }, {});
-    // console.log(Object.keys(groupedData));
   }
   console.log(dialogData);
   useEffect(() => {

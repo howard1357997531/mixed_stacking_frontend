@@ -38,8 +38,9 @@ export const NavLinkImageSmallBox = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  padding: "4px 2px 0px",
+  padding: "8px 0px 4px",
   width: "60px",
+  borderRadius: "2px",
   "&:hover": {
     transform: "scale(1.1)",
     backgroundColor: Colors.grey300,

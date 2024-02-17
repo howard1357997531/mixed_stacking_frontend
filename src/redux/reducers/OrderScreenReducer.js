@@ -15,6 +15,7 @@ export const orderScreen_orderSelectReducer = (
     editId: null,
     editData: null,
     deleteIdArray: [],
+    isTraining: false,
     orderSearch: null,
     multiOrderSearch: null,
   },

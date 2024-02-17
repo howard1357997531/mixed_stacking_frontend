@@ -14,7 +14,12 @@ export const HistoryContainer = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "calc(100vh - 100px)",
-  //   backgroundColor: "red",
+  [theme.breakpoints.down("md")]: {
+    marginTop: "calc(100px)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "calc(70px + 10px)",
+  },
 }));
 
 export const StyleBox = styled(Box)(({ theme }) => ({
@@ -23,6 +28,13 @@ export const StyleBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "80%",
   height: "100%",
+  [theme.breakpoints.down("lg")]: {
+    width: "90%",
+  },
+  [theme.breakpoints.down("md")]: {
+    height: "90%",
+    padding: "30px 0px",
+  },
 }));
 
 export const HistoryBox = styled(Box)(({ theme }) => ({
@@ -31,19 +43,17 @@ export const HistoryBox = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  padding: "5px 25px 20px",
   width: "48%",
   height: "90%",
+  padding: "5px 20px 20px",
   backgroundColor: Colors.lightOrange,
   borderRadius: "10px",
-  [theme.breakpoints.down("lg")]: {
-    width: "60%",
-  },
   [theme.breakpoints.down("md")]: {
-    width: "80%",
+    width: "70vw",
+    height: "75vh",
   },
   [theme.breakpoints.down("sm")]: {
-    width: "100%",
+    width: "85vw",
   },
 }));
 
@@ -70,7 +80,7 @@ export const HistoryContent = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "90%",
   paddingLeft: "3px",
-  paddingRight: "4px",
+  paddingRight: "6px",
   overflowY: "auto",
 }));
 
@@ -81,6 +91,9 @@ export const HistoryListDate = styled(Typography, {
   marginTop: isFirst ? "0px" : "8px",
   marginBottom: "5px",
   padding: "0px 1px",
+  [theme.breakpoints.down("md")]: {
+    fontSize: "14px",
+  },
 }));
 
 export const HistoryListDetial = styled(Box)(({ theme }) => ({
@@ -89,7 +102,7 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
-  height: "60px",
+  height: "55px",
   marginBottom: "5px",
   paddingLeft: "15px",
   paddingRight: "10px",
@@ -98,10 +111,14 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
   backgroundColor: Colors.lightOrangeHover,
   boxShadow: "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
-    boxShadow: `1px 1px ${Colors.blue500}`,
+    boxShadow: `1.5px 1.5px ${Colors.blue500}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
+  },
+  [theme.breakpoints.down("md")]: {
+    height: "50px",
+    fontSize: "14px",
   },
 }));
 

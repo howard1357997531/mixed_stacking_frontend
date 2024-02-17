@@ -3,3 +3,17 @@
     height: 700px;
     transition: "all 1s ease-in-out";
 }
+
+@media screen and (max-width: 600px){
+    .home-icon {
+        width: 110vw;
+        height: 110vw;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .home-icon {
+        width: 120vw;
+        height: 120vw;
+    }
+}

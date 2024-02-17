@@ -9,7 +9,10 @@ import {
 } from "@mui/material";
 import { Colors } from "../theme";
 import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
-import { OrderListExeListWaitToExecuteAnimation } from "../../animation";
+import {
+  OrderListExeListWaitToExecuteAnimation,
+  aiTrainingBtnAnimation,
+} from "../../animation";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
@@ -20,10 +23,13 @@ export const OrderContainer = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "calc(100vh - 100px)",
-  [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {
+    marginTop: "calc(100px + 10px)",
     flexDirection: "column",
     height: "initial",
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "calc(70px + 10px)",
   },
 }));
 
@@ -47,22 +53,23 @@ export const OrderBox = styled(Box)(({ theme }) => ({
 export const OrderListBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "mode",
 })(({ theme, mode }) => ({
-  position: "relative",
+  boxSizing: "border-box",
   display: "flex",
+  position: "relative",
   flexDirection: "column",
   width: "48%",
   height: "100%",
   padding: "10px 20px 15px",
-  boxSizing: "border-box",
-  borderRadius: "10px",
   gap: "5px",
   backgroundColor: mode ? Colors.green : Colors.lightOrange,
+  borderRadius: "10px",
   [theme.breakpoints.down("md")]: {
     width: "70vw",
     height: "75vh",
   },
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
+    height: "calc(80vh - 70px)",
   },
 }));
 
@@ -176,18 +183,21 @@ export const OrderListNavBtn = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const OrderListNavRowBtn = styled(Box)(({ theme }) => ({
+export const OrderListNavRowBtn = styled(Typography)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   height: "75%",
-  padding: "1px 5px",
+  padding: "1px 10px",
   borderRadius: "10px",
-  border: `2px solid ${Colors.blue500}`,
+  // border: `2px solid ${Colors.blue500}`,
+  color: Colors.lightOrange,
+  backgroundColor: Colors.blue500,
+  fontWeight: 600,
+  animation: `1s ${aiTrainingBtnAnimation} infinite`,
   "&:hover": {
     cursor: "pointer",
     transform: "scale(1.05)",
-    // backgroundColor: Colors.greyText,
   },
 }));
 
@@ -457,6 +467,7 @@ export const FunctionAreaBox = styled(Box, {
   },
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
+    height: "calc(80vh - 70px)",
   },
 }));
 
@@ -593,9 +604,12 @@ export const AiResultIndex = styled(Typography)(({ theme }) => ({
 export const AiResultDataBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexWrap: "wrap",
-  gap: "10px",
+  gap: "11px",
   width: "100%",
   marginBottom: "10px",
+  [theme.breakpoints.down("sm")]: {
+    gap: "10px",
+  },
 }));
 
 export const AiResultDataSmBox = styled(Box)(({ theme }) => ({
@@ -603,6 +617,9 @@ export const AiResultDataSmBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "calc(33% - 8px)",
+  [theme.breakpoints.down("sm")]: {
+    width: "calc(50% - 8px)",
+  },
 }));
 
 export const AiResultDataSmmBox = styled(Box)(({ theme }) => ({
@@ -610,10 +627,13 @@ export const AiResultDataSmmBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   // marginBottom: "8px",
   width: "100%",
-  height: "60px",
+  height: "55px",
   borderRadius: "10px",
   backgroundColor: Colors.lightOrangeHover,
   boxShadow: "1px 1px rgba(0, 0, 0, 0.2)",
+  [theme.breakpoints.down("md")]: {
+    height: "50px",
+  },
 }));
 
 export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
@@ -622,6 +642,11 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   height: "30px",
   fontSize: "14px",
   color: "#fff",
+  [theme.breakpoints.down("md")]: {
+    width: "25px",
+    height: "25px",
+    fontSize: "13px",
+  },
 }));
 
 export const AiResultText = styled(Typography)(({ theme }) => ({
@@ -630,6 +655,9 @@ export const AiResultText = styled(Typography)(({ theme }) => ({
   color: Colors.greyText,
   fontSize: 18,
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "16px",
+  },
 }));
 
 export const MultiCreateBox = styled(Box)(({ theme }) => ({
