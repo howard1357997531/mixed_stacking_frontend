@@ -143,8 +143,9 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
             sx={{
               width: "170px",
               marginRight: "10px",
-              color: Colors.brown,
+              color: Colors.orangeDialog,
               backgroundColor: Colors.greyText,
+              fontWeight: 600,
             }}
             endAdornment={
               <InputAdornment position="end" onClick={filterNameHandler}>
@@ -152,7 +153,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
                   sx={{
                     width: "22px",
                     height: "22px",
-                    backgroundColor: Colors.lightbrown,
+                    backgroundColor: Colors.orangeDialog,
                     marginRight: "6px",
                     "&:hover": {
                       cursor: "pointer",
@@ -176,7 +177,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
             style={{
               width: "140px",
               marginRight: "10px",
-              color: Colors.brown,
+              color: Colors.orangeDialog,
               backgroundColor: Colors.greyText,
               fontWeight: 600,
             }}

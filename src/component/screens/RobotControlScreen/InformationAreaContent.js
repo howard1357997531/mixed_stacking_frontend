@@ -279,7 +279,7 @@ function InformationAreaContent({
           <MultiOrderDetailBox className="orderlist">
             {multipleOrderArray.map((order, index) => (
               <MultiOrderDetailSmBox
-                key={order.id}
+                key={index}
                 isDoing={index === queue && isDoing}
               >
                 <MultiOrderAvatarBox>

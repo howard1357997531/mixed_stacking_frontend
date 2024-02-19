@@ -79,6 +79,9 @@ export const MultiOrderDetailSmBox = styled(Box, {
     cursor: "pointer",
     backgroundColor: Colors.white,
   },
+  [theme.breakpoints.down("md")]: {
+    height: "50px",
+  },
 }));
 
 export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
@@ -96,6 +99,11 @@ export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
   fontSize: "13px",
   color: Colors.greenHover,
   backgroundColor: Colors.white,
+  [theme.breakpoints.down("md")]: {
+    height: "21px",
+    width: "21px",
+    fontSize: "12px",
+  },
 }));
 
 export const AvatarDivider = styled(Box)(({ theme }) => ({
@@ -113,6 +121,9 @@ export const MultiOrderName = styled(Box)(({ theme }) => ({
   height: "inherit",
   color: Colors.greyText,
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const MultiOrderEachCount = styled(Typography)(({ theme }) => ({
@@ -122,4 +133,7 @@ export const MultiOrderEachCount = styled(Typography)(({ theme }) => ({
   transform: "translateY(-50%)",
   color: Colors.greyText,
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));

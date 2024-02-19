@@ -7,13 +7,18 @@ import { DIALOG } from "../../../redux/constants";
 import OrderDetailDialogTabs from "./OrderDetailDialogTabs";
 import "./css/OrderDetailDialog.css";
 import { Colors } from "../../../styles/theme";
+import { useTheme } from "@mui/material";
 
 function OrderDetailDialog(props) {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const handleClose = () => {
     dispatch({ type: DIALOG.order, payload: { orderId: null } });
     props.onCloseDialog();
   };
+
+  const page = window.location.pathname === "/order";
+
   return (
     <div>
       <Dialog
@@ -24,9 +29,12 @@ function OrderDetailDialog(props) {
       >
         <DialogContent
           sx={{
-            backgroundColor: Colors.greenDialog,
+            backgroundColor: page ? Colors.greenDialog : Colors.orangeDialog,
             padding: 0,
             width: "600px",
+            [theme.breakpoints.down("md")]: {
+              width: "80vw",
+            },
           }}
         >
           <OrderDetailDialogTabs {...props} />

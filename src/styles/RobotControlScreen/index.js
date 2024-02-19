@@ -395,8 +395,11 @@ export const OrderListContentBox = styled(Box, {
 })(({ theme, isDoing }) => ({
   display: "flex",
   width: "100%",
-  height: "60px",
+  height: "55px",
   backgroundColor: isDoing ? Colors.lightbrown300 : "transparent",
+  [theme.breakpoints.down("sm")]: {
+    height: "50px",
+  },
 }));
 
 export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
@@ -419,8 +422,11 @@ export const MultiOrderDetailSmBox = styled(Box, {
   position: "relative",
   display: "flex",
   width: "100%",
-  height: "60px",
+  height: "55px",
   backgroundColor: isDoing ? Colors.lightbrown300 : "transparent",
+  [theme.breakpoints.down("sm")]: {
+    height: "50px",
+  },
 }));
 
 export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({

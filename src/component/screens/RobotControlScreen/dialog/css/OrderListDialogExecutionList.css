@@ -1,17 +1,20 @@
 .dialogExecutionList::-webkit-scrollbar{
-    width: 3px;
-    color: #6ce7db8b;
+    width: 4px;
+}
+
+.dialogExecutionList-detail::-webkit-scrollbar{
+    width: 0px;
 }
 
 .dialogExecutionList::-webkit-scrollbar-thumb{
-    background-color: #009688;
-    color: #00968733
+    background-color: #2196f3;
+    border-radius: 30px;
 }
 
 .iconBtn-help:hover .icon-help{
-    color: #009688;
+    color: #2196f3;
 }
 
 .iconBtn-add:hover .icon-add{
-    color: #fff176;
+    color: #2196f3;
 }

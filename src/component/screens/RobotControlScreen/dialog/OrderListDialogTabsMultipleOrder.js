@@ -143,6 +143,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
               marginRight: "10px",
               color: Colors.brown,
               backgroundColor: Colors.greyText,
+              fontWeight: 600,
             }}
             endAdornment={
               <InputAdornment position="end" onClick={filterNameHandler}>
@@ -150,7 +151,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
                   sx={{
                     width: "22px",
                     height: "22px",
-                    backgroundColor: Colors.lightbrown,
+                    backgroundColor: Colors.orangeDialog,
                     marginRight: "6px",
                     "&:hover": {
                       cursor: "pointer",
@@ -174,7 +175,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
             style={{
               width: "140px",
               marginRight: "10px",
-              color: Colors.brown,
+              color: Colors.orangeDialog,
               backgroundColor: Colors.greyText,
               fontWeight: 600,
             }}
@@ -187,6 +188,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
             名稱
           </OrderDialogSearchSelect>
         ) : null}
+
         {selectSearchDate ? (
           <OrderDialogSearchSelect onClick={() => selectCondition("date")}>
             日期

@@ -83,8 +83,8 @@ function FunctionAreaContentAiResult() {
           </AiResultImageBackBtn>
         </AiResultImageBox>
       ) : (
-        <>
-          <DescTextBox sx={{ marginBottom: "8px", justifyContent: "left" }}>
+        <Fragment>
+          <DescTextBox sx={{ marginBottom: "6px", justifyContent: "left" }}>
             <DescText isTitle={true}>堆疊順序</DescText>
             <AiResultImageBtn onClick={aiImageHandler}>圖片</AiResultImageBtn>
           </DescTextBox>
@@ -112,7 +112,7 @@ function FunctionAreaContentAiResult() {
               </Fragment>
             ))}
           </AiResultBox>
-        </>
+        </Fragment>
       )}
     </OrderBox>
   );

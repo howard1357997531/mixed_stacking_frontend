@@ -6,6 +6,7 @@ import OrderListDialogTabs from "./OrderListDialogTabs";
 import OrderListDialogExecutionList from "./OrderListDialogExecutionList";
 import "./css/OrderListDialog.css";
 import { Colors } from "../../../../styles/theme";
+import { useTheme } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -26,6 +27,8 @@ function OrderListDialog(props) {
     }
   }, [executeOrderId, isDoing]);
 
+  const theme = useTheme();
+
   return (
     <div>
       <Dialog
@@ -38,10 +41,13 @@ function OrderListDialog(props) {
       >
         <DialogContent
           sx={{
-            backgroundColor: Colors.brown,
+            backgroundColor: Colors.orangeDialog,
             padding: 0,
             width: "400px",
             overflow: "hidden",
+            [theme.breakpoints.down("sm")]: {
+              width: "70vw",
+            },
           }}
         >
           {["inactivate", "success", "reset"].includes(props.robotStateMode) &&

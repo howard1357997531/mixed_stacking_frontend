@@ -1,4 +1,5 @@
 import {
+  DIALOG,
   MULTIPLE_ORDER_LIST,
   ORDER_LIST,
   ROBOT_CONTROL_SCREEN,
@@ -96,12 +97,10 @@ const parseAllData = (data) => {
 
 export const multipleOrderlistSelectAction =
   (multipleOrderSelectData) => (dispatch) => {
-    console.log(multipleOrderSelectData);
-    const firstId = multipleOrderSelectData.orderSelectId_str
-      .split(",")
-      .at(0)
-      .split("*")
-      .at(0);
+    dispatch({
+      type: DIALOG.order,
+      payload: { multiOrderId: multipleOrderSelectData.id },
+    });
 
     dispatch({
       type: ROBOT_CONTROL_SCREEN.orderSelect,

@@ -1,27 +1,23 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
+  DescText,
+  DescTextBox,
   IconButtonBack,
-  IconButtonHelp,
-  IconButtonSearch,
+  OrderContentBox,
+  OrderContentTitleBox,
+  OrderContentTitleSmBox,
+  OrderDetailBox,
+  OrderDetailSmBox,
   OrderListExeListBox,
-  OrderListExeListInsertName,
-  OrderListExeListNameBox,
+  OrderListExeListNameBox2,
   OrderListExeListTitleBox,
 } from "../../../../styles/RobotControlScreen/dialog";
-import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import LoadingCircle from "../../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
-import {
-  OrderListContentMsg,
-  OrderListDetailBox,
-  OrderListDetailSmallBox,
-} from "../../../../styles/OrderScreen";
-import { Colors } from "../../../../styles/theme";
+import { OrderListContentMsg } from "../../../../styles/OrderScreen";
 
 function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
   const dispatch = useDispatch();
@@ -48,16 +44,10 @@ function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
         <IconButtonBack onClick={backHandler}>
           <ChevronLeftIcon />
         </IconButtonBack>
-        詳細資料
-        <IconButtonSearch>
-          <SearchRoundedIcon />
-        </IconButtonSearch>
+        {orderDetail.name}
       </OrderListExeListTitleBox>
 
-      <OrderListExeListNameBox
-        className="dialogExecutionList"
-        sx={{ padding: "2px 10px" }}
-      >
+      <OrderListExeListNameBox2 className="dialogExecutionList-detail">
         {orderListLoading ? (
           <LoadingCircle />
         ) : orderListError ? (
@@ -65,71 +55,49 @@ function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
         ) : orderListData.length === 0 ? (
           <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
         ) : (
-          <>
-            <Typography
-              variant="h6"
-              align="center"
-              sx={{ color: Colors.greyTextBlood, marginTop: "10px" }}
-            >
-              {orderDetail.name}
-            </Typography>
+          <Fragment>
+            <DescTextBox>
+              <DescText isTitle={true}>創建時間</DescText>
+              <DescText sx={{ marginLeft: "5px" }}>
+                {orderDetail.createdAt}
+              </DescText>
+            </DescTextBox>
 
-            <Typography
-              textAlign="right"
-              sx={{
-                color: Colors.greyTextBlood,
-                fontWeight: 600,
-                fontSize: "14px",
-              }}
-            >
-              數量: {orderDetail.aiTraining_order.split(",").length}
-            </Typography>
+            <DescTextBox sx={{ justifyContent: "space-between" }}>
+              <DescText isTitle={true}>詳細資訊</DescText>
+              <DescText>
+                總數: {orderDetail.aiTraining_order.split(",").length}
+              </DescText>
+            </DescTextBox>
 
-            <Typography
-              textAlign="right"
-              sx={{
-                color: Colors.greyTextBlood,
-                fontWeight: 600,
-                fontSize: "14px",
-              }}
-            >
-              創建時間: {orderDetail.createdAt}
-            </Typography>
+            <OrderContentTitleBox>
+              <OrderContentTitleSmBox isName={true}>
+                名稱
+              </OrderContentTitleSmBox>
+              <OrderContentTitleSmBox>寬度</OrderContentTitleSmBox>
+              <OrderContentTitleSmBox>長度</OrderContentTitleSmBox>
+              <OrderContentTitleSmBox>高度</OrderContentTitleSmBox>
+              <OrderContentTitleSmBox>數量</OrderContentTitleSmBox>
+            </OrderContentTitleBox>
 
-            <OrderListDetailBox isTitle={true}>
-              <OrderListDetailSmallBox>名稱</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>寬度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>長度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>高度</OrderListDetailSmallBox>
-              <OrderListDetailSmallBox>數量</OrderListDetailSmallBox>
-            </OrderListDetailBox>
-
-            {orderDetail.orderItem.map((order, index) =>
-              order.quantity !== 0 ? (
-                <OrderListDetailBox key={index} isTitle={false}>
-                  <OrderListDetailSmallBox
-                    sx={{ backgroundColor: Colors.darkGreenHover }}
-                  >
-                    {order.name}
-                  </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox>
-                    {order.width}
-                  </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox>
-                    {order.height}
-                  </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox>
-                    {order.depth}
-                  </OrderListDetailSmallBox>
-                  <OrderListDetailSmallBox>
-                    {order.quantity}
-                  </OrderListDetailSmallBox>
-                </OrderListDetailBox>
-              ) : null
-            )}
-          </>
+            <OrderContentBox className="dialogExecutionList-detail">
+              {orderDetail.orderItem.map((order, index) =>
+                order.quantity !== 0 ? (
+                  <OrderDetailBox key={index}>
+                    <OrderDetailSmBox isName={true}>
+                      {order.name}
+                    </OrderDetailSmBox>
+                    <OrderDetailSmBox>{order.width}</OrderDetailSmBox>
+                    <OrderDetailSmBox>{order.height}</OrderDetailSmBox>
+                    <OrderDetailSmBox>{order.depth}</OrderDetailSmBox>
+                    <OrderDetailSmBox>{order.quantity}</OrderDetailSmBox>
+                  </OrderDetailBox>
+                ) : null
+              )}
+            </OrderContentBox>
+          </Fragment>
         )}
-      </OrderListExeListNameBox>
+      </OrderListExeListNameBox2>
     </OrderListExeListBox>
   );
 }

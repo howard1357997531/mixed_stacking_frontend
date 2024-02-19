@@ -62,10 +62,11 @@ function OrderDetailDialogTabs(props) {
       (order) => order.id === multiOrderId
     );
   }
+  console.log(orderSelectData);
 
   const addProps = { ...props, orderId, orderSelectData };
 
-  const theme = createTheme({
+  const theme2 = createTheme({
     palette: {
       primary: {
         main: `${Colors.greyTextBlood}`,
@@ -73,16 +74,16 @@ function OrderDetailDialogTabs(props) {
     },
   });
 
-  const StyleTab = styled(Tab)({
+  const StyleTab = styled(Tab)(({ theme }) => ({
     color: Colors.greyTextBlood,
     fontWeight: 600,
     fontSize: "16px",
-  });
+  }));
 
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme2}>
           <Tabs
             variant="fullWidth"
             value={value}

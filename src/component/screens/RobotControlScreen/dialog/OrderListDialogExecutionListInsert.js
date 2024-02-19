@@ -133,13 +133,15 @@ function OrderListDialogExecutionListInsert(props) {
                 <Collapse in={insertCkeck && insertId === order.id}>
                   <ConfirmBox>
                     <ConfirmBoxButton
+                      disableElevation
                       variant="contained"
-                      colorArray={[Colors.darkGreenHover, teal[700]]}
+                      colorArray={[Colors.blue500, Colors.blue600]}
                       onClick={() => selectInsertOrderHandler(order)}
                     >
                       插單
                     </ConfirmBoxButton>
                     <ConfirmBoxButton
+                      disableElevation
                       variant="contained"
                       colorArray={[Colors.darkred, Colors.darkredHover]}
                       onClick={confirmCancelHandler}

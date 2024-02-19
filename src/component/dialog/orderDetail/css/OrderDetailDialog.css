@@ -1,7 +1,14 @@
-.order-dialog::-webkit-scrollbar{
-    width: 0px;
+.order-dialog::-webkit-scrollbar,
+.multi-order-dialog::-webkit-scrollbar {
+    width: 4px;
 }
 
-.order-dialog::-webkit-scrollbar-thumb{
-    background-color: #1976d2;
+.order-dialog::-webkit-scrollbar-thumb {
+    background-color: #ffffffee;
+    border-radius: 30px;
+}
+
+.multi-order-dialog::-webkit-scrollbar-thumb {
+    background-color: #2196f3;
+    border-radius: 30px;
 }

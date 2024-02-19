@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   IconButtonAdd,
   IndexText,
+  InsertBox,
   InsertNowText,
   InsertText,
   OrderListExeListAdd,
@@ -124,7 +125,7 @@ function OrderListDialogExecutionList(props) {
                       ) ? (
                         <TextEffect
                           text={"進行中"}
-                          textColor={Colors.purple400}
+                          textColor={Colors.blue500}
                         />
                       ) : null}
                     </OrderListExeListInProgress>
@@ -140,17 +141,17 @@ function OrderListDialogExecutionList(props) {
                 {/* 可以在待執行單前面插單 */}
                 {index + 1 == executionListQueue &&
                 props.robotStateMode === "success" ? (
-                  <Box sx={{ borderTop: `1px solid ${Colors.brownHover}` }}>
+                  <InsertBox>
                     <InsertNowText
                       onClick={() => insertOrderHandler(index + 1)}
                     >
                       即刻插單
                     </InsertNowText>
-                  </Box>
+                  </InsertBox>
                 ) : null}
 
                 {index >= executionListQueue ? (
-                  <Box sx={{ borderTop: `1px solid ${Colors.brownHover}` }}>
+                  <InsertBox>
                     <Tooltip title="插單" placement="right" arrow>
                       <IconButtonAdd
                         className="iconBtn-add"
@@ -159,7 +160,7 @@ function OrderListDialogExecutionList(props) {
                         <OrderListExeListAdd className="icon-add" />
                       </IconButtonAdd>
                     </Tooltip>
-                  </Box>
+                  </InsertBox>
                 ) : null}
               </Fragment>
             ))}

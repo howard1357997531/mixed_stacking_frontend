@@ -2,7 +2,7 @@
     width: 4px
 }
 
-.multi-order::-webkit-scrollbar-thumb {
+.multi-order::-webkit-scrollbar-thumb { 
     background-color: #ffffffee;
     border-radius: 30px;
 }

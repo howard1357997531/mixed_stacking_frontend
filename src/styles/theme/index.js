@@ -35,6 +35,8 @@ export const Colors = {
   orange: "#FE4A1B",
   softOrange: deepOrange[400],
   softOrangeHover: deepOrange[500],
+  orangeDialog: "#debf94",
+  orangeDialogHover: "#d0ae81",
   // green: "#01FCAC",
   // greenHover: "#06d896",
   green: "#A2F4D3",

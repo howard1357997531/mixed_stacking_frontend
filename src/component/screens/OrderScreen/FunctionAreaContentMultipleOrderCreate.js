@@ -135,6 +135,8 @@ function FunctionAreaContentMultipleOrderCreate() {
                   : inputNoFocusRef
               }
               style={{
+                width: "20px",
+                height: "10px",
                 color: Colors.grey600,
                 border: `1px solid ${Colors.grey600}`,
               }}

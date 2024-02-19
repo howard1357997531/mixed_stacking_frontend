@@ -1,8 +1,12 @@
 import { keyframes } from "@emotion/react";
+import { Colors } from "../styles/theme";
 
 export const aiTrainingBtnAnimation = keyframes`
   0% { transform : scale(1) }
-  50% { transform : scale(1.05) }
+  50% { 
+    transform : scale(1.1);
+    background-color: #1976d2;
+    }
   100% { transform : scale(1) }
 `;
 

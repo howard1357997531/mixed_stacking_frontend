@@ -13,6 +13,7 @@ import {
   OrderDetailSmBox,
   OrderTitle,
 } from "../../../styles/dialog/OrderDetailDialogTabsOriginal";
+import { Colors } from "../../../styles/theme";
 
 function OrderDetailDialogTabsOriginal({ source, orderId, orderSelectData }) {
   if (orderId) {
@@ -30,19 +31,28 @@ function OrderDetailDialogTabsOriginal({ source, orderId, orderSelectData }) {
         : orderData.modifiedAt;
   }
 
+  const page = window.location.pathname === "/order";
+
   return orderId ? (
     <OrderBox className="order-dialog">
-      <DescText>名稱 : {orderData.name}</DescText>
-      <DescText>
-        總數量 : {orderData.aiTraining_order.split(",").length}
-      </DescText>
-      <DescText>上傳日期 : {orderData.createdAt}</DescText>
-      <DescText>修改日期 : {modifiyText}</DescText>
+      <DescText>名稱: {orderData.name}</DescText>
+
+      <DescText>上傳日期: {orderData.createdAt}</DescText>
+      <DescText>修改日期: {modifiyText}</DescText>
 
       <DescTextBox>
-        <DescText isTitle={true}>詳細資訊</DescText>
+        <DescText
+          isTitle={true}
+          sx={{ color: page ? Colors.greenDialog : Colors.orangeDialog }}
+        >
+          詳細資訊
+        </DescText>
+        <DescText>
+          數量: {orderData.aiTraining_order.split(",").length}
+        </DescText>
       </DescTextBox>
-      <OrderContentTitleBox>
+
+      <OrderContentTitleBox page={page}>
         <OrderContentTitleSmBox isName={true}>名稱</OrderContentTitleSmBox>
         <OrderContentTitleSmBox>寬度</OrderContentTitleSmBox>
         <OrderContentTitleSmBox>長度</OrderContentTitleSmBox>
@@ -54,7 +64,16 @@ function OrderDetailDialogTabsOriginal({ source, orderId, orderSelectData }) {
         {orderData.orderItem.map((order, index) =>
           order.quantity !== 0 ? (
             <OrderDetailBox key={index}>
-              <OrderDetailSmBox isName={true}>{order.name}</OrderDetailSmBox>
+              <OrderDetailSmBox
+                sx={{
+                  width: "40%",
+                  backgroundColor: page
+                    ? Colors.greenDialogHover
+                    : Colors.orangeDialogHover,
+                }}
+              >
+                {order.name}
+              </OrderDetailSmBox>
               <OrderDetailSmBox>{order.width}</OrderDetailSmBox>
               <OrderDetailSmBox>{order.height}</OrderDetailSmBox>
               <OrderDetailSmBox>{order.depth}</OrderDetailSmBox>

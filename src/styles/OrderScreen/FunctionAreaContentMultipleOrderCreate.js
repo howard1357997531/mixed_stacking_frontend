@@ -19,6 +19,9 @@ export const MultiCreateCount = styled(Box)(({ theme }) => ({
   marginRight: "10px",
   padding: "0px 1px",
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const MultiCreateResetBtn = styled(Box)(({ theme }) => ({
@@ -61,6 +64,9 @@ export const MultiCreateSelectSmBox = styled(Box, {
   borderRadius: "5px",
   backgroundColor: Colors.greenHover,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  [theme.breakpoints.down("md")]: {
+    height: "50px",
+  },
 }));
 
 export const MultiCreateAvatarBox = styled(Box)(({ theme }) => ({
@@ -78,6 +84,11 @@ export const MultiCreateAvatar = styled(Avatar)(({ theme }) => ({
   fontSize: "13px",
   color: Colors.greenHover,
   backgroundColor: Colors.white,
+  [theme.breakpoints.down("md")]: {
+    height: "21px",
+    width: "21px",
+    fontSize: "12px",
+  },
 }));
 
 export const AvatarDivider = styled(Box)(({ theme }) => ({
@@ -95,6 +106,9 @@ export const MultiCreateOrderName = styled(Box)(({ theme }) => ({
   height: "inherit",
   color: Colors.greyText,
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const MultiCreatePlusBox = styled(Box)(({ theme }) => ({

@@ -8,6 +8,9 @@ export const OrderBox = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "500px",
   padding: "2px 10px",
+  [theme.breakpoints.down("md")]: {
+    height: "65vh",
+  },
 }));
 
 export const DescText = styled(Typography, {
@@ -18,16 +21,22 @@ export const DescText = styled(Typography, {
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
   backgroundColor: isTitle && Colors.greyText,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const DescTextBox = styled(Box)(({ theme }) => ({
   display: "flex",
+  justifyContent: "space-between",
   alignItems: "center",
   fontWeight: 600,
   marginBottom: "3px",
 }));
 
-export const OrderContentTitleBox = styled(Box)(({ theme }) => ({
+export const OrderContentTitleBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "page",
+})(({ theme, page }) => ({
   boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
@@ -35,6 +44,7 @@ export const OrderContentTitleBox = styled(Box)(({ theme }) => ({
   paddingRight: "1px",
   gap: "2px",
   marginBottom: "2px",
+  color: page ? Colors.greenDialog : Colors.orangeDialog,
 }));
 
 export const OrderContentTitleSmBox = styled(Box, {
@@ -44,11 +54,15 @@ export const OrderContentTitleSmBox = styled(Box, {
   justifyContent: "center",
   alignItems: "center",
   width: isName ? "40%" : "15%",
-  height: "35px",
-  color: Colors.greenDialog,
+  height: "30px",
+
   backgroundColor: Colors.greyText,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    height: "25px",
+    fontSize: 14,
+  },
 }));
 
 export const OrderContentBox = styled(Box)(({ theme }) => ({
@@ -69,19 +83,22 @@ export const OrderDetailBox = styled(Box)(({ theme }) => ({
   height: "40px",
   gap: "2px",
   marginBottom: "3px",
+  color: Colors.greyText,
+  [theme.breakpoints.down("md")]: {
+    height: "35px",
+  },
 }));
 
-export const OrderDetailSmBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isName",
-})(({ theme, isName }) => ({
+export const OrderDetailSmBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: isName ? "40%" : "15%",
+  width: "15%",
   height: "100%",
-  backgroundColor: isName && Colors.greenDialogHover,
-  color: Colors.greyTextBlood,
-  fontSize: "18px",
+  fontSize: 18,
   fontWeight: 600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
+  [theme.breakpoints.down("md")]: {
+    fontSize: 16,
+  },
 }));
