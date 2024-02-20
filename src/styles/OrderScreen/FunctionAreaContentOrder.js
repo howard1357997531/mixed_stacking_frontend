@@ -24,6 +24,7 @@ export const DescText = styled(Typography, {
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
   backgroundColor: isTitle && Colors.grey600,
+  borderRadius: "2px",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
   },
@@ -31,7 +32,6 @@ export const DescText = styled(Typography, {
 
 export const DescTextBox = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "space-between",
   alignItems: "center",
   fontWeight: 600,
   marginBottom: "3px",

@@ -32,15 +32,29 @@ function OrderDetailDialogTabsOriginal({ source, orderId, orderSelectData }) {
   }
 
   const page = window.location.pathname === "/order";
+  if (orderId) {
+    var descData = [
+      { name: "名稱", text: orderData.name },
+      { name: "上傳", text: orderData.createdAt },
+      // { name: "修改日期", text: modifiyText },
+    ];
+  }
 
   return orderId ? (
     <OrderBox className="order-dialog">
-      <DescText>名稱: {orderData.name}</DescText>
+      {descData.map((desc, index) => (
+        <DescTextBox key={index}>
+          <DescText
+            isTitle={true}
+            sx={{ color: page ? Colors.greenDialog : Colors.orangeDialog }}
+          >
+            {desc.name}
+          </DescText>
+          <DescText sx={{ marginLeft: "7px" }}>{desc.text}</DescText>
+        </DescTextBox>
+      ))}
 
-      <DescText>上傳日期: {orderData.createdAt}</DescText>
-      <DescText>修改日期: {modifiyText}</DescText>
-
-      <DescTextBox>
+      <DescTextBox sx={{ justifyContent: "space-between" }}>
         <DescText
           isTitle={true}
           sx={{ color: page ? Colors.greenDialog : Colors.orangeDialog }}

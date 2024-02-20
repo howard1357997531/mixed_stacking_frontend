@@ -57,7 +57,7 @@ export const MultiOrderDeleteBtn = styled(DeleteIcon)(({ theme }) => ({
 
 export const MultiOrderDetailBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  padding: "0px 6px 0px 3px",
+  paddingRight: "6px",
   flexGrow: 1,
   width: "100%",
   overflowY: "auto",
@@ -71,7 +71,7 @@ export const MultiOrderDetailSmBox = styled(Box, {
   display: "flex",
   width: "100%",
   height: "55px",
-  marginTop: !isFirst ? "5px" : "0px",
+  marginTop: !isFirst ? "6px" : "0px",
   borderRadius: "5px",
   backgroundColor: Colors.greenHover,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",

@@ -4,21 +4,22 @@ import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
 import OrderListDialogTabs from "./OrderListDialogTabs";
 import OrderListDialogExecutionList from "./OrderListDialogExecutionList";
-import "./css/OrderListDialog.css";
 import { Colors } from "../../../../styles/theme";
 import {
   BufferBox,
   BufferContent,
   BufferInfoBox,
   BufferInfoSmBox,
+  BufferInfoText,
   BufferTitle,
   Content,
   ImageBox,
   Title,
 } from "../../../../styles/RobotControlScreen/dialog/StackAndBufferDialog";
 import { domain } from "../../../../env";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
+import "./css/StackAndBufferDialog.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -43,7 +44,9 @@ function StackAndBufferDialog(props) {
   // const bufferquanlity = [4, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0];
   // console.log("bufferquanlity:", bufferquanlity);
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("md"));
+  const matches_lg = useMediaQuery(theme.breakpoints.up("lg"));
+  const matches_md = useMediaQuery(theme.breakpoints.up("md"));
+  const matches_sm = useMediaQuery(theme.breakpoints.up("sm"));
   const handleClose = () => {
     props.onStackAndBufferOpen();
   };
@@ -56,7 +59,6 @@ function StackAndBufferDialog(props) {
     }
   }, [executeOrderIdArray, isDoing]);
 
-  const qwe = [1, 2, 0, 0, 0, 0, 1, 3, 0, 0, 0];
   const buffer = [
     "#7",
     "#29",
@@ -91,11 +93,11 @@ function StackAndBufferDialog(props) {
           className="stack-and-buffer"
           sx={{
             display: "flex",
-            flexDirection: matches ? "row" : "column",
-            backgroundColor: Colors.brown,
+            flexDirection: matches_md ? "row" : "column",
+            backgroundColor: Colors.darkPink,
             padding: 0,
-            maxWidth: "900px",
-            height: "60vh",
+            width: matches_lg ? "900px" : "75vw",
+            height: matches_md ? "60vh" : "75vh",
           }}
         >
           <ImageBox className="dialog-stack-image">
@@ -131,12 +133,14 @@ function StackAndBufferDialog(props) {
             <Content sx={{ gap: "8px" }}>
               <BufferBox>
                 <BufferTitle>Buffer 1</BufferTitle>
-                <BufferContent className="buffer-content">
+                <BufferContent className="stack-and-buffer">
                   {buffer1.map((data, index) =>
                     data !== 0 ? (
                       <BufferInfoBox key={index}>
                         <BufferInfoSmBox>
-                          {data.split("*").at(0)}
+                          <BufferInfoText>
+                            {data.split("*").at(0)}
+                          </BufferInfoText>
                         </BufferInfoSmBox>
                         <BufferInfoSmBox>
                           {data.split("*").at(1)} 個
@@ -149,12 +153,14 @@ function StackAndBufferDialog(props) {
 
               <BufferBox>
                 <BufferTitle>Buffer 2</BufferTitle>
-                <BufferContent className="buffer-content">
+                <BufferContent className="stack-and-buffer">
                   {buffer2.map((data, index) =>
                     data !== 0 ? (
                       <BufferInfoBox key={index}>
                         <BufferInfoSmBox>
-                          {data.split("*").at(0)}
+                          <BufferInfoText>
+                            {data.split("*").at(0)}
+                          </BufferInfoText>
                         </BufferInfoSmBox>
                         <BufferInfoSmBox>
                           {data.split("*").at(1)} 個

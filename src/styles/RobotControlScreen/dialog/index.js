@@ -245,6 +245,7 @@ export const OrderText = styled(Typography, {
 export const WaitToExecuteText = styled(Typography)(({ theme }) => ({
   color: Colors.green800,
   backgroundColor: Colors.darkGreen,
+  fontSize: 14,
   fontWeight: 600,
   padding: "1px 6px 0px",
   border: `2px solid ${Colors.darkGreen}`,
@@ -298,12 +299,9 @@ export const ConfirmBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "space-evenly",
-  width: "396px",
+  width: "calc(100% - 4px)",
   padding: "10px 0px",
   borderBottom: `1px solid ${Colors.brownHover}`,
-  [theme.breakpoints.down("sm")]: {
-    width: "calc(70vw -4px)",
-  },
 }));
 
 export const ConfirmBoxButton = styled(Button, {

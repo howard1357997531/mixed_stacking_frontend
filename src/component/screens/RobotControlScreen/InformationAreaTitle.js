@@ -3,7 +3,7 @@ import {
   InformationAreaTitleBox,
   OrderListTitleButton,
 } from "../../../styles/RobotControlScreen";
-import { Box, styled } from "@mui/material";
+import { Avatar, Box, styled } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
@@ -16,10 +16,22 @@ function InformationAreaTitle({
   robotExecutionData,
 }) {
   const Title = styled(Box)(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
     fontWeight: 600,
     fontSize: "20px",
     color: Colors.greyText,
   }));
+
+  const StyleAvatar = styled(Avatar)({
+    display: "inline-flex",
+    width: "22px",
+    height: "22px",
+    fontSize: 13,
+    margin: "0px 5px",
+    color: Colors.lightOrange,
+    backgroundColor: Colors.blue500,
+  });
 
   const dispatch = useDispatch();
 
@@ -27,7 +39,7 @@ function InformationAreaTitle({
     (state) => state.robotControlScreen_multipleOrderSelect
   );
 
-  const { isDoing, executeOrderId } = robotExecutionData;
+  const { isDoing, executeOrderId, queue } = robotExecutionData;
 
   const changeModeHandler = (mode) => {
     dispatch({
@@ -40,21 +52,17 @@ function InformationAreaTitle({
       {informationAreaMode === "order" && robotStateMode !== "activate" ? (
         <Title>{orderSelectData.name}</Title>
       ) : null}
-
       {informationAreaMode === "multipleOrder" && !isDoing ? (
         <Title>{multipleOrderSelectData.name}</Title>
       ) : null}
 
       {informationAreaMode === "multipleOrder" && isDoing ? (
-        <Title>待執行工單</Title>
+        <Title>
+          <span>{`即將執行第`}</span>
+          <StyleAvatar>{`${queue + 1}`}</StyleAvatar>
+          <span>{`份工單`}</span>
+        </Title>
       ) : null}
-
-      {informationAreaMode === "picture" && robotStateMode !== "activate" && (
-        <OrderListTitleButton onClick={() => changeModeHandler("order")}>
-          清單
-        </OrderListTitleButton>
-      )}
-
       {informationAreaMode === "success" && executeOrderId.length !== 0 ? (
         <OrderListTitleButton
           onClick={() => changeModeHandler("multipleOrder")}

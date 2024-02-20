@@ -8,11 +8,12 @@ import {
   MultiOrderDetailSmBox,
   MultiOrderName,
   MultipleOrderInfo,
-  MultipleOrderListIconButton,
   NoSelectOrderText,
   OrderListBox,
   OrderListContent,
+  OrderListContentAvatar,
   OrderListContentBox,
+  OrderListContentName,
   OrderListContentSmBox,
   OrderListTitle,
   OrderListTitleText,
@@ -21,7 +22,7 @@ import {
   RobotSuccessTitle,
 } from "../../../styles/RobotControlScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { domain } from "../../../env";
 import { DIALOG } from "../../../redux/constants";
@@ -151,15 +152,22 @@ function InformationAreaContent({
       countArray.slice(0, index + 1).reduce((acc, cur) => acc + cur)
     );
 
+    var parseDoingQueue = (qu) => {
+      var output = null;
+      for (let i = 0; i < indexArray.length; i++) {
+        if (indexArray[i] >= qu) {
+          output = i;
+          break;
+        }
+      }
+      return output;
+    };
+
     var parseIndex = (index) => (index === 0 ? 1 : indexArray[index - 1] + 1);
     var parseIndex2 = (index) => indexArray[index];
   }
   const parseId = (order) => {
     return parseInt(order.split("*").at(0));
-  };
-
-  const parseTimes = (times) => {
-    return times.includes("*") ? parseInt(times.split("*").at(1)) : 1;
   };
 
   const parseName = (id) => {
@@ -230,38 +238,34 @@ function InformationAreaContent({
                 ref={realtimeItemCount === index + 2 ? scrollRef : null}
               >
                 <OrderListContentSmBox width="20%">
-                  <Avatar
-                    sx={{
-                      width: "28px",
-                      height: "28px",
-                      fontSize: "14px",
-                      backgroundColor:
-                        realtimeItemCount === index + 1
-                          ? Colors.lightYellow
-                          : Colors.grey600,
-                      color: realtimeItemCount === index + 1 && Colors.brown,
-                    }}
+                  <OrderListContentAvatar
+                    count={realtimeItemCount === index + 1}
                   >
                     {index + 1}
-                  </Avatar>
+                  </OrderListContentAvatar>
                 </OrderListContentSmBox>
 
                 <OrderListContentSmBox
-                  sx={{ flexGrow: 1, paddingRight: "20px" }}
+                  sx={{
+                    flexGrow: 1,
+                    paddingRight: "20px",
+                    color:
+                      realtimeItemCount === index + 1 && Colors.lightOrange,
+                  }}
                 >
                   <img src={`${order}.png`} alt={`${order}.png`}></img>
-                  <Typography sx={{ marginLeft: "5px" }}>{order}</Typography>
+                  <OrderListContentName>{order}</OrderListContentName>
                 </OrderListContentSmBox>
 
-                <OrderListContentSmBox width="35%">
+                <OrderListContentSmBox
+                  width="35%"
+                  sx={{
+                    color:
+                      realtimeItemCount === index + 1 && Colors.lightOrange,
+                  }}
+                >
                   {itemSize[order]}
                 </OrderListContentSmBox>
-
-                {/* <OrderListContentSmBox width="25%">
-                  {realtimeVisualResult.length !== 0
-                    ? compareResult(index)
-                    : null}
-                </OrderListContentSmBox> */}
               </OrderListContentBox>
             ))}
           </OrderListContent>
@@ -280,19 +284,35 @@ function InformationAreaContent({
             {multipleOrderArray.map((order, index) => (
               <MultiOrderDetailSmBox
                 key={index}
-                isDoing={index === queue && isDoing}
+                isDoing={parseDoingQueue(queue + 1) === index && isDoing}
               >
                 <MultiOrderAvatarBox>
-                  <MultiOrderAvatar>{parseIndex(index)}</MultiOrderAvatar>
+                  <MultiOrderAvatar
+                    isDoing={parseDoingQueue(queue + 1) === index && isDoing}
+                  >
+                    {parseIndex(index)}
+                  </MultiOrderAvatar>
                   {order.includes("*") ? (
                     <>
-                      <AvatarDivider />
-                      <MultiOrderAvatar>{parseIndex2(index)}</MultiOrderAvatar>
+                      <AvatarDivider
+                        isDoing={
+                          parseDoingQueue(queue + 1) === index && isDoing
+                        }
+                      />
+                      <MultiOrderAvatar
+                        isDoing={
+                          parseDoingQueue(queue + 1) === index && isDoing
+                        }
+                      >
+                        {parseIndex2(index)}
+                      </MultiOrderAvatar>
                     </>
                   ) : null}
                 </MultiOrderAvatarBox>
 
-                <MultiOrderName>
+                <MultiOrderName
+                  isDoing={parseDoingQueue(queue + 1) === index && isDoing}
+                >
                   {parseName(parseId(order)).name}
                 </MultiOrderName>
 
@@ -301,7 +321,13 @@ function InformationAreaContent({
                     onClick={() => multipleOrderDetailHandler(parseId(order))}
                   >
                     <InfoIcon
-                      sx={{ fontSize: "20px", color: Colors.darkGreen }}
+                      sx={{
+                        fontSize: "20px",
+                        color:
+                          parseDoingQueue(queue + 1) === index && isDoing
+                            ? Colors.lightOrange
+                            : Colors.darkGreen,
+                      }}
                     />
                   </IconButton>
                 </MultipleOrderInfo>

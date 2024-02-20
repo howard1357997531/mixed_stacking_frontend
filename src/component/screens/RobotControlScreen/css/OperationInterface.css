@@ -7,8 +7,8 @@
 
 @media screen and (max-width: 900px) {
     .operation-interface img {
-        width: 55px !important;
-        height: 55px !important;
+        width: 60px !important;
+        height: 60px !important;
     }
 }
 
@@ -25,17 +25,4 @@
 .operation-interface .box-photo {
     width: 100% !important;
     height: 100% !important;
-}
-
-.dialog-stack-image img {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-.stack-and-buffer::-webkit-scrollbar {
-    width: 0px
-}
-
-.buffer-box .buffer-content::-webkit-scrollbar {
-    width: 0px
 }

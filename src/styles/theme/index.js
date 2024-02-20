@@ -37,8 +37,6 @@ export const Colors = {
   softOrangeHover: deepOrange[500],
   orangeDialog: "#debf94",
   orangeDialogHover: "#d0ae81",
-  // green: "#01FCAC",
-  // greenHover: "#06d896",
   green: "#A2F4D3",
   greenHover: "#86d2b2",
   greenDialog: "#7ec4a7",
@@ -89,6 +87,7 @@ export const Colors = {
   brownHover: brown[400],
   brown500: brown[500],
   brownText: brown[600],
+  palletColor: "#E3C19F", // 棧板顏色
   // swal
   swalRed: "#f27474",
   swalYellow: "#facea8",

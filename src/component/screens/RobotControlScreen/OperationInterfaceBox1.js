@@ -185,7 +185,7 @@ function OperationInterfaceBox1({
             </OperationInterfaceButtonLogo>
 
             <OperationInterfaceButtonText>
-              視覺辨識
+              堆疊圖示
             </OperationInterfaceButtonText>
           </>
         ) : null}

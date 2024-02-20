@@ -1,0 +1,12 @@
+.dialog-stack-image img {
+    width: 100% ;
+}
+
+.stack-and-buffer::-webkit-scrollbar {
+    width: 5px
+}
+
+.stack-and-buffer::-webkit-scrollbar-thumb {
+    background-color: #ffffffee;
+    border-radius: 30px;
+}

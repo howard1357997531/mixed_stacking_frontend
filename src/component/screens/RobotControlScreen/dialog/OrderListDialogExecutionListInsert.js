@@ -95,7 +95,7 @@ function OrderListDialogExecutionListInsert(props) {
         <IconButtonBack onClick={backHandler}>
           <ChevronLeftIcon />
         </IconButtonBack>
-        請選擇插單
+        請點選插單
         <IconButtonSearch>
           <SearchRoundedIcon />
         </IconButtonSearch>

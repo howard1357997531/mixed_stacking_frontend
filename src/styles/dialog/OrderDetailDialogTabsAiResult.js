@@ -5,7 +5,7 @@ export const OrderBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   flexDirection: "column",
-  paddingTop: "7px",
+  paddingTop: "5px",
   paddingLeft: "10px",
   width: "100%",
   height: "500px",

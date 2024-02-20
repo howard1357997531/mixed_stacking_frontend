@@ -97,10 +97,23 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
     <OrderListContentMsg variant="h5">已刪除資料</OrderListContentMsg>
   ) : (
     <MultiOrderBox>
-      <DescText>上傳日期 : {multipleOrderData.createdAt}</DescText>
-      <DescText>修改日期 : {modifiyText}</DescText>
+      <DescTextBox>
+        <DescText isTitle={true} sx={{ color: Colors.green }}>
+          上傳日期
+        </DescText>
+        <DescText sx={{ marginLeft: "7px" }}>
+          {multipleOrderData.createdAt}
+        </DescText>
+      </DescTextBox>
 
       <DescTextBox>
+        <DescText isTitle={true} sx={{ color: Colors.green }}>
+          修改日期
+        </DescText>
+        <DescText sx={{ marginLeft: "7px" }}>{modifiyText}</DescText>
+      </DescTextBox>
+
+      <DescTextBox sx={{ justifyContent: "space-between" }}>
         <DescText sx={{ color: Colors.green }} isTitle={true}>
           詳細資訊
         </DescText>

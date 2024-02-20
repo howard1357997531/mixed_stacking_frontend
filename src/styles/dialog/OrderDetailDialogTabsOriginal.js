@@ -7,7 +7,7 @@ export const OrderBox = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   width: "100%",
   height: "500px",
-  padding: "2px 10px",
+  padding: "5px 10px",
   [theme.breakpoints.down("md")]: {
     height: "65vh",
   },
@@ -28,10 +28,9 @@ export const DescText = styled(Typography, {
 
 export const DescTextBox = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "space-between",
   alignItems: "center",
   fontWeight: 600,
-  marginBottom: "3px",
+  marginBottom: "4px",
 }));
 
 export const OrderContentTitleBox = styled(Box, {

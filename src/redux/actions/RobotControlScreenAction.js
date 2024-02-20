@@ -172,7 +172,8 @@ const replaceInsertName = (name) => {
 
 export const executeRobotAction =
   (robotStateMode, informationAreaMode, robotExecutionData) => (dispatch) => {
-    const { startTime, executeOrderId, name, allData } = robotExecutionData;
+    const { startTime, executeOrderId, name, allData, isDoing } =
+      robotExecutionData;
     const executeLength = executeOrderId.length;
     const tempQueue = robotExecutionData.queue;
 
@@ -190,12 +191,8 @@ export const executeRobotAction =
       });
     }
 
-    if (informationAreaMode === "multipleOrder") {
-      var queue = tempQueue;
-    } else {
-      // executeLength > 1 代表不是第一次點這邊進來
-      var queue = executeLength === 1 ? tempQueue : tempQueue + 1;
-    }
+    // isDoing = True 代表不是第一次點這邊進來
+    const queue = isDoing ? tempQueue + 1 : tempQueue;
 
     if (executeLength === 0) {
       basicSwal("warning", "請選擇工單");
@@ -235,13 +232,10 @@ export const executeRobotAction =
             });
 
             // 此單不是第一次從這進來
-            if (
-              informationAreaMode !== "multipleOrder" &&
-              executeLength !== 1
-            ) {
+            if (isDoing) {
               dispatch({
                 type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-                payload: { queue: tempQueue + 1 },
+                payload: { queue },
               });
             }
 

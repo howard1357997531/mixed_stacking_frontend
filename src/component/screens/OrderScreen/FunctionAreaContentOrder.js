@@ -43,10 +43,17 @@ function FunctionAreaContentOrder() {
         </Fragment>
       ) : null}
 
-      <DescText>上傳日期 : {orderData.createdAt}</DescText>
-      <DescText>修改日期 : {modifiyText}</DescText>
+      <DescTextBox>
+        <DescText isTitle={true}>上傳日期</DescText>
+        <DescText sx={{ marginLeft: "7px" }}>{orderData.createdAt}</DescText>
+      </DescTextBox>
 
       <DescTextBox>
+        <DescText isTitle={true}>修改日期</DescText>
+        <DescText sx={{ marginLeft: "7px" }}>{modifiyText}</DescText>
+      </DescTextBox>
+
+      <DescTextBox sx={{ justifyContent: "space-between" }}>
         <DescText isTitle={true}>詳細資訊</DescText>
         <DescText>總數: {orderCount}</DescText>
       </DescTextBox>

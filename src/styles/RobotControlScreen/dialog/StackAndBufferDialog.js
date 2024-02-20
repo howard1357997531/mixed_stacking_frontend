@@ -3,31 +3,37 @@ import { Colors } from "../../theme";
 
 export const ImageBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  width: "450px",
-  maxWidth: "450px",
+  display: "flex",
+  flexDirection: "column",
+  width: "50%",
   height: "100%",
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+  },
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
-  width: "100%",
-  height: "10%",
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-end",
+  width: "100%",
+  paddingTop: "10px",
   color: Colors.greyTextBlood,
   fontSize: 24,
   fontWeight: 600,
-  //   backgroundColor: "red",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 20,
+  },
 }));
 
 export const Content = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   width: "100%",
-  height: "90%",
+  height: "88%",
   padding: "20px",
-  //   backgroundColor: "red",
+  paddingBottom: "5px",
 }));
 
 export const BufferBox = styled(Box)(({ theme }) => ({
@@ -36,17 +42,18 @@ export const BufferBox = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   width: "50%",
   height: "100%",
-  border: `1px solid ${Colors.greyTextBlood}`,
+  border: `1px solid ${Colors.greyText}`,
 }));
 
-export const BufferTitle = styled(Box)(({ theme }) => ({
+export const BufferTitle = styled(Typography)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
   height: "10%",
-  backgroundColor: Colors.darkPink,
+  color: Colors.darkPink,
+  backgroundColor: Colors.greyText,
   fontWight: 600,
   borderBottom: `1px solid ${Colors.greyTextBlood}`,
 }));
@@ -67,6 +74,9 @@ export const BufferInfoBox = styled(Box)(({ theme }) => ({
   height: "60px",
   padding: "0px 10px",
   borderBottom: `1px solid ${Colors.greyTextBlood}`,
+  [theme.breakpoints.down("sm")]: {
+    height: "50px",
+  },
 }));
 
 export const BufferInfoSmBox = styled(Box)(({ theme }) => ({
@@ -76,5 +86,17 @@ export const BufferInfoSmBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "50%",
   height: "100%",
-  fontSize: "20px",
+  color: Colors.greyText,
+  fontSize: "18px",
+  fontWeight: 600,
+}));
+
+export const BufferInfoText = styled(Box)(({ theme }) => ({
+  backgroundColor: Colors.greyText,
+  color: Colors.darkPink,
+  padding: "5px 10px",
+  borderRadius: "5px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "4px 8px",
+  },
 }));

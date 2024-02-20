@@ -107,12 +107,18 @@ export const OperationInterfaceButtonText = styled(Typography)(({ theme }) => ({
   position: "absolute",
   top: "75%",
   left: "50%",
+  width: "100%",
+  textAlign: "center",
   transform: "translate(-50%, -50%)",
   fontSize: "24px",
   fontWeight: 600,
   color: Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
-    fontSize: 18,
+    fontSize: 20,
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 20,
+    top: "70%",
   },
 }));
 
@@ -332,6 +338,9 @@ export const RobotSuccessTitle = styled(Typography)(({ theme }) => ({
   color: Colors.darkGreenHover,
   fontWeight: 600,
   fontSize: "36px",
+  [theme.breakpoints.down("md")]: {
+    fontSize: 30,
+  },
 }));
 
 export const RobotSuccessSubTitle = styled(Typography)(({ theme }) => ({
@@ -350,16 +359,15 @@ export const OrderListTitleButton = styled(Button)(({ theme }) => ({
   top: "60%",
   left: "10%",
   transform: "translateY(-50%)",
-  minWidth: "40px",
-  height: "60%",
+  padding: "4px 6px 3px",
   fontWeight: 600,
-  color: "#fff",
-  backgroundColor: Colors.brown,
+  color: Colors.lightOrange,
+  backgroundColor: Colors.grey600,
   "&:hover": {
     transition: "scale 0.3s ease-in-out",
     transform: "scale(1.05), translateY(-50%)",
     cursor: "pointer",
-    backgroundColor: Colors.brownHover,
+    backgroundColor: Colors.greyText,
   },
   "&:active": {
     transform: "scale(0.95), translateY(-50%)",
@@ -396,7 +404,7 @@ export const OrderListContentBox = styled(Box, {
   display: "flex",
   width: "100%",
   height: "55px",
-  backgroundColor: isDoing ? Colors.lightbrown300 : "transparent",
+  backgroundColor: isDoing ? Colors.blue500 : "transparent",
   [theme.breakpoints.down("sm")]: {
     height: "50px",
   },
@@ -407,6 +415,35 @@ export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   height: "100%",
+  color: Colors.greyText,
+  fontSize: 16,
+  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
+}));
+
+export const OrderListContentAvatar = styled(Avatar, {
+  shouldForwardProp: (prop) => prop !== "count",
+})(({ theme, count }) => ({
+  width: "30px",
+  height: "30px",
+  fontSize: "14px",
+  backgroundColor: count ? Colors.lightOrange : Colors.grey600,
+  color: count && Colors.blue500,
+  [theme.breakpoints.down("md")]: {
+    width: "28px",
+    height: "28px",
+    fontSize: "13px",
+  },
+}));
+
+export const OrderListContentName = styled(Typography)(({ theme }) => ({
+  fontSize: 16,
+  marginLeft: 5,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const MultiOrderDetailBox = styled(Box)(({ theme }) => ({
@@ -423,7 +460,7 @@ export const MultiOrderDetailSmBox = styled(Box, {
   display: "flex",
   width: "100%",
   height: "55px",
-  backgroundColor: isDoing ? Colors.lightbrown300 : "transparent",
+  backgroundColor: isDoing ? Colors.blue500 : "transparent",
   [theme.breakpoints.down("sm")]: {
     height: "50px",
   },
@@ -436,11 +473,14 @@ export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
   width: "20%",
 }));
 
-export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
+export const MultiOrderAvatar = styled(Avatar, {
+  shouldForwardProp: (prop) => prop !== "isDoing",
+})(({ theme, isDoing }) => ({
   height: "23px",
   width: "23px",
   fontSize: "11px",
-  backgroundColor: Colors.grey600,
+  color: isDoing && Colors.blue500,
+  backgroundColor: isDoing ? Colors.lightOrange : Colors.grey600,
   [theme.breakpoints.down("lg")]: {
     height: "22px",
     width: "22px",
@@ -453,11 +493,13 @@ export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
   },
 }));
 
-export const AvatarDivider = styled(Box)(({ theme }) => ({
+export const AvatarDivider = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isDoing",
+})(({ theme, isDoing }) => ({
   height: "2px",
   width: "7px",
   margin: "0px 2px",
-  backgroundColor: Colors.greyText,
+  backgroundColor: isDoing ? Colors.lightOrange : Colors.greyText,
 }));
 
 export const MultiOrderName = styled(Box, {
@@ -468,7 +510,7 @@ export const MultiOrderName = styled(Box, {
   alignItems: "center",
   width: "60%",
   height: "inherit",
-  color: isDoing ? Colors.lightYellow : Colors.greyText,
+  color: isDoing ? Colors.lightOrange : Colors.greyText,
   fontWeight: 600,
 }));
 
@@ -514,8 +556,6 @@ export const MultipleOrderInfoDialogAiResultBox = styled(Box, {
   alignItems: "center",
   width: "33.33%",
   height: "70px",
-  // borderBottom: `1px solid ${brown[400]}`,
-  // backgroundColor: Colors.yellow,
 }));
 
 export const MultipleOrderInfoDialogAiResultOrder = styled(Box, {
@@ -526,8 +566,6 @@ export const MultipleOrderInfoDialogAiResultOrder = styled(Box, {
   alignItems: "center",
   width: "35%",
   height: "100%",
-
-  // backgroundColor: Colors.darkGreen,
 }));
 
 export const MultipleOrderInfoDialogAiResultName = styled(Box, {
@@ -538,4 +576,133 @@ export const MultipleOrderInfoDialogAiResultName = styled(Box, {
   alignItems: "center",
   width: "65%",
   height: "100%",
+}));
+
+// 相機即時辨識
+export const BoardBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  width: "100%",
+  height: "20%",
+}));
+
+export const VisualBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "100%",
+}));
+
+export const ImageBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  boxSizing: "border-box",
+  position: "absolute",
+  top: "50%",
+  left: "calc(100% - 100px)",
+  transform: "translateY(-50%)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "90px",
+  height: "50px",
+  borderRadius: "5px",
+  zIndex: 3,
+  color: data[0] ? "#fff" : Colors.greyTextBlood,
+  backgroundColor: data[0] ? data[1] : "#fff",
+  boxShadow:
+    "0px 0px 8px rgba(0, 0, 0, 0.4) inset, 0px 0px 2px rgba(0, 0, 0, 0.2) inset",
+  [theme.breakpoints.down("lg")]: {
+    left: "calc(100% - 95px)",
+    width: "85px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    left: "calc(100% - 90px)",
+  },
+}));
+
+export const ImageBox2 = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  boxSizing: "border-box",
+  position: "absolute",
+  top: "50%",
+  left: "calc(100% - 200px)",
+  transform: "translateY(-50%)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "90px",
+  height: "50px",
+  borderRadius: "8px",
+  zIndex: 3,
+  color: data[0] ? "#fff" : Colors.greyTextBlood,
+  backgroundColor: data[0] ? data[1] : "#fff",
+  boxShadow:
+    "0px 0px 8px rgba(0, 0, 0, 0.4) inset, 0px 0px 2px rgba(0, 0, 0, 0.2) inset",
+  [theme.breakpoints.down("lg")]: {
+    left: "calc(100% - 190px)",
+    width: "85px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    left: "calc(100% - 180px)",
+  },
+}));
+
+export const ImageBox3 = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  boxSizing: "border-box",
+  position: "absolute",
+  top: "50%",
+  left: "calc(100% - 300px)",
+  transform: "translateY(-50%)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "90px",
+  height: "50px",
+  borderRadius: "8px",
+  zIndex: 3,
+  color: data[0] ? "#fff" : Colors.greyTextBlood,
+  backgroundColor: data[0] ? data[1] : "#fff",
+  boxShadow:
+    "0px 0px 8px rgba(0, 0, 0, 0.4) inset, 0px 0px 2px rgba(0, 0, 0, 0.2) inset",
+  [theme.breakpoints.down("lg")]: {
+    left: "calc(100% - 285px)",
+    width: "85px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    left: "calc(100% - 270px)",
+  },
+}));
+
+export const ImageBox4 = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  boxSizing: "border-box",
+  position: "absolute",
+  top: "50%",
+  left: "calc(100% - 400px)",
+  transform: "translateY(-50%)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "90px",
+  height: "50px",
+  borderRadius: "8px",
+  zIndex: 3,
+  color: data[0] ? "#fff" : Colors.greyTextBlood,
+  backgroundColor: data[0] ? data[1] : "#fff",
+  boxShadow:
+    "0px 0px 8px rgba(0, 0, 0, 0.4) inset, 0px 0px 2px rgba(0, 0, 0, 0.2) inset",
+  [theme.breakpoints.down("lg")]: {
+    left: "calc(100% - 380px)",
+    width: "85px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    left: "calc(100% - 360px)",
+  },
 }));

@@ -44,7 +44,7 @@ function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
         <IconButtonBack onClick={backHandler}>
           <ChevronLeftIcon />
         </IconButtonBack>
-        {orderDetail.name}
+        詳細資訊
       </OrderListExeListTitleBox>
 
       <OrderListExeListNameBox2 className="dialogExecutionList-detail">
@@ -57,7 +57,12 @@ function OrderListDialogExecutionListInsertDetail({ robotExecutionData }) {
         ) : (
           <Fragment>
             <DescTextBox>
-              <DescText isTitle={true}>創建時間</DescText>
+              <DescText isTitle={true}>名稱</DescText>
+              <DescText sx={{ marginLeft: "5px" }}>{orderDetail.name}</DescText>
+            </DescTextBox>
+
+            <DescTextBox>
+              <DescText isTitle={true}>上傳</DescText>
               <DescText sx={{ marginLeft: "5px" }}>
                 {orderDetail.createdAt}
               </DescText>
