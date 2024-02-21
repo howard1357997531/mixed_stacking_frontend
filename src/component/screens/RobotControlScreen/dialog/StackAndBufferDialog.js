@@ -96,7 +96,7 @@ function StackAndBufferDialog(props) {
             flexDirection: matches_md ? "row" : "column",
             backgroundColor: Colors.darkPink,
             padding: 0,
-            width: matches_lg ? "900px" : "75vw",
+            width: matches_lg ? "900px" : "80vw",
             height: matches_md ? "60vh" : "75vh",
           }}
         >

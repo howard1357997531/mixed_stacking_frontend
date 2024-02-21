@@ -70,6 +70,7 @@ export const OrderListBox = styled(Box, {
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
     height: "calc(80vh - 70px)",
+    padding: "5px 8px 10px",
   },
 }));
 
@@ -153,18 +154,26 @@ export const SearchSelect = styled(Box, {
     cursor: "pointer",
     backgroundColor: Colors.greyText,
   },
+  [theme.breakpoints.down("sm")]: {
+    padding: "0px 8px",
+    fontSize: "12px",
+  },
 }));
 
 export const OrderListNavBtnBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "right",
-  paddingTop: "10px",
+  alignItems: "center",
+  paddingTop: "8px",
   paddingRight: "4px",
   height: "100%",
   gap: "20px",
   [theme.breakpoints.down("lg")]: {
     gap: "10px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    paddingTop: "5px",
   },
 }));
 
@@ -187,10 +196,9 @@ export const OrderListNavRowBtn = styled(Typography)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: "75%",
-  padding: "1px 10px",
+  height: "80%",
+  padding: "1px 10px 0px",
   borderRadius: "10px",
-  // border: `2px solid ${Colors.blue500}`,
   color: Colors.lightOrange,
   backgroundColor: Colors.blue500,
   fontWeight: 600,
@@ -199,12 +207,20 @@ export const OrderListNavRowBtn = styled(Typography)(({ theme }) => ({
     cursor: "pointer",
     transform: "scale(1.05)",
   },
+  [theme.breakpoints.down("sm")]: {
+    height: "70%",
+    padding: "0px 10px",
+    fontSize: 12,
+  },
 }));
 
 export const OrderListNavBtnText = styled(Typography)(({ theme }) => ({
   color: Colors.greyTextBlood,
   fontSize: 14,
   fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12,
+  },
 }));
 
 export const OrderListNavBtn2 = styled(Button)(({ theme }) => ({
@@ -312,9 +328,9 @@ export const OrderListDetial = styled(Box, {
 export const OrderListName = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
+  flex: 1,
   justifyContent: "left",
   alignItems: "center",
-  width: "100%",
   height: "100%",
   color: Colors.greyText,
 }));
@@ -339,7 +355,6 @@ export const OrderListState = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "right",
   alignItems: "center",
-  width: "100%",
   height: "100%",
 }));
 
@@ -347,6 +362,9 @@ export const OrderListStateText = styled(Typography)(({ theme }) => ({
   display: "inline-block",
   fontSize: "14px",
   fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12,
+  },
 }));
 
 export const MultipleOrderBox = styled(Box, {
@@ -468,6 +486,7 @@ export const FunctionAreaBox = styled(Box, {
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
     height: "calc(80vh - 70px)",
+    padding: "5px 12px 10px",
   },
 }));
 

@@ -13,7 +13,7 @@ import {
   OrderDetailBox,
   OrderDetailSmBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
-import { Input, Stack, Tooltip } from "@mui/material";
+import { Input, Stack, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import InfoIcon from "@mui/icons-material/Info";
 import {
@@ -58,6 +58,9 @@ function FunctionAreaContentEdit() {
     dispatch(orderEditAction(editData, title, allData));
   };
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
   return !editId ? (
     <CenterText text={"尚未選擇"} />
   ) : orderData.aiTraining_state === "is_training" ? (
@@ -65,11 +68,18 @@ function FunctionAreaContentEdit() {
   ) : (
     <OrderBox>
       <OrderListNavBtn
-        sx={{ position: "absolute", top: "18px", right: "23px" }}
+        sx={{
+          position: "absolute",
+          top: matches ? "18px" : "13px",
+          right: matches ? "23px" : "9px",
+        }}
         onClick={editBtnHandler}
       >
         <img
-          style={{ width: "20px", height: "20px" }}
+          style={{
+            width: matches ? "20px" : "16px",
+            height: matches ? "20px" : "16px",
+          }}
           src={"ok.png"}
           alt={"ok.png"}
         />

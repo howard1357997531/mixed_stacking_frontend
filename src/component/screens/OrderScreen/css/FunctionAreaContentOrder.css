@@ -4,8 +4,20 @@
 
 .is-training-gif {
     position: absolute;
-    right: 20px;
+    top: 15px;
+    right: 10px;
     transform: translate(35%, -35%) ;
-    width: 300px;
-    height: 225px
+    width: 225px;
+    height: 150px
+}
+
+@media screen and (max-width: 600px) {
+    .is-training-gif {
+        position: absolute;
+        top: 15px;
+        right: 10px;
+        transform: translate(35%, -35%) ;
+        width: 150px;
+        height: 117px
+    }
 }

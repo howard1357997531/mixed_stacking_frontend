@@ -11,6 +11,7 @@ import { functionAreaNavButtonAction } from "../../../redux/actions/OrderScreenA
 import { Colors } from "../../../styles/theme";
 import { MultiOrderDeleteBtn } from "../../../styles/OrderScreen/FunctionAreaContentMultipleOrder";
 import { ORDER_SCREEN } from "../../../redux/constants";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 function FunctionAreaNavButton({ orderSelectMode }) {
   const dispatch = useDispatch();
@@ -56,6 +57,9 @@ function FunctionAreaNavButton({ orderSelectMode }) {
     });
   };
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <OrderListNavBtnBox noPadding={["orderDetail"].includes(orderSelectMode)}>
       {orderSelectMode === "orderDetail" &&
@@ -76,7 +80,10 @@ function FunctionAreaNavButton({ orderSelectMode }) {
           onClick={() => buttonHandler(orderSelectMode, "finish_training")}
         >
           <img
-            style={{ width: "28px", height: "20px" }}
+            style={{
+              width: matches ? "28px" : "20px",
+              height: matches ? "20px" : "16px",
+            }}
             src={"aiResult.png"}
             alt={"aiResult.png"}
           />
@@ -93,7 +100,10 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             onClick={() => buttonHandler(orderSelectMode, null)}
           >
             <img
-              style={{ width: "20px", height: "20px" }}
+              style={{
+                width: matches ? "20px" : "16px",
+                height: matches ? "20px" : "16px",
+              }}
               src={"orderList.png"}
               alt={"orderList.png"}
             />
@@ -108,7 +118,10 @@ function FunctionAreaNavButton({ orderSelectMode }) {
         <Fragment>
           <OrderListNavBtn onClick={orderDeleteResetHandler}>
             <img
-              style={{ width: "20px", height: "20px" }}
+              style={{
+                width: matches ? "20px" : "16px",
+                height: matches ? "20px" : "16px",
+              }}
               src={"reset.png"}
               alt={"reset.png"}
             />
@@ -123,7 +136,10 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             onClick={() => buttonHandler(orderSelectMode, null)}
           >
             <img
-              style={{ width: "20px", height: "20px" }}
+              style={{
+                width: matches ? "20px" : "16px",
+                height: matches ? "20px" : "16px",
+              }}
               src={"ok.png"}
               alt={"ok.png"}
             />
@@ -145,7 +161,10 @@ function FunctionAreaNavButton({ orderSelectMode }) {
           onClick={() => buttonHandler(orderSelectMode, null)}
         >
           <img
-            style={{ width: "20px", height: "20px" }}
+            style={{
+              width: matches ? "20px" : "16px",
+              height: matches ? "20px" : "16px",
+            }}
             src={"ok.png"}
             alt={"ok.png"}
           />
@@ -162,7 +181,10 @@ function FunctionAreaNavButton({ orderSelectMode }) {
         <Fragment>
           <OrderListNavBtn onClick={multiCreateResetHandler}>
             <img
-              style={{ width: "20px", height: "20px" }}
+              style={{
+                width: matches ? "20px" : "16px",
+                height: matches ? "20px" : "16px",
+              }}
               src={"reset.png"}
               alt={"reset.png"}
             />
@@ -177,7 +199,10 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             onClick={() => buttonHandler(orderSelectMode, null)}
           >
             <img
-              style={{ width: "20px", height: "20px" }}
+              style={{
+                width: matches ? "20px" : "16px",
+                height: matches ? "20px" : "16px",
+              }}
               src={"ok.png"}
               alt={"ok.png"}
             />

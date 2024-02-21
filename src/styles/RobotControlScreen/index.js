@@ -117,7 +117,7 @@ export const OperationInterfaceButtonText = styled(Typography)(({ theme }) => ({
     fontSize: 20,
   },
   [theme.breakpoints.down("sm")]: {
-    fontSize: 20,
+    fontSize: 18,
     top: "70%",
   },
 }));

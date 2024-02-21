@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import { Colors } from "../../../styles/theme";
 import { useSelector } from "react-redux";
@@ -25,6 +25,9 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
     delete: "",
   };
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
   const Title = () => {
     if (titleArray.includes(orderSelectMode)) {
       return (
@@ -35,7 +38,7 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
             top: "55%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            fontSize: "18px",
+            fontSize: matches ? "18px" : "16px",
             fontWeight: 600,
             color: Colors.greyText,
           }}

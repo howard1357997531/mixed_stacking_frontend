@@ -12,7 +12,13 @@ import {
   OrderSwitchBtn,
   SearchSelect,
 } from "../../../styles/OrderScreen";
-import { IconButton, Input, InputAdornment, useTheme } from "@mui/material";
+import {
+  IconButton,
+  Input,
+  InputAdornment,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import OrderListDropdownMenu from "./OrderListDropdownMenu";
 import OrderListUploadFileDialog from "./OrderListUploadFileDialog";
 import OrderListContent from "./OrderListContent";
@@ -191,6 +197,7 @@ function OrderList(props) {
   };
 
   const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
   const orderListClassName = ["multipleOrder", "multipleOrderCreate"].includes(
     orderSelectMode
@@ -271,8 +278,8 @@ function OrderList(props) {
               style={{
                 // boxSizing: "border-box",
                 width: "110px",
-                padding: "7.5px 0px",
-                paddingRight: "7.5px",
+                // padding: "7.5px 0px",
+                // paddingRight: "7.5px",
                 color: colorMode ? Colors.green : Colors.lightOrange,
                 backgroundColor: Colors.grey600,
                 fontWeight: 600,
@@ -313,7 +320,10 @@ function OrderList(props) {
           ) ? (
             <OrderListNavBtn onClick={() => changeMode("edit")}>
               <img
-                style={{ width: "20px", height: "20px" }}
+                style={{
+                  width: matches ? "20px" : "16px",
+                  height: matches ? "20px" : "16px",
+                }}
                 src={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
                 alt={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
               />
@@ -330,7 +340,10 @@ function OrderList(props) {
           ) ? (
             <OrderListNavBtn onClick={() => changeMode("delete")}>
               <img
-                style={{ width: "16px", height: "20px" }}
+                style={{
+                  width: matches ? "16px" : "12px",
+                  height: matches ? "20px" : "16px",
+                }}
                 src={
                   orderSelectMode === "delete" ? "delete2.png" : "delete.png"
                 }
@@ -349,7 +362,10 @@ function OrderList(props) {
           {["multipleOrder"].includes(orderSelectMode) ? (
             <OrderListNavBtn onClick={createMultiOrderHandle}>
               <img
-                style={{ width: "24px", height: "24px" }}
+                style={{
+                  width: matches ? "24px" : "16px",
+                  height: matches ? "24px" : "16px",
+                }}
                 src={
                   orderSelectMode === "multipleOrderCreate"
                     ? "createCombineOrder2.png"
@@ -375,7 +391,10 @@ function OrderList(props) {
           ].includes(orderSelectMode) ? (
             <OrderListNavBtn onClick={() => setOpen(true)}>
               <img
-                style={{ width: "26px", height: "20px" }}
+                style={{
+                  width: matches ? "26px" : "20px",
+                  height: matches ? "20px" : "16px",
+                }}
                 src="upload.png"
                 alt="upload.png"
               />

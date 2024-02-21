@@ -10,10 +10,16 @@ export const OrderBox = styled(Box)(({ theme }) => ({
 
 export const IsTrainingText = styled(Typography)(({ theme }) => ({
   position: "absolute",
-  right: "20px",
+  top: "-2px",
+  right: "0px",
   transform: "translate(-40%, 270%)",
   color: Colors.blue700,
   fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    top: "2px",
+    right: "0px",
+    fontSize: 12,
+  },
 }));
 
 export const DescText = styled(Typography, {
@@ -93,8 +99,8 @@ export const OrderDetailSmBox = styled(Box, {
   alignItems: "center",
   width: isName ? "40%" : "15%",
   height: "100%",
+  color: Colors.grey600,
   backgroundColor: isName && Colors.lightOrangeHover,
-  color: Colors.greyText,
   fontSize: "18px",
   fontWeight: 600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",

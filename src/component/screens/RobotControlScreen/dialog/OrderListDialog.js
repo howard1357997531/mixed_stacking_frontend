@@ -46,7 +46,7 @@ function OrderListDialog(props) {
             width: "400px",
             overflow: "hidden",
             [theme.breakpoints.down("sm")]: {
-              width: "70vw",
+              width: "80vw",
             },
           }}
         >

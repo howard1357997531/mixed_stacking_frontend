@@ -11,6 +11,14 @@
     font-weight: 600;
 }
 
+@media screen and (max-width: 600px) {
+    .text-effect {
+        position: relative;
+        font-size: 12px;
+        font-weight: 600;
+    }
+}
+
 .text-effect1::after {
     content: attr(data-text);
     color: var(--blue500);

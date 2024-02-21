@@ -12,6 +12,13 @@
     }
 }
 
+@media screen and (max-width: 600px) {
+    .operation-interface img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
+
 .operation-interface .board {
     width: 100% !important;
     height: 100% !important;

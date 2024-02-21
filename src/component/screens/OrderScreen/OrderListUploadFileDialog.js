@@ -1,6 +1,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -28,31 +28,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 function OrderListUploadFileDialog({ open, onCloseDialog }) {
-  const WorkListTopUploadFileButton = styled(Button)(({ theme }) => ({
-    height: "60%",
-    marginLeft: "10px",
-    color: Colors.lightOrange,
-    fontSize: "16px",
-    fontWeight: 600,
-    backgroundColor: Colors.grey600,
-    textTransform: "capitalize",
-    "&:hover": {
-      transform: "scale(1.05)",
-      transition: "all 0.2s ease-in-out",
-      backgroundColor: Colors.grey600,
-      cursor: "pointer",
-    },
-    "&:active": {
-      transform: "scale(0.95)",
-    },
-  }));
-  const StyleDialogContent = styled(DialogContent)(({ theme }) => ({
-    position: "relative",
-    width: "600px",
-    height: "400px",
-    padding: "0px !important",
-    backgroundColor: Colors.grey600,
-  }));
   const DashBox = styled(Box, { shouldForwardProp: (prop) => prop !== "mode" })(
     ({ theme, mode }) => ({
       position: "absolute",
@@ -65,11 +40,17 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
       width: "25%",
       height: "25%",
       border: `1px dashed ${mode ? Colors.greenHover : Colors.lightOrange}`,
+      [theme.breakpoints.down("sm")]: {
+        width: "40%",
+        height: "20%",
+      },
     })
   );
   const UploadTextBox = styled(Box)(({ theme }) => ({
     display: "flex",
+    justifyContent: "center",
     alignItems: "center",
+    width: "100%",
     gap: "10px",
     position: "absolute",
     top: "50%",
@@ -82,8 +63,12 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
   })(({ theme, mode }) => ({
     color: mode ? Colors.greenHover : Colors.lightOrange,
     fontWeight: 600,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 14,
+    },
   }));
 
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { mode } = useSelector((state) => state.orderScreen_orderSelect);
   const modeCheck = mode === "multipleOrderCreate" ? true : false;
@@ -93,6 +78,7 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
 
   const fileChangeHandler = (e) => {
     onCloseDialog();
+
     const formData = new FormData();
     formData.append(`csv_file_length`, e.target.files.length);
     for (let i = 0; i < e.target.files.length; i++) {
@@ -132,9 +118,6 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
 
   return (
     <>
-      {/* <WorkListTopUploadFileButton onClick={handleClickOpen}>
-        上傳
-      </WorkListTopUploadFileButton> */}
       <BootstrapDialog
         maxWidth={false}
         onClose={handleClose}
@@ -159,14 +142,28 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
           <CloseIcon />
         </IconButton>
 
-        <StyleDialogContent
+        <DialogContent
           className={modeCheck ? "uploadAfter2" : "uploadAfter"}
+          sx={{
+            position: "relative",
+            width: "600px",
+            height: "400px",
+            padding: "0px !important",
+            backgroundColor: Colors.grey600,
+            [theme.breakpoints.down("md")]: {
+              width: "80vw",
+              height: "55vh",
+            },
+          }}
         >
           <DashBox mode={modeCheck}>
             <CloudUploadIcon
               sx={{
                 color: modeCheck ? Colors.greenHover : Colors.lightOrange,
                 fontSize: "40px",
+                [theme.breakpoints.down("md")]: {
+                  width: "30px",
+                },
               }}
               className="uploadIconAnimation"
             />
@@ -183,7 +180,6 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
               htmlFor="file"
               className="labelStyle"
               style={{
-                fontWeight: 600,
                 color: Colors.greyText,
                 backgroundColor: modeCheck
                   ? Colors.greenHover
@@ -198,7 +194,7 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
               或拖曳檔案至此
             </UploadText>
           </UploadTextBox>
-        </StyleDialogContent>
+        </DialogContent>
       </BootstrapDialog>
     </>
   );

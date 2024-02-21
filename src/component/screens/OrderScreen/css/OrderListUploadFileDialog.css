@@ -36,6 +36,23 @@
     height: 40px;
     padding: 0px;
     border-radius: 10px;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 600px) {
+    .uploadAfter::after{
+        font-size: 14px;
+    }
+
+    .uploadAfter2::after{
+        font-size: 14px;
+    }
+
+    .labelStyle {
+        width: 60px;
+        height: 30px;
+        font-size: 14px;
+    }
 }
 
 .labelStyle:hover {
