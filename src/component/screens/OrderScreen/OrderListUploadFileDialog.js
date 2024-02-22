@@ -41,8 +41,8 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
       height: "25%",
       border: `1px dashed ${mode ? Colors.greenHover : Colors.lightOrange}`,
       [theme.breakpoints.down("sm")]: {
-        width: "40%",
-        height: "20%",
+        width: "50%",
+        height: "23%",
       },
     })
   );

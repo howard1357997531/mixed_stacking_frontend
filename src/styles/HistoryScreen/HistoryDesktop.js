@@ -73,6 +73,9 @@ export const HistoryTitle = styled(Typography)(({ theme }) => ({
   fontSize: 20,
   fontWeight: 600,
   marginRight: "5px",
+  [theme.breakpoints.down("md")]: {
+    fontSize: 16,
+  },
 }));
 
 export const HistoryContent = styled(Box)(({ theme }) => ({

@@ -7,6 +7,8 @@ import {
   OrderListNavBtn,
   OrderListNavBtnBox,
   OrderListNavBtnText,
+  OrderListNavFixedBox,
+  OrderListNavFixedSmBox,
   OrderListSearch,
   OrderSwitchBox,
   OrderSwitchBtn,
@@ -98,8 +100,8 @@ function OrderList(props) {
   };
 
   const [isFilter, setIsFilter] = useState(false);
-  const [selectSearchName, setSelectSearchName] = useState(false);
-  const [selectSearchDate, setSelectSearchDate] = useState(false);
+  const [selectSearchName, setSelectSearchName] = useState(true);
+  const [selectSearchDate, setSelectSearchDate] = useState(true);
   const [selectName, setSelectName] = useState(false);
   const [selectDate, setSelectDate] = useState(false);
 
@@ -197,6 +199,8 @@ function OrderList(props) {
   };
 
   const theme = useTheme();
+  const matches_lg = useMediaQuery(theme.breakpoints.up("lg"));
+  const matches_md = useMediaQuery(theme.breakpoints.up("md"));
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
   const orderListClassName = ["multipleOrder", "multipleOrderCreate"].includes(
@@ -244,7 +248,7 @@ function OrderList(props) {
                   width: "140px",
                 },
                 [theme.breakpoints.down("sm")]: {
-                  width: "120px",
+                  width: "170px",
                 },
               }}
               endAdornment={
@@ -276,12 +280,13 @@ function OrderList(props) {
               type="date"
               className="orderlist-input-date"
               style={{
-                // boxSizing: "border-box",
-                width: "110px",
-                // padding: "7.5px 0px",
-                // paddingRight: "7.5px",
-                color: colorMode ? Colors.green : Colors.lightOrange,
-                backgroundColor: Colors.grey600,
+                width: matches_lg ? "150px" : matches_md ? "120px" : "160px",
+                color: matches
+                  ? colorMode
+                    ? Colors.green
+                    : Colors.lightOrange
+                  : Colors.greyText,
+                backgroundColor: matches && Colors.grey600,
                 fontWeight: 600,
               }}
               onChange={filterDateHandler}
@@ -315,15 +320,13 @@ function OrderList(props) {
         /> */}
 
         <OrderListNavBtnBox>
+          {/* orderList */}
           {!["multipleOrder", "multipleOrderCreate"].includes(
             orderSelectMode
-          ) ? (
+          ) && matches ? (
             <OrderListNavBtn onClick={() => changeMode("edit")}>
               <img
-                style={{
-                  width: matches ? "20px" : "16px",
-                  height: matches ? "20px" : "16px",
-                }}
+                style={{ width: "20px", height: "20px" }}
                 src={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
                 alt={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
               />
@@ -337,13 +340,10 @@ function OrderList(props) {
 
           {!["multipleOrder", "multipleOrderCreate"].includes(
             orderSelectMode
-          ) ? (
+          ) && matches ? (
             <OrderListNavBtn onClick={() => changeMode("delete")}>
               <img
-                style={{
-                  width: matches ? "16px" : "12px",
-                  height: matches ? "20px" : "16px",
-                }}
+                style={{ width: "16px", height: "20px" }}
                 src={
                   orderSelectMode === "delete" ? "delete2.png" : "delete.png"
                 }
@@ -359,12 +359,87 @@ function OrderList(props) {
             </OrderListNavBtn>
           ) : null}
 
+          {["close", "orderDetail", "aiResult", "edit", "delete"].includes(
+            orderSelectMode
+          ) && matches ? (
+            <OrderListNavBtn onClick={() => setOpen(true)}>
+              <img
+                style={{ width: "26px", height: "20px" }}
+                src="upload.png"
+                alt="upload.png"
+              />
+              <OrderListNavBtnText>上傳</OrderListNavBtnText>
+            </OrderListNavBtn>
+          ) : null}
+
+          {["close", "orderDetail", "aiResult", "edit", "delete"].includes(
+            orderSelectMode
+          ) && !matches ? (
+            <OrderListNavFixedBox>
+              <OrderListNavFixedSmBox
+                mode={orderSelectMode === "edit"}
+                onClick={() => changeMode("edit")}
+              >
+                <OrderListNavBtn>
+                  <img
+                    style={{ width: "20px", height: "20px" }}
+                    src={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
+                    alt={orderSelectMode === "edit" ? "edit2.png" : "edit.png"}
+                  />
+                  <OrderListNavBtnText
+                    sx={{ color: orderSelectMode === "edit" && Colors.blue400 }}
+                  >
+                    修改
+                  </OrderListNavBtnText>
+                </OrderListNavBtn>
+              </OrderListNavFixedSmBox>
+
+              <OrderListNavFixedSmBox
+                mode={orderSelectMode === "delete"}
+                onClick={() => changeMode("delete")}
+              >
+                <OrderListNavBtn>
+                  <img
+                    style={{ width: "16px", height: "20px" }}
+                    src={
+                      orderSelectMode === "delete"
+                        ? "delete2.png"
+                        : "delete.png"
+                    }
+                    alt={
+                      orderSelectMode === "delete"
+                        ? "delete2.png"
+                        : "delete.png"
+                    }
+                  />
+                  <OrderListNavBtnText
+                    sx={{ color: orderSelectMode === "delete" && Colors.red }}
+                  >
+                    刪除
+                  </OrderListNavBtnText>
+                </OrderListNavBtn>
+              </OrderListNavFixedSmBox>
+
+              <OrderListNavFixedSmBox onClick={() => setOpen(true)}>
+                <OrderListNavBtn>
+                  <img
+                    style={{ width: "26px", height: "20px" }}
+                    src="upload.png"
+                    alt="upload.png"
+                  />
+                  <OrderListNavBtnText>上傳</OrderListNavBtnText>
+                </OrderListNavBtn>
+              </OrderListNavFixedSmBox>
+            </OrderListNavFixedBox>
+          ) : null}
+
+          {/* multipleOrder */}
           {["multipleOrder"].includes(orderSelectMode) ? (
             <OrderListNavBtn onClick={createMultiOrderHandle}>
               <img
                 style={{
-                  width: matches ? "24px" : "16px",
-                  height: matches ? "24px" : "16px",
+                  width: matches ? "24px" : "22px",
+                  height: matches ? "24px" : "20px",
                 }}
                 src={
                   orderSelectMode === "multipleOrderCreate"
@@ -381,18 +456,11 @@ function OrderList(props) {
             </OrderListNavBtn>
           ) : null}
 
-          {[
-            "close",
-            "orderDetail",
-            "aiResult",
-            "edit",
-            "delete",
-            "multipleOrderCreate",
-          ].includes(orderSelectMode) ? (
+          {["multipleOrderCreate"].includes(orderSelectMode) ? (
             <OrderListNavBtn onClick={() => setOpen(true)}>
               <img
                 style={{
-                  width: matches ? "26px" : "20px",
+                  width: matches ? "24px" : "24px",
                   height: matches ? "20px" : "16px",
                 }}
                 src="upload.png"

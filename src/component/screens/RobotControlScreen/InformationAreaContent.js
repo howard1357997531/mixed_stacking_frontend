@@ -180,7 +180,7 @@ function InformationAreaContent({
   return (
     <InformationAreaContentBox data={[hasOrderList, mode]}>
       {informationAreaMode === "initial" ? (
-        <NoSelectOrderText>尚未選擇工單</NoSelectOrderText>
+        <NoSelectOrderText></NoSelectOrderText>
       ) : null}
 
       {!realtimeVisualMode && robotStateMode === "activate" ? (

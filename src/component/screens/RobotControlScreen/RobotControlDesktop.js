@@ -10,6 +10,7 @@ import {
   ImageBox2,
   ImageBox3,
   ImageBox4,
+  ImageBoxText,
 } from "../../../styles/RobotControlScreen";
 import OperationInterfaceBox1 from "./OperationInterfaceBox1";
 import OperationInterfaceBox2 from "./OperationInterfaceBox2";
@@ -110,25 +111,25 @@ function RobotControlDesktop(props) {
               realtimeVisualResult[0] &&
               realtimeVisualResult[0] !== "#0" ? (
                 <ImageBox data={[motionList[0], boxColor[0]]}>
-                  <Typography>{realtimeVisualResult[0]}</Typography>
+                  <ImageBoxText>{realtimeVisualResult[0]}</ImageBoxText>
                 </ImageBox>
               ) : null}
 
               {realtimeVisualResult && realtimeVisualResult[1] ? (
                 <ImageBox2 data={[motionList[1], boxColor[1]]}>
-                  <Typography>{realtimeVisualResult[1]}</Typography>
+                  <ImageBoxText>{realtimeVisualResult[1]}</ImageBoxText>
                 </ImageBox2>
               ) : null}
 
               {realtimeVisualResult && realtimeVisualResult[2] ? (
                 <ImageBox3 data={[motionList[2], boxColor[2]]}>
-                  <Typography>{realtimeVisualResult[2]}</Typography>
+                  <ImageBoxText>{realtimeVisualResult[2]}</ImageBoxText>
                 </ImageBox3>
               ) : null}
 
               {realtimeVisualResult && realtimeVisualResult[3] ? (
                 <ImageBox4 data={[motionList[3], boxColor[3]]}>
-                  <Typography>{realtimeVisualResult[3]}</Typography>
+                  <ImageBoxText>{realtimeVisualResult[3]}</ImageBoxText>
                 </ImageBox4>
               ) : null}
             </VisualBox>

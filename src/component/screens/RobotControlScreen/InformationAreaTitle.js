@@ -21,6 +21,9 @@ function InformationAreaTitle({
     fontWeight: 600,
     fontSize: "20px",
     color: Colors.greyText,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 18,
+    },
   }));
 
   const StyleAvatar = styled(Avatar)({

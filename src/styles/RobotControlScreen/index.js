@@ -65,13 +65,16 @@ export const FortyRadioWidthButton = styled(Box, {
   backgroundColor: customColor[0],
   "&:hover": {
     backgroundColor: customColor[1],
-    transition: "all 0.3s ease-in-out",
-    transform: "scale(1.1)",
+    transition: "all 0.1s ease-in-out",
+    transform: "scale(1.05)",
     cursor: "pointer",
     zIndex: 2,
   },
   "&:active": {
-    transform: "scale(0.9)",
+    transform: "scale(0.95)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "45%",
   },
 }));
 
@@ -86,13 +89,17 @@ export const SixtyRadioWidthButton = styled(Box, {
   backgroundColor: customColor[0],
   "&:hover": {
     backgroundColor: customColor[1],
-    transition: "all 0.3s ease-in-out",
-    transform: "scale(1.1)",
+    transition: "all 0.1s ease-in-out",
+    transform: "scale(1.05)",
     cursor: "pointer",
     zIndex: 2,
   },
   "&:active": {
-    transform: "scale(0.9)",
+    transform: "scale(0.95)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "55%",
+    padding: "25px 30px",
   },
 }));
 
@@ -595,6 +602,13 @@ export const VisualBox = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
+export const ImageBoxText = styled(Typography)(({ theme }) => ({
+  fontSize: 16,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12,
+  },
+}));
+
 export const ImageBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "data",
 })(({ theme, data }) => ({
@@ -619,7 +633,9 @@ export const ImageBox = styled(Box, {
     width: "85px",
   },
   [theme.breakpoints.down("sm")]: {
-    left: "calc(100% - 90px)",
+    width: "60px",
+    height: "40px",
+    left: "calc(100% - 70px)",
   },
 }));
 
@@ -647,7 +663,9 @@ export const ImageBox2 = styled(Box, {
     width: "85px",
   },
   [theme.breakpoints.down("sm")]: {
-    left: "calc(100% - 180px)",
+    width: "60px",
+    height: "40px",
+    left: "calc(100% - 140px)",
   },
 }));
 
@@ -675,7 +693,9 @@ export const ImageBox3 = styled(Box, {
     width: "85px",
   },
   [theme.breakpoints.down("sm")]: {
-    left: "calc(100% - 270px)",
+    width: "60px",
+    height: "40px",
+    left: "calc(100% - 210px)",
   },
 }));
 
@@ -703,6 +723,8 @@ export const ImageBox4 = styled(Box, {
     width: "85px",
   },
   [theme.breakpoints.down("sm")]: {
-    left: "calc(100% - 360px)",
+    width: "60px",
+    height: "40px",
+    left: "calc(100% - 280px)",
   },
 }));

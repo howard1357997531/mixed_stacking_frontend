@@ -315,6 +315,9 @@ export const ConfirmBoxButton = styled(Button, {
   "&:hover": {
     backgroundColor: colorArray[1],
   },
+  [theme.breakpoints.down("md")]: {
+    padding: "3px 0px",
+  },
 }));
 
 export const IconButtonHelp = styled(IconButton, {

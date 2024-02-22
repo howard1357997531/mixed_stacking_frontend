@@ -10,7 +10,13 @@ import {
   OrderDialogSearchSelect,
   OrderDialogBackBox,
 } from "../../../../styles/RobotControlScreen/dialog";
-import { IconButton, Input, InputAdornment } from "@mui/material";
+import {
+  IconButton,
+  Input,
+  InputAdornment,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -129,6 +135,9 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
     }
   }, [searchData]);
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <OrderDialogBox>
       <OrderDialogSearchBox>
@@ -175,8 +184,8 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
             style={{
               width: "140px",
               marginRight: "10px",
-              color: Colors.orangeDialog,
-              backgroundColor: Colors.greyText,
+              color: matches ? Colors.orangeDialog : Colors.greyText,
+              backgroundColor: matches && Colors.greyText,
               fontWeight: 600,
             }}
             onChange={filterDateHandler}

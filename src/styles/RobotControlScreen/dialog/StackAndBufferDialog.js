@@ -56,6 +56,9 @@ export const BufferTitle = styled(Typography)(({ theme }) => ({
   backgroundColor: Colors.greyText,
   fontWight: 600,
   borderBottom: `1px solid ${Colors.greyTextBlood}`,
+  [theme.breakpoints.down("sm")]: {
+    height: "35px",
+  },
 }));
 
 export const BufferContent = styled(Box)(({ theme }) => ({
@@ -63,6 +66,9 @@ export const BufferContent = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "90%",
   overflowY: "auto",
+  [theme.breakpoints.down("sm")]: {
+    height: "250px",
+  },
 }));
 
 export const BufferInfoBox = styled(Box)(({ theme }) => ({
@@ -87,14 +93,15 @@ export const BufferInfoSmBox = styled(Box)(({ theme }) => ({
   width: "50%",
   height: "100%",
   color: Colors.greyText,
-  fontSize: "18px",
+  fontSize: "16px",
   fontWeight: 600,
 }));
 
 export const BufferInfoText = styled(Box)(({ theme }) => ({
-  backgroundColor: Colors.greyText,
-  color: Colors.darkPink,
+  // backgroundColor: Colors.greyText,
+  color: Colors.greyText,
   padding: "5px 10px",
+  border: `2px solid ${Colors.greyText}`,
   borderRadius: "5px",
   [theme.breakpoints.down("sm")]: {
     padding: "4px 8px",

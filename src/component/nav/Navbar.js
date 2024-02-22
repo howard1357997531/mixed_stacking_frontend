@@ -12,8 +12,9 @@ import {
   NavLinkImageBox,
   NavLinkImageSmallBox,
   NavLinkImageBoxText,
+  UpBtn,
 } from "../../styles/nav";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Button, useMediaQuery, useTheme } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import SwipeableEdgeDrawer from "./SwipeableEdgeDrawer";
 import "./css/nav.css";
@@ -24,6 +25,29 @@ function Navbar() {
   const matches_six = useMediaQuery(theme.breakpoints.up("sm"));
 
   const [open, setOpen] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  React.useEffect(() => {
+    const scrollHandler = () => {
+      if (window.scrollY > 100) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    };
+    window.addEventListener("scroll", scrollHandler);
+
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -120,7 +144,6 @@ function Navbar() {
                   edge="start"
                   color="inherit"
                   aria-label="menu"
-                  // onClick={toggleDrawer("left", true)}
                   onClick={() => setOpen(true)}
                   sx={{
                     marginRight: "7.5%",
@@ -141,6 +164,8 @@ function Navbar() {
           </NavRightBox>
         </Toolbar>
       </AppBar>
+
+      <UpBtn onClick={scrollToTop} visible={visible} />
     </Box>
   );
 }

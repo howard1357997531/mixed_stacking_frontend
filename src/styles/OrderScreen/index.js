@@ -219,8 +219,34 @@ export const OrderListNavBtnText = styled(Typography)(({ theme }) => ({
   fontSize: 14,
   fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
-    fontSize: 12,
+    fontSize: 13,
   },
+}));
+
+export const OrderListNavFixedBox = styled(Box)({
+  position: "fixed",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  zIndex: 999,
+  display: "flex",
+  width: "100vw",
+  backgroundColor: Colors.grey300,
+  borderTop: `2px solid ${Colors.grey100}`,
+});
+
+export const OrderListNavFixedSmBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flex: 1,
+  height: "60px",
+  paddingTop: "5px",
+  borderRight: `2px solid ${Colors.grey100}`,
+  backgroundColor: mode && Colors.grey400,
 }));
 
 export const OrderListNavBtn2 = styled(Button)(({ theme }) => ({
@@ -338,6 +364,9 @@ export const OrderListName = styled(Box)(({ theme }) => ({
 export const NewText = styled(Typography)(({ theme }) => ({
   marginRight: "5px",
   color: Colors.red800,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const OrderListNameSelect = styled(Box, {
@@ -486,6 +515,9 @@ export const FunctionAreaBox = styled(Box, {
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
     height: "calc(80vh - 70px)",
+    marginBottom:
+      ["close", "orderDetail", "aiResult", "edit", "delete"].includes(mode) &&
+      "55px",
     padding: "5px 12px 10px",
   },
 }));

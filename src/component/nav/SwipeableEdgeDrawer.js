@@ -168,7 +168,10 @@ function SwipeableEdgeDrawer(props) {
           }}
         >
           {routeData.map((data) => (
-            <RouteBox onClick={() => routeBoxClickHandler(data.route)}>
+            <RouteBox
+              key={data.name}
+              onClick={() => routeBoxClickHandler(data.route)}
+            >
               <RouteImage>
                 <img
                   src={data.image}

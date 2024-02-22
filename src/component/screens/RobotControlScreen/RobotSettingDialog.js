@@ -2,24 +2,11 @@ import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
-import { Box, Typography, styled } from "@mui/material";
-import {
-  blue,
-  brown,
-  deepOrange,
-  deepPurple,
-  green,
-  grey,
-  lightGreen,
-  pink,
-  red,
-} from "@mui/material/colors";
+import { Box, Typography, styled, useTheme } from "@mui/material";
+import { brown, grey, lightGreen, pink } from "@mui/material/colors";
 import "./css/RobotSettingDialog.css";
-import Swal from "sweetalert2";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { robotSettingAction } from "../../../redux/actions/RobotControlScreenAction";
-import { ROBOT_CONTROL_SCREEN_robotSetting } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -32,18 +19,18 @@ function RobotSettingDialog({
 }) {
   const StyleBox = styled(Box)(({ theme }) => ({
     display: "flex",
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    width: "400px",
-    height: "200px",
+    width: "100%",
   }));
   const StyleSpeedBox = styled(Box)(({ theme }) => ({
     display: "flex",
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     gap: "5px",
-    width: "400px",
-    height: "200px",
+    width: "100%",
   }));
   const StyleSpeedSmallLeftBox = styled(Box)(({ theme }) => ({
     display: "flex",
@@ -70,27 +57,26 @@ function RobotSettingDialog({
   }));
   const StyleSpeedSmallMiddleBoxText = styled(Typography)(({ theme }) => ({
     position: "absolute",
-    top: "30px",
+    top: "-20px",
     left: "50%",
     transform: "translateX(-50%)",
-    color: brown[700],
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
     fontWeight: 600,
+    [theme.breakpoints.down("sm")]: {
+      top: "-15px",
+      fontSize: 26,
+    },
   }));
-  const StyleSpeedPlusMinusBox = styled(Box, {
-    shouldForwardProp: (prop) => prop !== "customColor",
-  })(({ theme, customColor }) => ({
-    backgroundColor: brown[500],
+  const StyleSpeedPlusMinusBox = styled(Box)(({ theme }) => ({
+    backgroundColor: Colors.lightOrange,
     marginTop: "30px",
     padding: "15px 15px 10px",
     "&:hover": {
-      backgroundColor: customColor,
-      transition: "all 0.3s ease-in-out",
-      transform: "scale(1.1)",
+      backgroundColor: Colors.lightOrangeHover,
       cursor: "pointer",
-    },
-    "&:active": {
-      backgroundColor: customColor,
-      transform: "scale(.95)",
     },
   }));
   const StyleSmallBox = styled(Box)(({ theme }) => ({
@@ -115,6 +101,10 @@ function RobotSettingDialog({
     width: "80%",
     height: "80%",
     backgroundColor: "red",
+    [theme.breakpoints.down("sm")]: {
+      width: "80%",
+      height: "65%",
+    },
   }));
   const StyleButton = styled(Box, {
     shouldForwardProp: (prop) => prop !== "customColor",
@@ -131,6 +121,10 @@ function RobotSettingDialog({
     "&:hover": {
       backgroundColor: customColor[1],
     },
+    [theme.breakpoints.down("sm")]: {
+      width: "80%",
+      height: "65%",
+    },
   }));
   const StyleButtonLogo = styled(Box)(({ theme }) => ({
     position: "absolute",
@@ -145,7 +139,9 @@ function RobotSettingDialog({
     transform: "translate(-50%, -50%)",
     fontSize: "24px",
     fontWeight: 600,
-    color: grey[800],
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "20px",
+    },
   }));
 
   const dispatch = useDispatch();
@@ -161,6 +157,7 @@ function RobotSettingDialog({
     dispatch(robotSettingAction(mode, speed));
   };
 
+  const theme = useTheme();
   return (
     <div>
       <Dialog
@@ -170,9 +167,22 @@ function RobotSettingDialog({
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
-        className="operate-interface"
       >
-        <DialogContent sx={{ backgroundColor: brown[300], padding: "10px" }}>
+        <DialogContent
+          sx={{
+            boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "Column",
+            width: "400px",
+            height: "400px",
+            backgroundColor: Colors.darkGreenHover,
+            padding: "10px",
+            [theme.breakpoints.down("sm")]: {
+              width: "80vw",
+              height: "60vh",
+            },
+          }}
+        >
           <StyleBox>
             {/* pause */}
             <StyleSmallBox>
@@ -190,7 +200,7 @@ function RobotSettingDialog({
                   robotSettingHandler(!pause ? "pause" : "unPause")
                 }
               >
-                <StyleButtonLogo>
+                <StyleButtonLogo className="robot-setting-img">
                   {pause ? (
                     <img src="re-activate.png" alt="re-activate.png"></img>
                   ) : (
@@ -208,7 +218,7 @@ function RobotSettingDialog({
                 customColor={[Colors.softOrange, Colors.softOrangeHover]}
                 onClick={() => robotSettingHandler("reset")}
               >
-                <StyleButtonLogo>
+                <StyleButtonLogo className="robot-setting-img">
                   <img src="restart.png" alt="restart.png"></img>
                 </StyleButtonLogo>
 
@@ -222,7 +232,6 @@ function RobotSettingDialog({
             <StyleSpeedSmallLeftBox>
               <StyleSpeedPlusMinusBox
                 className="speed-box"
-                customColor={pink[200]}
                 display={speed <= 10 ? "none" : "block"}
                 onClick={() => robotSettingHandler("speedDown")}
               >
@@ -241,9 +250,21 @@ function RobotSettingDialog({
                   marginTop: "30px",
                   padding: "14px 0px",
                   textAlign: "center",
+                  [theme.breakpoints.down("sm")]: {
+                    padding: "12.5px 0px",
+                  },
                 }}
               >
-                <Typography variant="h4">{speed}</Typography>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    [theme.breakpoints.down("sm")]: {
+                      fontSize: 26,
+                    },
+                  }}
+                >
+                  {speed}
+                </Typography>
               </Box>
             </StyleSpeedSmallMiddleBox>
 

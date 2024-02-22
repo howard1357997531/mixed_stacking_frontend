@@ -11,7 +11,7 @@ import {
   HistoryTitleBox,
   StyleBox,
 } from "../../../styles/HistoryScreen/HistoryDesktop";
-import { IconButton } from "@mui/material";
+import { IconButton, useMediaQuery, useTheme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Colors } from "../../../styles/theme";
 import HistoryDialog from "./HistoryDialog";
@@ -67,6 +67,9 @@ function HistoryDesktop() {
     });
   }, []);
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <HistoryContainer>
       <StyleBox>
@@ -80,11 +83,10 @@ function HistoryDesktop() {
               type="date"
               style={{
                 display: !dateInput && "none",
-                width: "120px",
-                padding: "7.5px",
-                marginLeft: "2px",
-                color: Colors.lightOrange,
-                backgroundColor: Colors.grey600,
+                width: matches && "120px",
+                marginLeft: matches && "2px",
+                color: matches ? Colors.lightOrange : Colors.grey600,
+                backgroundColor: matches && Colors.grey600,
                 fontWeight: 600,
               }}
               onChange={dateHandler}

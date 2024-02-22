@@ -1,5 +1,5 @@
 import { Box, Stack, Typography, styled } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import theme, { Colors } from "../theme";
 
 export const NavLeftBox = styled(Box)({
@@ -61,3 +61,18 @@ export const NavLinkImageBoxText = styled(Typography)({
     fontSize: "14px",
   },
 });
+
+export const UpBtn = styled(KeyboardArrowUpIcon, {
+  shouldForwardProp: (prop) => prop !== "visible",
+})(({ theme, visible }) => ({
+  position: "fixed",
+  display: !visible && "none",
+  bottom: "9%",
+  right: "5%",
+  zIndex: 9999,
+  opacity: "70%",
+  width: "45px",
+  height: "45px",
+  backgroundColor: Colors.blue500,
+  borderRadius: "50%",
+}));
