@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import {
+  BackBtnIconButton,
   HistoryBox,
   HistoryContainer,
   HistoryContent,
@@ -10,14 +11,19 @@ import {
   HistoryTitle,
   HistoryTitleBox,
   StyleBox,
+  StyleCancelButton,
 } from "../../../styles/HistoryScreen/HistoryDesktop";
 import { IconButton, useMediaQuery, useTheme } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import { Colors } from "../../../styles/theme";
 import HistoryDialog from "./HistoryDialog";
 import { domain } from "../../../env";
 import axios from "axios";
 import "./css/HistoryDesktop.css";
+import {
+  OrderListContentMsg,
+  StyleSearchIcon,
+} from "../../../styles/OrderScreen";
+import LoadingCircle from "../../../tool/LoadingCircle";
 
 function HistoryDesktop() {
   const [data, setData] = useState([]);
@@ -25,13 +31,17 @@ function HistoryDesktop() {
   const [dateInput, setDateInput] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogData, setDialogData] = useState([]);
+  const [isFilter, setIsFilter] = useState(false);
+  const [filterData, setFilterData] = useState([]);
 
   const dateHandler = (e) => {
-    console.log(e.target.value);
+    setLoading(true);
+    setIsFilter(true);
     axios
       .get(`${domain}/api/filter_history_record?date=${e.target.value}`)
       .then((res) => {
-        console.log(res.data);
+        setFilterData(res.data);
+        setLoading(false);
       });
   };
 
@@ -50,7 +60,8 @@ function HistoryDesktop() {
   };
 
   if (data.length > 0) {
-    var groupedData = data.reduce((acc, item) => {
+    const hData = isFilter ? filterData : data;
+    var groupedData = hData.reduce((acc, item) => {
       const dateTemp = item.start_time.slice(0, 10);
       if (!acc[dateTemp]) {
         acc[dateTemp] = [];
@@ -59,16 +70,23 @@ function HistoryDesktop() {
       return acc;
     }, {});
   }
-  console.log(dialogData);
+
   useEffect(() => {
-    axios.get(`${domain}/api/history_record/`).then((res) => {
-      setData(res.data);
+    try {
+      axios.get(`${domain}/api/history_record/`).then((res) => {
+        setData(res.data);
+        setLoading(false);
+      });
+    } catch (error) {
       setLoading(false);
-    });
+    }
   }, []);
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const removeFilterHandler = () => {
+    setIsFilter(false);
+  };
 
   return (
     <HistoryContainer>
@@ -77,27 +95,32 @@ function HistoryDesktop() {
           <HistoryTitleBox>
             <HistoryTitle>歷史紀錄</HistoryTitle>
             <IconButton onClick={() => setDateInput(!dateInput)}>
-              <SearchIcon />
+              <StyleSearchIcon />
             </IconButton>
             <input
               type="date"
+              className="input-date-orange"
               style={{
                 display: !dateInput && "none",
                 width: matches && "120px",
                 marginLeft: matches && "2px",
-                color: matches ? Colors.lightOrange : Colors.grey600,
-                backgroundColor: matches && Colors.grey600,
+                color: matches ? Colors.lightOrange : Colors.greyTextBlood,
+                backgroundColor: matches && Colors.greyTextBlood,
                 fontWeight: 600,
               }}
               onChange={dateHandler}
             />
           </HistoryTitleBox>
 
-          <HistoryContent className="history-content">
+          <HistoryContent className="history-content" isFilter={isFilter}>
             {loading ? (
-              "asd"
+              <LoadingCircle />
+            ) : data.length === 0 ? (
+              <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
+            ) : filterData.length === 0 && isFilter ? (
+              <OrderListContentMsg variant="h5">查無此資料</OrderListContentMsg>
             ) : (
-              <>
+              <Fragment>
                 {Object.keys(groupedData).map((date, index) => (
                   <Fragment key={index}>
                     <HistoryListDate isFirst={index === 0}>
@@ -125,9 +148,15 @@ function HistoryDesktop() {
                   closeOpen={() => setDialogOpen(false)}
                   data={dialogData}
                 />
-              </>
+              </Fragment>
             )}
           </HistoryContent>
+
+          {isFilter && !loading ? (
+            <BackBtnIconButton onClick={removeFilterHandler}>
+              <StyleCancelButton />
+            </BackBtnIconButton>
+          ) : null}
         </HistoryBox>
       </StyleBox>
     </HistoryContainer>

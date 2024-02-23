@@ -16,6 +16,7 @@ import {
   OrderListContentName,
   OrderListContentSmBox,
   OrderListTitle,
+  OrderListTitleSmText,
   OrderListTitleText,
   RobotSuccessBox,
   RobotSuccessSubTitle,
@@ -225,8 +226,9 @@ function InformationAreaContent({
             <OrderListTitleText width="20%">次序</OrderListTitleText>
             <OrderListTitleText sx={{ flexGrow: 1 }}>名稱</OrderListTitleText>
             {/* <OrderListTitleText width="25%">辨識</OrderListTitleText> */}
-            <OrderListTitleText width="35%">
-              尺寸<span style={{ fontSize: 12 }}>(長寬高)</span>
+            <OrderListTitleText width="32%">
+              尺寸
+              <OrderListTitleSmText>(長寬高)</OrderListTitleSmText>
             </OrderListTitleText>
           </OrderListTitle>
 
@@ -258,7 +260,7 @@ function InformationAreaContent({
                 </OrderListContentSmBox>
 
                 <OrderListContentSmBox
-                  width="35%"
+                  width="32%"
                   sx={{
                     color:
                       realtimeItemCount === index + 1 && Colors.lightOrange,

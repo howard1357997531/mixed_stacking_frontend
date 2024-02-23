@@ -97,6 +97,7 @@ export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
   height: "23px",
   width: "23px",
   fontSize: "13px",
+  fontWeight: 600,
   color: Colors.greenHover,
   backgroundColor: Colors.white,
   [theme.breakpoints.down("md")]: {
@@ -119,7 +120,7 @@ export const MultiOrderName = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "inherit",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
@@ -131,7 +132,7 @@ export const MultiOrderEachCount = styled(Typography)(({ theme }) => ({
   top: "50%",
   right: "15px",
   transform: "translateY(-50%)",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
   [theme.breakpoints.down("md")]: {
     fontSize: 14,

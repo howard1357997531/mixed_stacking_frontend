@@ -118,6 +118,7 @@ function OrderListContentMultipleOrderCreate() {
 
           {groupedData[date].map((order) => (
             <OrderListDetial
+              key={order.id}
               data={[
                 checkItemSelect.includes(order.id),
                 Colors.greenHover,
@@ -179,11 +180,14 @@ function OrderListContentMultipleOrderCreate() {
           ))}
         </Fragment>
       ))}
-      <OrderDetailDialog
-        openDialog={openDialog}
-        onCloseDialog={onCloseDialog}
-        source={"order"}
-      />
+
+      {openDialog ? (
+        <OrderDetailDialog
+          openDialog={openDialog}
+          onCloseDialog={onCloseDialog}
+          source={"order"}
+        />
+      ) : null}
     </>
   );
 }

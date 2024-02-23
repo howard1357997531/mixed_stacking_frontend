@@ -62,7 +62,6 @@ function OrderDetailDialogTabs(props) {
       (order) => order.id === multiOrderId
     );
   }
-  console.log(orderSelectData);
 
   const addProps = { ...props, orderId, orderSelectData };
 

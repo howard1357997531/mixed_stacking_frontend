@@ -207,7 +207,7 @@ export const HomeDescBox = styled(Box)(({ theme }) => ({
 }));
 
 export const DescText = styled(Typography)(({ theme }) => ({
-  color: Colors.grey600,
+  color: Colors.greyTextBlood,
   fontSize: 26,
   fontWeight: 600,
   width: "700px",

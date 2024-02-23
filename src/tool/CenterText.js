@@ -10,7 +10,7 @@ function CenterText({ text }) {
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        color: Colors.greyText,
+        color: Colors.greyTextBlood,
         fontSize: "20px",
         fontWeight: 600,
       }}

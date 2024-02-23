@@ -10,8 +10,6 @@ import {
   OrderListNameSelect,
 } from "../../../styles/OrderScreen";
 import { multipleOrderListSelectAction } from "../../../redux/actions/OrderScreenAction";
-import { Button } from "@mui/material";
-import { ORDER_SCREEN, ORDER_SCREEN_orderList } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 
 function OrderListContentMultipleOrder() {
@@ -59,6 +57,7 @@ function OrderListContentMultipleOrder() {
 
         {groupedData[date].map((order) => (
           <OrderListDetial
+            key={order.id}
             data={[order.id === orderId, Colors.greenHover, Colors.white]}
             onClick={() => multipleOrderHandler(order.id, order.name)}
           >

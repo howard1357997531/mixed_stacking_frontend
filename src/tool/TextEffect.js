@@ -14,7 +14,7 @@ function TextEffect({ text, textColor }) {
     <p
       className={className}
       data-text={text}
-      style={{ color: Colors.greyText }}
+      style={{ color: Colors.greyTextBlood }}
     >
       {text}
     </p>

@@ -119,7 +119,7 @@ export const OperationInterfaceButtonText = styled(Typography)(({ theme }) => ({
   transform: "translate(-50%, -50%)",
   fontSize: "24px",
   fontWeight: 600,
-  color: Colors.greyTextBlood,
+  color: Colors.greyTexts,
   [theme.breakpoints.down("md")]: {
     fontSize: 20,
   },
@@ -293,7 +293,7 @@ export const InformationAreaContentBox = styled(Box, {
   position: "relative",
   width: "80%",
   height: data[1] ? "85%" : "80%",
-  border: `1px ${data[0] ? "solid" : "dashed"} ${Colors.brown}`,
+  border: `1px ${data[0] ? "solid" : "dashed"} ${Colors.greyTextBlood}`,
   [theme.breakpoints.down("sm")]: {
     width: "90%",
     height: data[0] ? "85%" : "80%",
@@ -314,7 +314,7 @@ export const NoSelectOrderText = styled(Typography)(({ theme }) => ({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
   fontSize: "26px",
   [theme.breakpoints.down("sm")]: {
@@ -355,7 +355,7 @@ export const RobotSuccessSubTitle = styled(Typography)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "flex-start",
   height: "50%",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
   fontSize: "14px",
   marginTop: 2,
@@ -369,12 +369,12 @@ export const OrderListTitleButton = styled(Button)(({ theme }) => ({
   padding: "4px 6px 3px",
   fontWeight: 600,
   color: Colors.lightOrange,
-  backgroundColor: Colors.grey600,
+  backgroundColor: Colors.greyTextBlood,
   "&:hover": {
     transition: "scale 0.3s ease-in-out",
     transform: "scale(1.05), translateY(-50%)",
     cursor: "pointer",
-    backgroundColor: Colors.greyText,
+    backgroundColor: Colors.grey900,
   },
   "&:active": {
     transform: "scale(0.95), translateY(-50%)",
@@ -391,12 +391,25 @@ export const OrderListTitle = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "8%",
-  backgroundColor: Colors.grey600,
+  color: Colors.lightOrange,
+  backgroundColor: Colors.greyTextBlood,
 }));
 
 export const OrderListTitleText = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  color: "#fff",
+  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
+}));
+
+export const OrderListTitleSmText = styled(Typography)(({ theme }) => ({
+  display: "inline",
+  fontSize: 12,
+  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 10,
+  },
 }));
 
 export const OrderListContent = styled(Box)(({ theme }) => ({
@@ -422,7 +435,7 @@ export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   height: "100%",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontSize: 16,
   fontWeight: 600,
   [theme.breakpoints.down("md")]: {
@@ -433,11 +446,11 @@ export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
 export const OrderListContentAvatar = styled(Avatar, {
   shouldForwardProp: (prop) => prop !== "count",
 })(({ theme, count }) => ({
-  width: "30px",
-  height: "30px",
+  width: "28px",
+  height: "28px",
   fontSize: "14px",
-  backgroundColor: count ? Colors.lightOrange : Colors.grey600,
-  color: count && Colors.blue500,
+  color: count ? Colors.blue500 : Colors.lightOrange,
+  backgroundColor: count ? Colors.lightOrange : Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
     width: "28px",
     height: "28px",
@@ -447,6 +460,7 @@ export const OrderListContentAvatar = styled(Avatar, {
 
 export const OrderListContentName = styled(Typography)(({ theme }) => ({
   fontSize: 16,
+  fontWeight: 600,
   marginLeft: 5,
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
@@ -486,8 +500,8 @@ export const MultiOrderAvatar = styled(Avatar, {
   height: "23px",
   width: "23px",
   fontSize: "11px",
-  color: isDoing && Colors.blue500,
-  backgroundColor: isDoing ? Colors.lightOrange : Colors.grey600,
+  color: isDoing ? Colors.blue500 : Colors.lightOrange,
+  backgroundColor: isDoing ? Colors.lightOrange : Colors.greyTextBlood,
   [theme.breakpoints.down("lg")]: {
     height: "22px",
     width: "22px",
@@ -517,7 +531,7 @@ export const MultiOrderName = styled(Box, {
   alignItems: "center",
   width: "60%",
   height: "inherit",
-  color: isDoing ? Colors.lightOrange : Colors.greyText,
+  color: isDoing ? Colors.lightOrange : Colors.greyTextBlood,
   fontWeight: 600,
 }));
 

@@ -25,11 +25,11 @@ export const IsTrainingText = styled(Typography)(({ theme }) => ({
 export const DescText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isTitle",
 })(({ theme, isTitle }) => ({
-  color: isTitle ? Colors.lightOrange : Colors.greyText,
+  color: isTitle ? Colors.lightOrange : Colors.greyTextBlood,
   fontWeight: !isTitle && 600,
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
-  backgroundColor: isTitle && Colors.grey600,
+  backgroundColor: isTitle && Colors.greyTextBlood,
   borderRadius: "2px",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
@@ -50,7 +50,7 @@ export const OrderContentTitleBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   paddingRight: "1px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   gap: "2px",
   marginBottom: "2px",
 }));
@@ -64,7 +64,7 @@ export const OrderContentTitleSmBox = styled(Box, {
   width: isName ? "40%" : "15%",
   height: "30px",
   color: Colors.lightOrange,
-  backgroundColor: Colors.grey600,
+  backgroundColor: Colors.greyTextBlood,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
@@ -99,7 +99,7 @@ export const OrderDetailSmBox = styled(Box, {
   alignItems: "center",
   width: isName ? "40%" : "15%",
   height: "100%",
-  color: Colors.grey600,
+  color: Colors.greyTextBlood,
   backgroundColor: isName && Colors.lightOrangeHover,
   fontSize: "18px",
   fontWeight: 600,

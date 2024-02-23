@@ -1,7 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import LoadingCircle from "../../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
-import { OrderListContentMsg } from "../../../../styles/OrderScreen";
+import {
+  OrderListContentMsg,
+  StyleCancelButton,
+  StyleCloseIcon,
+  StyleSearchIcon,
+} from "../../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
 import {
   dialogOrderFilterAction,
@@ -144,7 +149,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
     <OrderDialogBox>
       <OrderDialogSearchBox>
         <IconButton onClick={selectSearchHandler}>
-          <SearchIcon sx={{ color: Colors.greyText }} />
+          <StyleSearchIcon />
         </IconButton>
 
         {selectName ? (
@@ -153,7 +158,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
               width: "170px",
               marginRight: "10px",
               color: Colors.orangeDialog,
-              backgroundColor: Colors.greyText,
+              backgroundColor: Colors.greyTextBlood,
               fontWeight: 600,
             }}
             endAdornment={
@@ -182,12 +187,12 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
         {selectDate ? (
           <input
             type="date"
-            className="orderlist-dialog-input-date"
+            className="input-date-orange"
             style={{
               width: "140px",
               marginRight: "10px",
-              color: matches ? Colors.orangeDialog : Colors.greyText,
-              backgroundColor: matches && Colors.greyText,
+              color: matches ? Colors.orangeDialog : Colors.greyTextBlood,
+              backgroundColor: matches && Colors.greyTextBlood,
               fontWeight: 600,
             }}
             onChange={filterDateHandler}
@@ -199,6 +204,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
             名稱
           </OrderDialogSearchSelect>
         ) : null}
+
         {selectSearchDate ? (
           <OrderDialogSearchSelect onClick={() => selectCondition("date")}>
             日期
@@ -217,7 +223,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
           <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
           {isFilter ? (
             <OrderDialogBackBox onClick={removeFilterHandler}>
-              <CancelIcon />
+              <StyleCancelButton />
             </OrderDialogBackBox>
           ) : null}
         </Fragment>
@@ -246,7 +252,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
 
           {isFilter ? (
             <OrderDialogBackBox onClick={removeFilterHandler}>
-              <CancelIcon />
+              <StyleCancelButton />
             </OrderDialogBackBox>
           ) : null}
         </Fragment>

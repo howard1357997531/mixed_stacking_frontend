@@ -44,7 +44,7 @@ export const OrderDialogSearchSelect = styled(Box)(({ theme }) => ({
   marginRight: "15px",
   padding: "2px 8px",
   color: Colors.orangeDialog,
-  backgroundColor: Colors.greyText,
+  backgroundColor: Colors.greyTextBlood,
   fontSize: "14px",
   fontWeight: 600,
   borderRadius: "10px",
@@ -215,7 +215,7 @@ export const IndexText = styled(Avatar, {
   fontSize: "14px",
   fontWeight: 600,
   color: finish ? Colors.darkGreen : Colors.orangeDialog,
-  backgroundColor: finish ? Colors.green800 : Colors.greyText,
+  backgroundColor: finish ? Colors.green800 : Colors.greyTextBlood,
 }));
 
 export const InsertText = styled(Typography, {
@@ -337,6 +337,7 @@ export const IconButtonHelp = styled(IconButton, {
 
 export const StyleHelpRoundedIcon = styled(HelpRoundedIcon)(({ theme }) => ({
   fontSize: 16,
+  color: Colors.greyTextBlood,
 }));
 
 export const OrderListExeListCheck = styled(CheckCircleIcon)(({ theme }) => ({
@@ -360,7 +361,7 @@ export const OrderListExeListDelete = styled(DisabledByDefaultRoundedIcon)(
     position: "absolute",
     top: "calc(50% - 13px)",
     right: "10px",
-    color: Colors.greyText,
+    color: Colors.greyTextBlood,
     fontSize: "26px",
     "&:hover": {
       cursor: "pointer",
@@ -399,12 +400,12 @@ export const OrderListExeListButton = styled(Box, {
 export const DescText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isTitle",
 })(({ theme, isTitle }) => ({
-  color: isTitle ? Colors.lightOrange : Colors.greyText,
+  color: isTitle ? Colors.lightOrange : Colors.greyTextBlood,
   fontSize: 14,
   fontWeight: !isTitle && 600,
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
-  backgroundColor: isTitle && Colors.greyText,
+  backgroundColor: isTitle && Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
   },
@@ -426,7 +427,7 @@ export const OrderContentTitleBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   paddingRight: "1px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   gap: "2px",
   marginBottom: "2px",
   fontSize: 14,
@@ -441,7 +442,7 @@ export const OrderContentTitleSmBox = styled(Box, {
   width: isName ? "40%" : "15%",
   height: "30px",
   color: Colors.lightOrange,
-  backgroundColor: Colors.greyText,
+  backgroundColor: Colors.greyTextBlood,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
@@ -478,7 +479,7 @@ export const OrderDetailSmBox = styled(Box, {
   width: isName ? "40%" : "15%",
   height: "100%",
   backgroundColor: isName && Colors.orangeDialogHover,
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontSize: "14",
   fontWeight: 600,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",

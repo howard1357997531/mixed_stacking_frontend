@@ -109,17 +109,31 @@ export const orderScreen_orderSelectReducer = (
     case ORDER_SCREEN.selectDelete:
       let orderId = action.payload.selectId;
       let name = action.payload.name;
+      let check = action.payload.check;
       const idArray = state.deleteIdArray.map((order) =>
         parseInt(Object.keys(order).at(0))
       );
-      if (idArray.includes(orderId)) {
-        var deleteIdArray = state.deleteIdArray.filter(
-          (order) => parseInt(Object.keys(order).at(0)) !== orderId
-        );
+
+      if (check) {
+        // 如果在沒有選擇order情況下會點擊刪除，近來會是空的
+        // 如果在有選擇order情況下會點擊刪除會自動加入deleteIdArray,
+        // 若已經在裡面就不動作
+        if (!idArray.includes(orderId)) {
+          var deleteIdArray = [...state.deleteIdArray, { [orderId]: name }];
+        } else {
+          var deleteIdArray = state.deleteIdArray;
+        }
       } else {
-        // [orderId] 可以根據變數的值來動態設定屬性名稱
-        var deleteIdArray = [...state.deleteIdArray, { [orderId]: name }];
+        if (idArray.includes(orderId)) {
+          var deleteIdArray = state.deleteIdArray.filter(
+            (order) => parseInt(Object.keys(order).at(0)) !== orderId
+          );
+        } else {
+          // [orderId] 可以根據變數的值來動態設定屬性名稱
+          var deleteIdArray = [...state.deleteIdArray, { [orderId]: name }];
+        }
       }
+
       return { ...state, deleteIdArray };
 
     case ORDER_SCREEN.orderSelect_reset:

@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import {
   FunctionAreaNavBtn,
   OrderListNavBtn,
+  OrderListNavBtnAiResultText,
   OrderListNavBtnBox,
   OrderListNavBtnText,
   OrderListNavRowBtn,
@@ -87,9 +88,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             src={"aiResult.png"}
             alt={"aiResult.png"}
           />
-          <OrderListNavBtnText sx={{ color: Colors.blue500, fontSize: 14 }}>
-            演算結果
-          </OrderListNavBtnText>
+          <OrderListNavBtnAiResultText>演算結果</OrderListNavBtnAiResultText>
         </OrderListNavBtn>
       ) : null}
 

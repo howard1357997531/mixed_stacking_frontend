@@ -7,8 +7,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import { Colors } from "../../../styles/theme";
 import { Box, useMediaQuery } from "@mui/material";
 import {
   AvatarBox,
@@ -104,7 +102,7 @@ export default function HistoryDialog({ open, closeOpen, data }) {
             position: "absolute",
             right: 8,
             top: 3,
-            color: (theme) => theme.palette.grey[700],
+            color: (theme) => theme.palette.grey[800],
           }}
         >
           <CloseIcon />
@@ -114,40 +112,42 @@ export default function HistoryDialog({ open, closeOpen, data }) {
             執行時間 : {data.start_time.slice(11)} ~ {data.end_time.slice(11)}
           </DescText>
           <DescText>執行工單數量 : {parseCount(data.order_id)} 個</DescText>
-          <DescText isTitle={true}>詳細資訊</DescText>
-          <Box sx={{ height: "300px" }}>
-            <HistoryDetailBox className="dialog-history-detail">
-              {historyData.map((hData, index) => (
-                <HistoryDetailSmBox key={index} isFirst={index === 0}>
-                  {hData.isInsert ? (
-                    <InsertBox>
-                      <InsertSmBox>插</InsertSmBox>
-                      <InsertSmBox>單</InsertSmBox>
-                    </InsertBox>
-                  ) : null}
-                  <AvatarBox>
-                    {hData.index.length > 1 ? (
-                      <>
-                        <StyleAvatar isInsert={hData.isInsert}>
-                          {hData.index.at(0)}
-                        </StyleAvatar>
-                        <AvatarDivider isInsert={hData.isInsert} />
-                        <StyleAvatar isInsert={hData.isInsert}>
-                          {hData.index.at(1)}
-                        </StyleAvatar>
-                      </>
-                    ) : (
+          <Box>
+            <DescText isTitle={true}>詳細資訊</DescText>
+          </Box>
+
+          <HistoryDetailBox className="dialog-history-detail">
+            {historyData.map((hData, index) => (
+              <HistoryDetailSmBox key={index} isFirst={index === 0}>
+                {hData.isInsert ? (
+                  <InsertBox>
+                    <InsertSmBox>插</InsertSmBox>
+                    <InsertSmBox>單</InsertSmBox>
+                  </InsertBox>
+                ) : null}
+
+                <AvatarBox>
+                  {hData.index.length > 1 ? (
+                    <>
                       <StyleAvatar isInsert={hData.isInsert}>
                         {hData.index.at(0)}
                       </StyleAvatar>
-                    )}
-                  </AvatarBox>
+                      <AvatarDivider isInsert={hData.isInsert} />
+                      <StyleAvatar isInsert={hData.isInsert}>
+                        {hData.index.at(1)}
+                      </StyleAvatar>
+                    </>
+                  ) : (
+                    <StyleAvatar isInsert={hData.isInsert}>
+                      {hData.index.at(0)}
+                    </StyleAvatar>
+                  )}
+                </AvatarBox>
 
-                  <NameBox>{hData.name}</NameBox>
-                </HistoryDetailSmBox>
-              ))}
-            </HistoryDetailBox>
-          </Box>
+                <NameBox>{hData.name}</NameBox>
+              </HistoryDetailSmBox>
+            ))}
+          </HistoryDetailBox>
         </StyleDialogContent>
       </BootstrapDialog>
     </React.Fragment>

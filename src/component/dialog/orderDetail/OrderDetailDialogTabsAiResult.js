@@ -29,8 +29,6 @@ function OrderDetailDialogTabsAiResult({ source, orderId, orderSelectData }) {
     var data = orderTemp.order;
   }
 
-  console.log(data);
-
   if (data) {
     var orderData = data;
     var aiResultData = orderData.aiTraining_order.split(",");

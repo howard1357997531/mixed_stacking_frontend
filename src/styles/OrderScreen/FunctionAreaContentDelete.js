@@ -15,7 +15,7 @@ export const DeleteTitle = styled(Box)(({ theme }) => ({
 }));
 
 export const DeleteCount = styled(Typography)(({ theme }) => ({
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   marginRight: "10px",
   padding: "0px 1px",
   fontWeight: 600,
@@ -72,6 +72,6 @@ export const DeleteSelectSmBox = styled(Box, {
 
 export const DeleteOrderName = styled(Box)(({ theme }) => ({
   marginLeft: "20px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
 }));

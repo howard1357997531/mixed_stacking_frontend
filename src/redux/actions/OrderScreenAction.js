@@ -292,7 +292,10 @@ export const orderDeleteSelectAction =
       timerToast("warning", "演算中，不能刪除");
       return;
     }
-    dispatch({ type: ORDER_SCREEN.selectDelete, payload: { selectId, name } });
+    dispatch({
+      type: ORDER_SCREEN.selectDelete,
+      payload: { selectId, name, check: false },
+    });
   };
 
 export const orderDeleteAction = (orderId) => async (dispatch) => {

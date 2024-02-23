@@ -40,7 +40,7 @@ function FunctionAreaNavTitle({ orderSelectMode }) {
             transform: "translate(-50%, -50%)",
             fontSize: matches ? "18px" : "16px",
             fontWeight: 600,
-            color: Colors.greyText,
+            color: Colors.greyTextBlood,
           }}
         >
           {titleName[orderSelectMode]}

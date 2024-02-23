@@ -8,6 +8,10 @@
     100% { transform: scale(1);}
 }
 
-/* .orderlist-input-date::-webkit-calendar-picker-indicator {
+.input-date-orange::-webkit-calendar-picker-indicator {
     filter: invert(1) sepia(100%) saturate(10000%) hue-rotate(300deg); 
-  } */
+}
+
+.input-date-green::-webkit-calendar-picker-indicator {
+    filter: invert(1) sepia(100%) saturate(10000%) hue-rotate(90deg)
+}

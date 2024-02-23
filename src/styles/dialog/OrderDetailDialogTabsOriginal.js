@@ -20,7 +20,7 @@ export const DescText = styled(Typography, {
   fontWeight: 600,
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
-  backgroundColor: isTitle && Colors.greyText,
+  backgroundColor: isTitle && Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
   },
@@ -54,8 +54,7 @@ export const OrderContentTitleSmBox = styled(Box, {
   alignItems: "center",
   width: isName ? "40%" : "15%",
   height: "30px",
-
-  backgroundColor: Colors.greyText,
+  backgroundColor: Colors.greyTextBlood,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   fontWeight: 600,
   [theme.breakpoints.down("md")]: {
@@ -82,7 +81,7 @@ export const OrderDetailBox = styled(Box)(({ theme }) => ({
   height: "40px",
   gap: "2px",
   marginBottom: "3px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
     height: "35px",
   },

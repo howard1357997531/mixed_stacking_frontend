@@ -137,15 +137,12 @@ function FunctionAreaContentMultipleOrderCreate() {
               style={{
                 width: "20px",
                 height: "10px",
-                color: Colors.grey600,
-                border: `1px solid ${Colors.grey600}`,
+                color: Colors.greyText,
+                border: `1px solid ${Colors.greyText}`,
               }}
             ></input>
 
-            <OrderListExeListDelete
-              sx={{ color: Colors.grey600 }}
-              onClick={() => deleteHandler(index)}
-            />
+            <OrderListExeListDelete onClick={() => deleteHandler(index)} />
           </MultiCreateSelectSmBox>
         ))}
       </MultiCreateSelectBox>

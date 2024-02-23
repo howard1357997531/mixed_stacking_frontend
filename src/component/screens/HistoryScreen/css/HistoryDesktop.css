@@ -12,9 +12,14 @@
 }
 
 .dialog-history-detail::-webkit-scrollbar {
-    width: 3px;
+    width: 4px;
 }
 
 .dialog-history-detail::-webkit-scrollbar-thumb {
-    background-color: #616161;
+    background-color: #424242;
+    border-radius: 30px; 
+}
+
+.dialog-history-detail::-webkit-scrollbar-track {
+    background-color: #d0ae81;
 }

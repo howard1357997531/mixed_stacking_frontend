@@ -20,7 +20,7 @@ function InformationAreaTitle({
     alignItems: "center",
     fontWeight: 600,
     fontSize: "20px",
-    color: Colors.greyText,
+    color: Colors.greyTextBlood,
     [theme.breakpoints.down("sm")]: {
       fontSize: 18,
     },

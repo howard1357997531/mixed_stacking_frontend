@@ -117,7 +117,11 @@ function OrderListDialogExecutionListInsert(props) {
                   onMouseLeave={mouseLeaveHandler}
                   onClick={() => confirmHandler(order.id, index)}
                 >
-                  <Typography fontWeight={600}>{order.name}</Typography>
+                  <Typography
+                    sx={{ color: Colors.greyTextBlood, fontWeight: 600 }}
+                  >
+                    {order.name}
+                  </Typography>
 
                   <Tooltip title="詳細資料" placement="left" arrow>
                     <IconButtonHelp

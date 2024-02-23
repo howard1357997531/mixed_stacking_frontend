@@ -29,9 +29,9 @@ export const AiResultImageBackBtn = styled(Button, {
   width: "20%",
   fontWeight: 600,
   color: page ? Colors.greenDialog : Colors.orangeDialog,
-  backgroundColor: Colors.grey600,
+  backgroundColor: Colors.greyTextBlood,
   "&:hover": {
-    backgroundColor: Colors.greyText,
+    backgroundColor: Colors.grey900,
   },
   [theme.breakpoints.down("md")]: {
     padding: "5px 0px 3px",
@@ -45,7 +45,7 @@ export const AiResultImageBtn = styled(Box, {
   marginLeft: "10px",
   padding: "3px 6px",
   fontSize: "14px",
-  color: page ? Colors.greyText : Colors.orangeDialog,
+  color: page ? Colors.greyTextBlood : Colors.orangeDialog,
   backgroundColor: page ? Colors.greenDialogHover : Colors.blue500,
   borderRadius: "10px",
   "&:hover": {
@@ -67,11 +67,11 @@ export const DescTextBox = styled(Box)(({ theme }) => ({
 export const DescText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isTitle",
 })(({ theme, isTitle }) => ({
-  color: isTitle ? Colors.greenDialog : Colors.greyText,
+  color: isTitle ? Colors.greenDialog : Colors.greyTextBlood,
   fontWeight: !isTitle && 600,
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
-  backgroundColor: isTitle && Colors.greyText,
+  backgroundColor: isTitle && Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
   },
@@ -85,7 +85,7 @@ export const AiResultBox = styled(Box)(({ theme }) => ({
 
 export const AiResultIndex = styled(Typography)(({ theme }) => ({
   marginBottom: "5px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fomtSize: 18,
   fontWeight: 600,
 }));
@@ -134,6 +134,7 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   width: "30px",
   height: "30px",
   fontSize: "14px",
+  fontWeight: 600,
   color: "#fff",
   [theme.breakpoints.down("md")]: {
     width: "25px",
@@ -145,7 +146,7 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
 export const AiResultText = styled(Typography)(({ theme }) => ({
   flexGrow: 1,
   textAlign: "center",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontSize: 18,
   fontWeight: 600,
   [theme.breakpoints.down("md")]: {

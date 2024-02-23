@@ -82,6 +82,7 @@ export const MultiCreateAvatar = styled(Avatar)(({ theme }) => ({
   height: "23px",
   width: "23px",
   fontSize: "13px",
+  fontWeight: 600,
   color: Colors.greenHover,
   backgroundColor: Colors.white,
   [theme.breakpoints.down("md")]: {

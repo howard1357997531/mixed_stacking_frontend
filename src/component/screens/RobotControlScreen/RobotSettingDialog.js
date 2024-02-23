@@ -93,7 +93,7 @@ function RobotSettingDialog({
       transform: "scale(0.9)",
     },
   }));
-  const StylePauseButton = styled(Box)(({ theme, pause, customColor }) => ({
+  const StylePauseButton = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -271,7 +271,6 @@ function RobotSettingDialog({
             <StyleSpeedSmallRightBox>
               <StyleSpeedPlusMinusBox
                 className="speed-box"
-                customColor={pink[200]}
                 display={speed >= 100 ? "none" : "block"}
                 onClick={() => robotSettingHandler("speedUp")}
               >

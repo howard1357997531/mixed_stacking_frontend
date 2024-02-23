@@ -42,7 +42,7 @@ export const BufferBox = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   width: "50%",
   height: "100%",
-  border: `1px solid ${Colors.greyText}`,
+  border: `1px solid ${Colors.greyTextBlood}`,
 }));
 
 export const BufferTitle = styled(Typography)(({ theme }) => ({
@@ -53,7 +53,7 @@ export const BufferTitle = styled(Typography)(({ theme }) => ({
   width: "100%",
   height: "10%",
   color: Colors.darkPink,
-  backgroundColor: Colors.greyText,
+  backgroundColor: Colors.greyTextBlood,
   fontWight: 600,
   borderBottom: `1px solid ${Colors.greyTextBlood}`,
   [theme.breakpoints.down("sm")]: {
@@ -92,16 +92,16 @@ export const BufferInfoSmBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "50%",
   height: "100%",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontSize: "16px",
   fontWeight: 600,
 }));
 
 export const BufferInfoText = styled(Box)(({ theme }) => ({
   // backgroundColor: Colors.greyText,
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   padding: "5px 10px",
-  border: `2px solid ${Colors.greyText}`,
+  border: `2px solid ${Colors.greyTextBlood}`,
   borderRadius: "5px",
   [theme.breakpoints.down("sm")]: {
     padding: "4px 8px",

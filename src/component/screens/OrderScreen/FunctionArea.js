@@ -9,6 +9,8 @@ import {
   FunctionAreaBox,
   FunctionAreaNav,
   OrderListContentMsg,
+  StyleChevronLeftIcon,
+  StyleCloseIcon,
 } from "../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
@@ -112,9 +114,9 @@ function FunctionArea(props) {
               {["edit", "delete", "multipleOrderCreate"].includes(
                 orderSelectMode
               ) ? (
-                <ChevronLeftIcon />
+                <StyleChevronLeftIcon />
               ) : (
-                <CloseIcon />
+                <StyleCloseIcon />
               )}
             </CloseIconButton>
 

@@ -13,6 +13,8 @@ import {
   OrderSwitchBox,
   OrderSwitchBtn,
   SearchSelect,
+  StyleCancelButton,
+  StyleSearchIcon,
 } from "../../../styles/OrderScreen";
 import {
   IconButton,
@@ -27,6 +29,7 @@ import OrderListContent from "./OrderListContent";
 import { useDispatch, useSelector } from "react-redux";
 import {
   functionAreaModeAction,
+  orderDeleteSelectAction,
   orderEditSelectAction,
   orderlistFilterAction,
   removeFilterAction,
@@ -34,12 +37,6 @@ import {
 import { ORDER_LIST, ORDER_SCREEN } from "../../../redux/constants";
 import { Colors } from "../../../styles/theme";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import SearchIcon from "@mui/icons-material/Search";
-import CancelIcon from "@mui/icons-material/Cancel";
-import {
-  multipleOrderListAction,
-  orderListAction,
-} from "../../../redux/actions/OrderActions";
 import aos from "aos";
 import "./css/OrderList.css";
 
@@ -191,6 +188,16 @@ function OrderList(props) {
         dispatch(orderEditSelectAction(orderId, orderListData));
       }
     }
+
+    if (mode === "delete") {
+      const [orderName] = orderListData.filter((order) => order.id === orderId);
+      if (orderId) {
+        dispatch({
+          type: ORDER_SCREEN.selectDelete,
+          payload: { selectId: orderId, name: orderName.name, check: true },
+        });
+      }
+    }
   };
   // upload
   const [open, setOpen] = useState(false);
@@ -208,12 +215,18 @@ function OrderList(props) {
   )
     ? "multi-order-list"
     : "order-list";
+
+  const dateClassName = ["multipleOrder", "multipleOrderCreate"].includes(
+    orderSelectMode
+  )
+    ? "input-date-green"
+    : "input-date-orange";
   return (
     <OrderListBox mode={colorMode}>
       <OrderSwitchBox>
         <OrderSwitchBtn onClick={() => orderSwitchHandler("orderDetail")}>
           <img
-            style={{ width: "24px", height: "15px", marginRight: "2px" }}
+            style={{ width: "24px", height: "15px", marginRight: "4px" }}
             src="order.png"
             alt="order.png"
           />
@@ -224,7 +237,7 @@ function OrderList(props) {
           onClick={() => orderSwitchHandler("multipleOrder")}
         >
           <img
-            style={{ width: "24px", height: "15px", marginRight: "2px" }}
+            style={{ width: "24px", height: "15px", marginRight: "4px" }}
             src="combineOrder.png"
             alt="combineOrder.png"
           />
@@ -235,14 +248,14 @@ function OrderList(props) {
       <OrderListNav>
         <OrderListSearch>
           <IconButton onClick={selectSearchHandler}>
-            <SearchIcon sx={{ color: Colors.greyText }} />
+            <StyleSearchIcon />
           </IconButton>
           {selectName ? (
             <Input
               sx={{
                 width: "170px",
                 color: colorMode ? Colors.green : Colors.lightOrange,
-                backgroundColor: Colors.grey600,
+                backgroundColor: Colors.greyTextBlood,
                 fontWeight: 600,
                 [theme.breakpoints.down("lg")]: {
                   width: "140px",
@@ -278,15 +291,15 @@ function OrderList(props) {
           {selectDate ? (
             <input
               type="date"
-              className="orderlist-input-date"
+              className={dateClassName}
               style={{
                 width: matches_lg ? "150px" : matches_md ? "120px" : "160px",
                 color: matches
                   ? colorMode
                     ? Colors.green
                     : Colors.lightOrange
-                  : Colors.greyText,
-                backgroundColor: matches && Colors.grey600,
+                  : Colors.greyTextBlood,
+                backgroundColor: matches && Colors.greyTextBlood,
                 fontWeight: 600,
               }}
               onChange={filterDateHandler}
@@ -478,7 +491,7 @@ function OrderList(props) {
 
       {isFilter && !orderListLoading && !multipleOrderListLoading ? (
         <BackBtnIconButton onClick={removeFilterHandler}>
-          <CancelIcon />
+          <StyleCancelButton />
         </BackBtnIconButton>
       ) : null}
 

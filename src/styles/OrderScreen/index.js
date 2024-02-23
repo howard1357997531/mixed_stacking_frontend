@@ -3,18 +3,19 @@ import {
   Box,
   Button,
   IconButton,
-  Stack,
   Typography,
   styled,
 } from "@mui/material";
 import { Colors } from "../theme";
-import { blueGrey, brown, deepPurple, grey, red } from "@mui/material/colors";
 import {
   OrderListExeListWaitToExecuteAnimation,
   aiTrainingBtnAnimation,
 } from "../../animation";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export const OrderContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -95,7 +96,7 @@ export const OrderSwitchBtn = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   padding: "5px 10px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   background: Colors.lightOrange,
   fontSize: 14,
   fontWeight: 600,
@@ -135,6 +136,13 @@ export const OrderListSearch = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
+export const StyleSearchIcon = styled(SearchIcon)(({ theme }) => ({
+  color: Colors.greyTextBlood,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.2rem",
+  },
+}));
+
 export const SearchSelect = styled(Box, {
   shouldForwardProp: (prop) => prop !== "mode",
 })(({ theme, mode }) => ({
@@ -145,14 +153,14 @@ export const SearchSelect = styled(Box, {
   padding: "0px 8px",
   height: "50%",
   color: mode ? Colors.green : Colors.lightOrange,
-  backgroundColor: Colors.grey600,
+  backgroundColor: Colors.greyTextBlood,
   fontSize: "14px",
   fontWeight: 600,
   borderRadius: "10px",
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     cursor: "pointer",
-    backgroundColor: Colors.greyText,
+    backgroundColor: Colors.greyTextBlood,
   },
   [theme.breakpoints.down("sm")]: {
     padding: "0px 8px",
@@ -219,7 +227,16 @@ export const OrderListNavBtnText = styled(Typography)(({ theme }) => ({
   fontSize: 14,
   fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
-    fontSize: 13,
+    fontSize: 12,
+  },
+}));
+
+export const OrderListNavBtnAiResultText = styled(Typography)(({ theme }) => ({
+  color: Colors.blue500,
+  fontSize: 14,
+  fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 10,
   },
 }));
 
@@ -277,21 +294,27 @@ export const OrderListContentMsg = styled(Typography)(({ theme }) => ({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 20,
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 18,
+  },
 }));
 
 export const OrderListContentBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isFilter",
 })(({ theme, isFilter }) => ({
+  boxSizing: "border-box",
   position: "relative",
   width: "100%",
   // height: isFilter ? "87%" : "92%",
   height: isFilter ? "calc(93% - 45px)" : "calc(100% - 45px)",
-  overflowY: "auto",
-  boxSizing: "border-box",
   paddingLeft: "3px",
   paddingRight: "6px",
+  overflowY: "auto",
 }));
 
 export const BackBtnBox = styled(Box)(({ theme }) => ({
@@ -307,13 +330,21 @@ export const BackBtnIconButton = styled(IconButton)(({ theme }) => ({
   transform: "translateX(-50%)",
 }));
 
+export const StyleCancelButton = styled(CancelIcon)(({ theme }) => ({
+  color: Colors.greyTextBlood,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.6rem",
+  },
+}));
+
 export const OrderListDate = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isFirst",
 })(({ theme, isFirst }) => ({
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   marginTop: isFirst ? "0px" : "8px",
   marginBottom: "5px",
   padding: "0px 1px",
+  fontWeight: 600,
   [theme.breakpoints.down("md")]: {
     fontSize: "14px",
   },
@@ -329,7 +360,7 @@ export const OrderListDetial = styled(Box, {
   height: "55px",
   marginBottom: "7px",
   padding: "0px 10px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
   backgroundColor: data[1],
   border: data[0] ? `2px solid ${data[2]}` : "none",
@@ -358,7 +389,6 @@ export const OrderListName = styled(Box)(({ theme }) => ({
   justifyContent: "left",
   alignItems: "center",
   height: "100%",
-  color: Colors.greyText,
 }));
 
 export const NewText = styled(Typography)(({ theme }) => ({
@@ -373,11 +403,13 @@ export const OrderListNameSelect = styled(Box, {
   shouldForwardProp: (prop) => prop !== "itemSelect",
 })(({ theme, itemSelect }) => ({
   marginRight: "10px",
-  width: "15px",
-  height: "15px",
+  width: "13px",
+  height: "13px",
   backgroundColor: itemSelect && Colors.blue500,
   borderRadius: "50%",
-  border: `1px solid ${Colors.brown200}`,
+  border: itemSelect
+    ? `1px solid ${Colors.blue500}`
+    : `1px solid ${Colors.greyTextBlood}`,
 }));
 
 export const OrderListState = styled(Box)(({ theme }) => ({
@@ -536,6 +568,20 @@ export const CloseIconButton = styled(IconButton)(({ theme }) => ({
   left: 0,
 }));
 
+export const StyleChevronLeftIcon = styled(ChevronLeftIcon)(({ theme }) => ({
+  color: Colors.greyTextBlood,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.2rem",
+  },
+}));
+
+export const StyleCloseIcon = styled(CloseIcon)(({ theme }) => ({
+  color: Colors.greyTextBlood,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.2rem",
+  },
+}));
+
 export const FunctionAreaNavBtn = styled(Button, {
   shouldForwardProp: (prop) => prop !== "colorData",
 })(({ theme, colorData }) => ({
@@ -617,9 +663,9 @@ export const AiResultImageBox = styled(Box)(({ theme }) => ({
 export const AiResultImageBackBtn = styled(Button)(({ theme }) => ({
   marginTop: "30px",
   width: "20%",
-  backgroundColor: Colors.grey600,
+  backgroundColor: Colors.greyText,
   "&:hover": {
-    backgroundColor: Colors.greyText,
+    backgroundColor: Colors.greyTextBlood,
   },
 }));
 
@@ -692,6 +738,7 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   width: "30px",
   height: "30px",
   fontSize: "14px",
+  fontWeight: 600,
   color: "#fff",
   [theme.breakpoints.down("md")]: {
     width: "25px",

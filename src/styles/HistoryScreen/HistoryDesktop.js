@@ -3,10 +3,12 @@ import {
   Box,
   DialogContent,
   DialogTitle,
+  IconButton,
   Typography,
   styled,
 } from "@mui/material";
 import { Colors } from "../theme";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export const HistoryContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -39,10 +41,9 @@ export const StyleBox = styled(Box)(({ theme }) => ({
 
 export const HistoryBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
+  position: "relative",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
   width: "48%",
   height: "90%",
   padding: "5px 20px 20px",
@@ -69,7 +70,7 @@ export const HistoryTitleBox = styled(Box)(({ theme }) => ({
 }));
 
 export const HistoryTitle = styled(Typography)(({ theme }) => ({
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontSize: 20,
   fontWeight: 600,
   marginRight: "5px",
@@ -78,10 +79,13 @@ export const HistoryTitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
-export const HistoryContent = styled(Box)(({ theme }) => ({
+export const HistoryContent = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isFilter",
+})(({ theme, isFilter }) => ({
   boxSizing: "border-box",
+  position: "relative",
   width: "100%",
-  height: "90%",
+  height: isFilter ? "calc(93% - 45px)" : "calc(100% - 45px)",
   paddingLeft: "3px",
   paddingRight: "6px",
   overflowY: "auto",
@@ -90,10 +94,11 @@ export const HistoryContent = styled(Box)(({ theme }) => ({
 export const HistoryListDate = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isFirst",
 })(({ theme, isFirst }) => ({
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   marginTop: isFirst ? "0px" : "8px",
   marginBottom: "5px",
   padding: "0px 1px",
+  fontWeight: 600,
   [theme.breakpoints.down("md")]: {
     fontSize: "14px",
   },
@@ -106,10 +111,10 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "55px",
-  marginBottom: "5px",
+  marginBottom: "7px",
   paddingLeft: "15px",
   paddingRight: "10px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
   backgroundColor: Colors.lightOrangeHover,
   boxShadow: "1px 1px rgba(0, 0, 0, 0.2)",
@@ -130,7 +135,7 @@ export const HistoryName = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "left",
   alignItems: "center",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
 }));
 
 export const HistoryTime = styled(Box)(({ theme }) => ({
@@ -138,51 +143,59 @@ export const HistoryTime = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "left",
   alignItems: "center",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
 }));
 
 // dialog
 export const StyleDialogTitle = styled(DialogTitle)(({ theme }) => ({
   boxSizing: "border-box",
-  width: "500px",
+  width: "100%",
   padding: "8px 15px 5px",
   fontSize: 18,
-  color: Colors.greyText,
+  fontWeight: 600,
+  color: Colors.greyTextBlood,
   backgroundColor: Colors.lightOrangeHover,
   textAlign: "center",
   [theme.breakpoints.down("md")]: {
-    width: "80vw",
+    fontSize: 16,
   },
 }));
 
 export const StyleDialogContent = styled(DialogContent)(({ theme }) => ({
   boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
   width: "500px",
+  height: "65vh",
   padding: "5px 16px 10px !important",
   backgroundColor: Colors.lightOrangeHover,
   [theme.breakpoints.down("md")]: {
     width: "80vw",
+    // height: "65vh",
   },
 }));
 
 export const DescText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isTitle",
 })(({ theme, isTitle }) => ({
-  display: isTitle && "inline-block",
+  display: isTitle && "inline-flex",
   padding: isTitle && "0px 5px",
   marginBottom: isTitle && "4px",
-  color: isTitle ? Colors.lightOrangeHover : Colors.greyText,
-  backgroundColor: isTitle && Colors.greyText,
+  color: isTitle ? Colors.lightOrangeHover : Colors.greyTextBlood,
+  backgroundColor: isTitle && Colors.greyTextBlood,
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
 }));
 
 export const HistoryDetailBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
+  flex: 1,
   width: "100%",
-  maxHeight: "300px",
   overflow: "auto",
-  border: `1px solid ${Colors.greyText}`,
-  // borderBottom: `1px solid ${Colors.greyText}`,
+  border: `1px solid ${Colors.greyTextBlood}`,
+  // borderBottom: `1px solid ${Colors.greyTextBlood}`,
 }));
 
 export const HistoryDetailSmBox = styled(Box, {
@@ -193,8 +206,10 @@ export const HistoryDetailSmBox = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "50px",
-  borderTop: !isFirst && `1px solid ${Colors.greyText}`,
-  borderRight: `1px solid ${Colors.greyText}`,
+  borderBottom: `1px solid ${Colors.greyTextBlood}`,
+  [theme.breakpoints.down("sm")]: {
+    height: "45px",
+  },
 }));
 
 export const InsertBox = styled(Box)(({ theme }) => ({
@@ -207,7 +222,7 @@ export const InsertBox = styled(Box)(({ theme }) => ({
   height: "100%",
   color: Colors.lightOrange,
   backgroundColor: Colors.blue500,
-  borderRight: `1px solid ${Colors.greyText}`,
+  borderRight: `1px solid ${Colors.greyTextBlood}`,
   fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
     width: "8%",
@@ -221,6 +236,9 @@ export const InsertSmBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "40%",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12,
+  },
 }));
 
 export const AvatarBox = styled(Box)(({ theme }) => ({
@@ -228,11 +246,11 @@ export const AvatarBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "30%",
+  width: "25%",
   height: "100%",
-  borderRight: `1px solid ${Colors.greyText}`,
+  borderRight: `1px solid ${Colors.greyTextBlood}`,
   [theme.breakpoints.down("sm")]: {
-    width: "40%",
+    width: "27%",
   },
 }));
 
@@ -242,8 +260,14 @@ export const StyleAvatar = styled(Avatar, {
   width: "25px",
   height: "25px",
   fontSize: 12,
+  fontWeight: 600,
   color: Colors.lightOrangeHover,
-  backgroundColor: isInsert ? Colors.blue500 : Colors.greyText,
+  backgroundColor: isInsert ? Colors.blue500 : Colors.greyTextBlood,
+  [theme.breakpoints.down("md")]: {
+    width: "20px",
+    height: "20px",
+    fontSize: 11,
+  },
 }));
 
 export const AvatarDivider = styled(Box, {
@@ -252,14 +276,31 @@ export const AvatarDivider = styled(Box, {
   width: "6px",
   height: "2px",
   margin: "0px 4px",
-  backgroundColor: isInsert ? Colors.blue500 : Colors.greyText,
+  backgroundColor: isInsert ? Colors.blue500 : Colors.greyTextBlood,
 }));
 
-export const NameBox = styled(Box)({
+export const NameBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexGrow: 1,
   justifyContent: "center",
   alignItems: "center",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontWeight: 600,
-});
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
+}));
+
+export const BackBtnIconButton = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  bottom: "8px",
+  left: "50%",
+  transform: "translateX(-50%)",
+}));
+
+export const StyleCancelButton = styled(CancelIcon)(({ theme }) => ({
+  color: Colors.greyTextBlood,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.6rem",
+  },
+}));

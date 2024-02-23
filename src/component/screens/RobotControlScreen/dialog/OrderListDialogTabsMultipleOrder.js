@@ -17,13 +17,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import CancelIcon from "@mui/icons-material/Cancel";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 import LoadingCircle from "../../../../tool/LoadingCircle";
 import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
-import { OrderListContentMsg } from "../../../../styles/OrderScreen";
+import {
+  OrderListContentMsg,
+  StyleCancelButton,
+  StyleSearchIcon,
+} from "../../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "../../../../styles/theme";
 import { multipleOrderlistSelectAction } from "../../../../redux/actions/RobotControlScreenAction";
@@ -142,7 +144,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
     <OrderDialogBox>
       <OrderDialogSearchBox>
         <IconButton onClick={selectSearchHandler}>
-          <SearchIcon sx={{ color: Colors.greyText }} />
+          <StyleSearchIcon />
         </IconButton>
 
         {selectName ? (
@@ -150,8 +152,8 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
             sx={{
               width: "170px",
               marginRight: "10px",
-              color: Colors.brown,
-              backgroundColor: Colors.greyText,
+              color: Colors.orangeDialog,
+              backgroundColor: Colors.greyTextBlood,
               fontWeight: 600,
             }}
             endAdornment={
@@ -180,12 +182,12 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
         {selectDate ? (
           <input
             type="date"
-            className="orderlist-dialog-input-date"
+            className="input-date-orange"
             style={{
               width: "140px",
               marginRight: "10px",
-              color: matches ? Colors.orangeDialog : Colors.greyText,
-              backgroundColor: matches && Colors.greyText,
+              color: matches ? Colors.orangeDialog : Colors.greyTextBlood,
+              backgroundColor: matches && Colors.greyTextBlood,
               fontWeight: 600,
             }}
             onChange={filterDateHandler}
@@ -216,7 +218,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
           <OrderListContentMsg variant="h5">尚無資料</OrderListContentMsg>
           {isFilter ? (
             <OrderDialogBackBox onClick={removeFilterHandler}>
-              <CancelIcon />
+              <StyleCancelButton />
             </OrderDialogBackBox>
           ) : null}
         </Fragment>
@@ -245,7 +247,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
 
           {isFilter ? (
             <OrderDialogBackBox onClick={removeFilterHandler}>
-              <CancelIcon />
+              <StyleCancelButton />
             </OrderDialogBackBox>
           ) : null}
         </Fragment>

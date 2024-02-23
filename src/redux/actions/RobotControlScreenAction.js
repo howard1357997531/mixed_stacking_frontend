@@ -183,7 +183,11 @@ export const executeRobotAction =
       const month = monthTemp >= 10 ? monthTemp : `0${monthTemp}`;
       const day =
         parseInt(date.getDate()) >= 10 ? date.getDate() : `0${date.getDate()}`;
-      const dateInfo = `${date.getFullYear()}/${month}/${day} ${date.getHours()}:${date.getMinutes()}`;
+      const minute =
+        parseInt(date.getMinutes()) >= 10
+          ? date.getMinutes()
+          : `0${date.getMinutes()}`;
+      const dateInfo = `${date.getFullYear()}/${month}/${day} ${date.getHours()}:${minute}`;
 
       dispatch({
         type: ROBOT_CONTROL_SCREEN.robotExecutionList,
