@@ -239,7 +239,7 @@ function App() {
           path="/control-robot-socket"
           element={<ControlRobotScreen_socket />}
         />
-        <Route path="demo1-select-item" element={<Demo1SelectItemsScreen />} />
+        <Route path="/demo1-select-item" element={<Demo1SelectItemsScreen />} />
         <Route path="/history" element={<HistoryScreen />} />
       </Routes>
     </Router>

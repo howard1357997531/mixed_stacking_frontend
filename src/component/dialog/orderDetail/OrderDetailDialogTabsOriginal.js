@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  DescRectText,
   DescText,
   DescTextBox,
   OrderBox,
@@ -25,10 +26,6 @@ function OrderDetailDialogTabsOriginal({ source, orderId, orderSelectData }) {
       );
       var orderData = orderTemp.order;
     }
-    var modifiyText =
-      orderData.modifiedAt === orderData.createdAt
-        ? "尚未修改過"
-        : orderData.modifiedAt;
   }
 
   const page = window.location.pathname === "/order";
@@ -55,12 +52,11 @@ function OrderDetailDialogTabsOriginal({ source, orderId, orderSelectData }) {
       ))}
 
       <DescTextBox sx={{ justifyContent: "space-between" }}>
-        <DescText
-          isTitle={true}
+        <DescRectText
           sx={{ color: page ? Colors.greenDialog : Colors.orangeDialog }}
         >
           詳細資訊
-        </DescText>
+        </DescRectText>
         <DescText>
           數量: {orderData.aiTraining_order.split(",").length}
         </DescText>

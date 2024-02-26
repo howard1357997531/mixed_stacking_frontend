@@ -63,6 +63,7 @@ export const ORDER_SCREEN = {
   orderSelect: "ORDER_SCREEN_orderSelect",
   orderSelectData: "ORDER_SCREEN_orderSelectData",
   multiOrderCreateSelectData: "ORDER_SCREEN_multiOrderCreateSelectData",
+  multiOrderCreateSwitch: "ORDER_SCREEN_multiOrderCreateSwitch",
   afterTrainingCheck: "ORDER_SCREEN_afterTrainingCheck",
   finishTrainingEdit: "ORDER_SCREEN_finishTrainingEdit",
   selectDelete: "ORDER_SCREEN_selectDelete",

@@ -127,21 +127,17 @@ export default function HistoryDialog({ open, closeOpen, data }) {
                 ) : null}
 
                 <AvatarBox>
+                  <StyleAvatar isInsert={hData.isInsert}>
+                    {hData.index.at(0)}
+                  </StyleAvatar>
                   {hData.index.length > 1 ? (
                     <>
-                      <StyleAvatar isInsert={hData.isInsert}>
-                        {hData.index.at(0)}
-                      </StyleAvatar>
                       <AvatarDivider isInsert={hData.isInsert} />
                       <StyleAvatar isInsert={hData.isInsert}>
                         {hData.index.at(1)}
                       </StyleAvatar>
                     </>
-                  ) : (
-                    <StyleAvatar isInsert={hData.isInsert}>
-                      {hData.index.at(0)}
-                    </StyleAvatar>
-                  )}
+                  ) : null}
                 </AvatarBox>
 
                 <NameBox>{hData.name}</NameBox>

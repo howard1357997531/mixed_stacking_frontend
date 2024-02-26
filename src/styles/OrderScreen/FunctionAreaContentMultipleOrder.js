@@ -96,10 +96,10 @@ export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
 export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
   height: "23px",
   width: "23px",
-  fontSize: "13px",
+  fontSize: "12px",
   fontWeight: 600,
   color: Colors.greenHover,
-  backgroundColor: Colors.white,
+  backgroundColor: Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
     height: "21px",
     width: "21px",
@@ -109,9 +109,9 @@ export const MultiOrderAvatar = styled(Avatar)(({ theme }) => ({
 
 export const AvatarDivider = styled(Box)(({ theme }) => ({
   height: "2px",
-  width: "10px",
+  width: "8px",
   margin: "0px 3px",
-  backgroundColor: Colors.white,
+  backgroundColor: Colors.greyTextBlood,
 }));
 
 export const MultiOrderName = styled(Box)(({ theme }) => ({

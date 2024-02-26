@@ -295,8 +295,7 @@ export const InformationAreaContentBox = styled(Box, {
   height: data[1] ? "85%" : "80%",
   border: `1px ${data[0] ? "solid" : "dashed"} ${Colors.greyTextBlood}`,
   [theme.breakpoints.down("sm")]: {
-    width: "90%",
-    height: data[0] ? "85%" : "80%",
+    width: "83%",
   },
 }));
 
@@ -487,6 +486,22 @@ export const MultiOrderDetailSmBox = styled(Box, {
   },
 }));
 
+export const MultiOrderInsertBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isDoing",
+})(({ theme, isDoing }) => ({
+  marginRight: "8px",
+  padding: "3px 6px",
+  fontSize: 14,
+  color: isDoing ? Colors.blue500 : Colors.lightOrange,
+  backgroundColor: isDoing ? Colors.lightOrange : Colors.blue500,
+
+  borderRadius: "2px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "2px 3px",
+    fontSize: 12,
+  },
+}));
+
 export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
@@ -507,9 +522,14 @@ export const MultiOrderAvatar = styled(Avatar, {
     width: "22px",
     fontSize: "10px",
   },
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     height: "20px",
     width: "20px",
+    fontSize: "9px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "18px",
+    width: "18px",
     fontSize: "9px",
   },
 }));
@@ -521,6 +541,9 @@ export const AvatarDivider = styled(Box, {
   width: "7px",
   margin: "0px 2px",
   backgroundColor: isDoing ? Colors.lightOrange : Colors.greyText,
+  [theme.breakpoints.down("sm")]: {
+    width: "4px",
+  },
 }));
 
 export const MultiOrderName = styled(Box, {
@@ -533,6 +556,9 @@ export const MultiOrderName = styled(Box, {
   height: "inherit",
   color: isDoing ? Colors.lightOrange : Colors.greyTextBlood,
   fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+  },
 }));
 
 export const MultipleOrderInfo = styled(Box)(({ theme }) => ({

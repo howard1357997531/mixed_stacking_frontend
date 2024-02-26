@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   AvatarDivider,
+  DownIcon,
   MultiCreateAvatar,
   MultiCreateAvatarBox,
   MultiCreateBox,
@@ -9,7 +10,10 @@ import {
   MultiCreateResetBtn,
   MultiCreateSelectBox,
   MultiCreateSelectSmBox,
+  MultiCreateSwitchBox,
   MultiCreateTitle,
+  SwitchBox,
+  UpIcon,
 } from "../../../styles/OrderScreen/FunctionAreaContentMultipleOrderCreate";
 import { OrderListExeListDelete } from "../../../styles/RobotControlScreen/dialog";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,6 +60,13 @@ function FunctionAreaContentMultipleOrderCreate() {
     return count.reduce((acc, crr) => acc + crr);
   };
 
+  const switchBtnHandler = (index, state) => {
+    dispatch({
+      type: ORDER_SCREEN.multiOrderCreateSwitch,
+      payload: { index, state },
+    });
+  };
+
   const inputChangeHandler = (e, index) => {
     if (e.target.value !== "") {
       const num = parseInt(e.target.value) > 0 ? e.target.value : "1";
@@ -86,7 +97,9 @@ function FunctionAreaContentMultipleOrderCreate() {
   };
 
   const deleteHandler = (index) => {
-    dispatch(multipleOrderCreateDeleteAction(index, combineOrder));
+    dispatch(
+      multipleOrderCreateDeleteAction(index, combineOrder, combineOrderName)
+    );
   };
 
   const inputFocusRef = useRef(null);
@@ -108,7 +121,16 @@ function FunctionAreaContentMultipleOrderCreate() {
       <MultiCreateSelectBox className="multi-create-select-box">
         {combineOrder.map((order, index) => (
           <MultiCreateSelectSmBox key={index}>
-            <MultiCreateAvatarBox>
+            <MultiCreateSwitchBox>
+              <SwitchBox show={index !== 0}>
+                <UpIcon onClick={() => switchBtnHandler(index, "up")} />
+              </SwitchBox>
+              <SwitchBox show={index !== combineOrder.length - 1}>
+                <DownIcon onClick={() => switchBtnHandler(index, "down")} />
+              </SwitchBox>
+            </MultiCreateSwitchBox>
+
+            <MultiCreateAvatarBox show={combineOrder.length !== 1}>
               <MultiCreateAvatar>{parseIndex(index)}</MultiCreateAvatar>
               {order.includes("*") ? (
                 <>
@@ -137,12 +159,15 @@ function FunctionAreaContentMultipleOrderCreate() {
               style={{
                 width: "20px",
                 height: "10px",
-                color: Colors.greyText,
-                border: `1px solid ${Colors.greyText}`,
+                color: Colors.greyTextBlood,
+                border: `1px solid ${Colors.greyTextBlood}`,
               }}
             ></input>
 
-            <OrderListExeListDelete onClick={() => deleteHandler(index)} />
+            <OrderListExeListDelete
+              sx={{ right: "6px" }}
+              onClick={() => deleteHandler(index)}
+            />
           </MultiCreateSelectSmBox>
         ))}
       </MultiCreateSelectBox>

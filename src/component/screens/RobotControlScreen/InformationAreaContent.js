@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   AvatarDivider,
   InformationAreaContentBox,
@@ -6,6 +6,7 @@ import {
   MultiOrderAvatarBox,
   MultiOrderDetailBox,
   MultiOrderDetailSmBox,
+  MultiOrderInsertBox,
   MultiOrderName,
   MultipleOrderInfo,
   NoSelectOrderText,
@@ -32,6 +33,11 @@ import WarningIcon from "@mui/icons-material/Warning";
 import "./css/InformationAreaContent.css";
 import OrderDetailDialog from "../../dialog/orderDetail/OrderDetailDialog";
 import InfoIcon from "@mui/icons-material/Info";
+import {
+  parseExecuteIndex,
+  parseExecuteName,
+  parseExecutionData,
+} from "../../../tool/func";
 
 function InformationAreaContent({
   orderSelectData,
@@ -47,6 +53,7 @@ function InformationAreaContent({
   const {
     isDoing,
     executeOrderId: executeOrderIdArray,
+    executeOrderStr,
     queue,
     name: robotExecutionName,
     allData: robotExecutionAllData,
@@ -123,8 +130,9 @@ function InformationAreaContent({
   };
 
   const multipleOrderDetailHandler = (orderId) => {
-    dispatch({ type: DIALOG.order, payload: { orderId } });
-    setOpenDialog(true);
+    // dispatch({ type: DIALOG.order, payload: { orderId } });
+    // setOpenDialog(true);
+    console.log(orderId);
   };
 
   // mode:"order" 自動scroll到指定位置
@@ -177,6 +185,22 @@ function InformationAreaContent({
     );
     return filterData.order;
   };
+
+  // executeList
+
+  if (isDoing) {
+    var [executeId, insertIndex] = parseExecutionData(executeOrderStr);
+    var executeData = [];
+    let name = parseExecuteName(executeId, robotExecutionAllData);
+    for (let i = 0; i < name.length; i++) {
+      let tempObj = {};
+      tempObj["id"] = executeId.at(i).split("*").at(0);
+      tempObj["name"] = name.at(i);
+      tempObj["index"] = parseExecuteIndex(executeId).at(i);
+      tempObj["isInsert"] = insertIndex.includes(i);
+      executeData.push(tempObj);
+    }
+  }
 
   return (
     <InformationAreaContentBox data={[hasOrderList, mode]}>
@@ -327,6 +351,76 @@ function InformationAreaContent({
                         fontSize: "20px",
                         color:
                           parseDoingQueue(queue + 1) === index && isDoing
+                            ? Colors.lightOrange
+                            : Colors.darkGreen,
+                      }}
+                    />
+                  </IconButton>
+                </MultipleOrderInfo>
+              </MultiOrderDetailSmBox>
+            ))}
+          </MultiOrderDetailBox>
+        </>
+      ) : null}
+
+      {informationAreaMode === "executeOrder" ? (
+        <>
+          <OrderListTitle>
+            <OrderListTitleText width="20%">次序</OrderListTitleText>
+            <OrderListTitleText sx={{ flexGrow: 1 }}>名稱</OrderListTitleText>
+            <OrderListTitleText width="20%">資訊</OrderListTitleText>
+          </OrderListTitle>
+
+          <MultiOrderDetailBox className="orderlist">
+            {executeData.map((eData, index) => (
+              <MultiOrderDetailSmBox
+                key={index}
+                isDoing={eData.index.includes(queue + 1) && isDoing}
+              >
+                <MultiOrderAvatarBox>
+                  <MultiOrderAvatar
+                    isDoing={eData.index.includes(queue + 1) && isDoing}
+                  >
+                    {eData.index.at(0)}
+                  </MultiOrderAvatar>
+                  {eData.index.length > 1 ? (
+                    <Fragment>
+                      <AvatarDivider
+                        isDoing={eData.index.includes(queue + 1) && isDoing}
+                      />
+                      <MultiOrderAvatar
+                        isDoing={eData.index.includes(queue + 1) && isDoing}
+                      >
+                        {eData.index.at(1)}
+                      </MultiOrderAvatar>
+                    </Fragment>
+                  ) : null}
+                </MultiOrderAvatarBox>
+
+                <MultiOrderName
+                  isDoing={eData.index.includes(queue + 1) && isDoing}
+                >
+                  {eData.isInsert ? (
+                    <MultiOrderInsertBox
+                      isDoing={eData.index.includes(queue + 1) && isDoing}
+                      sx={{ display: index === 0 && "none" }}
+                    >
+                      插單
+                    </MultiOrderInsertBox>
+                  ) : null}
+
+                  {eData.name}
+                </MultiOrderName>
+
+                <MultipleOrderInfo>
+                  <IconButton
+                    onClick={() => multipleOrderDetailHandler(eData.id)}
+                  >
+                    <InfoIcon
+                      sx={{
+                        fontSize: "20px",
+                        color:
+                          eData.index.includes(queue + 1) && isDoing
                             ? Colors.lightOrange
                             : Colors.darkGreen,
                       }}

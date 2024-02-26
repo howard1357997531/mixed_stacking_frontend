@@ -17,6 +17,7 @@ import OrderDetailDialog from "../../dialog/orderDetail/OrderDetailDialog";
 import { useState } from "react";
 import { DIALOG } from "../../../redux/constants";
 import {
+  DescRectText,
   DescText,
   DescTextBox,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
@@ -114,9 +115,7 @@ function FunctionAreaContentMultipleOrder({ orderListData }) {
       </DescTextBox>
 
       <DescTextBox sx={{ justifyContent: "space-between" }}>
-        <DescText sx={{ color: Colors.green }} isTitle={true}>
-          詳細資訊
-        </DescText>
+        <DescRectText sx={{ color: Colors.green }}>詳細資訊</DescRectText>
         <DescText>
           數量: {parseCount(multipleOrderData.orderSelectId_str)}
         </DescText>

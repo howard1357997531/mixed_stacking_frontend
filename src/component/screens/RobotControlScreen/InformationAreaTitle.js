@@ -59,17 +59,16 @@ function InformationAreaTitle({
         <Title>{multipleOrderSelectData.name}</Title>
       ) : null}
 
-      {informationAreaMode === "multipleOrder" && isDoing ? (
+      {informationAreaMode === "executeOrder" && isDoing ? (
         <Title>
           <span>{`即將執行第`}</span>
           <StyleAvatar>{`${queue + 1}`}</StyleAvatar>
           <span>{`份工單`}</span>
         </Title>
       ) : null}
+
       {informationAreaMode === "success" && executeOrderId.length !== 0 ? (
-        <OrderListTitleButton
-          onClick={() => changeModeHandler("multipleOrder")}
-        >
+        <OrderListTitleButton onClick={() => changeModeHandler("executeOrder")}>
           待執行工單
         </OrderListTitleButton>
       ) : null}

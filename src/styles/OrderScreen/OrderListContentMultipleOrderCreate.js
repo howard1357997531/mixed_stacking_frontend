@@ -54,4 +54,5 @@ export const IconButtonHelp = styled(IconButton, {
 
 export const StyleHelpRoundedIcon = styled(HelpRoundedIcon)(({ theme }) => ({
   fontSize: 16,
+  color: Colors.greyTextBlood,
 }));

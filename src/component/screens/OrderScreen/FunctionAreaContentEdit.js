@@ -12,6 +12,7 @@ import {
   OrderContentBox,
   OrderDetailBox,
   OrderDetailSmBox,
+  DescRectText,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
 import { Input, Stack, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import { Colors } from "../../../styles/theme";
@@ -70,8 +71,8 @@ function FunctionAreaContentEdit() {
       <OrderListNavBtn
         sx={{
           position: "absolute",
-          top: matches ? "18px" : "13px",
-          right: matches ? "23px" : "9px",
+          top: matches ? "16px" : "13px",
+          right: matches ? "24px" : "16px",
         }}
         onClick={editBtnHandler}
       >
@@ -83,7 +84,7 @@ function FunctionAreaContentEdit() {
           src={"ok.png"}
           alt={"ok.png"}
         />
-        <OrderListNavBtnText>確認修改</OrderListNavBtnText>
+        <OrderListNavBtnText>修改</OrderListNavBtnText>
       </OrderListNavBtn>
 
       <Stack direction={"row"} justifyContent="center">
@@ -104,9 +105,9 @@ function FunctionAreaContentEdit() {
       </Stack>
 
       <DescTextBox sx={{ justifyContent: "left" }} mt={1}>
-        <DescText isTitle={true}>詳細資訊</DescText>
+        <DescRectText>詳細資訊</DescRectText>
         <Tooltip title="藍色區域為可修改部分" placement="right" arrow>
-          <InfoIcon sx={{ marginLeft: "4px", color: Colors.grey600 }} />
+          <InfoIcon sx={{ marginLeft: "4px", color: Colors.greyTextBlood }} />
         </Tooltip>
       </DescTextBox>
 

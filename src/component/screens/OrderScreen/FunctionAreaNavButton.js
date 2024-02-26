@@ -145,7 +145,7 @@ function FunctionAreaNavButton({ orderSelectMode }) {
             <OrderListNavBtnText
               sx={{ color: orderSelectMode === "edit" && "#FF494B" }}
             >
-              確認刪除
+              刪除
             </OrderListNavBtnText>
           </OrderListNavBtn>
         </Fragment>

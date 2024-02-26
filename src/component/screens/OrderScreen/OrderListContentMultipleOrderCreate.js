@@ -159,7 +159,7 @@ function OrderListContentMultipleOrderCreate() {
                 )}
 
                 {order.aiTraining_state === "finish_training" && (
-                  <OrderListStateText sx={{ color: Colors.greyText }}>
+                  <OrderListStateText sx={{ color: Colors.greyTextBlood }}>
                     已演算
                   </OrderListStateText>
                 )}

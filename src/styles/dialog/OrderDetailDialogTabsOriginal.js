@@ -17,10 +17,22 @@ export const DescText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "isTitle",
 })(({ theme, isTitle }) => ({
   color: isTitle ? Colors.greenDialog : Colors.greyTextBlood,
-  fontWeight: 600,
-  padding: isTitle && "2px 5px 0px",
+  fontWeight: !isTitle && 600,
+  padding: isTitle && "2px 8px 0px",
   display: isTitle && "inline-block",
   backgroundColor: isTitle && Colors.greyTextBlood,
+  borderRadius: "20px",
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
+}));
+
+export const DescRectText = styled(Typography)(({ theme }) => ({
+  color: Colors.greenDialog,
+  padding: "2px 8px 0px",
+  display: "inline-block",
+  backgroundColor: Colors.greyTextBlood,
+  borderRadius: "2px",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
   },
@@ -56,7 +68,6 @@ export const OrderContentTitleSmBox = styled(Box, {
   height: "30px",
   backgroundColor: Colors.greyTextBlood,
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
-  fontWeight: 600,
   [theme.breakpoints.down("md")]: {
     height: "25px",
     fontSize: 14,

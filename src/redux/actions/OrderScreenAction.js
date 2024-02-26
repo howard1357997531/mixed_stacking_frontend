@@ -359,13 +359,16 @@ export const multipleOrderCreateInputChangeAction =
   };
 
 export const multipleOrderCreateDeleteAction =
-  (index, combineOrderTemp) => (dispatch) => {
+  (index, combineOrderTemp, combineOrderNameTemp) => (dispatch) => {
     const combineOrder = [...combineOrderTemp];
+    const combineOrderName = [...combineOrderNameTemp];
     combineOrder.splice(index, 1);
+    combineOrderName.splice(index, 1);
     dispatch({
       type: ORDER_SCREEN.orderSelect,
       payload: {
         combineOrder,
+        combineOrderName,
         // -------------
         combineOrderFocusIndex: null,
       },

@@ -27,9 +27,20 @@ export const DescText = styled(Typography, {
 })(({ theme, isTitle }) => ({
   color: isTitle ? Colors.lightOrange : Colors.greyTextBlood,
   fontWeight: !isTitle && 600,
-  padding: isTitle && "2px 5px 0px",
+  padding: isTitle && "2px 8px 0px",
   display: isTitle && "inline-block",
   backgroundColor: isTitle && Colors.greyTextBlood,
+  borderRadius: "20px",
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
+}));
+
+export const DescRectText = styled(Typography)(({ theme }) => ({
+  color: Colors.lightOrange,
+  padding: "2px 8px 0px",
+  display: "inline-block",
+  backgroundColor: Colors.greyTextBlood,
   borderRadius: "2px",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,

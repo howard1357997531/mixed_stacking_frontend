@@ -88,6 +88,30 @@ export const orderScreen_orderSelectReducer = (
         combineOrderFocusIndex: combineOrder.length - 1,
       };
 
+    case ORDER_SCREEN.multiOrderCreateSwitch:
+      var combineOrder = [...state.combineOrder];
+      var combineOrderName = [...state.combineOrderName];
+      let stateName = action.payload.state;
+      let switchIndex = action.payload.index;
+      let beSwitchIndex =
+        stateName === "up" ? switchIndex - 1 : switchIndex + 1;
+      let switchOrder = combineOrder[switchIndex];
+      let beSwitchOrder = combineOrder[beSwitchIndex];
+      let switchName = combineOrderName[switchIndex];
+      let beSwitchName = combineOrderName[beSwitchIndex];
+      combineOrder[switchIndex] = beSwitchOrder;
+      combineOrder[beSwitchIndex] = switchOrder;
+      combineOrderName[switchIndex] = beSwitchName;
+      combineOrderName[beSwitchIndex] = switchName;
+
+      return {
+        ...state,
+        combineOrder,
+        combineOrderName,
+        // ---------------
+        combineOrderFocusIndex: null,
+      };
+
     case ORDER_SCREEN.afterTrainingCheck:
       let id = action.payload.orderId;
       if (state.mode === "orderDetail" && state.orderId === id) {

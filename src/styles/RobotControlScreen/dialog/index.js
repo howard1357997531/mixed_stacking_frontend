@@ -17,6 +17,7 @@ import {
   OrderListExeListDeleteAnimation,
   OrderListExeListWaitToExecuteAnimation,
 } from "../../../animation";
+import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 
 export const OrderDialogBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
@@ -42,19 +43,15 @@ export const OrderDialogSearchSelect = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   marginRight: "15px",
-  padding: "2px 8px",
+  padding: "2px 8px 1.5px",
   color: Colors.orangeDialog,
   backgroundColor: Colors.greyTextBlood,
   fontSize: "14px",
-  fontWeight: 600,
   borderRadius: "10px",
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     cursor: "pointer",
-    transform: "scale(1.1)",
-  },
-  "&:active": {
-    transform: "scale(.95)",
+    backgroundColor: Colors.grey900,
   },
   [theme.breakpoints.down("sm")]: {
     padding: "1.5px 6px",
@@ -356,11 +353,11 @@ export const OrderListExeListInProgress = styled(Box)(({ theme }) => ({
   transform: "translateY(-50%)",
 }));
 
-export const OrderListExeListDelete = styled(DisabledByDefaultRoundedIcon)(
+export const OrderListExeListDelete = styled(DisabledByDefaultOutlinedIcon)(
   ({ theme }) => ({
     position: "absolute",
     top: "calc(50% - 13px)",
-    right: "10px",
+    right: "13px",
     color: Colors.greyTextBlood,
     fontSize: "26px",
     "&:hover": {

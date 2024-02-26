@@ -9,6 +9,7 @@ import {
   OrderContentTitleSmBox,
   IsTrainingText,
   DescTextBox,
+  DescRectText,
 } from "../../../styles/OrderScreen/FunctionAreaContentOrder";
 import "./css/FunctionAreaContentOrder.css";
 import { useSelector } from "react-redux";
@@ -54,7 +55,7 @@ function FunctionAreaContentOrder() {
       </DescTextBox>
 
       <DescTextBox sx={{ justifyContent: "space-between" }}>
-        <DescText isTitle={true}>詳細資訊</DescText>
+        <DescRectText>詳細資訊</DescRectText>
         <DescText>總數: {orderCount}</DescText>
       </DescTextBox>
 

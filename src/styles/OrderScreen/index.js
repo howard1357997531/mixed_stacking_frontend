@@ -149,21 +149,17 @@ export const SearchSelect = styled(Box, {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  // marginLeft: "8px",
-  padding: "0px 8px",
-  height: "50%",
+  padding: "2px 8px",
   color: mode ? Colors.green : Colors.lightOrange,
   backgroundColor: Colors.greyTextBlood,
   fontSize: "14px",
-  fontWeight: 600,
   borderRadius: "10px",
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     cursor: "pointer",
-    backgroundColor: Colors.greyTextBlood,
+    backgroundColor: Colors.grey900,
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "0px 8px",
     fontSize: "12px",
   },
 }));
@@ -663,9 +659,9 @@ export const AiResultImageBox = styled(Box)(({ theme }) => ({
 export const AiResultImageBackBtn = styled(Button)(({ theme }) => ({
   marginTop: "30px",
   width: "20%",
-  backgroundColor: Colors.greyText,
+  backgroundColor: Colors.greyTextBlood,
   "&:hover": {
-    backgroundColor: Colors.greyTextBlood,
+    backgroundColor: Colors.grey900,
   },
 }));
 
@@ -693,7 +689,7 @@ export const AiResultBox = styled(Box)(({ theme }) => ({
 
 export const AiResultIndex = styled(Typography)(({ theme }) => ({
   marginBottom: "5px",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fomtSize: 18,
   fontWeight: 600,
 }));
@@ -750,7 +746,7 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
 export const AiResultText = styled(Typography)(({ theme }) => ({
   flexGrow: 1,
   textAlign: "center",
-  color: Colors.greyText,
+  color: Colors.greyTextBlood,
   fontSize: 18,
   fontWeight: 600,
   [theme.breakpoints.down("md")]: {
