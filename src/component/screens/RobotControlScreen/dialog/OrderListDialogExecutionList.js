@@ -7,6 +7,7 @@ import {
   InsertNowText,
   InsertText,
   OrderListExeListAdd,
+  OrderListExeListBottomBox,
   OrderListExeListBox,
   OrderListExeListCheck,
   OrderListExeListDelete,
@@ -15,6 +16,7 @@ import {
   OrderListExeListNameBox,
   OrderListExeListTitleBox,
   OrderText,
+  StopAllBtn,
   WaitToExecuteText,
 } from "../../../../styles/RobotControlScreen/dialog";
 import { Box, Tooltip, Typography } from "@mui/material";
@@ -109,18 +111,20 @@ function OrderListDialogExecutionList(props) {
                   ) : null}
 
                   {index == executionListQueue ? (
-                    <OrderListExeListInProgress>
-                      {props.robotStateMode === "success" ? (
-                        <WaitToExecuteText>待執行</WaitToExecuteText>
-                      ) : null}
+                    props.robotStateMode === "success" ? (
+                      <WaitToExecuteText>待執行</WaitToExecuteText>
+                    ) : null
+                  ) : null}
 
+                  {index === executionListQueue ? (
+                    <OrderListExeListInProgress>
                       {props.robotStateMode === "pause" ? (
                         <Typography color={Colors.red800} fontWeight={600}>
                           暫停
                         </Typography>
                       ) : null}
 
-                      {!["inactivate", "success", "pause"].includes(
+                      {!["inactivate", "success", "reset", "pause"].includes(
                         props.robotStateMode
                       ) ? (
                         <TextEffect
@@ -129,6 +133,13 @@ function OrderListDialogExecutionList(props) {
                         />
                       ) : null}
                     </OrderListExeListInProgress>
+                  ) : null}
+
+                  {index === executionListQueue &&
+                  ["success", "reset"].includes(props.robotStateMode) ? (
+                    <OrderListExeListDelete
+                      onClick={() => deleteOrderHandler(index, name)}
+                    />
                   ) : null}
 
                   {index > executionListQueue ? (
@@ -165,6 +176,10 @@ function OrderListDialogExecutionList(props) {
               </Fragment>
             ))}
           </OrderListExeListNameBox>
+
+          <OrderListExeListBottomBox>
+            <StopAllBtn>全部中斷</StopAllBtn>
+          </OrderListExeListBottomBox>
         </OrderListExeListBox>
       ) : null}
     </>

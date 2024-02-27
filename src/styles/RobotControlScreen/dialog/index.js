@@ -137,7 +137,7 @@ export const OrderListExeListBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   width: "100%",
-  height: "500px",
+  height: "100%",
 }));
 
 export const OrderListExeListTitleBox = styled(Box)(({ theme }) => ({
@@ -150,6 +150,40 @@ export const OrderListExeListTitleBox = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${Colors.brownHover}`,
   color: Colors.greyTextBlood,
   fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+  },
+}));
+
+export const OrderListExeListBottomBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "9%",
+  // borderTop: `1px solid ${Colors.green}`,
+  backgroundColor: Colors.red800,
+  fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    height: "10%",
+    fontSize: 14,
+  },
+}));
+
+export const StopAllBtn = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "2px 4px",
+  color: Colors.green,
+  border: `2px solid ${Colors.green}`,
+  fontWeight: 600,
+  "&:hover": {
+    cursor: "pointer",
+    color: Colors.red800,
+    backgroundColor: Colors.green,
+  },
 }));
 
 export const IconButtonBack = styled(IconButton)(({ theme }) => ({
@@ -171,7 +205,7 @@ export const IconButtonSearch = styled(IconButton)(({ theme }) => ({
 export const OrderListExeListNameBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   width: "100%",
-  height: "92%",
+  flex: 1,
   overflowY: "auto",
 }));
 
@@ -205,14 +239,19 @@ export const IndexText = styled(Avatar, {
 })(({ theme, finish }) => ({
   position: "absolute",
   top: "50%",
-  left: "10px",
+  left: "8px",
   transform: "translateY(-50%)",
   width: "24px",
   height: "24px",
   fontSize: "14px",
   fontWeight: 600,
   color: finish ? Colors.darkGreen : Colors.orangeDialog,
-  backgroundColor: finish ? Colors.green800 : Colors.greyTextBlood,
+  backgroundColor: finish ? Colors.green : Colors.greyTextBlood,
+  [theme.breakpoints.down("sm")]: {
+    width: "20px",
+    height: "20px",
+    fontSize: "12px",
+  },
 }));
 
 export const InsertText = styled(Typography, {
@@ -220,19 +259,24 @@ export const InsertText = styled(Typography, {
 })(({ theme, finish }) => ({
   position: "absolute",
   top: "50%",
-  left: "44px",
+  left: "38px",
   transform: "translateY(-50%)",
   padding: "2px 6px 1px",
-  color: finish ? Colors.softGreen : Colors.orangeDialog,
-  backgroundColor: finish ? Colors.green600 : Colors.blue500,
+  color: finish ? Colors.darkGreen : Colors.orangeDialog,
+  backgroundColor: finish ? Colors.green : Colors.blue500,
+  fontSize: 14,
   fontWeight: 600,
   borderRadius: "2px",
+  [theme.breakpoints.down("sm")]: {
+    left: "33px",
+    fontSize: 12,
+  },
 }));
 
 export const OrderText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "finish",
 })(({ theme, finish }) => ({
-  color: finish ? Colors.green800 : Colors.greyTextBlood,
+  color: finish ? Colors.green : Colors.greyTextBlood,
   fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
@@ -240,14 +284,20 @@ export const OrderText = styled(Typography, {
 }));
 
 export const WaitToExecuteText = styled(Typography)(({ theme }) => ({
-  color: Colors.green800,
+  position: "absolute",
+  right: "35px",
+  color: Colors.green,
   backgroundColor: Colors.darkGreen,
   fontSize: 14,
   fontWeight: 600,
-  padding: "1px 6px 0px",
+  padding: "1px 4px 0px",
   border: `2px solid ${Colors.darkGreen}`,
   borderRadius: "30px",
   animation: `${OrderListExeListWaitToExecuteAnimation} 1s ease-in-out infinite`,
+  [theme.breakpoints.down("sm")]: {
+    right: "30px",
+    fontSize: 12,
+  },
 }));
 
 export const InsertBox = styled(Box)(({ theme }) => ({
@@ -274,6 +324,10 @@ export const InsertNowText = styled(Typography)(({ theme }) => ({
   "&:active": {
     transform: "scale(.95)",
   },
+  [theme.breakpoints.down("sm")]: {
+    padding: "1px 4px 0px",
+    fontSize: 14,
+  },
 }));
 
 export const OrderListExeListInsertName = styled(Box)(({ theme }) => ({
@@ -282,13 +336,15 @@ export const OrderListExeListInsertName = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  height: "60px",
+  height: "55px",
   color: Colors.greyTextBlood,
   borderBottom: `1px solid ${Colors.brownHover}`,
   "&:hover": {
-    // color: Colors.orangeDialog,
     backgroundColor: Colors.orangeDialogHover,
     cursor: "pointer",
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "50px",
   },
 }));
 
@@ -339,11 +395,15 @@ export const StyleHelpRoundedIcon = styled(HelpRoundedIcon)(({ theme }) => ({
 
 export const OrderListExeListCheck = styled(CheckCircleIcon)(({ theme }) => ({
   position: "absolute",
-  top: "calc(50% - 15px)",
-  right: "10px",
-  fontSize: "26px",
-  color: Colors.green800,
+  top: "calc(50% - 12px)",
+  right: "8px",
+  fontSize: "24px",
+  color: Colors.green,
   animation: `${OrderListExeListCheckAnimation} 1s ease`,
+  [theme.breakpoints.down("sm")]: {
+    top: "calc(50% - 10px)",
+    fontSize: 20,
+  },
 }));
 
 export const OrderListExeListInProgress = styled(Box)(({ theme }) => ({
@@ -356,16 +416,20 @@ export const OrderListExeListInProgress = styled(Box)(({ theme }) => ({
 export const OrderListExeListDelete = styled(DisabledByDefaultOutlinedIcon)(
   ({ theme }) => ({
     position: "absolute",
-    top: "calc(50% - 13px)",
-    right: "13px",
+    top: "calc(50% - 12px)",
+    right: "8px",
     color: Colors.greyTextBlood,
-    fontSize: "26px",
+    fontSize: "24px",
     "&:hover": {
       cursor: "pointer",
       animation: `${OrderListExeListDeleteAnimation} .3s`,
     },
     "&:active": {
       transform: "scale(0.8)",
+    },
+    [theme.breakpoints.down("sm")]: {
+      top: "calc(50% - 10px)",
+      fontSize: 20,
     },
   })
 );
@@ -381,6 +445,9 @@ export const IconButtonAdd = styled(IconButton)(({ theme }) => ({
 export const OrderListExeListAdd = styled(AddIcon)(({ theme }) => ({
   color: Colors.greyTextBlood,
   fontSize: "20px",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "14px",
+  },
 }));
 
 export const OrderListExeListButton = styled(Box, {
@@ -403,6 +470,7 @@ export const DescText = styled(Typography, {
   padding: isTitle && "2px 5px 0px",
   display: isTitle && "inline-block",
   backgroundColor: isTitle && Colors.greyTextBlood,
+  borderRadius: "2px",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
   },

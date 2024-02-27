@@ -360,15 +360,17 @@ export const RobotSuccessSubTitle = styled(Typography)(({ theme }) => ({
   marginTop: 2,
 }));
 
-export const OrderListTitleButton = styled(Button)(({ theme }) => ({
+export const OrderListTitleButton = styled(Box)(({ theme }) => ({
   position: "absolute",
-  top: "60%",
-  left: "10%",
+  top: "55%",
+  right: "10%",
   transform: "translateY(-50%)",
-  padding: "4px 6px 3px",
+  padding: "3px 6px",
+  fontSize: 14,
   fontWeight: 600,
   color: Colors.lightOrange,
   backgroundColor: Colors.greyTextBlood,
+  borderRadius: "5px",
   "&:hover": {
     transition: "scale 0.3s ease-in-out",
     transform: "scale(1.05), translateY(-50%)",

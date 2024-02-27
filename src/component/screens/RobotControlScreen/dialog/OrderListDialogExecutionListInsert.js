@@ -11,7 +11,13 @@ import {
   OrderListExeListTitleBox,
   StyleHelpRoundedIcon,
 } from "../../../../styles/RobotControlScreen/dialog";
-import { Collapse, Tooltip, Typography } from "@mui/material";
+import {
+  Collapse,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -89,6 +95,9 @@ function OrderListDialogExecutionListInsert(props) {
     setDetailHover(false);
   };
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <OrderListExeListBox>
       <OrderListExeListTitleBox>
@@ -117,9 +126,7 @@ function OrderListDialogExecutionListInsert(props) {
                   onMouseLeave={mouseLeaveHandler}
                   onClick={() => confirmHandler(order.id, index)}
                 >
-                  <Typography
-                    sx={{ color: Colors.greyTextBlood, fontWeight: 600 }}
-                  >
+                  <Typography sx={{ fontWeight: 600, fontSize: matches && 14 }}>
                     {order.name}
                   </Typography>
 

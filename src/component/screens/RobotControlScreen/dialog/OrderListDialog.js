@@ -44,6 +44,7 @@ function OrderListDialog(props) {
             backgroundColor: Colors.orangeDialog,
             padding: 0,
             width: "400px",
+            height: "75vh",
             overflow: "hidden",
             [theme.breakpoints.down("sm")]: {
               width: "80vw",

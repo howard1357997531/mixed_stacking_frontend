@@ -17,6 +17,7 @@ import {
 import { Colors } from "../../../styles/theme";
 
 function OrderDetailDialogTabsOriginal({ source, orderId, orderSelectData }) {
+  console.log(source);
   if (orderId) {
     if (source === "order") {
       var orderData = orderSelectData;
@@ -25,6 +26,8 @@ function OrderDetailDialogTabsOriginal({ source, orderId, orderSelectData }) {
         (order) => order.order.id === orderId
       );
       var orderData = orderTemp.order;
+    } else if (source === "executeOrder") {
+      var orderData = orderSelectData;
     }
   }
 

@@ -1,7 +1,7 @@
 import { DIALOG } from "../constants";
 
 export const dialogReducer = (
-  state = { orderId: null, multiOrderId: null },
+  state = { orderId: null, multiOrderId: null, executeOrderId: null },
   action
 ) => {
   switch (action.type) {

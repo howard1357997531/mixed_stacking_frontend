@@ -87,12 +87,17 @@ const parseOrderName = (data) => {
 };
 
 const parseAllData = (data) => {
-  var idToAllData = {};
-  data.multipleOrder.forEach(
-    (order) => (idToAllData[order.order.id] = order.order)
-  );
-  const nameArray = parseOrderId(data);
-  return nameArray.map((order) => idToAllData[order]);
+  // var idToAllData = {};
+  // data.multipleOrder.forEach(
+  //   (order) => (idToAllData[order.order.id] = order.order)
+  // );
+
+  // const nameArray = parseOrderId(data);
+
+  const output = data.multipleOrder.map((order) => order.order);
+
+  // return nameArray.map((order) => idToAllData[order]);
+  return output;
 };
 
 export const multipleOrderlistSelectAction =
@@ -213,16 +218,16 @@ export const executeRobotAction =
       ).then((result) => {
         if (result.isConfirmed) {
           const orderId = executeOrderId.at(queue - 1);
+          const [allDataTemp] = allData.filter((order) => order.id === orderId);
           try {
             dispatch({
               type: ROBOT_CONTROL_SCREEN.robotState,
               payload: { mode: "activate" },
             });
 
-            //
             dispatch({
               type: ROBOT_CONTROL_SCREEN.orderSelect,
-              payload: { data: allData.at(tempQueue - 1) },
+              payload: { data: allDataTemp },
             });
 
             dispatch({
@@ -344,7 +349,7 @@ export const robotSettingAction = (mode, speed) => async (dispatch) => {
 };
 
 export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
-  const { executeOrderId, name } = robotExecutionData;
+  const { executeOrderId, name, allData } = robotExecutionData;
   const queue = robotExecutionData.queue + 1;
 
   confirmSwal2(
@@ -353,10 +358,16 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
   ).then((result) => {
     if (result.isConfirmed) {
       const orderId = executeOrderId.at(queue - 1);
+      const [allDataTemp] = allData.filter((order) => order.id === orderId);
       try {
         dispatch({
           type: ROBOT_CONTROL_SCREEN.robotState,
           payload: { mode: "activate" },
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.orderSelect,
+          payload: { data: allDataTemp },
         });
 
         dispatch({
@@ -436,15 +447,15 @@ export const executeRobotFinishAction =
   };
 
 // index不對
-export const hasNextExecutionOrderAction =
-  (robotExecutionData) => (dispatch) => {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.orderSelect,
-      payload: {
-        data: robotExecutionData.allData[robotExecutionData.queue],
-      },
-    });
-  };
+// export const hasNextExecutionOrderAction =
+//   (robotExecutionData) => (dispatch) => {
+//     dispatch({
+//       type: ROBOT_CONTROL_SCREEN.orderSelect,
+//       payload: {
+//         data: robotExecutionData.allData[robotExecutionData.queue],
+//       },
+//     });
+//   };
 
 export const insertOrderAction = (insertIndex) => (dispatch) => {
   dispatch({
@@ -462,12 +473,17 @@ export const selectInsertOrderAction =
     const executeOrderId = [...robotExecutionData.executeOrderId];
     const executeOrderStr = [...robotExecutionData.executeOrderStr];
     const name = [...robotExecutionData.name];
-    const allData = [...robotExecutionData.allData];
+    var allData = [...robotExecutionData.allData];
+    const isInAllData = allData.filter((data) => data.id === order.id);
+
+    if (isInAllData.length === 0) {
+      allData.push(order);
+    }
 
     executeOrderId.splice(insertIndex, 0, order.id);
     executeOrderStr.splice(insertIndex, 0, String(order.id) + "_insert");
     name.splice(insertIndex, 0, order.name + "_insert");
-    allData.splice(insertIndex, 0, order);
+    // allData.splice(insertIndex, 0, order);
 
     // 若是即刻差單的 order 會加到 orderSelect
     // 必須是在 robotStateMode === 'inactivate' 才會觸發
@@ -507,18 +523,16 @@ export const deleteExecutionListAction =
     const executeOrderId = [...robotExecutionData.executeOrderId];
     const executeOrderStr = [...robotExecutionData.executeOrderStr];
     const name = [...robotExecutionData.name];
-    const allData = [...robotExecutionData.allData];
 
     executeOrderId.splice(index, 1);
     executeOrderStr.splice(index, 1);
     name.splice(index, 1);
-    allData.splice(index, 1);
 
     confirmSwal("確定刪除?", deleteName).then((result) => {
       if (result.isConfirmed) {
         dispatch({
           type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-          payload: { executeOrderId, executeOrderStr, name, allData },
+          payload: { executeOrderId, executeOrderStr, name },
         });
       }
     });

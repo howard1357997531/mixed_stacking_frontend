@@ -27,6 +27,8 @@ function OrderDetailDialogTabsAiResult({ source, orderId, orderSelectData }) {
       (order) => order.order.id === orderId
     );
     var data = orderTemp.order;
+  } else if (source === "executeOrder") {
+    var data = orderSelectData;
   }
 
   if (data) {

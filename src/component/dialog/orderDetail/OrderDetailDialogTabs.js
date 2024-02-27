@@ -53,14 +53,21 @@ function OrderDetailDialogTabs(props) {
 
   const { data: multiOrder } = useSelector((state) => state.multipleOrderList);
 
+  const { allData } = useSelector(
+    (state) => state.robotControlScreen_robotExecutionList
+  );
+
   const { orderId, multiOrderId } = useSelector((state) => state.dialog);
 
   if (props.source === "order") {
     var [orderSelectData] = orderData.filter((order) => order.id === orderId);
-  } else {
+  } else if (props.source === "multiOrder") {
     var [orderSelectData] = multiOrder.filter(
       (order) => order.id === multiOrderId
     );
+  } else if (props.source === "executeOrder") {
+    const [allDataTemp] = allData.filter((order) => order.id === orderId);
+    var orderSelectData = allDataTemp;
   }
 
   const addProps = { ...props, orderId, orderSelectData };

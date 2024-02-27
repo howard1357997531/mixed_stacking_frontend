@@ -199,8 +199,6 @@ function App() {
         robotExecutionData.name.length > 1 &&
         robotExecutionData.name.length > robotExecutionData.queue
       ) {
-        dispatch(hasNextExecutionOrderAction(robotExecutionData));
-
         setTimeout(() => {
           dispatch(robotExecutionAlertAction(robotExecutionData));
         }, 2000);

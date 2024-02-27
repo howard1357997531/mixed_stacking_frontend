@@ -19,7 +19,7 @@ function InformationAreaTitle({
     display: "flex",
     alignItems: "center",
     fontWeight: 600,
-    fontSize: "20px",
+    fontSize: "18px",
     color: Colors.greyTextBlood,
     [theme.breakpoints.down("sm")]: {
       fontSize: 18,
@@ -50,6 +50,14 @@ function InformationAreaTitle({
       payload: { mode },
     });
   };
+
+  if (["inactivate", "success", "reset"].includes(robotStateMode)) {
+    var executeText = `即將執行第`;
+    var executeQueue = queue + 1;
+  } else {
+    var executeText = `正在執行第`;
+    var executeQueue = queue;
+  }
   return (
     <InformationAreaTitleBox>
       {informationAreaMode === "order" && robotStateMode !== "activate" ? (
@@ -61,15 +69,34 @@ function InformationAreaTitle({
 
       {informationAreaMode === "executeOrder" && isDoing ? (
         <Title>
-          <span>{`即將執行第`}</span>
-          <StyleAvatar>{`${queue + 1}`}</StyleAvatar>
+          <span>{executeText}</span>
+          <StyleAvatar>{executeQueue}</StyleAvatar>
           <span>{`份工單`}</span>
         </Title>
       ) : null}
 
-      {informationAreaMode === "success" && executeOrderId.length !== 0 ? (
+      {/* 手臂停機中階段 */}
+      {["success", "reset"].includes(robotStateMode) &&
+      informationAreaMode === "success" &&
+      executeOrderId.length !== 0 &&
+      isDoing ? (
         <OrderListTitleButton onClick={() => changeModeHandler("executeOrder")}>
-          待執行工單
+          執行清單
+        </OrderListTitleButton>
+      ) : null}
+
+      {/* 手臂執行中階段 */}
+      {!["activate", "success", "reset"].includes(robotStateMode) &&
+      executeOrderId.length !== 0 &&
+      isDoing ? (
+        <OrderListTitleButton
+          onClick={() =>
+            changeModeHandler(
+              informationAreaMode === "order" ? "executeOrder" : "order"
+            )
+          }
+        >
+          {informationAreaMode === "order" ? "執行清單" : "返回"}
         </OrderListTitleButton>
       ) : null}
     </InformationAreaTitleBox>
