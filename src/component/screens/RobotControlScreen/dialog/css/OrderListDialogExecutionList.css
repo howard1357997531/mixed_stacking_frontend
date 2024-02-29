@@ -18,3 +18,12 @@
 .iconBtn-add:hover .icon-add{
     color: #2196f3;
 }
+
+.stop-all-box:hover .stop-all-btn {
+    animation: stop-all-btn 1s ease;
+}
+
+@keyframes stop-all-btn {
+    0% {transform: rotateY(0deg);}
+    100% {transform: rotateY(-1080deg);}
+}

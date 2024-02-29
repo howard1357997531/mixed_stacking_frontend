@@ -225,25 +225,19 @@ function InformationAreaContent({
         </Box>
       ) : null}
 
-      {informationAreaMode === "success" ? (
+      {["success", "reset"].includes(informationAreaMode) ? (
         <RobotSuccessBox>
-          <RobotSuccessTitle>執行成功</RobotSuccessTitle>
+          <RobotSuccessTitle
+            sx={{ color: informationAreaMode === "reset" && Colors.softOrange }}
+          >
+            {informationAreaMode === "success" ? "執行成功" : "中斷成功"}
+          </RobotSuccessTitle>
 
           <RobotSuccessSubTitle>
             {executeOrderIdArray.length === 0
               ? "請重新選擇工單"
               : `執行進度 (${queue}/${executeOrderIdArray.length})`}
           </RobotSuccessSubTitle>
-        </RobotSuccessBox>
-      ) : null}
-
-      {informationAreaMode === "reset" ? (
-        <RobotSuccessBox>
-          <RobotSuccessTitle sx={{ color: Colors.softOrange }}>
-            重置成功
-          </RobotSuccessTitle>
-
-          <RobotSuccessSubTitle>請重新選擇工單</RobotSuccessSubTitle>
         </RobotSuccessBox>
       ) : null}
 

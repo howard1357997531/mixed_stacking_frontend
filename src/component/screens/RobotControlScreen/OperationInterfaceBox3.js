@@ -19,13 +19,16 @@ function OperationInterfaceBox3({
     (state) => state.robotControlScreen_robotState
   );
 
-  const { executeOrderId: executeOrderIdArray } = useSelector(
+  const { executeOrderId: executeOrderIdArray, queue } = useSelector(
     (state) => state.robotControlScreen_robotExecutionList
   );
 
   const boxText = {
     inactivate: { text: "已選擇工單", color: Colors.greyTextBlood },
-    reset: { text: "已重置", color: Colors.orange },
+    reset: {
+      text: `預備執行第 ${queue + 1} 份工單`,
+      color: Colors.greyTextBlood,
+    },
     prepare: {
       text: `準備操作第${realtimeItemCount}個物件`,
       color: Colors.purple,
@@ -35,7 +38,10 @@ function OperationInterfaceBox3({
       color: Colors.darkGreenHover,
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
-    success: { text: "已結束", color: Colors.greyTextBlood },
+    success: {
+      text: `預備執行第 ${queue + 1} 份工單`,
+      color: Colors.greyTextBlood,
+    },
     buffer: { text: "錯誤!! 夾至 Buffer 區", color: Colors.red800 },
     buffer_to_main: {
       text: `從 Buffer 夾第${realtimeItemCount}個物件至棧板`,
@@ -60,7 +66,7 @@ function OperationInterfaceBox3({
               <TextShowBoardText
                 sx={{ color: boxText[robotStateMode]["color"] }}
               >
-                {robotStateText}
+                {boxText[robotStateMode]["text"]}
               </TextShowBoardText>
             </>
           )}

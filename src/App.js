@@ -196,6 +196,7 @@ function App() {
       });
 
       if (
+        // 表示不是最後一單
         robotExecutionData.name.length > 1 &&
         robotExecutionData.name.length > robotExecutionData.queue
       ) {

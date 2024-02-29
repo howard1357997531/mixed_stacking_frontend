@@ -52,7 +52,7 @@ function InformationAreaTitle({
   };
 
   if (["inactivate", "success", "reset"].includes(robotStateMode)) {
-    var executeText = `即將執行第`;
+    var executeText = `預備執行第`;
     var executeQueue = queue + 1;
   } else {
     var executeText = `正在執行第`;
@@ -77,7 +77,7 @@ function InformationAreaTitle({
 
       {/* 手臂停機中階段 */}
       {["success", "reset"].includes(robotStateMode) &&
-      informationAreaMode === "success" &&
+      ["success", "reset"].includes(informationAreaMode) &&
       executeOrderId.length !== 0 &&
       isDoing ? (
         <OrderListTitleButton onClick={() => changeModeHandler("executeOrder")}>

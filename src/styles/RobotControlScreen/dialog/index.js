@@ -12,6 +12,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import AddIcon from "@mui/icons-material/Add";
+import ReportIcon from "@mui/icons-material/Report";
 import {
   OrderListExeListCheckAnimation,
   OrderListExeListDeleteAnimation,
@@ -156,33 +157,44 @@ export const OrderListExeListTitleBox = styled(Box)(({ theme }) => ({
 }));
 
 export const OrderListExeListBottomBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
   position: "relative",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
   height: "9%",
-  // borderTop: `1px solid ${Colors.green}`,
+  borderTop: `1px solid ${Colors.brownHover}`,
+  color: Colors.orangeDialog,
   backgroundColor: Colors.red800,
-  fontWeight: 600,
-  [theme.breakpoints.down("sm")]: {
-    height: "10%",
-    fontSize: 14,
-  },
-}));
-
-export const StopAllBtn = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "2px 4px",
-  color: Colors.green,
-  border: `2px solid ${Colors.green}`,
   fontWeight: 600,
   "&:hover": {
     cursor: "pointer",
-    color: Colors.red800,
-    backgroundColor: Colors.green,
+    backgroundColor: Colors.red900,
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "10%",
+  },
+}));
+
+export const StopAllText = styled(Typography)(({ theme }) => ({
+  margin: "0px 5px",
+  paddingTop: "2px",
+  fontSize: 24,
+  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 18,
+  },
+}));
+
+export const StyleReportIcon = styled(ReportIcon)(({ theme }) => ({
+  color: Colors.orangeDialog,
+  fontSize: 24,
+  "&:hover": {
+    animation: `${OrderListExeListCheckAnimation} 1s ease`,
+  },
+  [theme.breakpoints.down("md")]: {
+    fontSize: 18,
   },
 }));
 
@@ -227,16 +239,20 @@ export const OrderListExeListName = styled(Box, {
   alignItems: "center",
   width: "100%",
   height: "55px",
-  backgroundColor: data[0] ? Colors.darkGreen : "transparent",
-  borderTop: data[1] ? "none" : `1px solid ${Colors.brownHover}`,
+  backgroundColor: data[0]
+    ? Colors.softOrange
+    : data[1]
+    ? Colors.darkGreen
+    : "transparent",
+  borderTop: data[2] ? "none" : `1px solid ${Colors.brownHover}`,
   [theme.breakpoints.down("sm")]: {
     height: "50px",
   },
 }));
 
 export const IndexText = styled(Avatar, {
-  shouldForwardProp: (prop) => prop !== "finish",
-})(({ theme, finish }) => ({
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
   position: "absolute",
   top: "50%",
   left: "8px",
@@ -245,8 +261,16 @@ export const IndexText = styled(Avatar, {
   height: "24px",
   fontSize: "14px",
   fontWeight: 600,
-  color: finish ? Colors.darkGreen : Colors.orangeDialog,
-  backgroundColor: finish ? Colors.green : Colors.greyTextBlood,
+  color: data[0]
+    ? Colors.softOrange
+    : data[1]
+    ? Colors.darkGreen
+    : Colors.orangeDialog,
+  backgroundColor: data[0]
+    ? Colors.greyTextBlood
+    : data[1]
+    ? Colors.green
+    : Colors.greyTextBlood,
   [theme.breakpoints.down("sm")]: {
     width: "20px",
     height: "20px",
@@ -255,15 +279,23 @@ export const IndexText = styled(Avatar, {
 }));
 
 export const InsertText = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== "finish",
-})(({ theme, finish }) => ({
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
   position: "absolute",
   top: "50%",
   left: "38px",
   transform: "translateY(-50%)",
   padding: "2px 6px 1px",
-  color: finish ? Colors.darkGreen : Colors.orangeDialog,
-  backgroundColor: finish ? Colors.green : Colors.blue500,
+  color: data[0]
+    ? Colors.softOrange
+    : data[1]
+    ? Colors.darkGreen
+    : Colors.orangeDialog,
+  backgroundColor: data[0]
+    ? Colors.greyTextBlood
+    : data[1]
+    ? Colors.green
+    : Colors.blue500,
   fontSize: 14,
   fontWeight: 600,
   borderRadius: "2px",
@@ -274,9 +306,13 @@ export const InsertText = styled(Typography, {
 }));
 
 export const OrderText = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== "finish",
-})(({ theme, finish }) => ({
-  color: finish ? Colors.green : Colors.greyTextBlood,
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  color: data[0]
+    ? Colors.greyTextBlood
+    : data[1]
+    ? Colors.green
+    : Colors.greyTextBlood,
   fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
@@ -310,14 +346,11 @@ export const InsertBox = styled(Box)(({ theme }) => ({
 export const InsertNowText = styled(Typography)(({ theme }) => ({
   margin: "10px 0px",
   fontWeight: 600,
-  padding: "2px 4px 0px",
-  color: Colors.blue500,
-  backgroundColor: Colors.orangeDialog,
-  border: `2px solid ${Colors.blue500}`,
+  padding: "2px 6px 1px",
+  color: Colors.orangeDialog,
+  backgroundColor: Colors.blue500,
   borderRadius: "2px",
   "&:hover": {
-    color: Colors.orangeDialog,
-    backgroundColor: Colors.blue500,
     transform: "scale(1.05)",
     cursor: "pointer",
   },
@@ -325,7 +358,6 @@ export const InsertNowText = styled(Typography)(({ theme }) => ({
     transform: "scale(.95)",
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "1px 4px 0px",
     fontSize: 14,
   },
 }));
@@ -403,6 +435,23 @@ export const OrderListExeListCheck = styled(CheckCircleIcon)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     top: "calc(50% - 10px)",
     fontSize: 20,
+  },
+}));
+
+export const OrderListExeListReset = styled(Typography)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  right: "8px",
+  transform: "translateY(-50%)",
+  fontSize: "14px",
+  fontWeight: 600,
+  padding: "2px 6px 1px",
+  color: Colors.softOrange,
+  backgroundColor: Colors.greyTextBlood,
+  borderRadius: "2px",
+  // border: `2px solid ${Colors.greyTextBlood}`,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12,
   },
 }));
 

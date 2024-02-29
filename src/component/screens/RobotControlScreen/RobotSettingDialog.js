@@ -222,7 +222,7 @@ function RobotSettingDialog({
                   <img src="restart.png" alt="restart.png"></img>
                 </StyleButtonLogo>
 
-                <StyleButtonText>重置</StyleButtonText>
+                <StyleButtonText>中斷</StyleButtonText>
               </StyleButton>
             </StyleSmallBox>
           </StyleBox>

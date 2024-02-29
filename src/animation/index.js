@@ -55,8 +55,8 @@ export const OrderListExeListWaitToExecuteAnimation = keyframes`
             transform : scale(1);
   }
   50% {
-    -webkit-transform : scale(1.1);
-            transform : scale(1.1);
+    -webkit-transform : scale(1.05);
+            transform : scale(1.05);
   }
   100% {
     -webkit-transform : scale(1);

@@ -49,6 +49,7 @@ export const Colors = {
   green800: teal[800],
   darkPink: "#DFA9B2",
   darkPinkHover: pink[200],
+  pink900: pink[900],
   grey: "#E2DCD0",
   grey100: grey[100],
   grey300: grey[300],

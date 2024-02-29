@@ -177,7 +177,7 @@ const replaceInsertName = (name) => {
 
 export const executeRobotAction =
   (robotStateMode, informationAreaMode, robotExecutionData) => (dispatch) => {
-    const { startTime, executeOrderId, name, allData, isDoing } =
+    const { startTime, executeOrderId, name, allData, isDoing, resetIndex } =
       robotExecutionData;
     const executeLength = executeOrderId.length;
     const tempQueue = robotExecutionData.queue;
@@ -256,7 +256,7 @@ export const executeRobotAction =
               .post(`${domain}/api/executeRobot/`, { orderId })
               .then((res) => {
                 const state = res.data.robot_state;
-                const is_finish = state === "finish" ? "success" : "reset";
+                const is_success = state === "finish" ? "success" : "reset";
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
@@ -265,12 +265,12 @@ export const executeRobotAction =
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.informationArea,
-                  payload: { mode: is_finish },
+                  payload: { mode: is_success },
                 });
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.robotState_reset,
-                  payload: is_finish,
+                  payload: is_success,
                 });
 
                 dispatch({
@@ -287,9 +287,28 @@ export const executeRobotAction =
                   type: ROBOT_CONTROL_SCREEN.robotExecutionList,
                   payload: { check: true },
                 });
+
+                // 如果 reset
+                if (state === "reset") {
+                  const resetdata = [...resetIndex];
+                  resetdata.push(queue - 1);
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+                    payload: { resetIndex: resetdata },
+                  });
+                } else if (state === "reset_all") {
+                  dispatch({
+                    type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
+                  });
+                }
               });
           } catch (error) {
             const err_msg = error.response.data.error_msg;
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotState_reset,
+              payload: "reset",
+            });
+
             dispatch({
               type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
               payload: err_msg,
@@ -310,46 +329,50 @@ export const executeRobotAction =
     }
   };
 
-export const robotSettingAction = (mode, speed) => async (dispatch) => {
-  const robotSettingData = {
-    pause: { pause: true },
-    unPause: { pause: false },
-    reset: { reset: true },
-    speedUp: { speed: speed + 10 },
-    speedDown: { speed: speed - 10 },
+export const robotSettingAction =
+  (modeTemp, speed, resetAll = null) =>
+  async (dispatch) => {
+    const robotSettingData = {
+      pause: { pause: true },
+      unPause: { pause: false },
+      reset: { reset: true },
+      speedUp: { speed: speed + 10 },
+      speedDown: { speed: speed - 10 },
+    };
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.robotState,
+      payload: robotSettingData[modeTemp],
+    });
+
+    const mode = resetAll ? "reset_all" : modeTemp;
+
+    try {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_API_robotSetting.request,
+      });
+
+      const { data } = await axios.post(`${domain}/api/robotSetting/`, {
+        mode,
+        speed,
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_API_robotSetting.success,
+        payload: data,
+      });
+
+      // dispatch({ type: ROBOT_CONTROL_SCREEN.robotState, payload: { mode } });
+    } catch (error) {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_API_robotSetting.fail,
+        payload: error.message.data.error_msg,
+      });
+    }
   };
 
-  dispatch({
-    type: ROBOT_CONTROL_SCREEN.robotState,
-    payload: robotSettingData[mode],
-  });
-
-  try {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_API_robotSetting.request,
-    });
-
-    const { data } = await axios.post(`${domain}/api/robotSetting/`, {
-      mode,
-      speed,
-    });
-
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_API_robotSetting.success,
-      payload: data,
-    });
-
-    // dispatch({ type: ROBOT_CONTROL_SCREEN.robotState, payload: { mode } });
-  } catch (error) {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN_API_robotSetting.fail,
-      payload: error.message.data.error_msg,
-    });
-  }
-};
-
 export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
-  const { executeOrderId, name, allData } = robotExecutionData;
+  const { executeOrderId, name, allData, resetIndex } = robotExecutionData;
   const queue = robotExecutionData.queue + 1;
 
   confirmSwal2(
@@ -386,7 +409,7 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
 
         axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
           const state = res.data.robot_state;
-          const is_finish = state === "finish" ? "success" : "reset";
+          const is_success = state === "finish" ? "success" : "reset";
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
@@ -395,12 +418,12 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN.informationArea,
-            payload: { mode: is_finish },
+            payload: { mode: is_success },
           });
 
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotState_reset,
-            payload: is_finish,
+            payload: is_success,
           });
 
           dispatch({
@@ -417,9 +440,28 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
             type: ROBOT_CONTROL_SCREEN.robotExecutionList,
             payload: { check: true },
           });
+
+          if (state === "reset") {
+            const resetdata = [...resetIndex];
+            resetdata.push(queue - 1);
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+              payload: { resetIndex: resetdata },
+            });
+          } else if (state === "reset_all") {
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
+            });
+          }
         });
       } catch (error) {
         const err_msg = error.response.data.error_msg;
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotState_reset,
+          payload: "reset",
+        });
+
         dispatch({
           type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
           payload: err_msg,
@@ -436,9 +478,11 @@ export const executeRobotFinishAction =
     try {
       const startTime = robotExecutionData.startTime;
       const executeOrderStr = robotExecutionData.executeOrderStr;
+      const resetIndex = robotExecutionData.resetIndex;
       const { _ } = axios.post(`${domain}/api/executeRobotFinish/`, {
         startTime,
         executeOrderStr,
+        resetIndex,
       });
     } catch (error) {}
     dispatch({

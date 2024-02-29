@@ -66,6 +66,7 @@ export const robotControlScreen_robotExecutionListReducer = (
     insertOrderOpen: false,
     insertOrderDetailOpen: false,
     insertOrderDetailId: null,
+    resetIndex: [],
   },
   action
 ) => {

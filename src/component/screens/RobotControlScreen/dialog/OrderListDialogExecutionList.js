@@ -14,30 +14,38 @@ import {
   OrderListExeListInProgress,
   OrderListExeListName,
   OrderListExeListNameBox,
+  OrderListExeListReset,
   OrderListExeListTitleBox,
   OrderText,
-  StopAllBtn,
+  StopAllText,
+  StyleReportIcon,
   WaitToExecuteText,
 } from "../../../../styles/RobotControlScreen/dialog";
-import { Box, Tooltip, Typography } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 import TextEffect from "../../../../tool/TextEffect";
 import { Colors } from "../../../../styles/theme";
 import "./css/OrderListDialogExecutionList.css";
 import OrderListDialogExecutionListInsert from "./OrderListDialogExecutionListInsert";
 import {
   deleteExecutionListAction,
+  executeRobotFinishAction,
   insertOrderAction,
+  robotSettingAction,
 } from "../../../../redux/actions/RobotControlScreenAction";
 import OrderListDialogExecutionListInsertDetail from "./OrderListDialogExecutionListInsertDetail";
+import { confirmSwal } from "../../../../swal";
 
 function OrderListDialogExecutionList(props) {
   const dispatch = useDispatch();
+  const robotExecutionData = props.robotExecutionData;
+
   const {
     isOpenBool,
     executeOrderId: executeOrderIdArray,
     name: executeOrderNameArray,
     insertOrderOpen,
     insertOrderDetailOpen,
+    resetIndex,
   } = props.robotExecutionData;
 
   const insertOrderHandler = (insertIndex) => {
@@ -51,13 +59,26 @@ function OrderListDialogExecutionList(props) {
     );
   };
 
+  const stopAllBtnHandler = () => {
+    confirmSwal("警告", "確定要全部中斷 ?").then((result) => {
+      if (result.isConfirmed) {
+        dispatch(robotSettingAction("reset", 20, true));
+        setTimeout(() => {
+          dispatch(executeRobotFinishAction(robotExecutionData));
+        }, 500);
+      }
+    });
+  };
+
   const replaceInsertName = (name) => {
     return name.endsWith("_insert") ? name.replace("_insert", "") : name;
   };
 
   const robotStateMode = props.robotStateMode;
   const queue = props.robotExecutionData.queue;
-  const executionListQueue = robotStateMode === "success" ? queue : queue - 1;
+  const executionListQueue = ["success", "reset"].includes(robotStateMode)
+    ? queue
+    : queue - 1;
 
   const insertRef = useRef();
   useEffect(() => {
@@ -89,25 +110,48 @@ function OrderListDialogExecutionList(props) {
             {executeOrderNameArray.map((name, index) => (
               <Fragment key={index}>
                 <OrderListExeListName
-                  data={[index < executionListQueue, index === 0]}
+                  data={[
+                    resetIndex.includes(index),
+                    index < executionListQueue,
+                    index === 0,
+                  ]}
                   ref={queue - 2 === index ? insertRef : null}
                 >
-                  <IndexText finish={index < executionListQueue}>
+                  <IndexText
+                    data={[
+                      resetIndex.includes(index),
+                      index < executionListQueue,
+                    ]}
+                  >
                     {index + 1}
                   </IndexText>
 
                   {name.endsWith("_insert") ? (
-                    <InsertText finish={index < executionListQueue}>
+                    <InsertText
+                      data={[
+                        resetIndex.includes(index),
+                        index < executionListQueue,
+                      ]}
+                    >
                       插單
                     </InsertText>
                   ) : null}
 
-                  <OrderText finish={index < executionListQueue}>
+                  <OrderText
+                    data={[
+                      resetIndex.includes(index),
+                      index < executionListQueue,
+                    ]}
+                  >
                     {replaceInsertName(name)}
                   </OrderText>
 
-                  {index < executionListQueue ? (
+                  {!resetIndex.includes(index) && index < executionListQueue ? (
                     <OrderListExeListCheck />
+                  ) : null}
+
+                  {resetIndex.includes(index) ? (
+                    <OrderListExeListReset>中斷</OrderListExeListReset>
                   ) : null}
 
                   {index == executionListQueue ? (
@@ -177,8 +221,13 @@ function OrderListDialogExecutionList(props) {
             ))}
           </OrderListExeListNameBox>
 
-          <OrderListExeListBottomBox>
-            <StopAllBtn>全部中斷</StopAllBtn>
+          <OrderListExeListBottomBox
+            className="stop-all-box"
+            onClick={stopAllBtnHandler}
+          >
+            <StyleReportIcon className="stop-all-btn" />
+            <StopAllText>全部中斷</StopAllText>
+            <StyleReportIcon className="stop-all-btn" />
           </OrderListExeListBottomBox>
         </OrderListExeListBox>
       ) : null}

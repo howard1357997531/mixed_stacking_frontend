@@ -229,10 +229,13 @@ export const TextShowBoardTextBox = styled(Box)(({ theme }) => ({
 
 export const TextShowBoardText = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  fontSize: "30px",
+  fontSize: 30,
   fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 26,
+  },
   [theme.breakpoints.down("sm")]: {
-    fontSize: 20,
+    fontSize: 22,
   },
 }));
 
