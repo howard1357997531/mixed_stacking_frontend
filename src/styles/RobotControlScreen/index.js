@@ -491,15 +491,27 @@ export const MultiOrderDetailSmBox = styled(Box, {
   },
 }));
 
+export const MultiOrderResetBox = styled(Box)(({ theme }) => ({
+  marginRight: "4px",
+  padding: "3px 6px",
+  fontSize: 14,
+  color: Colors.greyTextBlood,
+  backgroundColor: Colors.softOrange,
+  borderRadius: "2px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "2px 3px",
+    fontSize: 12,
+  },
+}));
+
 export const MultiOrderInsertBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isDoing",
 })(({ theme, isDoing }) => ({
-  marginRight: "8px",
+  marginRight: "4px",
   padding: "3px 6px",
   fontSize: 14,
   color: isDoing ? Colors.blue500 : Colors.lightOrange,
   backgroundColor: isDoing ? Colors.lightOrange : Colors.blue500,
-
   borderRadius: "2px",
   [theme.breakpoints.down("sm")]: {
     padding: "2px 3px",

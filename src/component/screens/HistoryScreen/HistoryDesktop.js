@@ -4,9 +4,14 @@ import {
   HistoryBox,
   HistoryContainer,
   HistoryContent,
+  HistoryInsertState,
   HistoryListDate,
   HistoryListDetial,
   HistoryName,
+  HistoryResetAllState,
+  HistoryResetState,
+  HistoryStateCount,
+  HistoryStateMulti,
   HistoryTime,
   HistoryTitle,
   HistoryTitleBox,
@@ -34,7 +39,7 @@ function HistoryDesktop() {
   const [isFilter, setIsFilter] = useState(false);
   const [filterData, setFilterData] = useState([]);
 
-  const dateHandler = (e) => {
+  const dateFilterHandler = (e) => {
     setLoading(true);
     setIsFilter(true);
     axios
@@ -88,6 +93,31 @@ function HistoryDesktop() {
     setIsFilter(false);
   };
 
+  console.log(groupedData);
+
+  const parseState = (data) => {
+    return data === "" || data === null ? false : true;
+  };
+
+  const parseInsertCount = (data, insertIndex) => {
+    const temp = data
+      .split(",")
+      .filter((_, index) => insertIndex.split(",").includes(String(index)));
+    const temp2 = temp.map((d) =>
+      d.includes("*") ? parseInt(d.split("*").at(1)) : 1
+    );
+
+    return temp2.reduce((acc, cur) => acc + cur);
+  };
+
+  const parseResetCount = (data, resetAllIndex) => {
+    // var count = data.split(",").length;
+    // if (resetAllIndex !== null && resetAllIndex !== "") {
+    //   count -= 1;
+    // }
+    return data.split(",").length;
+  };
+
   return (
     <HistoryContainer>
       <StyleBox>
@@ -108,7 +138,7 @@ function HistoryDesktop() {
                 backgroundColor: matches && Colors.greyTextBlood,
                 fontWeight: 600,
               }}
-              onChange={dateHandler}
+              onChange={dateFilterHandler}
             />
           </HistoryTitleBox>
 
@@ -135,6 +165,43 @@ function HistoryDesktop() {
                         <HistoryName>
                           {parseCount(order.order_id)} 單
                         </HistoryName>
+
+                        {parseState(order.reset_all_index) ? (
+                          <Fragment>
+                            <HistoryResetAllState>
+                              全部中斷
+                            </HistoryResetAllState>
+                          </Fragment>
+                        ) : null}
+                        {/* 只要使用全部中斷裡面一定包含1個中斷(除了執行中的第一單中斷之外) */}
+                        {/* 若使用全部中斷會減去1個中斷(除了執行中的第一單中斷之外) */}
+                        {/* 若中斷 === 0 就不會顯示 */}
+                        {parseState(order.reset_index) ? (
+                          <Fragment>
+                            <HistoryResetState>中斷</HistoryResetState>
+                            <HistoryStateMulti>x</HistoryStateMulti>
+                            <HistoryStateCount>
+                              {parseResetCount(
+                                order.reset_index,
+                                order.reset_all_index
+                              )}
+                            </HistoryStateCount>
+                          </Fragment>
+                        ) : null}
+
+                        {parseState(order.insert_index) ? (
+                          <Fragment>
+                            <HistoryInsertState>插單</HistoryInsertState>
+                            <HistoryStateMulti>x</HistoryStateMulti>
+                            <HistoryStateCount>
+                              {parseInsertCount(
+                                order.order_id,
+                                order.insert_index
+                              )}
+                            </HistoryStateCount>
+                          </Fragment>
+                        ) : null}
+
                         <HistoryTime>
                           {order.start_time.slice(11)} ~{" "}
                           {order.end_time.slice(11)}

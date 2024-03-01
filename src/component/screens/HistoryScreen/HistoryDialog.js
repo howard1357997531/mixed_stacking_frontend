@@ -1,10 +1,6 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import { styled, useTheme } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, useMediaQuery } from "@mui/material";
@@ -14,12 +10,14 @@ import {
   DescText,
   HistoryDetailBox,
   HistoryDetailSmBox,
+  FirstBox,
   InsertBox,
-  InsertSmBox,
   NameBox,
   StyleAvatar,
   StyleDialogContent,
   StyleDialogTitle,
+  ResetBox,
+  HistoryResetAllBox,
 } from "../../../styles/HistoryScreen/HistoryDesktop";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -74,15 +72,20 @@ export default function HistoryDialog({ open, closeOpen, data }) {
     var historyData = [];
     let name = data.name.split(",");
     let order_id = data.order_id.split(",");
+    let reset_index = data.reset_index ? data.reset_index.split(",") : [];
     let insert_index = data.insert_index.split(",");
     for (let i = 0; i < name.length; i++) {
       let tempObj = {};
       tempObj["name"] = name.at(i);
       tempObj["index"] = parseIndex(order_id).at(i);
+      tempObj["resetAllIndex"] = parseInt(data.reset_all_index);
+      tempObj["isReset"] = reset_index.includes(String(i));
       tempObj["isInsert"] = insert_index.includes(String(i));
       historyData.push(tempObj);
     }
   }
+
+  // console.log(historyData);
 
   return data.id ? (
     <React.Fragment>
@@ -118,30 +121,43 @@ export default function HistoryDialog({ open, closeOpen, data }) {
 
           <HistoryDetailBox className="dialog-history-detail">
             {historyData.map((hData, index) => (
-              <HistoryDetailSmBox key={index} isFirst={index === 0}>
-                {hData.isInsert ? (
-                  <InsertBox>
-                    <InsertSmBox>插</InsertSmBox>
-                    <InsertSmBox>單</InsertSmBox>
-                  </InsertBox>
+              <React.Fragment key={index}>
+                {hData.resetAllIndex === index ? (
+                  <HistoryResetAllBox>以下全部中斷</HistoryResetAllBox>
                 ) : null}
 
-                <AvatarBox>
-                  <StyleAvatar isInsert={hData.isInsert}>
-                    {hData.index.at(0)}
-                  </StyleAvatar>
-                  {hData.index.length > 1 ? (
-                    <>
-                      <AvatarDivider isInsert={hData.isInsert} />
-                      <StyleAvatar isInsert={hData.isInsert}>
-                        {hData.index.at(1)}
-                      </StyleAvatar>
-                    </>
+                <HistoryDetailSmBox isFirst={index === 0}>
+                  {hData.isReset ? (
+                    <FirstBox isReset={true}>
+                      <ResetBox>中</ResetBox>
+                      <ResetBox>斷</ResetBox>
+                    </FirstBox>
                   ) : null}
-                </AvatarBox>
 
-                <NameBox>{hData.name}</NameBox>
-              </HistoryDetailSmBox>
+                  {hData.isInsert ? (
+                    <FirstBox isReset={false}>
+                      <InsertBox>插</InsertBox>
+                      <InsertBox>單</InsertBox>
+                    </FirstBox>
+                  ) : null}
+
+                  <AvatarBox>
+                    <StyleAvatar isInsert={hData.isInsert}>
+                      {hData.index.at(0)}
+                    </StyleAvatar>
+                    {hData.index.length > 1 ? (
+                      <>
+                        <AvatarDivider isInsert={hData.isInsert} />
+                        <StyleAvatar isInsert={hData.isInsert}>
+                          {hData.index.at(1)}
+                        </StyleAvatar>
+                      </>
+                    ) : null}
+                  </AvatarBox>
+
+                  <NameBox>{hData.name}</NameBox>
+                </HistoryDetailSmBox>
+              </React.Fragment>
             ))}
           </HistoryDetailBox>
         </StyleDialogContent>

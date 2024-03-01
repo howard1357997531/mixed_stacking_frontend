@@ -8,6 +8,7 @@ import {
   MultiOrderDetailSmBox,
   MultiOrderInsertBox,
   MultiOrderName,
+  MultiOrderResetBox,
   MultipleOrderInfo,
   NoSelectOrderText,
   OrderListBox,
@@ -57,6 +58,7 @@ function InformationAreaContent({
     queue,
     name: robotExecutionName,
     allData: robotExecutionAllData,
+    resetIndex: resetIndexArray,
   } = useSelector((state) => state.robotControlScreen_robotExecutionList);
   // console.log("asd:", executeOrderIdArray);
   // console.log("asd:", queue - 1);
@@ -189,7 +191,10 @@ function InformationAreaContent({
 
   // executeList
   if (isDoing) {
-    var [executeId, insertIndex] = parseExecutionData(executeOrderStr);
+    var [executeId, insertIndex, resetIndex] = parseExecutionData(
+      executeOrderStr,
+      resetIndexArray
+    );
     var executeData = [];
     let name = parseExecuteName(executeId, robotExecutionAllData);
     for (let i = 0; i < name.length; i++) {
@@ -197,6 +202,7 @@ function InformationAreaContent({
       tempObj["id"] = parseInt(executeId.at(i).split("*").at(0));
       tempObj["name"] = name.at(i);
       tempObj["index"] = parseExecuteIndex(executeId).at(i);
+      tempObj["isReset"] = resetIndex.includes(i);
       tempObj["isInsert"] = insertIndex.includes(i);
       executeData.push(tempObj);
     }
@@ -204,6 +210,8 @@ function InformationAreaContent({
       ? queue + 1
       : queue;
   }
+
+  console.log(executeId, insertIndex, resetIndex);
 
   return (
     <InformationAreaContentBox data={[hasOrderList, mode]}>
@@ -238,6 +246,16 @@ function InformationAreaContent({
               ? "請重新選擇工單"
               : `執行進度 (${queue}/${executeOrderIdArray.length})`}
           </RobotSuccessSubTitle>
+        </RobotSuccessBox>
+      ) : null}
+
+      {["resetAll"].includes(informationAreaMode) ? (
+        <RobotSuccessBox>
+          <RobotSuccessTitle sx={{ color: Colors.red800 }}>
+            全部中斷
+          </RobotSuccessTitle>
+
+          <RobotSuccessSubTitle>請重新選擇工單</RobotSuccessSubTitle>
         </RobotSuccessBox>
       ) : null}
 
@@ -399,6 +417,10 @@ function InformationAreaContent({
                 <MultiOrderName
                   isDoing={eData.index.includes(executeQueue) && isDoing}
                 >
+                  {eData.isReset ? (
+                    <MultiOrderResetBox>中斷</MultiOrderResetBox>
+                  ) : null}
+
                   {eData.isInsert ? (
                     <MultiOrderInsertBox
                       isDoing={eData.index.includes(executeQueue) && isDoing}

@@ -107,7 +107,7 @@ export const HistoryListDate = styled(Typography, {
 export const HistoryListDetial = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
-  justifyContent: "space-between",
+  // justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
   height: "55px",
@@ -130,20 +130,87 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const HistoryName = styled(Box)(({ theme }) => ({
-  boxSizing: "border-box",
-  display: "flex",
-  justifyContent: "left",
-  alignItems: "center",
+export const HistoryName = styled(Typography)(({ theme }) => ({
+  marginRight: 2,
   color: Colors.greyTextBlood,
+  fontSize: 15,
+  fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    marginRight: 0,
+    fontSize: 13,
+  },
 }));
 
-export const HistoryTime = styled(Box)(({ theme }) => ({
+export const HistoryStateMulti = styled(Typography)(({ theme }) => ({
+  marginRight: "2px",
+  color: Colors.greyTextBlood,
+  fontSize: 12,
+}));
+
+export const HistoryStateCount = styled(Typography)(({ theme }) => ({
+  color: Colors.greyTextBlood,
+  fontSize: 12,
+}));
+
+export const HistoryResetState = styled(Typography)(({ theme }) => ({
+  boxSizing: "border-box",
+  marginLeft: "10px",
+  marginRight: "4px",
+  padding: "3px 6px",
+  color: Colors.greyTextBlood,
+  backgroundColor: Colors.softOrange,
+  fontSize: 14,
+  fontWeight: 600,
+  borderRadius: "2px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "2px 3px",
+    fontSize: 12,
+  },
+}));
+
+export const HistoryInsertState = styled(Typography)(({ theme }) => ({
+  boxSizing: "border-box",
+  marginLeft: "10px",
+  marginRight: "4px",
+  padding: "3px 6px",
+  color: Colors.greyTextBlood,
+  backgroundColor: Colors.blue500,
+  fontSize: 14,
+  fontWeight: 600,
+  borderRadius: "2px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "2px 3px",
+    fontSize: 12,
+  },
+}));
+
+export const HistoryResetAllState = styled(Typography)(({ theme }) => ({
+  boxSizing: "border-box",
+  marginLeft: "10px",
+  padding: "3px 6px",
+  color: Colors.orangeDialog,
+  backgroundColor: Colors.red800,
+  fontSize: 14,
+  fontWeight: 600,
+  borderRadius: "2px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "2px 3px",
+    fontSize: 12,
+  },
+}));
+
+export const HistoryTime = styled(Typography)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
-  justifyContent: "left",
+  flex: 1,
+  justifyContent: "right",
   alignItems: "center",
   color: Colors.greyTextBlood,
+  fontSize: 14,
+  fnotWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 13,
+  },
 }));
 
 // dialog
@@ -195,7 +262,22 @@ export const HistoryDetailBox = styled(Box)(({ theme }) => ({
   width: "100%",
   overflow: "auto",
   border: `1px solid ${Colors.greyTextBlood}`,
-  // borderBottom: `1px solid ${Colors.greyTextBlood}`,
+}));
+
+export const HistoryResetAllBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "30px",
+  color: Colors.orangeDialog,
+  backgroundColor: Colors.red800,
+  fontWeight: 600,
+  borderBottom: `1px solid ${Colors.greyTextBlood}`,
+  [theme.breakpoints.down("sm")]: {
+    height: "45px",
+  },
 }));
 
 export const HistoryDetailSmBox = styled(Box, {
@@ -212,16 +294,18 @@ export const HistoryDetailSmBox = styled(Box, {
   },
 }));
 
-export const InsertBox = styled(Box)(({ theme }) => ({
+export const FirstBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isReset",
+})(({ theme, isReset }) => ({
   boxSizing: "border-box",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  color: isReset ? Colors.greyTextBlood : Colors.greyTextBlood,
+  backgroundColor: isReset ? Colors.softOrange : Colors.blue500,
   width: "6%",
   height: "100%",
-  color: Colors.lightOrange,
-  backgroundColor: Colors.blue500,
   borderRight: `1px solid ${Colors.greyTextBlood}`,
   fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
@@ -229,7 +313,7 @@ export const InsertBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const InsertSmBox = styled(Box)(({ theme }) => ({
+export const ResetBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "center",
@@ -238,6 +322,18 @@ export const InsertSmBox = styled(Box)(({ theme }) => ({
   height: "40%",
   [theme.breakpoints.down("sm")]: {
     fontSize: 12,
+  },
+}));
+
+export const InsertBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "40%",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 13,
   },
 }));
 
@@ -262,7 +358,7 @@ export const StyleAvatar = styled(Avatar, {
   fontSize: 12,
   fontWeight: 600,
   color: Colors.lightOrangeHover,
-  backgroundColor: isInsert ? Colors.blue500 : Colors.greyTextBlood,
+  backgroundColor: isInsert ? Colors.greyTextBlood : Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
     width: "20px",
     height: "20px",
@@ -276,7 +372,7 @@ export const AvatarDivider = styled(Box, {
   width: "6px",
   height: "2px",
   margin: "0px 4px",
-  backgroundColor: isInsert ? Colors.blue500 : Colors.greyTextBlood,
+  backgroundColor: isInsert ? Colors.greyTextBlood : Colors.greyTextBlood,
 }));
 
 export const NameBox = styled(Box)(({ theme }) => ({

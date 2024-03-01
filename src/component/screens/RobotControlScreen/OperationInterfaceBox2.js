@@ -25,13 +25,7 @@ function OperationInterfaceBox2() {
   );
 
   const executeRobotHandler = () => {
-    dispatch(
-      executeRobotAction(
-        robotStateMode,
-        informationAreaMode,
-        robotExecutionData
-      )
-    );
+    dispatch(executeRobotAction(robotStateMode, robotExecutionData));
   };
 
   const robotSettingHandler = () => {

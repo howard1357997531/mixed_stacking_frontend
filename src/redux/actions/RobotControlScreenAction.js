@@ -176,7 +176,7 @@ const replaceInsertName = (name) => {
 };
 
 export const executeRobotAction =
-  (robotStateMode, informationAreaMode, robotExecutionData) => (dispatch) => {
+  (robotStateMode, robotExecutionData) => (dispatch) => {
     const { startTime, executeOrderId, name, allData, isDoing, resetIndex } =
       robotExecutionData;
     const executeLength = executeOrderId.length;
@@ -235,16 +235,17 @@ export const executeRobotAction =
               payload: { mode: "order" },
             });
 
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-              payload: { isDoing: true },
-            });
-
-            // 此單不是第一次從這進來
             if (isDoing) {
+              // 此單不是第一次從這進來, queue才會加1
               dispatch({
                 type: ROBOT_CONTROL_SCREEN.robotExecutionList,
                 payload: { queue },
+              });
+            } else {
+              // 此單第一次從這進來
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+                payload: { isDoing: true },
               });
             }
 
@@ -256,7 +257,12 @@ export const executeRobotAction =
               .post(`${domain}/api/executeRobot/`, { orderId })
               .then((res) => {
                 const state = res.data.robot_state;
-                const is_success = state === "finish" ? "success" : "reset";
+                const is_success =
+                  state === "finish"
+                    ? "success"
+                    : state === "reset"
+                    ? "reset"
+                    : "resetAll";
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
@@ -375,7 +381,7 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
   const { executeOrderId, name, allData, resetIndex } = robotExecutionData;
   const queue = robotExecutionData.queue + 1;
 
-  confirmSwal2(
+  confirmSwal(
     `確定執行?`,
     `${replaceInsertName(name.at(queue - 1))} (${queue}/${name.length})`
   ).then((result) => {
@@ -474,15 +480,22 @@ export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
 };
 
 export const executeRobotFinishAction =
-  (robotExecutionData) => async (dispatch) => {
+  (robotExecutionData, executionListQueue = null) =>
+  async (dispatch) => {
     try {
       const startTime = robotExecutionData.startTime;
       const executeOrderStr = robotExecutionData.executeOrderStr;
-      const resetIndex = robotExecutionData.resetIndex;
+      const resetIndex = [...robotExecutionData.resetIndex];
+      // 如果是第一單就全部中斷不會加入(為了如果一二單是連一起不會拆散)
+      if (executionListQueue !== null && executionListQueue !== 0) {
+        resetIndex.push(executionListQueue);
+      }
+      const resetAllIndex = executionListQueue;
       const { _ } = axios.post(`${domain}/api/executeRobotFinish/`, {
         startTime,
         executeOrderStr,
         resetIndex,
+        resetAllIndex,
       });
     } catch (error) {}
     dispatch({

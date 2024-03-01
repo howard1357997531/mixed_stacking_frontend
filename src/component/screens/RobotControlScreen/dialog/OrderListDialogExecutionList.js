@@ -34,19 +34,26 @@ import {
 } from "../../../../redux/actions/RobotControlScreenAction";
 import OrderListDialogExecutionListInsertDetail from "./OrderListDialogExecutionListInsertDetail";
 import { confirmSwal } from "../../../../swal";
+import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 
 function OrderListDialogExecutionList(props) {
   const dispatch = useDispatch();
   const robotExecutionData = props.robotExecutionData;
+  const robotStateMode = props.robotStateMode;
 
   const {
     isOpenBool,
     executeOrderId: executeOrderIdArray,
     name: executeOrderNameArray,
+    queue,
     insertOrderOpen,
     insertOrderDetailOpen,
     resetIndex,
   } = props.robotExecutionData;
+
+  const executionListQueue = ["success", "reset"].includes(robotStateMode)
+    ? queue
+    : queue - 1;
 
   const insertOrderHandler = (insertIndex) => {
     dispatch(insertOrderAction(insertIndex));
@@ -62,10 +69,20 @@ function OrderListDialogExecutionList(props) {
   const stopAllBtnHandler = () => {
     confirmSwal("警告", "確定要全部中斷 ?").then((result) => {
       if (result.isConfirmed) {
-        dispatch(robotSettingAction("reset", 20, true));
-        setTimeout(() => {
-          dispatch(executeRobotFinishAction(robotExecutionData));
-        }, 500);
+        confirmSwal("二次警告", "確定要全部中斷 ?").then((result) => {
+          if (result.isConfirmed) {
+            dispatch(robotSettingAction("reset", 20, true));
+            setTimeout(() => {
+              dispatch(
+                executeRobotFinishAction(robotExecutionData, executionListQueue)
+              );
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.informationArea,
+                payload: { mode: "resetAll" },
+              });
+            }, 500);
+          }
+        });
       }
     });
   };
@@ -73,12 +90,6 @@ function OrderListDialogExecutionList(props) {
   const replaceInsertName = (name) => {
     return name.endsWith("_insert") ? name.replace("_insert", "") : name;
   };
-
-  const robotStateMode = props.robotStateMode;
-  const queue = props.robotExecutionData.queue;
-  const executionListQueue = ["success", "reset"].includes(robotStateMode)
-    ? queue
-    : queue - 1;
 
   const insertRef = useRef();
   useEffect(() => {
