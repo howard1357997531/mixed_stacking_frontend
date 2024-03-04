@@ -204,7 +204,7 @@ function App() {
           dispatch(robotExecutionAlertAction(robotExecutionData));
         }, 2000);
       } else {
-        dispatch(executeRobotFinishAction(robotExecutionData));
+        dispatch(executeRobotFinishAction(robotExecutionData, null));
       }
     }
   }, [robotExecutionData.check]);

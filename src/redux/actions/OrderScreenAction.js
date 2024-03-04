@@ -249,6 +249,7 @@ export const orderEditAction =
             })
             .then((res) => {
               const data = res.data;
+              timerToast("success", "修改成功");
               dispatch({
                 type: ORDER_LIST.finishTrainingEdit,
                 payload: data.allData,

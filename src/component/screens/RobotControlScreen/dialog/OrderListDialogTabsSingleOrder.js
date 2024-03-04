@@ -191,6 +191,7 @@ function OrderListDialogTabsSingleOrder({ onOrderListDialogOpen }) {
             style={{
               width: "140px",
               marginRight: "10px",
+              height: "28%",
               color: matches ? Colors.orangeDialog : Colors.greyTextBlood,
               backgroundColor: matches && Colors.greyTextBlood,
               fontWeight: 600,

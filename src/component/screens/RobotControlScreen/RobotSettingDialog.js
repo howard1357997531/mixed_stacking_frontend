@@ -177,6 +177,11 @@ function RobotSettingDialog({
             height: "400px",
             backgroundColor: Colors.darkGreenHover,
             padding: "10px",
+            "@media screen and (orientation: portrait)": {
+              flexDirection: "column",
+              width: "500px",
+              height: "500px",
+            },
             [theme.breakpoints.down("sm")]: {
               width: "80vw",
               height: "60vh",

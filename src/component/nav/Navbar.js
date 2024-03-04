@@ -14,7 +14,7 @@ import {
   NavLinkImageBoxText,
   UpBtn,
 } from "../../styles/nav";
-import { Button, useMediaQuery, useTheme } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import SwipeableEdgeDrawer from "./SwipeableEdgeDrawer";
 import "./css/nav.css";
@@ -48,6 +48,10 @@ function Navbar() {
       window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
+
+  // auto button
+  const [autoBtn, setAutoBtn] = React.useState(false);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -86,6 +90,25 @@ function Navbar() {
                 ></img>
               )}
             </Link>
+
+            {matches_nine ? (
+              <Box
+                sx={{
+                  marginLeft: "15px",
+                  padding: "4px 8px",
+                  color: Colors.bgcolorLightorange,
+                  backgroundColor: autoBtn ? Colors.darkGreen : Colors.red800,
+                  borderRadius: "5px",
+                  fontWeight: 600,
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={() => setAutoBtn(!autoBtn)}
+              >
+                {autoBtn ? "自動" : "手動"}
+              </Box>
+            ) : null}
           </NavLeftBox>
 
           <NavMiddleBox>

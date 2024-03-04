@@ -9,6 +9,7 @@ import {
   BufferBox,
   BufferContent,
   BufferInfoBox,
+  BufferInfoImageText,
   BufferInfoSmBox,
   BufferInfoText,
   BufferTitle,
@@ -17,7 +18,7 @@ import {
   Title,
 } from "../../../../styles/RobotControlScreen/dialog/StackAndBufferDialog";
 import { domain } from "../../../../env";
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
 import "./css/StackAndBufferDialog.css";
 
@@ -41,12 +42,10 @@ function StackAndBufferDialog(props) {
   const { bufferquanlity } = useSelector(
     (state) => state.robotControlScreen_realtimeVisual
   );
-  // const bufferquanlity = [4, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0];
+  // const bufferquanlity = [4, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1];
   // console.log("bufferquanlity:", bufferquanlity);
   const theme = useTheme();
-  const matches_lg = useMediaQuery(theme.breakpoints.up("lg"));
-  const matches_md = useMediaQuery(theme.breakpoints.up("md"));
-  const matches_sm = useMediaQuery(theme.breakpoints.up("sm"));
+
   const handleClose = () => {
     props.onStackAndBufferOpen();
   };
@@ -79,6 +78,19 @@ function StackAndBufferDialog(props) {
     .slice(5)
     .map((qty, index) => (qty !== 0 ? buffer[index + 5] + `*${qty}` : qty));
 
+  const bufferImageName = {
+    "#16A": "16A",
+    "#18A": "18A",
+    "#33": "33",
+    "#7": "7A",
+    "#13": "13",
+    "#22": "22",
+    "#20": "20",
+    "#29": "29",
+    "#9": "9",
+    "#26": "26",
+    "#35": "35",
+  };
   return (
     <div>
       <Dialog
@@ -93,11 +105,26 @@ function StackAndBufferDialog(props) {
           className="stack-and-buffer"
           sx={{
             display: "flex",
-            flexDirection: matches_md ? "row" : "column",
             backgroundColor: Colors.darkPink,
             padding: 0,
-            width: matches_lg ? "900px" : "80vw",
-            height: matches_md ? "60vh" : "75vh",
+            width: "900px",
+            height: "60vh",
+            [theme.breakpoints.down("lg")]: {
+              width: "80vw",
+            },
+            [theme.breakpoints.down("md")]: {
+              flexDirection: "column",
+              height: "75vh",
+            },
+            "@media screen and (orientation: portrait)": {
+              flexDirection: "column",
+              width: "500px",
+              height: "60vh",
+            },
+            [theme.breakpoints.down("sm")]: {
+              width: "80vw",
+              height: "75vh",
+            },
           }}
         >
           <ImageBox className="dialog-stack-image">
@@ -137,13 +164,23 @@ function StackAndBufferDialog(props) {
                   {buffer1.map((data, index) =>
                     data !== 0 ? (
                       <BufferInfoBox key={index}>
-                        <BufferInfoSmBox>
-                          <BufferInfoText>
-                            {data.split("*").at(0)}
-                          </BufferInfoText>
+                        <BufferInfoSmBox className="buffer-image">
+                          <img
+                            src={`${
+                              bufferImageName[data.split("*").at(0)]
+                            }.png`}
+                            alt={`${
+                              bufferImageName[data.split("*").at(0)]
+                            }.png`}
+                          ></img>
+                          <BufferInfoImageText>
+                            {bufferImageName[data.split("*").at(0)]}
+                          </BufferInfoImageText>
                         </BufferInfoSmBox>
                         <BufferInfoSmBox>
-                          {data.split("*").at(1)} 個
+                          <BufferInfoText>
+                            {data.split("*").at(1)} 個
+                          </BufferInfoText>
                         </BufferInfoSmBox>
                       </BufferInfoBox>
                     ) : null
@@ -157,13 +194,23 @@ function StackAndBufferDialog(props) {
                   {buffer2.map((data, index) =>
                     data !== 0 ? (
                       <BufferInfoBox key={index}>
-                        <BufferInfoSmBox>
-                          <BufferInfoText>
-                            {data.split("*").at(0)}
-                          </BufferInfoText>
+                        <BufferInfoSmBox className="buffer-image">
+                          <img
+                            src={`${
+                              bufferImageName[data.split("*").at(0)]
+                            }.png`}
+                            alt={`${
+                              bufferImageName[data.split("*").at(0)]
+                            }.png`}
+                          ></img>
+                          <BufferInfoImageText>
+                            {bufferImageName[data.split("*").at(0)]}
+                          </BufferInfoImageText>
                         </BufferInfoSmBox>
                         <BufferInfoSmBox>
-                          {data.split("*").at(1)} 個
+                          <BufferInfoText>
+                            {data.split("*").at(1)} 個
+                          </BufferInfoText>
                         </BufferInfoSmBox>
                       </BufferInfoBox>
                     ) : null

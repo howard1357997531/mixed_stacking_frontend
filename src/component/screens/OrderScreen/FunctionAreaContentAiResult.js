@@ -68,12 +68,21 @@ function FunctionAreaContentAiResult() {
     <OrderBox>
       {imageOpen ? (
         <AiResultImageBox>
-          <img
-            src={`${domain}/static/media/ai_figure/Figures_${orderId}/box_${orderCount}_bin_1.png`}
-            alt={`${domain}/static/media/ai_figure/Figures_${orderId}/box_${orderCount}_bin_1.png`}
-            // className="box-photo"
-            style={{ marginTop: "29.5px", width: "90%" }}
-          ></img>
+          {orderId < 140 ? (
+            <img
+              src={`${domain}/static/media/ai_figure/Figures_${orderId}/box_${orderCount}_bin_1.png`}
+              alt={`${domain}/static/media/ai_figure/Figures_${orderId}/box_${orderCount}_bin_1.png`}
+              // className="box-photo"
+              style={{ marginTop: "29.5px", width: "90%" }}
+            ></img>
+          ) : (
+            <img
+              src={`${domain}/static/media/ai_figure/Figures_${139}/box_${33}_bin_1.png`}
+              alt={`${domain}/static/media/ai_figure/Figures_${139}/box_${33}_bin_1.png`}
+              // className="box-photo"
+              style={{ marginTop: "29.5px", width: "90%" }}
+            ></img>
+          )}
           <AiResultImageBackBtn
             variant="contained"
             disableElevation

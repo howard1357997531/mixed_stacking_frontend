@@ -522,7 +522,8 @@ export const insertOrderAction = (insertIndex) => (dispatch) => {
 };
 
 export const selectInsertOrderAction =
-  (order, robotStateMode, robotExecutionData) => async (dispatch) => {
+  (order, robotStateMode, robotExecutionData, insertCount) =>
+  async (dispatch) => {
     const { insertIndex, queue } = robotExecutionData;
     // 不知為何不能直接使用 { executeOrderId } = robotExecutionData; 裡面的 executeOrderId
     // 去做 executeOrderId.splice(insertIndex, 0, order.id); 會error
@@ -537,9 +538,15 @@ export const selectInsertOrderAction =
       allData.push(order);
     }
 
-    executeOrderId.splice(insertIndex, 0, order.id);
-    executeOrderStr.splice(insertIndex, 0, String(order.id) + "_insert");
-    name.splice(insertIndex, 0, order.name + "_insert");
+    for (let i = 0; i < insertCount; i++) {
+      executeOrderId.splice(insertIndex, 0, order.id);
+      executeOrderStr.splice(insertIndex, 0, String(order.id) + "_insert");
+      name.splice(insertIndex, 0, order.name + "_insert");
+    }
+
+    // executeOrderId.splice(insertIndex, 0, order.id);
+    // executeOrderStr.splice(insertIndex, 0, String(order.id) + "_insert");
+    // name.splice(insertIndex, 0, order.name + "_insert");
     // allData.splice(insertIndex, 0, order);
 
     // 若是即刻差單的 order 會加到 orderSelect
@@ -564,15 +571,15 @@ export const selectInsertOrderAction =
       },
     });
 
-    try {
-      const { data } = await axios.post(`${domain}/api/executingOrder/`, {
-        insertIndex,
-        executeOrderId,
-        name,
-      });
-    } catch (error) {
-      console.log(error.message.data.error_msg);
-    }
+    // try {
+    //   const { data } = await axios.post(`${domain}/api/executingOrder/`, {
+    //     insertIndex,
+    //     executeOrderId,
+    //     name,
+    //   });
+    // } catch (error) {
+    //   console.log(error.message.data.error_msg);
+    // }
   };
 
 export const deleteExecutionListAction =

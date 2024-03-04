@@ -2,6 +2,8 @@ import React, { Fragment, useState } from "react";
 import {
   ConfirmBox,
   ConfirmBoxButton,
+  ConfirmBoxCount,
+  ConfirmBoxCountText,
   IconButtonBack,
   IconButtonHelp,
   IconButtonSearch,
@@ -31,6 +33,7 @@ import { teal } from "@mui/material/colors";
 
 function OrderListDialogExecutionListInsert(props) {
   const dispatch = useDispatch();
+  const [insertCount, setInsertCount] = useState(1);
   const {
     loading: orderListLoading,
     error: orderListError,
@@ -48,7 +51,12 @@ function OrderListDialogExecutionListInsert(props) {
 
   const selectInsertOrderHandler = (order) => {
     dispatch(
-      selectInsertOrderAction(order, robotStateMode, props.robotExecutionData)
+      selectInsertOrderAction(
+        order,
+        robotStateMode,
+        props.robotExecutionData,
+        parseInt(insertCount)
+      )
     );
   };
 
@@ -98,6 +106,8 @@ function OrderListDialogExecutionListInsert(props) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
+  // console.log(insertCount);
+
   return (
     <OrderListExeListBox>
       <OrderListExeListTitleBox>
@@ -143,6 +153,15 @@ function OrderListDialogExecutionListInsert(props) {
 
                 <Collapse in={insertCkeck && insertId === order.id}>
                   <ConfirmBox>
+                    <ConfirmBoxCount>
+                      <ConfirmBoxCountText>數量</ConfirmBoxCountText>
+                      <input
+                        type="number"
+                        defaultValue={insertCount}
+                        onChange={(e) => setInsertCount(e.target.value)}
+                        className="insert-count"
+                      />
+                    </ConfirmBoxCount>
                     <ConfirmBoxButton
                       disableElevation
                       variant="contained"
@@ -151,14 +170,14 @@ function OrderListDialogExecutionListInsert(props) {
                     >
                       插單
                     </ConfirmBoxButton>
-                    <ConfirmBoxButton
+                    {/* <ConfirmBoxButton
                       disableElevation
                       variant="contained"
                       colorArray={[Colors.darkred, Colors.darkredHover]}
                       onClick={confirmCancelHandler}
                     >
                       取消
-                    </ConfirmBoxButton>
+                    </ConfirmBoxButton> */}
                   </ConfirmBox>
                 </Collapse>
               </Fragment>

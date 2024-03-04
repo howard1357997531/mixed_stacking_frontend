@@ -10,6 +10,9 @@ export const ImageBox = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     width: "100%",
   },
+  "@media screen and (orientation: portrait)": {
+    width: "100%",
+  },
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
@@ -79,9 +82,12 @@ export const BufferInfoBox = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "60px",
   padding: "0px 10px",
+  gap: "5px",
   borderBottom: `1px solid ${Colors.greyTextBlood}`,
   [theme.breakpoints.down("sm")]: {
+    padding: "0px",
     height: "50px",
+    gap: "0px",
   },
 }));
 
@@ -97,13 +103,24 @@ export const BufferInfoSmBox = styled(Box)(({ theme }) => ({
   fontWeight: 600,
 }));
 
-export const BufferInfoText = styled(Box)(({ theme }) => ({
-  // backgroundColor: Colors.greyText,
+export const BufferInfoImageText = styled(Typography)(({ theme }) => ({
   color: Colors.greyTextBlood,
-  padding: "5px 10px",
-  border: `2px solid ${Colors.greyTextBlood}`,
-  borderRadius: "5px",
+  fontSize: 14,
+  fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
-    padding: "4px 8px",
+    fontSize: 12,
+  },
+}));
+
+export const BufferInfoText = styled(Box)(({ theme }) => ({
+  color: Colors.darkPink,
+  backgroundColor: Colors.greyTextBlood,
+  padding: "4px 8px",
+  borderRadius: "5px",
+  fontSize: 14,
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: "10px",
+    padding: "3px 6px",
+    fontSize: 12,
   },
 }));

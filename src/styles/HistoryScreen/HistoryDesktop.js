@@ -46,7 +46,7 @@ export const HistoryBox = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   width: "48%",
   height: "90%",
-  padding: "5px 20px 20px",
+  padding: "10px 20px 15px",
   backgroundColor: Colors.lightOrange,
   borderRadius: "10px",
   [theme.breakpoints.down("md")]: {
@@ -55,6 +55,7 @@ export const HistoryBox = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
+    padding: "5px 8px 10px",
   },
 }));
 
@@ -276,7 +277,7 @@ export const HistoryResetAllBox = styled(Box)(({ theme }) => ({
   fontWeight: 600,
   borderBottom: `1px solid ${Colors.greyTextBlood}`,
   [theme.breakpoints.down("sm")]: {
-    height: "45px",
+    fontSize: 14,
   },
 }));
 

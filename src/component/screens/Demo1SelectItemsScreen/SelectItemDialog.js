@@ -118,6 +118,7 @@ function SelectItemDialog({ listDailogOpen, onListDailogOpen, data, data2 }) {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
+        className="demo1-select-item"
       >
         <StyleDialogTitle>
           <input type="text" placeholder="請輸入工單名稱" className="name" />

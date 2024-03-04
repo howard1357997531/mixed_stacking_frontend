@@ -30,7 +30,7 @@ export const DescText = styled(Typography, {
   padding: isTitle && "2px 8px 0px",
   display: isTitle && "inline-block",
   backgroundColor: isTitle && Colors.greyTextBlood,
-  borderRadius: "20px",
+  borderRadius: "2px",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
   },

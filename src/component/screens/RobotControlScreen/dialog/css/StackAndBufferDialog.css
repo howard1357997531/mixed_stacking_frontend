@@ -2,6 +2,18 @@
     width: 100% ;
 }
 
+.buffer-image img {
+    width: 65px ;
+    height: 55px;
+}
+
+@media screen and (max-width: 600px){
+    .buffer-image img {
+        width: 50px ;
+        height: 45px;
+    }
+}
+
 .stack-and-buffer::-webkit-scrollbar {
     width: 5px
 }

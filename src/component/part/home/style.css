@@ -1,4 +1,4 @@
-.dialog-box::-webkit-scrollbar {
+/* .dialog-box::-webkit-scrollbar {
     width: 10px
 }
 
@@ -38,7 +38,3 @@ input:focus {
 }
 
 /* operate-interface*/
-
-div:where(.swal2-container) {
-    z-index: 9999 !important;
-}

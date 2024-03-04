@@ -294,6 +294,7 @@ function OrderList(props) {
               className={dateClassName}
               style={{
                 width: matches_lg ? "150px" : matches_md ? "120px" : "160px",
+                height: "28%",
                 color: matches
                   ? colorMode
                     ? Colors.green

@@ -18,7 +18,6 @@ import OperationInterfaceBox3 from "./OperationInterfaceBox3";
 import InformationAreaTitle from "./InformationAreaTitle";
 import InformationAreaContent from "./InformationAreaContent";
 import InformationAreaBottom from "./InformationAreaBottom";
-import { Typography } from "@mui/material";
 import { Colors } from "../../../styles/theme";
 import { useSelector } from "react-redux";
 import "./css/OperationInterface.css";

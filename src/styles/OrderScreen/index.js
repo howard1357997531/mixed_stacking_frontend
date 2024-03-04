@@ -149,7 +149,7 @@ export const SearchSelect = styled(Box, {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  padding: "2px 8px",
+  padding: "2.5px 6px",
   color: mode ? Colors.green : Colors.lightOrange,
   backgroundColor: Colors.greyTextBlood,
   fontSize: "14px",

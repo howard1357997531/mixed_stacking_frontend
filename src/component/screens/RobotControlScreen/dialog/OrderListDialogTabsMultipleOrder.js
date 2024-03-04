@@ -185,6 +185,7 @@ function OrderListDialogTabsMultipleOrder({ onOrderListDialogOpen }) {
             className="input-date-orange"
             style={{
               width: "140px",
+              height: "28%",
               marginRight: "10px",
               color: matches ? Colors.orangeDialog : Colors.greyTextBlood,
               backgroundColor: matches && Colors.greyTextBlood,

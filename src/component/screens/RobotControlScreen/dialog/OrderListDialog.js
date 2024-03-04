@@ -46,8 +46,13 @@ function OrderListDialog(props) {
             width: "400px",
             height: "75vh",
             overflow: "hidden",
+            "@media screen and (orientation: portrait)": {
+              width: "500px",
+              height: "60vh",
+            },
             [theme.breakpoints.down("sm")]: {
               width: "80vw",
+              height: "75vh",
             },
           }}
         >

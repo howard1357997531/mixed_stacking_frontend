@@ -2,6 +2,9 @@
 swalRed: "#f27474",
 swalGreen: "#a5dc86",
 */
+div:where(.swal2-container) {
+    z-index: 9999 !important;
+} 
 
 .swal-info {
     background-color: #9de0f6;

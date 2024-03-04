@@ -10,6 +10,7 @@ import {
 import { Colors } from "../theme";
 
 export const RobotControlContainer = styled(Stack)(({ theme }) => ({
+  position: "relative",
   flexDirection: "row",
   alignItems: "center",
   height: "calc(100vh - 100px)",
@@ -22,6 +23,11 @@ export const RobotControlContainer = styled(Stack)(({ theme }) => ({
     flexDirection: "column",
     height: "initial",
     padding: "0px",
+  },
+  "@media screen and (orientation: portrait)": {
+    flexDirection: "column",
+    height: "initial",
+    marginTop: "30px",
   },
   [theme.breakpoints.down("sm")]: {
     marginTop: "calc(70px + 10px)",
@@ -44,9 +50,16 @@ export const OperationInterface = styled(Box)(({ theme }) => ({
     height: "60vh",
     marginBottom: "20px",
   },
+
+  "@media screen and (orientation: portrait)": {
+    width: "75%",
+    height: "50vh",
+    marginBottom: "30px",
+  },
   [theme.breakpoints.down("sm")]: {
     width: "95%",
     height: "calc(80vh - 70px)",
+    marginBottom: "20px",
   },
 }));
 
@@ -262,9 +275,15 @@ export const InformationArea = styled(Box)(({ theme }) => ({
     height: "75vh",
     marginBottom: "50px",
   },
+  "@media screen and (orientation: portrait)": {
+    width: "75%",
+    height: "50vh",
+    marginBottom: "30px",
+  },
   [theme.breakpoints.down("sm")]: {
     width: "95%",
     height: "calc(80vh - 70px)",
+    marginBottom: "20px",
   },
 }));
 
@@ -382,6 +401,11 @@ export const OrderListTitleButton = styled(Box)(({ theme }) => ({
   },
   "&:active": {
     transform: "scale(0.95), translateY(-50%)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: "3px 6px",
+    fontSize: 12,
+    right: "8%",
   },
 }));
 

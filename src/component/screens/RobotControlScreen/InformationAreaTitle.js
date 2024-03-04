@@ -22,11 +22,11 @@ function InformationAreaTitle({
     fontSize: "18px",
     color: Colors.greyTextBlood,
     [theme.breakpoints.down("sm")]: {
-      fontSize: 18,
+      fontSize: 14,
     },
   }));
 
-  const StyleAvatar = styled(Avatar)({
+  const StyleAvatar = styled(Avatar)(({ theme }) => ({
     display: "inline-flex",
     width: "22px",
     height: "22px",
@@ -34,7 +34,12 @@ function InformationAreaTitle({
     margin: "0px 5px",
     color: Colors.lightOrange,
     backgroundColor: Colors.blue500,
-  });
+    [theme.breakpoints.down("sm")]: {
+      width: "18px",
+      height: "18px",
+      fontSize: 12,
+    },
+  }));
 
   const dispatch = useDispatch();
 

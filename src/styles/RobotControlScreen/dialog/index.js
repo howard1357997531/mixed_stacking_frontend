@@ -23,9 +23,12 @@ import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefault
 export const OrderDialogBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   width: "100%",
-  height: "70vh",
+  height: "calc(75vh - 48px)",
+  "@media screen and (orientation: portrait)": {
+    height: "calc(60vh - 48px)",
+  },
   [theme.breakpoints.down("sm")]: {
-    height: "70vh",
+    height: "calc(75vh - 48px)",
   },
 }));
 
@@ -44,7 +47,7 @@ export const OrderDialogSearchSelect = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   marginRight: "15px",
-  padding: "2px 8px 1.5px",
+  padding: "2.5px 6px",
   color: Colors.orangeDialog,
   backgroundColor: Colors.greyTextBlood,
   fontSize: "14px",
@@ -54,8 +57,11 @@ export const OrderDialogSearchSelect = styled(Box)(({ theme }) => ({
     cursor: "pointer",
     backgroundColor: Colors.grey900,
   },
+  "@media screen and (orientation: portrait)": {
+    padding: "3px 8px",
+  },
   [theme.breakpoints.down("sm")]: {
-    padding: "1.5px 6px",
+    padding: "2px 6px",
     fontSize: "12px",
   },
 }));
@@ -151,6 +157,9 @@ export const OrderListExeListTitleBox = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${Colors.brownHover}`,
   color: Colors.greyTextBlood,
   fontWeight: 600,
+  "@media screen and (orientation: portrait)": {
+    fontSize: 18,
+  },
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
   },
@@ -271,7 +280,14 @@ export const IndexText = styled(Avatar, {
     : data[1]
     ? Colors.green
     : Colors.greyTextBlood,
+  "@media screen and (orientation: portrait)": {
+    width: "26px",
+    height: "26px",
+    fontSize: "14px",
+    left: "10px",
+  },
   [theme.breakpoints.down("sm")]: {
+    left: "8px",
     width: "20px",
     height: "20px",
     fontSize: "12px",
@@ -299,8 +315,12 @@ export const InsertText = styled(Typography, {
   fontSize: 14,
   fontWeight: 600,
   borderRadius: "2px",
+  "@media screen and (orientation: portrait)": {
+    left: "45px",
+    fontSize: 14,
+  },
   [theme.breakpoints.down("sm")]: {
-    left: "33px",
+    left: "34px",
     fontSize: 12,
   },
 }));
@@ -314,6 +334,9 @@ export const OrderText = styled(Typography, {
     ? Colors.green
     : Colors.greyTextBlood,
   fontWeight: 600,
+  "@media screen and (orientation: portrait)": {
+    fontSize: 16,
+  },
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
   },
@@ -330,8 +353,11 @@ export const WaitToExecuteText = styled(Typography)(({ theme }) => ({
   border: `2px solid ${Colors.darkGreen}`,
   borderRadius: "30px",
   animation: `${OrderListExeListWaitToExecuteAnimation} 1s ease-in-out infinite`,
+  "@media screen and (orientation: portrait)": {
+    right: "42px",
+  },
   [theme.breakpoints.down("sm")]: {
-    right: "30px",
+    right: "33px",
     fontSize: 12,
   },
 }));
@@ -383,25 +409,46 @@ export const OrderListExeListInsertName = styled(Box)(({ theme }) => ({
 export const ConfirmBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
-  justifyContent: "space-evenly",
+  justifyContent: "center",
+  alignItems: "center",
   width: "calc(100% - 4px)",
   padding: "10px 0px",
   borderBottom: `1px solid ${Colors.brownHover}`,
+  gap: "20px",
 }));
 
-export const ConfirmBoxButton = styled(Button, {
+export const ConfirmBoxCount = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+}));
+
+export const ConfirmBoxCountText = styled(Typography)(({ theme }) => ({
+  marginRight: 5,
+  color: Colors.greyTextBlood,
+  fontSize: 16,
+  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
+}));
+
+export const ConfirmBoxButton = styled(Box, {
   shouldForwardProp: (prop) => prop !== "colorArray",
 })(({ theme, colorArray }) => ({
-  padding: "6px 0px 2px",
-  fontSize: 16,
+  padding: "4px 8px",
+  fontSize: 14,
   fontWeight: 600,
   color: Colors.greyTextBlood,
   backgroundColor: colorArray[0],
+  borderRadius: "2px",
   "&:hover": {
+    cursor: "pointer",
     backgroundColor: colorArray[1],
   },
   [theme.breakpoints.down("md")]: {
-    padding: "3px 0px",
+    fontSize: 12,
+    padding: "3px 6px",
   },
 }));
 
@@ -432,6 +479,11 @@ export const OrderListExeListCheck = styled(CheckCircleIcon)(({ theme }) => ({
   fontSize: "24px",
   color: Colors.green,
   animation: `${OrderListExeListCheckAnimation} 1s ease`,
+  "@media screen and (orientation: portrait)": {
+    right: "10px",
+    top: "calc(50% - 13px)",
+    fontSize: 26,
+  },
   [theme.breakpoints.down("sm")]: {
     top: "calc(50% - 10px)",
     fontSize: 20,
@@ -449,7 +501,10 @@ export const OrderListExeListReset = styled(Typography)(({ theme }) => ({
   color: Colors.softOrange,
   backgroundColor: Colors.greyTextBlood,
   borderRadius: "2px",
-  // border: `2px solid ${Colors.greyTextBlood}`,
+  "@media screen and (orientation: portrait)": {
+    right: "10px",
+    fontSize: 14,
+  },
   [theme.breakpoints.down("sm")]: {
     fontSize: 12,
   },
@@ -475,6 +530,11 @@ export const OrderListExeListDelete = styled(DisabledByDefaultOutlinedIcon)(
     },
     "&:active": {
       transform: "scale(0.8)",
+    },
+    "@media screen and (orientation: portrait)": {
+      top: "calc(50% - 13px)",
+      right: "10px",
+      fontSize: 26,
     },
     [theme.breakpoints.down("sm")]: {
       top: "calc(50% - 10px)",
