@@ -17,13 +17,20 @@ import CloseIcon from "@mui/icons-material/Close";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-export const OrderContainer = styled(Box)(({ theme }) => ({
+export const OrderContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
+  boxSizing: "border-box",
   display: "flex",
-  flexDirection: "row",
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
   height: "calc(100vh - 100px)",
+  "@media screen and (orientation: portrait)": {
+    marginTop: mode ? "0px" : "70px",
+    height: !mode && "initial",
+    // paddingBottom: mode ? "15px" : "0px",
+  },
   [theme.breakpoints.down("md")]: {
     marginTop: "calc(100px + 10px)",
     flexDirection: "column",
@@ -31,18 +38,24 @@ export const OrderContainer = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     marginTop: "calc(70px + 10px)",
+    paddingBottom: "0px",
   },
 }));
 
-export const OrderBox = styled(Box)(({ theme }) => ({
+export const OrderBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "20px",
   width: "80%",
-  height: "90%",
+  height: "100%",
   [theme.breakpoints.down("lg")]: {
     width: "90%",
+  },
+  "@media screen and (orientation: portrait)": {
+    flexDirection: "column",
   },
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
@@ -59,18 +72,24 @@ export const OrderListBox = styled(Box, {
   position: "relative",
   flexDirection: "column",
   width: "48%",
-  height: "100%",
+  height: "90%",
   padding: "10px 20px 15px",
-  gap: "5px",
   backgroundColor: mode ? Colors.green : Colors.lightOrange,
   borderRadius: "10px",
+  gap: "5px",
   [theme.breakpoints.down("md")]: {
     width: "70vw",
     height: "75vh",
   },
+  "@media screen and (orientation: portrait)": {
+    width: "65vw",
+    height: "65vh",
+    marginBottom: "20px",
+  },
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
     height: "calc(80vh - 70px)",
+    marginBottom: "0px",
     padding: "5px 8px 10px",
   },
 }));
@@ -86,7 +105,12 @@ export const OrderSwitchBox = styled(Box)(({ theme }) => ({
     display: "flex",
     width: "70vw",
   },
+  "@media screen and (orientation: portrait)": {
+    top: "-39px",
+    width: "65vw",
+  },
   [theme.breakpoints.down("sm")]: {
+    top: "-33px",
     width: "85vw",
   },
 }));
@@ -118,6 +142,13 @@ export const OrderSwitchBtn = styled(Box)(({ theme }) => ({
     "&:active": {
       transform: "scale(.98)",
     },
+  },
+  "@media screen and (orientation: portrait)": {
+    padding: "8px 10px",
+    width: "50%",
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: "5px 10px",
   },
 }));
 
@@ -175,6 +206,9 @@ export const OrderListNavBtnBox = styled(Box)(({ theme }) => ({
   gap: "20px",
   [theme.breakpoints.down("lg")]: {
     gap: "10px",
+  },
+  "@media screen and (orientation: portrait)": {
+    gap: "20px",
   },
   [theme.breakpoints.down("sm")]: {
     paddingTop: "5px",
@@ -522,13 +556,13 @@ export const StyleHelpRoundedIcon = styled(HelpRoundedIcon)(({ theme }) => ({
 export const FunctionAreaBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "mode",
 })(({ theme, mode }) => ({
+  boxSizing: "border-box",
   position: "relative",
   display: ["close", "noMultipleOrder"].includes(mode) ? "none" : "flex",
   flexDirection: "column",
   width: "48%",
-  height: "100%",
+  height: "90%",
   padding: "10px 20px 15px",
-  boxSizing: "border-box",
   borderRadius: "10px",
   gap: "5px",
   backgroundColor: ["multipleOrder", "multipleOrderCreate"].includes(mode)
@@ -540,12 +574,23 @@ export const FunctionAreaBox = styled(Box, {
     width: "70vw",
     height: "75vh",
   },
+  "@media screen and (orientation: portrait)": {
+    width: "65vw",
+    height: "65vh",
+    marginBottom: "30px",
+  },
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
     height: "calc(80vh - 70px)",
-    marginBottom:
-      ["close", "orderDetail", "aiResult", "edit", "delete"].includes(mode) &&
-      "55px",
+    marginBottom: [
+      "close",
+      "orderDetail",
+      "aiResult",
+      "edit",
+      "delete",
+    ].includes(mode)
+      ? "55px"
+      : "0px",
     padding: "5px 12px 10px",
   },
 }));

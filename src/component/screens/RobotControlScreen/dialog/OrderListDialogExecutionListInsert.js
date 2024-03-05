@@ -29,7 +29,6 @@ import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
 import { OrderListContentMsg } from "../../../../styles/OrderScreen";
 import { Colors } from "../../../../styles/theme";
 import { selectInsertOrderAction } from "../../../../redux/actions/RobotControlScreenAction";
-import { teal } from "@mui/material/colors";
 
 function OrderListDialogExecutionListInsert(props) {
   const dispatch = useDispatch();
@@ -63,18 +62,13 @@ function OrderListDialogExecutionListInsert(props) {
   const [insertCkeck, setInsertCheck] = useState(false);
   const [insertId, setInsertId] = useState(null);
 
-  const confirmHandler = (id, index) => {
+  const confirmHandler = (id) => {
     if (id === insertId || !insertId) {
       setInsertCheck((prev) => !prev);
     } else if (id !== insertId) {
       setInsertCheck(true);
     }
     setInsertId(id);
-  };
-
-  const confirmCancelHandler = () => {
-    setInsertCheck(false);
-    setInsertId(null);
   };
 
   const orderDetailHandler = (e, id) => {
@@ -106,8 +100,6 @@ function OrderListDialogExecutionListInsert(props) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // console.log(insertCount);
-
   return (
     <OrderListExeListBox>
       <OrderListExeListTitleBox>
@@ -134,7 +126,7 @@ function OrderListDialogExecutionListInsert(props) {
                 <OrderListExeListInsertName
                   onMouseEnter={() => mouseEnterHandler(order.id)}
                   onMouseLeave={mouseLeaveHandler}
-                  onClick={() => confirmHandler(order.id, index)}
+                  onClick={() => confirmHandler(order.id)}
                 >
                   <Typography sx={{ fontWeight: 600, fontSize: matches && 14 }}>
                     {order.name}
@@ -170,14 +162,6 @@ function OrderListDialogExecutionListInsert(props) {
                     >
                       插單
                     </ConfirmBoxButton>
-                    {/* <ConfirmBoxButton
-                      disableElevation
-                      variant="contained"
-                      colorArray={[Colors.darkred, Colors.darkredHover]}
-                      onClick={confirmCancelHandler}
-                    >
-                      取消
-                    </ConfirmBoxButton> */}
                   </ConfirmBox>
                 </Collapse>
               </Fragment>

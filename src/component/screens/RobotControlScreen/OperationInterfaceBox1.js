@@ -173,7 +173,6 @@ function OperationInterfaceBox1({
         </OperationInterfaceButtonText>
       </FortyRadioWidthButton>
 
-      {/* customColor={[VisualIdentityBoxColor, VisualIdentityBoxHoverColor] */}
       <SixtyRadioWidthButton
         customColor={[Colors.darkPink, Colors.darkPinkHover]}
         onClick={stackAndBufferDialogOpenHandler}

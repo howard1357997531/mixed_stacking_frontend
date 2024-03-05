@@ -5,11 +5,17 @@ export const OrderBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   flexDirection: "column",
-  width: "100%",
-  height: "500px",
   padding: "5px 10px",
+  width: "100%",
+  height: "calc(75vh - 50px)",
   [theme.breakpoints.down("md")]: {
-    height: "65vh",
+    height: "calc(65vh - 50px)",
+  },
+  "@media screen and (orientation: portrait)": {
+    height: "calc(60vh - 50px)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "calc(75vh - 50px)",
   },
 }));
 
@@ -21,7 +27,7 @@ export const DescText = styled(Typography, {
   padding: isTitle && "2px 8px 0px",
   display: isTitle && "inline-block",
   backgroundColor: isTitle && Colors.greyTextBlood,
-  borderRadius: "20px",
+  borderRadius: "2px",
   [theme.breakpoints.down("md")]: {
     fontSize: 14,
   },

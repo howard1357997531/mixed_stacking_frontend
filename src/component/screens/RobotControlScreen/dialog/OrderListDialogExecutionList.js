@@ -76,6 +76,17 @@ function OrderListDialogExecutionList(props) {
               dispatch(
                 executeRobotFinishAction(robotExecutionData, executionListQueue)
               );
+
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.orderSelect,
+                payload: { data: [] },
+              });
+
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
+                payload: { data: [] },
+              });
+
               dispatch({
                 type: ROBOT_CONTROL_SCREEN.informationArea,
                 payload: { mode: "resetAll" },

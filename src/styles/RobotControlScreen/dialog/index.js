@@ -252,7 +252,7 @@ export const OrderListExeListName = styled(Box, {
     ? Colors.softOrange
     : data[1]
     ? Colors.darkGreen
-    : "transparent",
+    : Colors.orangeDialogHover,
   borderTop: data[2] ? "none" : `1px solid ${Colors.brownHover}`,
   [theme.breakpoints.down("sm")]: {
     height: "50px",
@@ -412,7 +412,7 @@ export const ConfirmBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   width: "calc(100% - 4px)",
-  padding: "10px 0px",
+  padding: "15px 0px",
   borderBottom: `1px solid ${Colors.brownHover}`,
   gap: "20px",
 }));
@@ -424,7 +424,7 @@ export const ConfirmBoxCount = styled(Box)(({ theme }) => ({
 }));
 
 export const ConfirmBoxCountText = styled(Typography)(({ theme }) => ({
-  marginRight: 5,
+  marginRight: 8,
   color: Colors.greyTextBlood,
   fontSize: 16,
   fontWeight: 600,
@@ -436,10 +436,10 @@ export const ConfirmBoxCountText = styled(Typography)(({ theme }) => ({
 export const ConfirmBoxButton = styled(Box, {
   shouldForwardProp: (prop) => prop !== "colorArray",
 })(({ theme, colorArray }) => ({
-  padding: "4px 8px",
+  padding: "5px 10px",
   fontSize: 14,
   fontWeight: 600,
-  color: Colors.greyTextBlood,
+  color: Colors.orangeDialog,
   backgroundColor: colorArray[0],
   borderRadius: "2px",
   "&:hover": {

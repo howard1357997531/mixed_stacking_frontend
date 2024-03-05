@@ -32,8 +32,16 @@ function OrderDetailDialog(props) {
             backgroundColor: page ? Colors.greenDialog : Colors.orangeDialog,
             padding: 0,
             width: "600px",
+            height: "75vh",
             [theme.breakpoints.down("md")]: {
               width: "80vw",
+            },
+            "@media screen and (orientation: portrait)": {
+              height: "60vh",
+            },
+            [theme.breakpoints.down("sm")]: {
+              width: "80vw",
+              height: "75vh",
             },
           }}
         >

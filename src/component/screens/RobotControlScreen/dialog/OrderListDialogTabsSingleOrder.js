@@ -4,7 +4,6 @@ import ErrorMsgBox from "../../../../tool/ErrorMsgBox";
 import {
   OrderListContentMsg,
   StyleCancelButton,
-  StyleCloseIcon,
   StyleSearchIcon,
 } from "../../../../styles/OrderScreen";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,8 +30,6 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import CancelIcon from "@mui/icons-material/Cancel";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 

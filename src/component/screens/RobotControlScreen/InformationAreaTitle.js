@@ -21,8 +21,11 @@ function InformationAreaTitle({
     fontWeight: 600,
     fontSize: "18px",
     color: Colors.greyTextBlood,
+    "@media screen and (orientation: portrait)": {
+      fontSize: 18,
+    },
     [theme.breakpoints.down("sm")]: {
-      fontSize: 14,
+      fontSize: 16,
     },
   }));
 

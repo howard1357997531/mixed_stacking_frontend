@@ -15,7 +15,7 @@ function OperationInterfaceBox3({
   realtimeItemMode,
   realtimeItemCount,
 }) {
-  const { text: robotStateText, pause: robotStatePause } = useSelector(
+  const { pause: robotStatePause } = useSelector(
     (state) => state.robotControlScreen_robotState
   );
 

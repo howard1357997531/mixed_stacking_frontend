@@ -11,6 +11,7 @@ import { Colors } from "../theme";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 export const HistoryContainer = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -19,8 +20,13 @@ export const HistoryContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     marginTop: "calc(100px)",
   },
+  "@media screen and (orientation: portrait)": {
+    paddingBottom: "15px",
+  },
+
   [theme.breakpoints.down("sm")]: {
     marginTop: "calc(70px + 10px)",
+    paddingBottom: "0px",
   },
 }));
 
@@ -53,8 +59,13 @@ export const HistoryBox = styled(Box)(({ theme }) => ({
     width: "70vw",
     height: "75vh",
   },
+  "@media screen and (orientation: portrait)": {
+    width: "65vw",
+    height: "65vh",
+  },
   [theme.breakpoints.down("sm")]: {
     width: "85vw",
+    height: "75vh",
     padding: "5px 8px 10px",
   },
 }));
@@ -108,13 +119,11 @@ export const HistoryListDate = styled(Typography, {
 export const HistoryListDetial = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
-  // justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
   height: "55px",
   marginBottom: "7px",
-  paddingLeft: "15px",
-  paddingRight: "10px",
+  padding: "0px 10px",
   color: Colors.greyTextBlood,
   fontWeight: 600,
   backgroundColor: Colors.lightOrangeHover,
@@ -129,15 +138,20 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
     height: "50px",
     fontSize: "14px",
   },
+  [theme.breakpoints.down("sm")]: {
+    padding: "0px 8px",
+    height: "50px",
+    fontSize: "14px",
+  },
 }));
 
 export const HistoryName = styled(Typography)(({ theme }) => ({
-  marginRight: 2,
+  marginRight: "8px",
   color: Colors.greyTextBlood,
   fontSize: 15,
   fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
-    marginRight: 0,
+    marginRight: "4px",
     fontSize: 13,
   },
 }));
@@ -146,16 +160,21 @@ export const HistoryStateMulti = styled(Typography)(({ theme }) => ({
   marginRight: "2px",
   color: Colors.greyTextBlood,
   fontSize: 12,
+  fontWeight: 600,
 }));
 
 export const HistoryStateCount = styled(Typography)(({ theme }) => ({
+  marginRight: "7px",
   color: Colors.greyTextBlood,
   fontSize: 12,
+  fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "3px",
+  },
 }));
 
 export const HistoryResetState = styled(Typography)(({ theme }) => ({
   boxSizing: "border-box",
-  marginLeft: "10px",
   marginRight: "4px",
   padding: "3px 6px",
   color: Colors.greyTextBlood,
@@ -164,38 +183,38 @@ export const HistoryResetState = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   borderRadius: "2px",
   [theme.breakpoints.down("sm")]: {
-    padding: "2px 3px",
+    padding: "2px 4px",
     fontSize: 12,
   },
 }));
 
 export const HistoryInsertState = styled(Typography)(({ theme }) => ({
   boxSizing: "border-box",
-  marginLeft: "10px",
   marginRight: "4px",
   padding: "3px 6px",
-  color: Colors.greyTextBlood,
+  color: Colors.lightOrangeHover,
   backgroundColor: Colors.blue500,
   fontSize: 14,
   fontWeight: 600,
   borderRadius: "2px",
   [theme.breakpoints.down("sm")]: {
-    padding: "2px 3px",
+    padding: "2px 4px",
     fontSize: 12,
   },
 }));
 
 export const HistoryResetAllState = styled(Typography)(({ theme }) => ({
   boxSizing: "border-box",
-  marginLeft: "10px",
+  marginRight: "8px",
   padding: "3px 6px",
-  color: Colors.orangeDialog,
+  color: Colors.lightOrangeHover,
   backgroundColor: Colors.red800,
   fontSize: 14,
   fontWeight: 600,
   borderRadius: "2px",
   [theme.breakpoints.down("sm")]: {
-    padding: "2px 3px",
+    marginRight: "4px",
+    padding: "2px 4px",
     fontSize: 12,
   },
 }));
@@ -208,9 +227,9 @@ export const HistoryTime = styled(Typography)(({ theme }) => ({
   alignItems: "center",
   color: Colors.greyTextBlood,
   fontSize: 14,
-  fnotWeight: 600,
+  fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
-    fontSize: 13,
+    fontSize: 12,
   },
 }));
 
@@ -239,7 +258,12 @@ export const StyleDialogContent = styled(DialogContent)(({ theme }) => ({
   backgroundColor: Colors.lightOrangeHover,
   [theme.breakpoints.down("md")]: {
     width: "80vw",
-    // height: "65vh",
+  },
+  "@media screen and (orientation: portrait)": {
+    height: "60vh",
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "65vh",
   },
 }));
 
@@ -303,7 +327,7 @@ export const FirstBox = styled(Box, {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  color: isReset ? Colors.greyTextBlood : Colors.greyTextBlood,
+  color: isReset ? Colors.greyTextBlood : Colors.orangeDialog,
   backgroundColor: isReset ? Colors.softOrange : Colors.blue500,
   width: "6%",
   height: "100%",

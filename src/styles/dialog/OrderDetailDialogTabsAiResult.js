@@ -8,9 +8,15 @@ export const OrderBox = styled(Box)(({ theme }) => ({
   paddingTop: "5px",
   paddingLeft: "10px",
   width: "100%",
-  height: "500px",
+  height: "calc(75vh - 50px)",
   [theme.breakpoints.down("md")]: {
-    height: "65vh",
+    height: "calc(65vh - 50px)",
+  },
+  "@media screen and (orientation: portrait)": {
+    height: "calc(60vh - 50px)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "calc(75vh - 50px)",
   },
 }));
 
@@ -37,6 +43,10 @@ export const AiResultImageBackBtn = styled(Button, {
     padding: "5px 0px 3px",
     marginTop: "15px",
   },
+  [theme.breakpoints.down("sm")]: {
+    padding: "3px 0px",
+    marginTop: "15px",
+  },
 }));
 
 export const AiResultImageBtn = styled(Box, {
@@ -54,6 +64,9 @@ export const AiResultImageBtn = styled(Box, {
   },
   "&:active": {
     transform: "scale(.95)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: "2px 6px",
   },
 }));
 

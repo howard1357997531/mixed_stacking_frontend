@@ -238,12 +238,16 @@ function InformationAreaContent({
           <RobotSuccessTitle
             sx={{ color: informationAreaMode === "reset" && Colors.softOrange }}
           >
-            {informationAreaMode === "success" ? "執行成功" : "中斷成功"}
+            {executeOrderIdArray.length === 0
+              ? "全部執行完畢"
+              : informationAreaMode === "success"
+              ? "執行成功"
+              : "中斷成功"}
           </RobotSuccessTitle>
 
           <RobotSuccessSubTitle>
             {executeOrderIdArray.length === 0
-              ? "請重新選擇工單"
+              ? "過程以保存至歷史紀錄"
               : `執行進度 (${queue}/${executeOrderIdArray.length})`}
           </RobotSuccessSubTitle>
         </RobotSuccessBox>

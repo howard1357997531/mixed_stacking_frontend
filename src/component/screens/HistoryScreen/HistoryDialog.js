@@ -85,8 +85,6 @@ export default function HistoryDialog({ open, closeOpen, data }) {
     }
   }
 
-  // console.log(historyData);
-
   return data.id ? (
     <React.Fragment>
       <BootstrapDialog

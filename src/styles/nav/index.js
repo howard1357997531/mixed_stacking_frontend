@@ -70,9 +70,19 @@ export const UpBtn = styled(KeyboardArrowUpIcon, {
   bottom: "9%",
   right: "5%",
   zIndex: 9999,
-  opacity: "70%",
+  opacity: "80%",
   width: "45px",
   height: "45px",
   backgroundColor: Colors.blue500,
   borderRadius: "50%",
+  "@media screen and (orientation: portrait)": {
+    right: "4%",
+    width: "60px",
+    height: "60px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    right: "5%",
+    width: "45px",
+    height: "45px",
+  },
 }));

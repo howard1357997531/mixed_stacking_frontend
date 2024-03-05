@@ -112,7 +112,7 @@ export const SixtyRadioWidthButton = styled(Box, {
   },
   [theme.breakpoints.down("sm")]: {
     width: "55%",
-    padding: "25px 30px",
+    padding: "25px 20px",
   },
 }));
 
@@ -369,6 +369,9 @@ export const RobotSuccessTitle = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     fontSize: 30,
   },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 26,
+  },
 }));
 
 export const RobotSuccessSubTitle = styled(Typography)(({ theme }) => ({
@@ -377,30 +380,36 @@ export const RobotSuccessSubTitle = styled(Typography)(({ theme }) => ({
   alignItems: "flex-start",
   height: "50%",
   color: Colors.greyTextBlood,
+  fontSize: 14,
   fontWeight: 600,
-  fontSize: "14px",
   marginTop: 2,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 13,
+  },
 }));
 
 export const OrderListTitleButton = styled(Box)(({ theme }) => ({
   position: "absolute",
-  top: "55%",
+  top: "51%",
   right: "10%",
   transform: "translateY(-50%)",
-  padding: "3px 6px",
+  padding: "4px 8px",
   fontSize: 14,
   fontWeight: 600,
   color: Colors.lightOrange,
   backgroundColor: Colors.greyTextBlood,
   borderRadius: "5px",
   "&:hover": {
+    cursor: "pointer",
     transition: "scale 0.3s ease-in-out",
     transform: "scale(1.05), translateY(-50%)",
-    cursor: "pointer",
-    backgroundColor: Colors.grey900,
   },
   "&:active": {
     transform: "scale(0.95), translateY(-50%)",
+  },
+  "@media screen and (orientation: portrait)": {
+    padding: "4px 8px",
+    fontSize: 15,
   },
   [theme.breakpoints.down("sm")]: {
     padding: "3px 6px",
@@ -474,15 +483,15 @@ export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
 export const OrderListContentAvatar = styled(Avatar, {
   shouldForwardProp: (prop) => prop !== "count",
 })(({ theme, count }) => ({
-  width: "28px",
-  height: "28px",
-  fontSize: "14px",
+  width: "24px",
+  height: "24px",
+  fontSize: "13px",
   color: count ? Colors.blue500 : Colors.lightOrange,
   backgroundColor: count ? Colors.lightOrange : Colors.greyTextBlood,
-  [theme.breakpoints.down("md")]: {
-    width: "28px",
-    height: "28px",
-    fontSize: "13px",
+  [theme.breakpoints.down("sm")]: {
+    width: "22px",
+    height: "22px",
+    fontSize: "12px",
   },
 }));
 
@@ -556,6 +565,7 @@ export const MultiOrderAvatar = styled(Avatar, {
   height: "23px",
   width: "23px",
   fontSize: "11px",
+  fontWeight: 600,
   color: isDoing ? Colors.blue500 : Colors.lightOrange,
   backgroundColor: isDoing ? Colors.lightOrange : Colors.greyTextBlood,
   [theme.breakpoints.down("lg")]: {
@@ -567,6 +577,11 @@ export const MultiOrderAvatar = styled(Avatar, {
     height: "20px",
     width: "20px",
     fontSize: "9px",
+  },
+  "@media screen and (orientation: portrait)": {
+    height: "22px",
+    width: "22px",
+    fontSize: "10px",
   },
   [theme.breakpoints.down("sm")]: {
     height: "18px",

@@ -499,6 +499,16 @@ export const executeRobotFinishAction =
       });
     } catch (error) {}
     dispatch({
+      type: ROBOT_CONTROL_SCREEN.orderSelect,
+      payload: { data: [] },
+    });
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
+      payload: { data: [] },
+    });
+
+    dispatch({
       type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
     });
   };

@@ -166,13 +166,6 @@ function HistoryDesktop() {
                           {parseCount(order.order_id)} 單
                         </HistoryName>
 
-                        {parseState(order.reset_all_index) ? (
-                          <Fragment>
-                            <HistoryResetAllState>
-                              全部中斷
-                            </HistoryResetAllState>
-                          </Fragment>
-                        ) : null}
                         {/* 只要使用全部中斷裡面一定包含1個中斷(除了執行中的第一單中斷之外) */}
                         {/* 若使用全部中斷會減去1個中斷(除了執行中的第一單中斷之外) */}
                         {/* 若中斷 === 0 就不會顯示 */}
@@ -200,6 +193,10 @@ function HistoryDesktop() {
                               )}
                             </HistoryStateCount>
                           </Fragment>
+                        ) : null}
+
+                        {parseState(order.reset_all_index) ? (
+                          <HistoryResetAllState>全部中斷</HistoryResetAllState>
                         ) : null}
 
                         <HistoryTime>
