@@ -25,10 +25,6 @@ function OperationInterfaceBox3({
 
   const boxText = {
     inactivate: { text: "已選擇工單", color: Colors.greyTextBlood },
-    reset: {
-      text: `預備執行第 ${queue + 1} 份工單`,
-      color: Colors.greyTextBlood,
-    },
     prepare: {
       text: `準備操作第${realtimeItemCount}個物件`,
       color: Colors.purple,
@@ -39,8 +35,21 @@ function OperationInterfaceBox3({
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
     success: {
-      text: `預備執行第 ${queue + 1} 份工單`,
-      color: Colors.greyTextBlood,
+      // text: `預備執行第 ${queue + 1} 份工單`,
+      text: `待機中`,
+      color: Colors.darkGreenHover,
+    },
+    reset: {
+      text: `已中斷，待機中`,
+      color: Colors.softOrange,
+    },
+    autoSuccess: {
+      text: `準備自動執行下一單`,
+      color: Colors.blue500,
+    },
+    retrieve: {
+      text: `準備取回所有箱子`,
+      color: Colors.darkGreenHover,
     },
     buffer: { text: "錯誤!! 夾至 Buffer 區", color: Colors.red800 },
     buffer_to_main: {
@@ -61,13 +70,31 @@ function OperationInterfaceBox3({
         )}
 
         {executeOrderIdArray.length !== 0 &&
-          ["inactivate", "success", "reset"].includes(robotStateMode) && (
+          [
+            "inactivate",
+            "success",
+            "reset",
+            "autoSuccess",
+            "retrieve",
+          ].includes(robotStateMode) && (
             <>
               <TextShowBoardText
                 sx={{ color: boxText[robotStateMode]["color"] }}
               >
                 {boxText[robotStateMode]["text"]}
               </TextShowBoardText>
+
+              {robotStateMode !== "inactivate" ? (
+                <Dot
+                  dotColor={
+                    robotStateMode === "success"
+                      ? Colors.darkGreenHover
+                      : robotStateMode === "autoSuccess"
+                      ? Colors.blue500
+                      : Colors.softOrange
+                  }
+                />
+              ) : null}
             </>
           )}
 
@@ -75,13 +102,13 @@ function OperationInterfaceBox3({
           <>
             <TextShowBoardText
               sx={{
-                color: Colors.blue,
+                color: Colors.blue500,
               }}
             >
               {"啟動手臂中"}
             </TextShowBoardText>
             {robotStateMode === "activate" ? (
-              <Dot dotColor={Colors.blue} />
+              <Dot dotColor={Colors.blue500} />
             ) : null}
           </>
         ) : null}

@@ -33,7 +33,7 @@ import {
   robotSettingAction,
 } from "../../../../redux/actions/RobotControlScreenAction";
 import OrderListDialogExecutionListInsertDetail from "./OrderListDialogExecutionListInsertDetail";
-import { confirmSwal } from "../../../../swal";
+import { confirmSwal, confirmSwal2 } from "../../../../swal";
 import { ROBOT_CONTROL_SCREEN } from "../../../../redux/constants";
 
 function OrderListDialogExecutionList(props) {
@@ -67,9 +67,9 @@ function OrderListDialogExecutionList(props) {
   };
 
   const stopAllBtnHandler = () => {
-    confirmSwal("警告", "確定要全部中斷 ?").then((result) => {
+    confirmSwal("警告", "要全部中斷 ?").then((result) => {
       if (result.isConfirmed) {
-        confirmSwal("二次警告", "確定要全部中斷 ?").then((result) => {
+        confirmSwal2("二次警告", "確定要全部中斷 ?").then((result) => {
           if (result.isConfirmed) {
             dispatch(robotSettingAction("reset", 20, true));
             setTimeout(() => {

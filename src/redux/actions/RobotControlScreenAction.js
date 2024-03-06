@@ -6,7 +6,13 @@ import {
   ROBOT_CONTROL_SCREEN_API_executeRobot,
   ROBOT_CONTROL_SCREEN_API_robotSetting,
 } from "../constants";
-import { basicSwal, confirmSwal, confirmSwal2, timerSwal } from "../../swal";
+import {
+  basicSwal,
+  confirmSwal,
+  confirmSwal2,
+  standBySwal,
+  timerSwal,
+} from "../../swal";
 import { Colors } from "../../styles/theme";
 import { domain } from "../../env";
 import axios from "axios";
@@ -87,16 +93,7 @@ const parseOrderName = (data) => {
 };
 
 const parseAllData = (data) => {
-  // var idToAllData = {};
-  // data.multipleOrder.forEach(
-  //   (order) => (idToAllData[order.order.id] = order.order)
-  // );
-
-  // const nameArray = parseOrderId(data);
-
   const output = data.multipleOrder.map((order) => order.order);
-
-  // return nameArray.map((order) => idToAllData[order]);
   return output;
 };
 
@@ -188,11 +185,15 @@ export const executeRobotAction =
       const month = monthTemp >= 10 ? monthTemp : `0${monthTemp}`;
       const day =
         parseInt(date.getDate()) >= 10 ? date.getDate() : `0${date.getDate()}`;
+      const hour =
+        parseInt(date.getHours()) >= 10
+          ? date.getHours()
+          : `0${date.getHours()}`;
       const minute =
         parseInt(date.getMinutes()) >= 10
           ? date.getMinutes()
           : `0${date.getMinutes()}`;
-      const dateInfo = `${date.getFullYear()}/${month}/${day} ${date.getHours()}:${minute}`;
+      const dateInfo = `${date.getFullYear()}/${month}/${day} ${hour}:${minute}`;
 
       dispatch({
         type: ROBOT_CONTROL_SCREEN.robotExecutionList,
@@ -210,8 +211,7 @@ export const executeRobotAction =
       basicSwal("warning", "手臂執行中");
       return;
     } else {
-      const orderQueue =
-        executeLength !== 1 ? `(${queue}/${executeLength})` : "";
+      const orderQueue = `(${queue}/${executeLength})`;
       confirmSwal(
         "確定執行?",
         `${replaceInsertName(name.at(queue - 1))} ${orderQueue}`
@@ -274,10 +274,7 @@ export const executeRobotAction =
                   payload: { mode: is_success },
                 });
 
-                dispatch({
-                  type: ROBOT_CONTROL_SCREEN.robotState_reset,
-                  payload: is_success,
-                });
+                dispatch({ type: ROBOT_CONTROL_SCREEN.robotState_reset });
 
                 dispatch({
                   type: ROBOT_CONTROL_SCREEN.realtimeItem,
@@ -310,10 +307,6 @@ export const executeRobotAction =
               });
           } catch (error) {
             const err_msg = error.response.data.error_msg;
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotState_reset,
-              payload: "reset",
-            });
 
             dispatch({
               type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
@@ -377,106 +370,98 @@ export const robotSettingAction =
     }
   };
 
-export const robotExecutionAlertAction = (robotExecutionData) => (dispatch) => {
-  const { executeOrderId, name, allData, resetIndex } = robotExecutionData;
-  const queue = robotExecutionData.queue + 1;
+export const robotExecutionStandByAction =
+  (robotExecutionData) => (dispatch) => {
+    const { executeOrderId, allData, resetIndex } = robotExecutionData;
+    const queue = robotExecutionData.queue + 1;
 
-  confirmSwal(
-    `確定執行?`,
-    `${replaceInsertName(name.at(queue - 1))} (${queue}/${name.length})`
-  ).then((result) => {
-    if (result.isConfirmed) {
-      const orderId = executeOrderId.at(queue - 1);
-      const [allDataTemp] = allData.filter((order) => order.id === orderId);
-      try {
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.robotState,
-          payload: { mode: "activate" },
-        });
+    const orderId = executeOrderId.at(queue - 1);
+    const [allDataTemp] = allData.filter((order) => order.id === orderId);
+    try {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotState,
+        payload: { mode: "activate" },
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.orderSelect,
+        payload: { data: allDataTemp },
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.informationArea,
+        payload: { mode: "order" },
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+        payload: { queue },
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
+      });
+
+      axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
+        const state = res.data.robot_state;
+        const is_success = state === "finish" ? "success" : "reset";
 
         dispatch({
-          type: ROBOT_CONTROL_SCREEN.orderSelect,
-          payload: { data: allDataTemp },
+          type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
+          payload: res.data,
         });
 
         dispatch({
           type: ROBOT_CONTROL_SCREEN.informationArea,
-          payload: { mode: "order" },
+          payload: { mode: is_success },
+        });
+
+        dispatch({ type: ROBOT_CONTROL_SCREEN.robotState_reset });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.realtimeItem,
+          payload: { mode: null, count: null },
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+          payload: { mode: null, visualResult: [], visualCount: 1 },
         });
 
         dispatch({
           type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-          payload: { queue },
+          payload: { check: true },
         });
 
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
-        });
-
-        axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
-          const state = res.data.robot_state;
-          const is_success = state === "finish" ? "success" : "reset";
-
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
-            payload: res.data,
-          });
-
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN.informationArea,
-            payload: { mode: is_success },
-          });
-
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN.robotState_reset,
-            payload: is_success,
-          });
-
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN.realtimeItem,
-            payload: { mode: null, count: null },
-          });
-
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN.realtimeVisual,
-            payload: { mode: null, visualResult: [], visualCount: 1 },
-          });
-
+        if (state === "reset") {
+          const resetdata = [...resetIndex];
+          resetdata.push(queue - 1);
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-            payload: { check: true },
+            payload: { resetIndex: resetdata },
           });
+        } else if (state === "reset_all") {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
+          });
+        }
+      });
+    } catch (error) {
+      const err_msg = error.response.data.error_msg;
 
-          if (state === "reset") {
-            const resetdata = [...resetIndex];
-            resetdata.push(queue - 1);
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-              payload: { resetIndex: resetdata },
-            });
-          } else if (state === "reset_all") {
-            dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
-            });
-          }
-        });
-      } catch (error) {
-        const err_msg = error.response.data.error_msg;
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
+        payload: err_msg,
+      });
 
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.robotState_reset,
-          payload: "reset",
-        });
-
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN_API_executeRobot.fail,
-          payload: err_msg,
-        });
-
-        timerSwal("warning", err_msg, Colors.brownHover, 2000);
-      }
+      timerSwal("warning", err_msg, Colors.brownHover, 2000);
     }
-  });
+  };
+
+export const executeRobotAutoAction = () => async (dispatch) => {
+  try {
+    const { data } = axios.post(`${domain}/api/executeRobotAuto/`);
+  } catch (error) {}
 };
 
 export const executeRobotFinishAction =

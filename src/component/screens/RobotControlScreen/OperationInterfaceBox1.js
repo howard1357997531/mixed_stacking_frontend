@@ -22,7 +22,7 @@ import { Box, Slide } from "@mui/material";
 import { domain } from "../../../env";
 import { useDispatch, useSelector } from "react-redux";
 import StackAndBufferDialog from "./dialog/StackAndBufferDialog";
-import { timerToast } from "../../../swal";
+import { basicSwal, timerToast } from "../../../swal";
 import { ROBOT_CONTROL_SCREEN } from "../../../redux/constants";
 
 // demo1 可能要把 realtime-Visual-Count 改成 realtimeItemCount
@@ -54,10 +54,10 @@ function OperationInterfaceBox1({
     setStackAndBufferOpen(false);
   };
   const stackAndBufferDialogOpenHandler = () => {
-    // if (["inactivate", "reset"].includes(robotStateMode)) {
-    //   timerToast("warning", "尚未啟動手臂");
-    //   return;
-    // }
+    if (["inactivate", "success", "reset"].includes(robotStateMode)) {
+      basicSwal("warning", "手臂尚未啟動");
+      return;
+    }
     setStackAndBufferOpen(true);
   };
 

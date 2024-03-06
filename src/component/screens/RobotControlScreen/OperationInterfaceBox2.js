@@ -10,6 +10,7 @@ import { Colors } from "../../../styles/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { executeRobotAction } from "../../../redux/actions/RobotControlScreenAction";
 import RobotSettingDialog from "./RobotSettingDialog";
+import { basicSwal } from "../../../swal";
 
 function OperationInterfaceBox2() {
   const dispatch = useDispatch();
@@ -29,9 +30,11 @@ function OperationInterfaceBox2() {
   };
 
   const robotSettingHandler = () => {
-    if (!["inactivate", "success", "reset"].includes(robotStateMode)) {
-      setRobotSettingDialogOpen(true);
+    if (["inactivate", "success", "reset"].includes(robotStateMode)) {
+      basicSwal("warning", "手臂尚未啟動");
+      return;
     }
+    setRobotSettingDialogOpen(true);
   };
 
   useEffect(() => {

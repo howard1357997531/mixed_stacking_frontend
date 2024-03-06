@@ -16,10 +16,10 @@ import {
 } from "./redux/actions/OrderActions";
 import {
   executeRobotFinishAction,
-  hasNextExecutionOrderAction,
-  robotExecutionAlertAction,
+  robotExecutionStandByAction,
 } from "./redux/actions/RobotControlScreenAction";
 import Demo1SelectItemsScreen from "./screen/Demo1SelectItemsScreen";
+import { standBySwal } from "./swal";
 
 function App() {
   const dispatch = useDispatch();
@@ -187,6 +187,10 @@ function App() {
     dispatch(multipleOrderListAction());
   }, [dispatch]);
 
+  const replaceInsertName = (name) => {
+    return name.endsWith("_insert") ? name.replace("_insert", "") : name;
+  };
+
   // robotExecutionAlert
   useEffect(() => {
     if (robotExecutionData.check) {
@@ -200,10 +204,41 @@ function App() {
         robotExecutionData.name.length > 1 &&
         robotExecutionData.name.length > robotExecutionData.queue
       ) {
+        if (robotExecutionData.mode === "auto") {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotState,
+            payload: { mode: "autoSuccess" },
+          });
+          setTimeout(() => {
+            dispatch(robotExecutionStandByAction(robotExecutionData));
+          }, 2000);
+          return;
+        }
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotState,
+          payload: { mode: informationAreaMode },
+        });
+
         setTimeout(() => {
-          dispatch(robotExecutionAlertAction(robotExecutionData));
+          const { name, queue } = robotExecutionData;
+          standBySwal(
+            `確定執行?`,
+            `${replaceInsertName(name.at(queue))} (${queue + 1}/${name.length})`
+          ).then((result) => {
+            if (result.isConfirmed) {
+              dispatch(robotExecutionStandByAction(robotExecutionData));
+            }
+          });
         }, 2000);
       } else {
+        const modeTemp =
+          informationAreaMode === "success" ? "success" : "reset";
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotState,
+          payload: { mode: modeTemp },
+        });
+
         dispatch(executeRobotFinishAction(robotExecutionData, null));
       }
     }

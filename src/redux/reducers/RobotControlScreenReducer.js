@@ -53,6 +53,7 @@ export const robotControlScreen_informationAreaReducer = (
 
 export const robotControlScreen_robotExecutionListReducer = (
   state = {
+    mode: "manual",
     startTime: null,
     check: false,
     isDoing: false,
@@ -75,10 +76,13 @@ export const robotControlScreen_robotExecutionListReducer = (
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN.robotExecutionList_reset:
-      return {
+      const resetData = {
+        startTime: null,
         check: false,
         isDoing: false,
+        isOpenBool: false,
         executeOrderId: [],
+        executeOrderStr: [],
         name: [],
         queue: 1,
         allData: [],
@@ -86,7 +90,9 @@ export const robotControlScreen_robotExecutionListReducer = (
         insertOrderOpen: false,
         insertOrderDetailOpen: false,
         insertOrderDetailId: null,
+        resetIndex: [],
       };
+      return { ...state, ...resetData };
 
     default:
       return state;
@@ -108,14 +114,13 @@ export const robotControlScreen_robotStateReducer = (
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN.robotState_reset:
-      const mode = action.payload === "success" ? "success" : "reset";
-      return {
-        mode,
+      const data = {
         text: "尚未選擇工單",
         pause: false,
         reset: false,
         speed: 20,
       };
+      return { ...state, ...data };
 
     default:
       return state;

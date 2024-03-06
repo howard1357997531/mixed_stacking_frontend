@@ -49,7 +49,7 @@ export const Colors = {
   green800: teal[800],
   darkPink: "#DFA9B2",
   darkPinkHover: pink[200],
-  pink900: pink[900],
+  pink900: pink[800],
   grey: "#E2DCD0",
   grey100: grey[100],
   grey300: grey[300],
@@ -97,6 +97,7 @@ export const Colors = {
   swalBlue: "#9de0f6",
   swalGrey: "#c9dae1",
   swalPurple: "#7066e0",
+  swalBlack: "#2a2a2a",
 };
 
 const theme = createTheme({

@@ -4,6 +4,7 @@ swalGreen: "#a5dc86",
 */
 div:where(.swal2-container) {
     z-index: 9999 !important;
+    color: #2a2a2a
 } 
 
 .swal-info {
@@ -56,3 +57,36 @@ div:where(.swal2-container) {
 .infoBtnToast-button:active {
     transform: scale(0.95);
 }
+
+.swal-html-container{
+    font-weight: 600 !important;
+}
+
+.swal-btn {
+    color: #2a2a2a !important;
+    font-weight: 600;
+}
+
+.swal-btn2-confirm {
+    color: #facea8 !important;
+    font-weight: 600;
+}
+
+.swal-btn2-cancel {
+    color: #c62828 !important;
+    font-weight: 600;
+}
+
+.swal-standby-btn {
+    color: #eeeeee !important;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 600px){
+    .swal-popup {
+        width: 85vw
+    }
+}
+
+
+

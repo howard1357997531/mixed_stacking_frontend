@@ -25,7 +25,11 @@ export const basicSwal = (icon, title) => {
     icon: icon,
     title: title,
     color: parseColor(icon),
-    background: Colors.grey600,
+    background: Colors.swalBlack,
+    customClass: {
+      popup: "swal-popup",
+      confirmButton: "swal-btn",
+    },
   });
 };
 
@@ -36,25 +40,58 @@ export const confirmSwal = (title, text = "") => {
     text: text,
     icon: "warning",
     color: parseColor("warning"),
-    background: Colors.grey600,
+    background: Colors.swalBlack,
     showCancelButton: true,
-    // confirmButtonColor: "#7066e0",
-    cancelButtonColor: Colors.greyText,
+    cancelButtonColor: Colors.grey400,
     confirmButtonText: "確定",
     cancelButtonText: "返回",
+    customClass: {
+      popup: "swal-popup",
+      htmlContainer: "swal-html-container",
+      confirmButton: "swal-btn",
+      cancelButton: "swal-btn",
+    },
   });
 };
 
-export const confirmSwal2 = (title, text) => {
+export const confirmSwal2 = (title, text = "") => {
   return Swal.fire({
     title: title,
     text: text,
     icon: "warning",
-    background: Colors.grey600,
+    color: parseColor("warning"),
+    background: Colors.red800,
     showCancelButton: true,
-    cancelButtonColor: Colors.greyText,
+    confirmButtonColor: Colors.blue500,
+    cancelButtonColor: Colors.grey400,
     confirmButtonText: "確定",
-    cancelButtonText: "稍後",
+    cancelButtonText: "返回",
+    customClass: {
+      popup: "swal-popup",
+      htmlContainer: "swal-html-container",
+      confirmButton: "swal-btn2-confirm",
+      cancelButton: "swal-btn2-cancel",
+    },
+  });
+};
+
+export const standBySwal = (title, text = "") => {
+  return Swal.fire({
+    title: title,
+    text: text,
+    icon: "warning",
+    color: parseColor("warning"),
+    background: Colors.swalBlack,
+    showCancelButton: true,
+    cancelButtonColor: Colors.darkGreenHover,
+    confirmButtonText: "確定",
+    cancelButtonText: "稍等",
+    customClass: {
+      popup: "swal-popup",
+      htmlContainer: "swal-html-container",
+      confirmButton: "swal-btn",
+      cancelButton: "swal-standby-btn",
+    },
   });
 };
 
