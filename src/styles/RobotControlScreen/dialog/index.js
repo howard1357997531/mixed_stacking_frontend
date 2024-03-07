@@ -268,7 +268,7 @@ export const IndexText = styled(Avatar, {
   transform: "translateY(-50%)",
   width: "24px",
   height: "24px",
-  fontSize: "14px",
+  fontSize: "12px",
   fontWeight: 600,
   color: data[0]
     ? Colors.softOrange

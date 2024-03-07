@@ -54,7 +54,15 @@ function OperationInterfaceBox1({
     setStackAndBufferOpen(false);
   };
   const stackAndBufferDialogOpenHandler = () => {
-    if (["inactivate", "success", "reset"].includes(robotStateMode)) {
+    if (
+      [
+        "inactivate",
+        "success",
+        "reset",
+        "autoSuccess",
+        "autoRetrieveSuccess",
+      ].includes(robotStateMode)
+    ) {
       basicSwal("warning", "手臂尚未啟動");
       return;
     }
@@ -177,7 +185,14 @@ function OperationInterfaceBox1({
         customColor={[Colors.darkPink, Colors.darkPinkHover]}
         onClick={stackAndBufferDialogOpenHandler}
       >
-        {["inactivate", "success", "reset"].includes(robotStateMode) ? (
+        {[
+          "inactivate",
+          "success",
+          "reset",
+          "autoSuccess",
+          "autoRetrieve",
+          "autoRetrieveSuccess",
+        ].includes(robotStateMode) ? (
           <>
             <OperationInterfaceButtonLogo>
               <img src="visual.png" alt="visual.png"></img>
@@ -189,7 +204,29 @@ function OperationInterfaceBox1({
           </>
         ) : null}
 
-        {!["inactivate", "success", "reset"].includes(robotStateMode) ? (
+        {["activate"].includes(robotStateMode) &&
+        ["autoRetrieve"].includes(informationAreaMode) ? (
+          <>
+            <OperationInterfaceButtonLogo>
+              <img src="visual.png" alt="visual.png"></img>
+            </OperationInterfaceButtonLogo>
+
+            <OperationInterfaceButtonText>
+              堆疊圖示
+            </OperationInterfaceButtonText>
+          </>
+        ) : null}
+
+        {/* !["autoRetrieve"].includes(informationAreaMode) 在 activate 情形下不顯示 */}
+        {![
+          "inactivate",
+          "success",
+          "reset",
+          "autoSuccess",
+          "autoRetrieve",
+          "autoRetrieveSuccess",
+        ].includes(robotStateMode) &&
+        !["autoRetrieve"].includes(informationAreaMode) ? (
           <img
             src={`${domain}/static/media/ai_figure/Figures_${
               executeOrderIdArray[queue - 1]

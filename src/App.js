@@ -15,6 +15,7 @@ import {
   orderListAction,
 } from "./redux/actions/OrderActions";
 import {
+  executeRobotAutoRetrieveAction,
   executeRobotFinishAction,
   robotExecutionStandByAction,
 } from "./redux/actions/RobotControlScreenAction";
@@ -204,15 +205,44 @@ function App() {
         robotExecutionData.name.length > 1 &&
         robotExecutionData.name.length > robotExecutionData.queue
       ) {
-        if (robotExecutionData.mode === "auto") {
+        if (
+          robotExecutionData.mode === "auto" &&
+          informationAreaMode === "success"
+        ) {
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotState,
             payload: { mode: "autoSuccess" },
           });
+          console.log("autoSuccess");
+          setTimeout(() => {
+            dispatch(executeRobotAutoRetrieveAction());
+          }, 5000);
+          return;
+        } else if (
+          // 如果是自動模式下中斷會直接進入手動模式，因為自動區殘留的東西目前無法
+          // 使用程式把殘留物一一取回
+          robotExecutionData.mode === "auto" &&
+          informationAreaMode === "autoRetrieveSuccess"
+        ) {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotState,
+            payload: { mode: "autoRetrieveSuccess" },
+          });
+          console.log("autoRetrieveSuccess");
           setTimeout(() => {
             dispatch(robotExecutionStandByAction(robotExecutionData));
-          }, 2000);
+          }, 5000);
           return;
+        } else if (
+          // 如果是自動模式下中斷會直接進入手動模式，因為自動區殘留的東西目前無法
+          // 使用程式把殘留物一一取回
+          robotExecutionData.mode === "auto" &&
+          informationAreaMode === "reset"
+        ) {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+            payload: { mode: "manual" },
+          });
         }
 
         dispatch({
@@ -232,11 +262,9 @@ function App() {
           });
         }, 2000);
       } else {
-        const modeTemp =
-          informationAreaMode === "success" ? "success" : "reset";
         dispatch({
           type: ROBOT_CONTROL_SCREEN.robotState,
-          payload: { mode: modeTemp },
+          payload: { mode: informationAreaMode },
         });
 
         dispatch(executeRobotFinishAction(robotExecutionData, null));

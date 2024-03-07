@@ -30,7 +30,15 @@ function OperationInterfaceBox2() {
   };
 
   const robotSettingHandler = () => {
-    if (["inactivate", "success", "reset"].includes(robotStateMode)) {
+    if (
+      [
+        "inactivate",
+        "success",
+        "reset",
+        "autoSuccess",
+        "autoRetrieveSuccess",
+      ].includes(robotStateMode)
+    ) {
       basicSwal("warning", "手臂尚未啟動");
       return;
     }
@@ -38,7 +46,15 @@ function OperationInterfaceBox2() {
   };
 
   useEffect(() => {
-    if (["inactivate", "success", "reset"].includes(robotStateMode)) {
+    if (
+      [
+        "inactivate",
+        "success",
+        "reset",
+        "autoSuccess",
+        "autoRetrieveSuccess",
+      ].includes(robotStateMode)
+    ) {
       setRobotSettingDialogOpen(false);
     }
   }, [robotStateMode]);

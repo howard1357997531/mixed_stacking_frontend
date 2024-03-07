@@ -149,7 +149,13 @@ function InformationAreaContent({
     }
   }, [realtimeItemCount]);
   const hasOrderList = executeOrderIdArray.length !== 0;
-  const mode = !["inactivate", "success", "reset"].includes(robotStateMode);
+  const mode = ![
+    "inactivate",
+    "success",
+    "reset",
+    "autoSuccess",
+    "autoRetrieveSuccess",
+  ].includes(robotStateMode);
 
   // multipleOrder
   if (multipleOrderSelectData.length !== 0) {
@@ -210,8 +216,16 @@ function InformationAreaContent({
       ? queue + 1
       : queue;
   }
+  const executeListRef = useRef();
 
-  console.log(executeId, insertIndex, resetIndex);
+  useEffect(() => {
+    if (executeListRef.current) {
+      executeListRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [informationAreaMode]);
 
   return (
     <InformationAreaContentBox data={[hasOrderList, mode]}>
@@ -259,7 +273,32 @@ function InformationAreaContent({
             全部中斷
           </RobotSuccessTitle>
 
-          <RobotSuccessSubTitle>請重新選擇工單</RobotSuccessSubTitle>
+          <RobotSuccessSubTitle>過程以保存至歷史紀錄</RobotSuccessSubTitle>
+        </RobotSuccessBox>
+      ) : null}
+
+      {["autoRetrieve"].includes(informationAreaMode) &&
+      robotStateMode !== "activate" ? (
+        <Box
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            backgroundColor: Colors.lightOrange,
+            zIndex: 2,
+          }}
+        >
+          <NoSelectOrderText>自動取回</NoSelectOrderText>
+        </Box>
+      ) : null}
+
+      {["autoRetrieveSuccess"].includes(informationAreaMode) ? (
+        <RobotSuccessBox>
+          <RobotSuccessTitle>自動取回成功</RobotSuccessTitle>
+
+          <RobotSuccessSubTitle>
+            {`執行進度 (${queue}/${executeOrderIdArray.length})`}
+          </RobotSuccessSubTitle>
         </RobotSuccessBox>
       ) : null}
 
@@ -396,6 +435,7 @@ function InformationAreaContent({
             {executeData.map((eData, index) => (
               <MultiOrderDetailSmBox
                 key={index}
+                ref={eData.index.includes(executeQueue) ? executeListRef : null}
                 isDoing={eData.index.includes(executeQueue) && isDoing}
               >
                 <MultiOrderAvatarBox>

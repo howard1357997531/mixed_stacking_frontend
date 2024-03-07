@@ -5,6 +5,7 @@ import {
   ROBOT_CONTROL_SCREEN,
   ROBOT_CONTROL_SCREEN_API_executeRobot,
   ROBOT_CONTROL_SCREEN_API_robotSetting,
+  ROBOT_CONTROL_SCREEN_informationArea,
 } from "../constants";
 import {
   basicSwal,
@@ -458,9 +459,47 @@ export const robotExecutionStandByAction =
     }
   };
 
-export const executeRobotAutoAction = () => async (dispatch) => {
+export const executeRobotAutoRetrieveAction = () => async (dispatch) => {
   try {
-    const { data } = axios.post(`${domain}/api/executeRobotAuto/`);
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.robotState,
+      payload: { mode: "activate" },
+    });
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.informationArea,
+      payload: { mode: "autoRetrieve" },
+    });
+    setTimeout(() => {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotState,
+        payload: { mode: "autoRetrieve" },
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.realtimeItem,
+        payload: { mode: "retrieve" },
+      });
+    }, 2000);
+
+    const { data } = await axios.post(
+      `${domain}/api/executeRobotAutoRetrieve/`
+    );
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.informationArea,
+      payload: { mode: "autoRetrieveSuccess" },
+    });
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+      payload: { check: true },
+    });
+
+    dispatch({
+      type: ROBOT_CONTROL_SCREEN.realtimeItem,
+      payload: { mode: null },
+    });
   } catch (error) {}
 };
 

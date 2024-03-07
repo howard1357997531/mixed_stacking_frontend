@@ -44,11 +44,16 @@ function OperationInterfaceBox3({
       color: Colors.softOrange,
     },
     autoSuccess: {
-      text: `準備自動執行下一單`,
+      text: `準備自動取回所有物件`,
       color: Colors.blue500,
     },
-    retrieve: {
-      text: `準備取回所有箱子`,
+    autoRetrieve: {
+      text: `正在取回所有物件`,
+      color: Colors.darkGreenHover,
+      animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
+    },
+    autoRetrieveSuccess: {
+      text: `準備自動執行下一單`,
       color: Colors.darkGreenHover,
     },
     buffer: { text: "錯誤!! 夾至 Buffer 區", color: Colors.red800 },
@@ -75,7 +80,7 @@ function OperationInterfaceBox3({
             "success",
             "reset",
             "autoSuccess",
-            "retrieve",
+            "autoRetrieveSuccess",
           ].includes(robotStateMode) && (
             <>
               <TextShowBoardText
@@ -87,7 +92,7 @@ function OperationInterfaceBox3({
               {robotStateMode !== "inactivate" ? (
                 <Dot
                   dotColor={
-                    robotStateMode === "success"
+                    ["success", "autoRetrieveSuccess"].includes(robotStateMode)
                       ? Colors.darkGreenHover
                       : robotStateMode === "autoSuccess"
                       ? Colors.blue500
@@ -128,7 +133,7 @@ function OperationInterfaceBox3({
               {robotStatePause ? "暫停" : boxText[robotStateMode]["text"]}
             </TextShowBoardText>
 
-            {robotStateMode === "prepare" && !robotStatePause ? (
+            {["prepare"].includes(robotStateMode) && !robotStatePause ? (
               <Dot dotColor={boxText[robotStateMode]["color"]} />
             ) : null}
           </>

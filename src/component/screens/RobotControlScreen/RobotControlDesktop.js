@@ -92,7 +92,13 @@ function RobotControlDesktop(props) {
       <InformationArea className="information-area">
         <InformationAreaBox
           mode={
-            !["inactivate", "success", "reset"].includes(props.robotStateMode)
+            ![
+              "inactivate",
+              "success",
+              "reset",
+              "autoSuccess",
+              "autoRetrieveSuccess",
+            ].includes(props.robotStateMode)
           }
         >
           <InformationAreaTitle {...props} />
@@ -102,7 +108,13 @@ function RobotControlDesktop(props) {
           {/* <InformationAreaBottom {...props} /> */}
         </InformationAreaBox>
 
-        {!["inactivate", "success", "reset"].includes(props.robotStateMode) ? (
+        {![
+          "inactivate",
+          "success",
+          "reset",
+          "autoSuccess",
+          "autoRetrieveSuccess",
+        ].includes(props.robotStateMode) ? (
           <BoardBox>
             <img className="board" src="conveyor.png" alt="conveyor.png"></img>
             <VisualBox>

@@ -18,7 +18,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import SwipeableEdgeDrawer from "./SwipeableEdgeDrawer";
 import "./css/nav.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ROBOT_CONTROL_SCREEN } from "../../redux/constants";
 
 function Navbar() {
@@ -53,13 +53,14 @@ function Navbar() {
   }, []);
 
   // auto button
-  const [manualBtn, setManualBtn] = React.useState(true);
+  const { mode } = useSelector(
+    (state) => state.robotControlScreen_robotExecutionList
+  );
 
   const setManualBtnHandler = () => {
-    setManualBtn(!manualBtn);
     dispatch({
       type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-      payload: { mode: manualBtn ? "auto" : "manual" },
+      payload: { mode: mode === "manual" ? "auto" : "manual" },
     });
   };
 
@@ -108,7 +109,8 @@ function Navbar() {
                   marginLeft: "15px",
                   padding: "4px 8px",
                   color: Colors.bgcolorLightorange,
-                  backgroundColor: manualBtn ? Colors.red800 : Colors.darkGreen,
+                  backgroundColor:
+                    mode === "manual" ? Colors.red800 : Colors.darkGreen,
                   borderRadius: "5px",
                   fontWeight: 600,
                   "&:hover": {
@@ -117,7 +119,7 @@ function Navbar() {
                 }}
                 onClick={setManualBtnHandler}
               >
-                {manualBtn ? "手動" : "自動"}
+                {mode === "manual" ? "手動" : "自動"}
               </Box>
             ) : null}
           </NavLeftBox>

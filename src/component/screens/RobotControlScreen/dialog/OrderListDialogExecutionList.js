@@ -73,6 +73,11 @@ function OrderListDialogExecutionList(props) {
           if (result.isConfirmed) {
             dispatch(robotSettingAction("reset", 20, true));
             setTimeout(() => {
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.robotState,
+                payload: { mode: "reset" },
+              });
+
               dispatch(
                 executeRobotFinishAction(robotExecutionData, executionListQueue)
               );
@@ -102,6 +107,8 @@ function OrderListDialogExecutionList(props) {
     return name.endsWith("_insert") ? name.replace("_insert", "") : name;
   };
 
+  // 如果執行太多，可能會滑到其他地方，所以在每次開啟、插完單都會
+  // 自動 scroll 到目前執行的工單位置
   const insertRef = useRef();
   useEffect(() => {
     if (insertRef.current) {
@@ -110,7 +117,7 @@ function OrderListDialogExecutionList(props) {
         block: "start",
       });
     }
-  }, [isOpenBool, queue]);
+  }, [isOpenBool, queue, insertOrderOpen]);
 
   return (
     <>
@@ -177,7 +184,7 @@ function OrderListDialogExecutionList(props) {
                   ) : null}
 
                   {index == executionListQueue ? (
-                    props.robotStateMode === "success" ? (
+                    ["success", "reset"].includes(props.robotStateMode) ? (
                       <WaitToExecuteText>待執行</WaitToExecuteText>
                     ) : null
                   ) : null}
@@ -217,7 +224,7 @@ function OrderListDialogExecutionList(props) {
 
                 {/* 可以在待執行單前面插單 */}
                 {index + 1 == executionListQueue &&
-                props.robotStateMode === "success" ? (
+                ["success", "reset"].includes(props.robotStateMode) ? (
                   <InsertBox>
                     <InsertNowText
                       onClick={() => insertOrderHandler(index + 1)}
