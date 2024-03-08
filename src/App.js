@@ -192,7 +192,7 @@ function App() {
     return name.endsWith("_insert") ? name.replace("_insert", "") : name;
   };
 
-  // robotExecutionAlert
+  // robotExecutioncheck
   useEffect(() => {
     if (robotExecutionData.check) {
       dispatch({
@@ -213,14 +213,15 @@ function App() {
             type: ROBOT_CONTROL_SCREEN.robotState,
             payload: { mode: "autoSuccess" },
           });
-          console.log("autoSuccess");
+
           setTimeout(() => {
-            dispatch(executeRobotAutoRetrieveAction());
+            dispatch(executeRobotAutoRetrieveAction(robotExecutionData));
           }, 5000);
           return;
-        } else if (
-          // 如果是自動模式下中斷會直接進入手動模式，因為自動區殘留的東西目前無法
-          // 使用程式把殘留物一一取回
+        }
+        // 如果是自動模式下中斷會直接進入手動模式，因為自動區殘留的東西目前無法
+        // 使用程式把殘留物一一取回
+        else if (
           robotExecutionData.mode === "auto" &&
           informationAreaMode === "autoRetrieveSuccess"
         ) {
@@ -228,14 +229,15 @@ function App() {
             type: ROBOT_CONTROL_SCREEN.robotState,
             payload: { mode: "autoRetrieveSuccess" },
           });
-          console.log("autoRetrieveSuccess");
+
           setTimeout(() => {
             dispatch(robotExecutionStandByAction(robotExecutionData));
           }, 5000);
           return;
-        } else if (
-          // 如果是自動模式下中斷會直接進入手動模式，因為自動區殘留的東西目前無法
-          // 使用程式把殘留物一一取回
+        }
+        // 如果是自動模式下中斷會直接進入手動模式，因為自動區殘留的東西目前無法
+        // 使用程式把殘留物一一取回
+        else if (
           robotExecutionData.mode === "auto" &&
           informationAreaMode === "reset"
         ) {
@@ -244,11 +246,27 @@ function App() {
             payload: { mode: "manual" },
           });
         }
+        // 如果是在自動取回模式下改成手動模式，結束會到此
+        else if (
+          robotExecutionData.mode === "manual" &&
+          informationAreaMode === "autoRetrieveSuccess"
+        ) {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotState,
+            payload: { mode: "success" },
+          });
+        }
 
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.robotState,
-          payload: { mode: informationAreaMode },
-        });
+        // 如果是在自動取回模式下改成手動模式，不會執行這
+        if (
+          robotExecutionData.mode !== "manual" ||
+          informationAreaMode !== "autoRetrieveSuccess"
+        ) {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotState,
+            payload: { mode: informationAreaMode },
+          });
+        }
 
         setTimeout(() => {
           const { name, queue } = robotExecutionData;
@@ -262,6 +280,7 @@ function App() {
           });
         }, 2000);
       } else {
+        // 最後一單或是resetall 跑這
         dispatch({
           type: ROBOT_CONTROL_SCREEN.robotState,
           payload: { mode: informationAreaMode },

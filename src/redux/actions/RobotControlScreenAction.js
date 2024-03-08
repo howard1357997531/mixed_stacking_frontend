@@ -302,7 +302,7 @@ export const executeRobotAction =
                   });
                 } else if (state === "reset_all") {
                   dispatch({
-                    type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
+                    type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
                   });
                 }
               });
@@ -405,7 +405,12 @@ export const robotExecutionStandByAction =
 
       axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
         const state = res.data.robot_state;
-        const is_success = state === "finish" ? "success" : "reset";
+        const is_success =
+          state === "finish"
+            ? "success"
+            : state === "reset"
+            ? "reset"
+            : "resetAll";
 
         dispatch({
           type: ROBOT_CONTROL_SCREEN_API_executeRobot.success,
@@ -443,7 +448,7 @@ export const robotExecutionStandByAction =
           });
         } else if (state === "reset_all") {
           dispatch({
-            type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
+            type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
           });
         }
       });
@@ -459,49 +464,98 @@ export const robotExecutionStandByAction =
     }
   };
 
-export const executeRobotAutoRetrieveAction = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.robotState,
-      payload: { mode: "activate" },
-    });
-
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.informationArea,
-      payload: { mode: "autoRetrieve" },
-    });
-    setTimeout(() => {
+export const executeRobotAutoRetrieveAction =
+  (robotExecutionData) => async (dispatch) => {
+    const { resetIndex } = robotExecutionData;
+    const queue = robotExecutionData.queue + 1;
+    try {
       dispatch({
         type: ROBOT_CONTROL_SCREEN.robotState,
+        payload: { mode: "activate" },
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.informationArea,
         payload: { mode: "autoRetrieve" },
       });
+      setTimeout(() => {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotState,
+          payload: { mode: "autoRetrieve" },
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.realtimeItem,
+          payload: { mode: "retrieve" },
+        });
+      }, 2000);
+
+      const { data } = await axios.post(
+        `${domain}/api/executeRobotAutoRetrieve/`
+      );
+
+      const state = data.robot_state;
+      const is_success =
+        state === "finish"
+          ? "success"
+          : state === "reset"
+          ? "reset"
+          : "resetAll";
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.informationArea,
+        payload: { mode: is_success },
+      });
+
+      dispatch({ type: ROBOT_CONTROL_SCREEN.robotState_reset });
 
       dispatch({
         type: ROBOT_CONTROL_SCREEN.realtimeItem,
-        payload: { mode: "retrieve" },
+        payload: { mode: null, count: null },
       });
-    }, 2000);
 
-    const { data } = await axios.post(
-      `${domain}/api/executeRobotAutoRetrieve/`
-    );
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.realtimeVisual,
+        payload: { mode: null, visualResult: [], visualCount: 1 },
+      });
 
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.informationArea,
-      payload: { mode: "autoRetrieveSuccess" },
-    });
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+        payload: { check: true },
+      });
 
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-      payload: { check: true },
-    });
+      if (state === "reset") {
+        const resetdata = [...resetIndex];
+        resetdata.push(queue - 1);
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+          payload: { resetIndex: resetdata },
+        });
+      } else if (state === "reset_all") {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
+        });
+      }
 
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.realtimeItem,
-      payload: { mode: null },
-    });
-  } catch (error) {}
-};
+      // const mode =
+      //   data.robot_state === "success" ? "autoRetrieveSuccess" : "reset";
+
+      // dispatch({
+      //   type: ROBOT_CONTROL_SCREEN.informationArea,
+      //   payload: { mode },
+      // });
+
+      // dispatch({
+      //   type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+      //   payload: { check: true },
+      // });
+
+      // dispatch({
+      //   type: ROBOT_CONTROL_SCREEN.realtimeItem,
+      //   payload: { mode: null },
+      // });
+    } catch (error) {}
+  };
 
 export const executeRobotFinishAction =
   (robotExecutionData, executionListQueue = null) =>

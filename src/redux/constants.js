@@ -99,6 +99,8 @@ export const ROBOT_CONTROL_SCREEN = {
   robotSetting: "ROBOT_CONTROL_SCREEN_robotSetting",
   //reset
   robotExecutionList_reset: "ROBOT_CONTROL_SCREEN_robotExecutionList_reset",
+  robotExecutionList_resetAll:
+    "ROBOT_CONTROL_SCREEN_robotExecutionList_resetAll",
   robotState_reset: "ROBOT_CONTROL_SCREEN_robotState_reset",
 };
 

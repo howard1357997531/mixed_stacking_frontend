@@ -94,6 +94,25 @@ export const robotControlScreen_robotExecutionListReducer = (
       };
       return { ...state, ...resetData };
 
+    case ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll:
+      const resetData2 = {
+        mode: "manual",
+        startTime: null,
+        isDoing: false,
+        isOpenBool: false,
+        executeOrderId: [],
+        executeOrderStr: [],
+        name: [],
+        queue: 1,
+        allData: [],
+        insertIndex: null,
+        insertOrderOpen: false,
+        insertOrderDetailOpen: false,
+        insertOrderDetailId: null,
+        resetIndex: [],
+      };
+      return { ...state, ...resetData2 };
+
     default:
       return state;
   }

@@ -85,4 +85,7 @@ export const UpBtn = styled(KeyboardArrowUpIcon, {
     width: "45px",
     height: "45px",
   },
+  "&:hover": {
+    cursor: "pointer",
+  },
 }));

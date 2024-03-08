@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   IconButtonAdd,
   IndexText,
@@ -40,6 +40,9 @@ function OrderListDialogExecutionList(props) {
   const dispatch = useDispatch();
   const robotExecutionData = props.robotExecutionData;
   const robotStateMode = props.robotStateMode;
+  const { mode: informationAreaMode } = useSelector(
+    (state) => state.robotControlScreen_informationArea
+  );
 
   const {
     isOpenBool,
@@ -51,9 +54,34 @@ function OrderListDialogExecutionList(props) {
     resetIndex,
   } = props.robotExecutionData;
 
-  const executionListQueue = ["success", "reset"].includes(robotStateMode)
-    ? queue
-    : queue - 1;
+  // const executionListQueue =
+  //   robotStateMode === "activate" && queue === 1
+  //     ? queue - 1
+  //     : robotStateMode === "activate" && informationAreaMode === "autoRetrieve"
+  //     ? queue
+  //     : [
+  //         "success",
+  //         "reset",
+  //         "autoSuccess",
+  //         "autoRetrieve",
+  //         "autoRetrieveSuccess",
+  //       ].includes(robotStateMode)
+  //     ? queue
+  //     : queue - 1;
+
+  const executionListQueue =
+    // 在 autoRetrieve 的 activate 下會 == queue
+    robotStateMode === "activate" && informationAreaMode === "autoRetrieve"
+      ? queue
+      : [
+          "success",
+          "reset",
+          "autoSuccess",
+          "autoRetrieve",
+          "autoRetrieveSuccess",
+        ].includes(robotStateMode)
+      ? queue
+      : queue - 1;
 
   const insertOrderHandler = (insertIndex) => {
     dispatch(insertOrderAction(insertIndex));
@@ -72,6 +100,7 @@ function OrderListDialogExecutionList(props) {
         confirmSwal2("二次警告", "確定要全部中斷 ?").then((result) => {
           if (result.isConfirmed) {
             dispatch(robotSettingAction("reset", 20, true));
+
             setTimeout(() => {
               dispatch({
                 type: ROBOT_CONTROL_SCREEN.robotState,
@@ -106,6 +135,14 @@ function OrderListDialogExecutionList(props) {
   const replaceInsertName = (name) => {
     return name.endsWith("_insert") ? name.replace("_insert", "") : name;
   };
+
+  const state1 = [
+    "success",
+    "reset",
+    "autoSuccess",
+    "autoRetrieve",
+    "autoRetrieveSuccess",
+  ];
 
   // 如果執行太多，可能會滑到其他地方，所以在每次開啟、插完單都會
   // 自動 scroll 到目前執行的工單位置
@@ -146,6 +183,7 @@ function OrderListDialogExecutionList(props) {
                   ]}
                   ref={queue - 2 === index ? insertRef : null}
                 >
+                  {/* 排序 */}
                   <IndexText
                     data={[
                       resetIndex.includes(index),
@@ -155,6 +193,7 @@ function OrderListDialogExecutionList(props) {
                     {index + 1}
                   </IndexText>
 
+                  {/* 插單 */}
                   {name.endsWith("_insert") ? (
                     <InsertText
                       data={[
@@ -166,6 +205,7 @@ function OrderListDialogExecutionList(props) {
                     </InsertText>
                   ) : null}
 
+                  {/* 名稱 */}
                   <OrderText
                     data={[
                       resetIndex.includes(index),
@@ -175,20 +215,31 @@ function OrderListDialogExecutionList(props) {
                     {replaceInsertName(name)}
                   </OrderText>
 
+                  {/* 成功 icon */}
                   {!resetIndex.includes(index) && index < executionListQueue ? (
                     <OrderListExeListCheck />
                   ) : null}
 
+                  {/* 中斷 */}
                   {resetIndex.includes(index) ? (
                     <OrderListExeListReset>中斷</OrderListExeListReset>
                   ) : null}
 
+                  {/* 待執行 */}
                   {index == executionListQueue ? (
-                    ["success", "reset"].includes(props.robotStateMode) ? (
+                    state1.includes(props.robotStateMode) ? (
                       <WaitToExecuteText>待執行</WaitToExecuteText>
                     ) : null
                   ) : null}
 
+                  {/* 待執行，在 autoRetrieve activate 也會顯示 */}
+                  {index == executionListQueue &&
+                  props.robotStateMode === "activate" &&
+                  informationAreaMode === "autoRetrieve" ? (
+                    <WaitToExecuteText>待執行</WaitToExecuteText>
+                  ) : null}
+
+                  {/* 進行中 */}
                   {index === executionListQueue ? (
                     <OrderListExeListInProgress>
                       {props.robotStateMode === "pause" ? (
@@ -197,9 +248,16 @@ function OrderListDialogExecutionList(props) {
                         </Typography>
                       ) : null}
 
-                      {!["inactivate", "success", "reset", "pause"].includes(
-                        props.robotStateMode
-                      ) ? (
+                      {![
+                        "inactivate",
+                        "success",
+                        "reset",
+                        "pause",
+                        "autoSuccess",
+                        "autoRetrieve",
+                        "autoRetrieveSuccess",
+                      ].includes(props.robotStateMode) &&
+                      informationAreaMode !== "autoRetrieve" ? (
                         <TextEffect
                           text={"進行中"}
                           textColor={Colors.blue500}
@@ -208,23 +266,34 @@ function OrderListDialogExecutionList(props) {
                     </OrderListExeListInProgress>
                   ) : null}
 
-                  {index === executionListQueue &&
-                  ["success", "reset"].includes(props.robotStateMode) ? (
+                  {/* 刪除 */}
+                  {index > executionListQueue ? (
                     <OrderListExeListDelete
                       onClick={() => deleteOrderHandler(index, name)}
                     />
                   ) : null}
 
-                  {index > executionListQueue ? (
+                  {/* 刪除(待執行工單的) */}
+                  {index === executionListQueue &&
+                  state1.includes(props.robotStateMode) ? (
+                    <OrderListExeListDelete
+                      onClick={() => deleteOrderHandler(index, name)}
+                    />
+                  ) : null}
+
+                  {/* 刪除，在 autoRetrieve activate 也會顯示 */}
+                  {index === executionListQueue &&
+                  props.robotStateMode === "activate" &&
+                  informationAreaMode === "autoRetrieve" ? (
                     <OrderListExeListDelete
                       onClick={() => deleteOrderHandler(index, name)}
                     />
                   ) : null}
                 </OrderListExeListName>
 
-                {/* 可以在待執行單前面插單 */}
+                {/* 即刻插單，可以在待執行單前面插單 */}
                 {index + 1 == executionListQueue &&
-                ["success", "reset"].includes(props.robotStateMode) ? (
+                state1.includes(props.robotStateMode) ? (
                   <InsertBox>
                     <InsertNowText
                       onClick={() => insertOrderHandler(index + 1)}
@@ -234,6 +303,20 @@ function OrderListDialogExecutionList(props) {
                   </InsertBox>
                 ) : null}
 
+                {/* 即刻插單，在 autoRetrieve activate 也會顯示 */}
+                {index + 1 == executionListQueue &&
+                ["activate"].includes(props.robotStateMode) &&
+                informationAreaMode === "autoRetrieve" ? (
+                  <InsertBox>
+                    <InsertNowText
+                      onClick={() => insertOrderHandler(index + 1)}
+                    >
+                      即刻插單
+                    </InsertNowText>
+                  </InsertBox>
+                ) : null}
+
+                {/* 插單 */}
                 {index >= executionListQueue ? (
                   <InsertBox>
                     <Tooltip title="插單" placement="right" arrow>
