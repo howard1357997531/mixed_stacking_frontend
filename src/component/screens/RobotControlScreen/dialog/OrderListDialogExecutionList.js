@@ -17,6 +17,7 @@ import {
   OrderListExeListReset,
   OrderListExeListTitleBox,
   OrderText,
+  RetrieveText,
   StopAllText,
   StyleReportIcon,
   WaitToExecuteText,
@@ -100,32 +101,6 @@ function OrderListDialogExecutionList(props) {
         confirmSwal2("二次警告", "確定要全部中斷 ?").then((result) => {
           if (result.isConfirmed) {
             dispatch(robotSettingAction("reset", 20, true));
-
-            setTimeout(() => {
-              dispatch({
-                type: ROBOT_CONTROL_SCREEN.robotState,
-                payload: { mode: "reset" },
-              });
-
-              dispatch(
-                executeRobotFinishAction(robotExecutionData, executionListQueue)
-              );
-
-              dispatch({
-                type: ROBOT_CONTROL_SCREEN.orderSelect,
-                payload: { data: [] },
-              });
-
-              dispatch({
-                type: ROBOT_CONTROL_SCREEN.multipleOrderSelect,
-                payload: { data: [] },
-              });
-
-              dispatch({
-                type: ROBOT_CONTROL_SCREEN.informationArea,
-                payload: { mode: "resetAll" },
-              });
-            }, 500);
           }
         });
       }
@@ -220,20 +195,27 @@ function OrderListDialogExecutionList(props) {
                     <OrderListExeListCheck />
                   ) : null}
 
+                  {/* 收回中 */}
+                  {index === executionListQueue - 1 &&
+                  ["activate", "autoRetrieve"].includes(props.robotStateMode) &&
+                  informationAreaMode === "autoRetrieve" ? (
+                    <RetrieveText>收回中</RetrieveText>
+                  ) : null}
+
                   {/* 中斷 */}
                   {resetIndex.includes(index) ? (
                     <OrderListExeListReset>中斷</OrderListExeListReset>
                   ) : null}
 
                   {/* 待執行 */}
-                  {index == executionListQueue ? (
+                  {index === executionListQueue ? (
                     state1.includes(props.robotStateMode) ? (
                       <WaitToExecuteText>待執行</WaitToExecuteText>
                     ) : null
                   ) : null}
 
                   {/* 待執行，在 autoRetrieve activate 也會顯示 */}
-                  {index == executionListQueue &&
+                  {index === executionListQueue &&
                   props.robotStateMode === "activate" &&
                   informationAreaMode === "autoRetrieve" ? (
                     <WaitToExecuteText>待執行</WaitToExecuteText>
@@ -292,7 +274,7 @@ function OrderListDialogExecutionList(props) {
                 </OrderListExeListName>
 
                 {/* 即刻插單，可以在待執行單前面插單 */}
-                {index + 1 == executionListQueue &&
+                {index + 1 === executionListQueue &&
                 state1.includes(props.robotStateMode) ? (
                   <InsertBox>
                     <InsertNowText
@@ -304,7 +286,7 @@ function OrderListDialogExecutionList(props) {
                 ) : null}
 
                 {/* 即刻插單，在 autoRetrieve activate 也會顯示 */}
-                {index + 1 == executionListQueue &&
+                {index + 1 === executionListQueue &&
                 ["activate"].includes(props.robotStateMode) &&
                 informationAreaMode === "autoRetrieve" ? (
                   <InsertBox>

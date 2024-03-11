@@ -98,6 +98,7 @@ function RobotControlDesktop(props) {
               "reset",
               "autoSuccess",
               "autoRetrieveSuccess",
+              "autoRetrieveReset",
             ].includes(props.robotStateMode)
           }
         >
@@ -114,6 +115,7 @@ function RobotControlDesktop(props) {
           "reset",
           "autoSuccess",
           "autoRetrieveSuccess",
+          "autoRetrieveReset",
         ].includes(props.robotStateMode) ? (
           <BoardBox>
             <img className="board" src="conveyor.png" alt="conveyor.png"></img>

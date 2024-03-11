@@ -300,11 +300,12 @@ export const executeRobotAction =
                     type: ROBOT_CONTROL_SCREEN.robotExecutionList,
                     payload: { resetIndex: resetdata },
                   });
-                } else if (state === "reset_all") {
-                  dispatch({
-                    type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
-                  });
                 }
+                // else if (state === "reset_all") {
+                //   dispatch({
+                //     type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
+                //   });
+                // }
               });
           } catch (error) {
             const err_msg = error.response.data.error_msg;
@@ -496,10 +497,10 @@ export const executeRobotAutoRetrieveAction =
 
       const state = data.robot_state;
       const is_success =
-        state === "finish"
-          ? "success"
+        state === "success"
+          ? "autoRetrieveSuccess"
           : state === "reset"
-          ? "reset"
+          ? "autoRetrieveReset"
           : "resetAll";
 
       dispatch({
@@ -524,18 +525,18 @@ export const executeRobotAutoRetrieveAction =
         payload: { check: true },
       });
 
-      if (state === "reset") {
-        const resetdata = [...resetIndex];
-        resetdata.push(queue - 1);
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.robotExecutionList,
-          payload: { resetIndex: resetdata },
-        });
-      } else if (state === "reset_all") {
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
-        });
-      }
+      // if (state === "reset") {
+      //   // const resetdata = [...resetIndex];
+      //   // resetdata.push(queue - 1);
+      //   // dispatch({
+      //   //   type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+      //   //   payload: { resetIndex: resetdata },
+      //   // });
+      // } else if (state === "reset_all") {
+      //   dispatch({
+      //     type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
+      //   });
+      // }
 
       // const mode =
       //   data.robot_state === "success" ? "autoRetrieveSuccess" : "reset";

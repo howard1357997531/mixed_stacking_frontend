@@ -200,7 +200,27 @@ function App() {
         payload: { check: false },
       });
 
-      if (
+      // resetall 跑這
+      if (informationAreaMode === "resetAll") {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotState,
+          payload: { mode: "reset" },
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.informationArea,
+          payload: { mode: "resetAll" },
+        });
+
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
+        });
+
+        dispatch(
+          executeRobotFinishAction(robotExecutionData, robotExecutionData.queue)
+        );
+        return;
+      } else if (
         // 表示不是最後一單
         robotExecutionData.name.length > 1 &&
         robotExecutionData.name.length > robotExecutionData.queue
@@ -219,8 +239,7 @@ function App() {
           }, 5000);
           return;
         }
-        // 如果是自動模式下中斷會直接進入手動模式，因為自動區殘留的東西目前無法
-        // 使用程式把殘留物一一取回
+        // 如果是自動模式下成功執行完後，過幾秒會自動執行下一單
         else if (
           robotExecutionData.mode === "auto" &&
           informationAreaMode === "autoRetrieveSuccess"
@@ -239,7 +258,7 @@ function App() {
         // 使用程式把殘留物一一取回
         else if (
           robotExecutionData.mode === "auto" &&
-          informationAreaMode === "reset"
+          ["reset", "autoRetrieveReset"].includes(informationAreaMode)
         ) {
           dispatch({
             type: ROBOT_CONTROL_SCREEN.robotExecutionList,
@@ -257,8 +276,18 @@ function App() {
           });
         }
 
-        // 如果是在自動取回模式下改成手動模式，不會執行這
+        // 如果是在自動取回模式下中斷
         if (
+          robotExecutionData.mode === "auto" &&
+          informationAreaMode === "autoRetrieveReset"
+        ) {
+          dispatch({
+            type: ROBOT_CONTROL_SCREEN.robotState,
+            payload: { mode: "reset" },
+          });
+        }
+        // 如果是在自動取回模式下改成手動模式，不會執行這
+        else if (
           robotExecutionData.mode !== "manual" ||
           informationAreaMode !== "autoRetrieveSuccess"
         ) {
@@ -280,7 +309,7 @@ function App() {
           });
         }, 2000);
       } else {
-        // 最後一單或是resetall 跑這
+        // 最後一單跑這
         dispatch({
           type: ROBOT_CONTROL_SCREEN.robotState,
           payload: { mode: informationAreaMode },

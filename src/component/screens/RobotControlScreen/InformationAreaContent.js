@@ -155,6 +155,7 @@ function InformationAreaContent({
     "reset",
     "autoSuccess",
     "autoRetrieveSuccess",
+    "autoRetrieveReset",
   ].includes(robotStateMode);
 
   // multipleOrder
@@ -295,6 +296,18 @@ function InformationAreaContent({
       {["autoRetrieveSuccess"].includes(informationAreaMode) ? (
         <RobotSuccessBox>
           <RobotSuccessTitle>自動取回成功</RobotSuccessTitle>
+
+          <RobotSuccessSubTitle>
+            {`執行進度 (${queue}/${executeOrderIdArray.length})`}
+          </RobotSuccessSubTitle>
+        </RobotSuccessBox>
+      ) : null}
+
+      {["autoRetrieveReset"].includes(informationAreaMode) ? (
+        <RobotSuccessBox>
+          <RobotSuccessTitle sx={{ color: Colors.softOrange }}>
+            自動取回中斷
+          </RobotSuccessTitle>
 
           <RobotSuccessSubTitle>
             {`執行進度 (${queue}/${executeOrderIdArray.length})`}

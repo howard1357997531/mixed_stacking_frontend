@@ -342,6 +342,26 @@ export const OrderText = styled(Typography, {
   },
 }));
 
+export const RetrieveText = styled(Typography)(({ theme }) => ({
+  position: "absolute",
+  right: "35px",
+  color: Colors.darkGreen,
+  backgroundColor: Colors.green,
+  fontSize: 14,
+  fontWeight: 600,
+  padding: "1px 4px 0px",
+  border: `2px solid ${Colors.green}`,
+  borderRadius: "30px",
+  animation: `${OrderListExeListWaitToExecuteAnimation} 1s ease-in-out infinite`,
+  "@media screen and (orientation: portrait)": {
+    right: "42px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    right: "33px",
+    fontSize: 12,
+  },
+}));
+
 export const WaitToExecuteText = styled(Typography)(({ theme }) => ({
   position: "absolute",
   right: "35px",

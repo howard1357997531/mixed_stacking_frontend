@@ -84,7 +84,6 @@ function InformationAreaTitle({
       {informationAreaMode === "multipleOrder" && !isDoing ? (
         <Title>{multipleOrderSelectData.name}</Title>
       ) : null}
-
       {informationAreaMode === "executeOrder" &&
       robotStateMode !== "activate" &&
       isDoing ? (
@@ -99,13 +98,13 @@ function InformationAreaTitle({
           </span>
         </Title>
       ) : null}
-
       {/* 手臂停機中階段 */}
       {/* informationAreaMode 的 autoSuccess 會直接用 success */}
+      {/* robotStateMode 的 autoRetrieveReset 會直接用 reset */}
       {["success", "reset", "autoSuccess", "autoRetrieveSuccess"].includes(
         robotStateMode
       ) &&
-      ["success", "reset", "autoRetrieveSuccess"].includes(
+      ["success", "reset", "autoRetrieveSuccess", "autoRetrieveReset"].includes(
         informationAreaMode
       ) &&
       executeOrderId.length !== 0 &&
@@ -114,8 +113,7 @@ function InformationAreaTitle({
           執行清單
         </OrderListTitleButton>
       ) : null}
-
-      {/* 手臂執行中階段 */}
+      {/* 手臂非執行中階段 */}
       {![
         "activate",
         "success",
@@ -132,12 +130,13 @@ function InformationAreaTitle({
             )
           }
         >
-          {["order", "autoRetrieve"].includes(informationAreaMode)
+          {["order", "autoRetrieve", "autoRetrieveReset"].includes(
+            informationAreaMode
+          )
             ? "執行清單"
             : "返回"}
         </OrderListTitleButton>
       ) : null}
-
       {/* 手臂執行中階段 */}
       {["autoRetrieve"].includes(robotStateMode) &&
       executeOrderId.length !== 0 &&
