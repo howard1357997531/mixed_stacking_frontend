@@ -13,6 +13,11 @@ export const robotControlScreen_orderSelectReducer = (
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.orderSelect:
+      localStorage.setItem(
+        "robotControlScreen_orderSelect",
+        JSON.stringify({ ...state, ...action.payload })
+      );
+
       return { ...state, ...action.payload };
     case ROBOT_CONTROL_SCREEN_orderList.select:
       return {
@@ -31,6 +36,11 @@ export const robotControlScreen_multipleOrderSelectReducer = (
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.multipleOrderSelect:
+      localStorage.setItem(
+        "robotControlScreen_multipleOrderSelect",
+        JSON.stringify({ ...state, ...action.payload })
+      );
+
       return { ...state, ...action.payload };
 
     default:
@@ -44,6 +54,11 @@ export const robotControlScreen_informationAreaReducer = (
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.informationArea:
+      localStorage.setItem(
+        "robotControlScreen_informationArea",
+        JSON.stringify({ ...state, ...action.payload })
+      );
+
       return { ...state, ...action.payload };
 
     default:
@@ -51,34 +66,42 @@ export const robotControlScreen_informationAreaReducer = (
   }
 };
 
+export const robotExecutionListState = {
+  mode: "manual",
+  startTime: null,
+  check: false,
+  autoCheck: false,
+  isDoing: false,
+  isOpenBool: false,
+  executeOrderId: [],
+  executeOrderStr: [],
+  name: [],
+  queue: 1,
+  allData: [],
+  insertIndex: null,
+  insertOrderOpen: false,
+  insertOrderDetailOpen: false,
+  insertOrderDetailId: null,
+  resetIndex: [],
+};
+
 export const robotControlScreen_robotExecutionListReducer = (
-  state = {
-    mode: "manual",
-    startTime: null,
-    check: false,
-    isDoing: false,
-    isOpenBool: false,
-    executeOrderId: [],
-    executeOrderStr: [],
-    name: [],
-    queue: 1,
-    allData: [],
-    insertIndex: null,
-    insertOrderOpen: false,
-    insertOrderDetailOpen: false,
-    insertOrderDetailId: null,
-    resetIndex: [],
-  },
+  state = robotExecutionListState,
   action
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.robotExecutionList:
+      localStorage.setItem(
+        "robotControlScreen_robotExecutionList",
+        JSON.stringify({ ...state, ...action.payload })
+      );
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN.robotExecutionList_reset:
       const resetData = {
         startTime: null,
         check: false,
+        autoCheck: false,
         isDoing: false,
         isOpenBool: false,
         executeOrderId: [],
@@ -92,9 +115,16 @@ export const robotControlScreen_robotExecutionListReducer = (
         insertOrderDetailId: null,
         resetIndex: [],
       };
+
+      localStorage.setItem(
+        "robotControlScreen_robotExecutionList",
+        JSON.stringify({ ...state, ...resetData })
+      );
+
       return { ...state, ...resetData };
 
     case ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll:
+      // 這裡就不改變 check and autoCheck
       const resetData2 = {
         mode: "manual",
         startTime: null,
@@ -111,6 +141,12 @@ export const robotControlScreen_robotExecutionListReducer = (
         insertOrderDetailId: null,
         resetIndex: [],
       };
+
+      localStorage.setItem(
+        "robotControlScreen_robotExecutionList",
+        JSON.stringify({ ...state, ...resetData2 })
+      );
+
       return { ...state, ...resetData2 };
 
     default:
@@ -118,18 +154,25 @@ export const robotControlScreen_robotExecutionListReducer = (
   }
 };
 
+export const robotStateState = {
+  mode: "inactivate",
+  text: "尚未選擇工單",
+  pause: false,
+  reset: false,
+  speed: 20,
+};
+
 export const robotControlScreen_robotStateReducer = (
-  state = {
-    mode: "inactivate",
-    text: "尚未選擇工單",
-    pause: false,
-    reset: false,
-    speed: 20,
-  },
+  state = robotStateState,
   action
 ) => {
   switch (action.type) {
     case ROBOT_CONTROL_SCREEN.robotState:
+      localStorage.setItem(
+        "robotControlScreen_robotState",
+        JSON.stringify({ ...state, ...action.payload })
+      );
+
       return { ...state, ...action.payload };
 
     case ROBOT_CONTROL_SCREEN.robotState_reset:

@@ -7,13 +7,7 @@ import {
   ROBOT_CONTROL_SCREEN_API_robotSetting,
   ROBOT_CONTROL_SCREEN_informationArea,
 } from "../constants";
-import {
-  basicSwal,
-  confirmSwal,
-  confirmSwal2,
-  standBySwal,
-  timerSwal,
-} from "../../swal";
+import { basicSwal, confirmSwal, timerSwal } from "../../swal";
 import { Colors } from "../../styles/theme";
 import { domain } from "../../env";
 import axios from "axios";
@@ -222,11 +216,6 @@ export const executeRobotAction =
           const [allDataTemp] = allData.filter((order) => order.id === orderId);
           try {
             dispatch({
-              type: ROBOT_CONTROL_SCREEN.robotState,
-              payload: { mode: "activate" },
-            });
-
-            dispatch({
               type: ROBOT_CONTROL_SCREEN.orderSelect,
               payload: { data: allDataTemp },
             });
@@ -252,6 +241,11 @@ export const executeRobotAction =
 
             dispatch({
               type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
+            });
+
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotState,
+              payload: { mode: "activate" },
             });
 
             axios
@@ -301,11 +295,6 @@ export const executeRobotAction =
                     payload: { resetIndex: resetdata },
                   });
                 }
-                // else if (state === "reset_all") {
-                //   dispatch({
-                //     type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
-                //   });
-                // }
               });
           } catch (error) {
             const err_msg = error.response.data.error_msg;
@@ -381,11 +370,6 @@ export const robotExecutionStandByAction =
     const [allDataTemp] = allData.filter((order) => order.id === orderId);
     try {
       dispatch({
-        type: ROBOT_CONTROL_SCREEN.robotState,
-        payload: { mode: "activate" },
-      });
-
-      dispatch({
         type: ROBOT_CONTROL_SCREEN.orderSelect,
         payload: { data: allDataTemp },
       });
@@ -402,6 +386,11 @@ export const robotExecutionStandByAction =
 
       dispatch({
         type: ROBOT_CONTROL_SCREEN_API_executeRobot.request,
+      });
+
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotState,
+        payload: { mode: "activate" },
       });
 
       axios.post(`${domain}/api/executeRobot/`, { orderId }).then((res) => {
@@ -447,11 +436,12 @@ export const robotExecutionStandByAction =
             type: ROBOT_CONTROL_SCREEN.robotExecutionList,
             payload: { resetIndex: resetdata },
           });
-        } else if (state === "reset_all") {
-          dispatch({
-            type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
-          });
         }
+        // else if (state === "reset_all") {
+        //   dispatch({
+        //     type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
+        //   });
+        // }
       });
     } catch (error) {
       const err_msg = error.response.data.error_msg;
@@ -479,6 +469,7 @@ export const executeRobotAutoRetrieveAction =
         type: ROBOT_CONTROL_SCREEN.informationArea,
         payload: { mode: "autoRetrieve" },
       });
+
       setTimeout(() => {
         dispatch({
           type: ROBOT_CONTROL_SCREEN.robotState,
@@ -565,7 +556,7 @@ export const executeRobotFinishAction =
       const startTime = robotExecutionData.startTime;
       const executeOrderStr = robotExecutionData.executeOrderStr;
       const resetIndex = [...robotExecutionData.resetIndex];
-      // 如果是第一單就全部中斷不會加入(為了如果一二單是連一起不會拆散)
+      // 如果是第一單就全部中斷不會加入(為了如果一、二單是連一起不會拆散)
       if (executionListQueue !== null && executionListQueue !== 0) {
         resetIndex.push(executionListQueue);
       }
@@ -587,21 +578,12 @@ export const executeRobotFinishAction =
       payload: { data: [] },
     });
 
-    dispatch({
-      type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
-    });
+    if (executionListQueue === null) {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
+      });
+    }
   };
-
-// index不對
-// export const hasNextExecutionOrderAction =
-//   (robotExecutionData) => (dispatch) => {
-//     dispatch({
-//       type: ROBOT_CONTROL_SCREEN.orderSelect,
-//       payload: {
-//         data: robotExecutionData.allData[robotExecutionData.queue],
-//       },
-//     });
-//   };
 
 export const insertOrderAction = (insertIndex) => (dispatch) => {
   dispatch({

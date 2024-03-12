@@ -124,22 +124,24 @@ function HistoryDesktop() {
         <HistoryBox>
           <HistoryTitleBox>
             <HistoryTitle>歷史紀錄</HistoryTitle>
-            <IconButton onClick={() => setDateInput(!dateInput)}>
-              <StyleSearchIcon />
-            </IconButton>
-            <input
-              type="date"
-              className="input-date-orange"
-              style={{
-                display: !dateInput && "none",
-                width: matches && "120px",
-                marginLeft: matches && "2px",
-                color: matches ? Colors.lightOrange : Colors.greyTextBlood,
-                backgroundColor: matches && Colors.greyTextBlood,
-                fontWeight: 600,
-              }}
-              onChange={dateFilterHandler}
-            />
+            <div>
+              <input
+                type="date"
+                className="input-date-orange"
+                style={{
+                  display: !dateInput && "none",
+                  width: matches && "120px",
+                  marginRight: matches && "2px",
+                  color: matches ? Colors.lightOrange : Colors.greyTextBlood,
+                  backgroundColor: matches && Colors.greyTextBlood,
+                  fontWeight: 600,
+                }}
+                onChange={dateFilterHandler}
+              />
+              <IconButton onClick={() => setDateInput(!dateInput)}>
+                <StyleSearchIcon />
+              </IconButton>
+            </div>
           </HistoryTitleBox>
 
           <HistoryContent className="history-content" isFilter={isFilter}>

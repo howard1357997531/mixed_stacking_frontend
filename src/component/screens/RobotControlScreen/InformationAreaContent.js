@@ -81,49 +81,49 @@ function InformationAreaContent({
     35: "204 * 92 * 36",
   };
 
-  var compare = [];
-  if (orderSelectData.length !== 0) {
-    var detectState = orderSelectData.aiTraining_order.split(",");
-    const detectArea = detectState.slice(
-      realtimeVisualCount - 1,
-      realtimeVisualResult.length + realtimeVisualCount - 1
-    );
-    // console.log("realtimeVisualCount:", realtimeVisualCount);
-    // console.log("result:", realtimeVisualResult);
-    // console.log("detectArea:", detectArea);
-    var compare = detectArea.map((detect, index) => {
-      if (
-        detect.replace("A", "") === realtimeVisualResult[index].replace("#", "")
-      ) {
-        return detect;
-      } else if (realtimeVisualResult[0] === "#0") {
-        return "#0";
-      } else {
-        return "err";
-      }
-    });
-    detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
-  }
+  // var compare = [];
+  // if (orderSelectData.length !== 0) {
+  //   var detectState = orderSelectData.aiTraining_order.split(",");
+  //   const detectArea = detectState.slice(
+  //     realtimeVisualCount - 1,
+  //     realtimeVisualResult.length + realtimeVisualCount - 1
+  //   );
+  //   // console.log("realtimeVisualCount:", realtimeVisualCount);
+  //   // console.log("result:", realtimeVisualResult);
+  //   // console.log("detectArea:", detectArea);
+  //   var compare = detectArea.map((detect, index) => {
+  //     if (
+  //       detect.replace("A", "") === realtimeVisualResult[index].replace("#", "")
+  //     ) {
+  //       return detect;
+  //     } else if (realtimeVisualResult[0] === "#0") {
+  //       return "#0";
+  //     } else {
+  //       return "err";
+  //     }
+  //   });
+  //   detectState.splice(realtimeVisualCount - 1, compare.length, ...compare);
+  // }
 
-  const compareResult = (index) => {
-    if (index + 1 < realtimeVisualCount) {
-      return "";
-    }
-    if (index + 2 > realtimeVisualCount + realtimeVisualResult.length) {
-      return "";
-    }
+  // const compareResult = (index) => {
+  //   if (index + 1 < realtimeVisualCount) {
+  //     return "";
+  //   }
+  //   if (index + 2 > realtimeVisualCount + realtimeVisualResult.length) {
+  //     return "";
+  //   }
 
-    const orderList = orderSelectData.aiTraining_order.split(",");
-    if (detectState[index] === orderList[index]) {
-      return (
-        <CheckIcon sx={{ color: Colors.darkGreenHover, fontSize: "26px" }} />
-      );
-    } else if (detectState[index] === "#0") {
-      return "";
-    } else {
-      return <WarningIcon sx={{ color: Colors.red800, fontSize: "26px" }} />;
-    }
-  };
+  //   const orderList = orderSelectData.aiTraining_order.split(",");
+  //   if (detectState[index] === orderList[index]) {
+  //     return (
+  //       <CheckIcon sx={{ color: Colors.darkGreenHover, fontSize: "26px" }} />
+  //     );
+  //   } else if (detectState[index] === "#0") {
+  //     return "";
+  //   } else {
+  //     return <WarningIcon sx={{ color: Colors.red800, fontSize: "26px" }} />;
+  //   }
+  // };
 
   // 多單細節Dialog
   const [openDialog, setOpenDialog] = useState(false);
@@ -185,6 +185,7 @@ function InformationAreaContent({
     var parseIndex = (index) => (index === 0 ? 1 : indexArray[index - 1] + 1);
     var parseIndex2 = (index) => indexArray[index];
   }
+
   const parseId = (order) => {
     return parseInt(order.split("*").at(0));
   };

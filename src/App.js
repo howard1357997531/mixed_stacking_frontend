@@ -217,7 +217,10 @@ function App() {
         });
 
         dispatch(
-          executeRobotFinishAction(robotExecutionData, robotExecutionData.queue)
+          executeRobotFinishAction(
+            robotExecutionData,
+            robotExecutionData.queue - 1
+          )
         );
         return;
       } else if (
@@ -234,8 +237,14 @@ function App() {
             payload: { mode: "autoSuccess" },
           });
 
+          // 先設定5秒後自動啟動，但有可能在這期間使用全部中斷，所以要等5秒後
+          // 先判斷目前狀態是不是已經全部中斷，然後才會自動執行下去
           setTimeout(() => {
-            dispatch(executeRobotAutoRetrieveAction(robotExecutionData));
+            // dispatch(executeRobotAutoRetrieveAction(robotExecutionData));
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+              payload: { autoCheck: true },
+            });
           }, 5000);
           return;
         }
@@ -250,7 +259,11 @@ function App() {
           });
 
           setTimeout(() => {
-            dispatch(robotExecutionStandByAction(robotExecutionData));
+            // dispatch(robotExecutionStandByAction(robotExecutionData));
+            dispatch({
+              type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+              payload: { autoCheck: true },
+            });
           }, 5000);
           return;
         }
@@ -319,6 +332,42 @@ function App() {
       }
     }
   }, [robotExecutionData.check]);
+
+  // autoCheck
+  // 檢查是否在 (autoSuccess 或 autoRetrieveSuccess) 到 activate 期間
+  // 有沒有使用全部中斷
+  useEffect(() => {
+    if (robotExecutionData.autoCheck) {
+      dispatch({
+        type: ROBOT_CONTROL_SCREEN.robotExecutionList,
+        payload: { autoCheck: false },
+      });
+
+      if (informationAreaMode !== "resetAll") {
+        if (["success", "autoSuccess"].includes(informationAreaMode)) {
+          dispatch(executeRobotAutoRetrieveAction(robotExecutionData));
+        } else if (informationAreaMode === "autoRetrieveSuccess")
+          dispatch(robotExecutionStandByAction(robotExecutionData));
+      }
+    }
+  }, [robotExecutionData.autoCheck]);
+
+  // localStorage 清空
+  useEffect(() => {
+    if (
+      !robotExecutionData.isDoing &&
+      localStorage.getItem("robotControlScreen_robotState")
+    ) {
+      // 因為在 redux 是先判定 preloadedState 然後給值 redux
+      // 然後才會到這邊的 useEffect，所以需要 reload 一次
+      localStorage.removeItem("robotControlScreen_orderSelect");
+      localStorage.removeItem("robotControlScreen_multipleOrderSelect");
+      localStorage.removeItem("robotControlScreen_informationArea");
+      localStorage.removeItem("robotControlScreen_robotExecutionList");
+      localStorage.removeItem("robotControlScreen_robotState");
+      window.location.reload();
+    }
+  }, []);
 
   const reduxData = {
     orderSelectData,

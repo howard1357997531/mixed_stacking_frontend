@@ -73,7 +73,7 @@ export const HistoryBox = styled(Box)(({ theme }) => ({
 export const HistoryTitleBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
-  //   justifyContent: "space-between",
+  justifyContent: "space-between",
   alignItems: "center",
   padding: "0px 3px",
   width: "100%",

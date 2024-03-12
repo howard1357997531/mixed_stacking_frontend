@@ -55,21 +55,6 @@ function OrderListDialogExecutionList(props) {
     resetIndex,
   } = props.robotExecutionData;
 
-  // const executionListQueue =
-  //   robotStateMode === "activate" && queue === 1
-  //     ? queue - 1
-  //     : robotStateMode === "activate" && informationAreaMode === "autoRetrieve"
-  //     ? queue
-  //     : [
-  //         "success",
-  //         "reset",
-  //         "autoSuccess",
-  //         "autoRetrieve",
-  //         "autoRetrieveSuccess",
-  //       ].includes(robotStateMode)
-  //     ? queue
-  //     : queue - 1;
-
   const executionListQueue =
     // 在 autoRetrieve 的 activate 下會 == queue
     robotStateMode === "activate" && informationAreaMode === "autoRetrieve"
@@ -101,6 +86,35 @@ function OrderListDialogExecutionList(props) {
         confirmSwal2("二次警告", "確定要全部中斷 ?").then((result) => {
           if (result.isConfirmed) {
             dispatch(robotSettingAction("reset", 20, true));
+
+            // 可以在非手臂執行模式下全部中斷
+            if (
+              [
+                "activate",
+                "success",
+                "reset",
+                "autoSuccess",
+                "autoRetrieveSuccess",
+              ].includes(robotStateMode)
+            ) {
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.robotState,
+                payload: { mode: "reset" },
+              });
+
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.informationArea,
+                payload: { mode: "resetAll" },
+              });
+
+              dispatch({
+                type: ROBOT_CONTROL_SCREEN.robotExecutionList_resetAll,
+              });
+
+              dispatch(
+                executeRobotFinishAction(robotExecutionData, executionListQueue)
+              );
+            }
           }
         });
       }
@@ -199,7 +213,7 @@ function OrderListDialogExecutionList(props) {
                   {index === executionListQueue - 1 &&
                   ["activate", "autoRetrieve"].includes(props.robotStateMode) &&
                   informationAreaMode === "autoRetrieve" ? (
-                    <RetrieveText>收回中</RetrieveText>
+                    <RetrieveText>取回中</RetrieveText>
                   ) : null}
 
                   {/* 中斷 */}

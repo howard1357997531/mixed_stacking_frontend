@@ -15,6 +15,8 @@ import {
   robotControlScree_realtimeVisualReducer,
   robotControlScreen_API_robotSettingReducer,
   robotControlScreen_API_executeRobotReducer,
+  robotExecutionListState,
+  robotStateState,
 } from "./reducers/RobotControlScreenReducer";
 import { dialogReducer } from "./reducers/dialogReducer";
 import { toastReducer } from "./reducers/toastReducer";
@@ -41,8 +43,48 @@ const reducer = {
     robotControlScreen_API_robotSettingReducer,
 };
 
-const preloadedState = {};
+// storage
+const robotControlScreen_orderSelectStorage = localStorage.getItem(
+  "robotControlScreen_orderSelect"
+)
+  ? JSON.parse(localStorage.getItem("robotControlScreen_orderSelect"))
+  : { data: [], searchData: null };
 
+const robotControlScreen_multipleOrderSelectStorage = localStorage.getItem(
+  "robotControlScreen_multipleOrderSelect"
+)
+  ? JSON.parse(localStorage.getItem("robotControlScreen_multipleOrderSelect"))
+  : { data: [], searchData: null };
+
+const robotControlScreen_informationAreaStorage = localStorage.getItem(
+  "robotControlScreen_informationArea"
+)
+  ? JSON.parse(localStorage.getItem("robotControlScreen_informationArea"))
+  : { mode: "initial", multipleOrderSelectId: null };
+
+const robotControlScreen_robotExecutionListStorage = localStorage.getItem(
+  "robotControlScreen_robotExecutionList"
+)
+  ? JSON.parse(localStorage.getItem("robotControlScreen_robotExecutionList"))
+  : robotExecutionListState;
+
+const robotControlScreen_robotStateStorage = localStorage.getItem(
+  "robotControlScreen_robotState"
+)
+  ? JSON.parse(localStorage.getItem("robotControlScreen_robotState"))
+  : robotStateState;
+
+// preloadedState
+const preloadedState = {
+  robotControlScreen_orderSelect: robotControlScreen_orderSelectStorage,
+  robotControlScreen_multipleOrderSelect:
+    robotControlScreen_multipleOrderSelectStorage,
+  robotControlScreen_informationArea: robotControlScreen_informationAreaStorage,
+  robotControlScreen_robotExecutionList:
+    robotControlScreen_robotExecutionListStorage,
+  robotControlScreen_robotState: robotControlScreen_robotStateStorage,
+};
+console.log("redux");
 export const store = configureStore({
   reducer: reducer,
   preloadedState: preloadedState,
