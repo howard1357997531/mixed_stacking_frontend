@@ -252,7 +252,10 @@ function InformationAreaContent({
       {["success", "reset"].includes(informationAreaMode) ? (
         <RobotSuccessBox>
           <RobotSuccessTitle
-            sx={{ color: informationAreaMode === "reset" && Colors.softOrange }}
+            sx={{
+              color:
+                informationAreaMode === "reset" && isDoing && Colors.softOrange,
+            }}
           >
             {executeOrderIdArray.length === 0
               ? "全部執行完畢"

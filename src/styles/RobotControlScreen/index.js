@@ -480,14 +480,18 @@ export const OrderListContentSmBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const OrderListContentAvatar = styled(Avatar, {
+export const OrderListContentAvatar = styled(Box, {
   shouldForwardProp: (prop) => prop !== "count",
 })(({ theme, count }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   width: "24px",
   height: "24px",
   fontSize: "13px",
   color: count ? Colors.blue500 : Colors.lightOrange,
   backgroundColor: count ? Colors.lightOrange : Colors.greyTextBlood,
+  borderRadius: "2px",
   [theme.breakpoints.down("sm")]: {
     width: "22px",
     height: "22px",
@@ -525,7 +529,7 @@ export const MultiOrderDetailSmBox = styled(Box, {
 }));
 
 export const MultiOrderResetBox = styled(Box)(({ theme }) => ({
-  marginRight: "4px",
+  marginRight: "6px",
   padding: "3px 6px",
   fontSize: 14,
   color: Colors.greyTextBlood,
@@ -540,7 +544,7 @@ export const MultiOrderResetBox = styled(Box)(({ theme }) => ({
 export const MultiOrderInsertBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isDoing",
 })(({ theme, isDoing }) => ({
-  marginRight: "4px",
+  marginRight: "5px",
   padding: "3px 6px",
   fontSize: 14,
   color: isDoing ? Colors.blue500 : Colors.lightOrange,
@@ -559,15 +563,20 @@ export const MultiOrderAvatarBox = styled(Box)(({ theme }) => ({
   width: "20%",
 }));
 
-export const MultiOrderAvatar = styled(Avatar, {
+export const MultiOrderAvatar = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isDoing",
 })(({ theme, isDoing }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   height: "23px",
   width: "23px",
-  fontSize: "11px",
+  fontSize: "12px",
   fontWeight: 600,
   color: isDoing ? Colors.blue500 : Colors.lightOrange,
   backgroundColor: isDoing ? Colors.lightOrange : Colors.greyTextBlood,
+  borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0 , 0, 0, 0.2)",
   [theme.breakpoints.down("lg")]: {
     height: "22px",
     width: "22px",
@@ -596,7 +605,7 @@ export const AvatarDivider = styled(Box, {
   height: "2px",
   width: "7px",
   margin: "0px 2px",
-  backgroundColor: isDoing ? Colors.lightOrange : Colors.greyText,
+  backgroundColor: isDoing ? Colors.lightOrange : Colors.greyTextBlood,
   [theme.breakpoints.down("sm")]: {
     width: "4px",
   },

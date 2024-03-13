@@ -344,9 +344,15 @@ function App() {
       });
 
       if (informationAreaMode !== "resetAll") {
-        if (["success", "autoSuccess"].includes(informationAreaMode)) {
+        if (
+          ["success", "autoSuccess", "executeOrder"].includes(
+            informationAreaMode
+          )
+        ) {
           dispatch(executeRobotAutoRetrieveAction(robotExecutionData));
-        } else if (informationAreaMode === "autoRetrieveSuccess")
+        } else if (
+          ["autoRetrieveSuccess", "executeOrder"].includes(informationAreaMode)
+        )
           dispatch(robotExecutionStandByAction(robotExecutionData));
       }
     }

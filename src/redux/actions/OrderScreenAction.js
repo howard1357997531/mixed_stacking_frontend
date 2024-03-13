@@ -394,6 +394,8 @@ export const aiTrainingAction =
         orderId,
       });
 
+      console.log("response ok");
+
       dispatch({
         type: ORDER_SCREEN.orderSelect,
         payload: { isTraining: false },

@@ -16,6 +16,7 @@ import ReportIcon from "@mui/icons-material/Report";
 import {
   OrderListExeListCheckAnimation,
   OrderListExeListDeleteAnimation,
+  OrderListExeListIndexAnimation,
   OrderListExeListWaitToExecuteAnimation,
 } from "../../../animation";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
@@ -259,27 +260,33 @@ export const OrderListExeListName = styled(Box, {
   },
 }));
 
-export const IndexText = styled(Avatar, {
+// data[2] 當下執行的那單會特效
+export const IndexText = styled(Box, {
   shouldForwardProp: (prop) => prop !== "data",
 })(({ theme, data }) => ({
   position: "absolute",
   top: "50%",
   left: "8px",
   transform: "translateY(-50%)",
-  width: "24px",
-  height: "24px",
-  fontSize: "12px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "23px",
+  width: "23px",
+  fontSize: "14px",
   fontWeight: 600,
   color: data[0]
     ? Colors.softOrange
     : data[1]
     ? Colors.darkGreen
-    : Colors.orangeDialog,
+    : Colors.orangeDialogHover,
   backgroundColor: data[0]
     ? Colors.greyTextBlood
     : data[1]
     ? Colors.green
     : Colors.greyTextBlood,
+  borderRadius: "2px",
+  animation: data[2] ? `${OrderListExeListIndexAnimation} 1s infinite` : null,
   "@media screen and (orientation: portrait)": {
     width: "26px",
     height: "26px",
@@ -535,6 +542,20 @@ export const OrderListExeListInProgress = styled(Box)(({ theme }) => ({
   top: "50%",
   right: "10px",
   transform: "translateY(-50%)",
+}));
+
+export const PauseText = styled(Typography)(({ theme }) => ({
+  color: Colors.orangeDialogHover,
+  backgroundColor: Colors.red800,
+  fontSize: 14,
+  fontWeight: 600,
+  padding: "2px 6px 1px",
+  // border: `2px solid ${Colors.green}`,
+  borderRadius: "2px",
+  [theme.breakpoints.down("sm")]: {
+    right: "33px",
+    fontSize: 12,
+  },
 }));
 
 export const OrderListExeListDelete = styled(DisabledByDefaultOutlinedIcon)(

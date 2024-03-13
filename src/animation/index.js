@@ -27,6 +27,17 @@ export const operateShowBoardTextAnimation = keyframes`
   100% { transform : scale(1) }
 `;
 
+export const OrderListExeListIndexAnimation = keyframes`
+  0% {
+    outline: none;
+    box-shadow: none;
+  }
+  100% {
+    outline: 2.5px solid #1976d2;
+    box-shadow: inset 0px 0px 4px 3px #1976d2;
+  }
+`;
+
 export const OrderListExeListCheckAnimation = keyframes`
   0% {
     -webkit-transform: rotateY(0);

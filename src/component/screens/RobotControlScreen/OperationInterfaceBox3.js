@@ -34,6 +34,10 @@ function OperationInterfaceBox3({
       color: Colors.darkGreenHover,
       animation: `${operateShowBoardTextAnimation} 1s ease infinite`,
     },
+    pause: {
+      text: `暫停`,
+      color: Colors.red800,
+    },
     success: {
       // text: `預備執行第 ${queue + 1} 份工單`,
       text: `待機中`,
@@ -122,15 +126,13 @@ function OperationInterfaceBox3({
           <>
             <TextShowBoardText
               sx={{
-                color: robotStatePause
-                  ? Colors.red800
-                  : boxText[robotStateMode]["color"],
+                color: boxText[robotStateMode]["color"],
                 animation: boxText[robotStateMode]["animation"]
                   ? boxText[robotStateMode]["animation"]
                   : "none",
               }}
             >
-              {robotStatePause ? "暫停" : boxText[robotStateMode]["text"]}
+              {boxText[robotStateMode]["text"]}
             </TextShowBoardText>
 
             {["prepare"].includes(robotStateMode) && !robotStatePause ? (

@@ -17,6 +17,7 @@ import {
   OrderListExeListReset,
   OrderListExeListTitleBox,
   OrderText,
+  PauseText,
   RetrieveText,
   StopAllText,
   StyleReportIcon,
@@ -177,6 +178,16 @@ function OrderListDialogExecutionList(props) {
                     data={[
                       resetIndex.includes(index),
                       index < executionListQueue,
+                      index === executionListQueue &&
+                        ![
+                          "inactivate",
+                          "success",
+                          "reset",
+                          "autoSuccess",
+                          "autoRetrieve",
+                          "autoRetrieveSuccess",
+                        ].includes(props.robotStateMode) &&
+                        informationAreaMode !== "autoRetrieve",
                     ]}
                   >
                     {index + 1}
@@ -239,9 +250,7 @@ function OrderListDialogExecutionList(props) {
                   {index === executionListQueue ? (
                     <OrderListExeListInProgress>
                       {props.robotStateMode === "pause" ? (
-                        <Typography color={Colors.red800} fontWeight={600}>
-                          暫停
-                        </Typography>
+                        <PauseText>暫停</PauseText>
                       ) : null}
 
                       {![

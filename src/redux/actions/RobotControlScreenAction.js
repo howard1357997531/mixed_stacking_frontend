@@ -347,6 +347,13 @@ export const robotSettingAction =
         speed,
       });
 
+      if (data.mode === "pause") {
+        dispatch({
+          type: ROBOT_CONTROL_SCREEN.robotState,
+          payload: { mode: "pause" },
+        });
+      }
+
       dispatch({
         type: ROBOT_CONTROL_SCREEN_API_robotSetting.success,
         payload: data,
