@@ -134,13 +134,17 @@ export const MultiCreateAvatarBox = styled(Box, {
   alignItems: "center",
 }));
 
-export const MultiCreateAvatar = styled(Avatar)(({ theme }) => ({
+export const MultiCreateAvatar = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   height: "23px",
   width: "23px",
   fontSize: "12px",
   fontWeight: 600,
   color: Colors.greenHover,
   backgroundColor: Colors.greyTextBlood,
+  borderRadius: "2px",
   [theme.breakpoints.down("md")]: {
     height: "21px",
     width: "21px",

@@ -145,6 +145,15 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
   },
 }));
 
+export const NewText = styled(Typography)(({ theme }) => ({
+  marginRight: "6px",
+  color: Colors.red800,
+  [theme.breakpoints.down("md")]: {
+    marginRight: "5px",
+    fontSize: 12,
+  },
+}));
+
 export const HistoryName = styled(Typography)(({ theme }) => ({
   marginRight: "8px",
   color: Colors.greyTextBlood,
@@ -182,6 +191,7 @@ export const HistoryResetState = styled(Typography)(({ theme }) => ({
   fontSize: 14,
   fontWeight: 600,
   borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("sm")]: {
     padding: "2px 4px",
     fontSize: 12,
@@ -197,6 +207,7 @@ export const HistoryInsertState = styled(Typography)(({ theme }) => ({
   fontSize: 14,
   fontWeight: 600,
   borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("sm")]: {
     padding: "2px 4px",
     fontSize: 12,
@@ -296,7 +307,7 @@ export const HistoryResetAllBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   height: "30px",
-  color: Colors.orangeDialog,
+  color: Colors.lightOrangeHover,
   backgroundColor: Colors.red800,
   fontWeight: 600,
   borderBottom: `1px solid ${Colors.greyTextBlood}`,
@@ -319,55 +330,12 @@ export const HistoryDetailSmBox = styled(Box, {
   },
 }));
 
-export const FirstBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isReset",
-})(({ theme, isReset }) => ({
-  boxSizing: "border-box",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  color: isReset ? Colors.greyTextBlood : Colors.orangeDialog,
-  backgroundColor: isReset ? Colors.softOrange : Colors.blue500,
-  width: "6%",
-  height: "100%",
-  borderRight: `1px solid ${Colors.greyTextBlood}`,
-  fontWeight: 600,
-  [theme.breakpoints.down("sm")]: {
-    width: "8%",
-  },
-}));
-
-export const ResetBox = styled(Box)(({ theme }) => ({
-  boxSizing: "border-box",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "40%",
-  [theme.breakpoints.down("sm")]: {
-    fontSize: 12,
-  },
-}));
-
-export const InsertBox = styled(Box)(({ theme }) => ({
-  boxSizing: "border-box",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "40%",
-  [theme.breakpoints.down("sm")]: {
-    fontSize: 13,
-  },
-}));
-
 export const AvatarBox = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "25%",
+  width: "20%",
   height: "100%",
   borderRight: `1px solid ${Colors.greyTextBlood}`,
   [theme.breakpoints.down("sm")]: {
@@ -375,15 +343,24 @@ export const AvatarBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyleAvatar = styled(Avatar, {
-  shouldForwardProp: (prop) => prop !== "isInsert",
-})(({ theme, isInsert }) => ({
-  width: "25px",
-  height: "25px",
-  fontSize: 12,
+export const StyleAvatar = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "23px",
+  height: "23px",
+  fontSize: 14,
   fontWeight: 600,
-  color: Colors.lightOrangeHover,
-  backgroundColor: isInsert ? Colors.greyTextBlood : Colors.greyTextBlood,
+  color: data[0] ? Colors.greyTextBlood : Colors.lightOrangeHover,
+  backgroundColor: data[0]
+    ? Colors.softOrange
+    : data[1]
+    ? Colors.blue500
+    : Colors.greyTextBlood,
+  borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("md")]: {
     width: "20px",
     height: "20px",
@@ -397,12 +374,23 @@ export const AvatarDivider = styled(Box, {
   width: "6px",
   height: "2px",
   margin: "0px 4px",
-  backgroundColor: isInsert ? Colors.greyTextBlood : Colors.greyTextBlood,
+  backgroundColor: isInsert ? Colors.blue500 : Colors.greyTextBlood,
 }));
 
 export const NameBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexGrow: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  color: Colors.greyTextBlood,
+  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 14,
+  },
+}));
+
+export const StateBox = styled(Box)(({ theme }) => ({
+  display: "flex",
   justifyContent: "center",
   alignItems: "center",
   color: Colors.greyTextBlood,

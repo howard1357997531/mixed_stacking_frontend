@@ -184,6 +184,7 @@ export const SearchSelect = styled(Box, {
   color: mode ? Colors.green : Colors.lightOrange,
   backgroundColor: Colors.greyTextBlood,
   fontSize: "14px",
+  // fontWeight: 600,
   borderRadius: "10px",
   boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
@@ -781,6 +782,7 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   fontSize: "13px",
   fontWeight: 600,
   color: "#fff",
+  border: `2px solid #fff`,
   [theme.breakpoints.down("md")]: {
     width: "25px",
     height: "25px",

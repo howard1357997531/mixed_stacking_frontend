@@ -190,7 +190,7 @@ export const OrderListExeListBottomBox = styled(Box)(({ theme }) => ({
 export const StopAllText = styled(Typography)(({ theme }) => ({
   margin: "0px 5px",
   paddingTop: "2px",
-  fontSize: 24,
+  fontSize: 22,
   fontWeight: 600,
   [theme.breakpoints.down("md")]: {
     fontSize: 18,
@@ -199,7 +199,7 @@ export const StopAllText = styled(Typography)(({ theme }) => ({
 
 export const StyleReportIcon = styled(ReportIcon)(({ theme }) => ({
   color: Colors.orangeDialog,
-  fontSize: 24,
+  fontSize: 22,
   "&:hover": {
     animation: `${OrderListExeListCheckAnimation} 1s ease`,
   },
@@ -286,7 +286,8 @@ export const IndexText = styled(Box, {
     ? Colors.green
     : Colors.greyTextBlood,
   borderRadius: "2px",
-  animation: data[2] ? `${OrderListExeListIndexAnimation} 1s infinite` : null,
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
+  animation: data[2] ? `${OrderListExeListIndexAnimation} 1.1s infinite` : null,
   "@media screen and (orientation: portrait)": {
     width: "26px",
     height: "26px",
@@ -322,6 +323,7 @@ export const InsertText = styled(Typography, {
   fontSize: 14,
   fontWeight: 600,
   borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   "@media screen and (orientation: portrait)": {
     left: "45px",
     fontSize: 14,
@@ -403,6 +405,7 @@ export const InsertNowText = styled(Typography)(({ theme }) => ({
   color: Colors.orangeDialog,
   backgroundColor: Colors.blue500,
   borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     transform: "scale(1.05)",
     cursor: "pointer",
@@ -550,8 +553,8 @@ export const PauseText = styled(Typography)(({ theme }) => ({
   fontSize: 14,
   fontWeight: 600,
   padding: "2px 6px 1px",
-  // border: `2px solid ${Colors.green}`,
   borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("sm")]: {
     right: "33px",
     fontSize: 12,

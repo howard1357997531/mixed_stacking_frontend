@@ -65,6 +65,9 @@ function OperationInterfaceBox1({
     ) {
       basicSwal("warning", "手臂尚未啟動");
       return;
+    } else if (informationAreaMode === "autoRetrieve") {
+      basicSwal("warning", "收回物件中");
+      return;
     }
     setStackAndBufferOpen(true);
   };

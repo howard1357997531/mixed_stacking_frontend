@@ -58,7 +58,7 @@ export const Colors = {
   greyBorder: grey[500],
   grey600: grey[600],
   greyText: grey[700],
-  greyTextBlood: grey[800],
+  greyTextBlood: "#484848",
   grey900: grey[900],
   red: "#FF494B",
   lightred: red[300],

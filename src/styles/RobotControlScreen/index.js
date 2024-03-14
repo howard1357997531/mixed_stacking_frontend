@@ -132,7 +132,7 @@ export const OperationInterfaceButtonText = styled(Typography)(({ theme }) => ({
   transform: "translate(-50%, -50%)",
   fontSize: "24px",
   fontWeight: 600,
-  color: Colors.greyTexts,
+  color: Colors.greyTextBlood,
   [theme.breakpoints.down("md")]: {
     fontSize: 20,
   },
@@ -535,6 +535,7 @@ export const MultiOrderResetBox = styled(Box)(({ theme }) => ({
   color: Colors.greyTextBlood,
   backgroundColor: Colors.softOrange,
   borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("sm")]: {
     padding: "2px 3px",
     fontSize: 12,
@@ -550,6 +551,7 @@ export const MultiOrderInsertBox = styled(Box, {
   color: isDoing ? Colors.blue500 : Colors.lightOrange,
   backgroundColor: isDoing ? Colors.lightOrange : Colors.blue500,
   borderRadius: "2px",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("sm")]: {
     padding: "2px 3px",
     fontSize: 12,
@@ -576,7 +578,7 @@ export const MultiOrderAvatar = styled(Box, {
   color: isDoing ? Colors.blue500 : Colors.lightOrange,
   backgroundColor: isDoing ? Colors.lightOrange : Colors.greyTextBlood,
   borderRadius: "2px",
-  boxShadow: "inset 0px 0px 2px rgba(0 , 0, 0, 0.2)",
+  boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("lg")]: {
     height: "22px",
     width: "22px",

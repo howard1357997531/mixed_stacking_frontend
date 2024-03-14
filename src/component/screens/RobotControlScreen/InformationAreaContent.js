@@ -218,6 +218,17 @@ function InformationAreaContent({
       ? queue + 1
       : queue;
   }
+
+  const checkInExecuteIndex = (data, index) => {
+    if (data.length === 1) {
+      return data.includes(index);
+    } else {
+      const min = data.at(0);
+      const max = data.at(1);
+      return min <= index && max >= index;
+    }
+  };
+
   const executeListRef = useRef();
 
   useEffect(() => {
@@ -229,6 +240,7 @@ function InformationAreaContent({
     }
   }, [informationAreaMode]);
 
+  console.log(executeData);
   return (
     <InformationAreaContentBox data={[hasOrderList, mode]}>
       {informationAreaMode === "initial" ? (
@@ -452,22 +464,36 @@ function InformationAreaContent({
             {executeData.map((eData, index) => (
               <MultiOrderDetailSmBox
                 key={index}
-                ref={eData.index.includes(executeQueue) ? executeListRef : null}
-                isDoing={eData.index.includes(executeQueue) && isDoing}
+                ref={
+                  checkInExecuteIndex(eData.index, executeQueue)
+                    ? executeListRef
+                    : null
+                }
+                isDoing={
+                  checkInExecuteIndex(eData.index, executeQueue) && isDoing
+                }
               >
                 <MultiOrderAvatarBox>
                   <MultiOrderAvatar
-                    isDoing={eData.index.includes(executeQueue) && isDoing}
+                    isDoing={
+                      checkInExecuteIndex(eData.index, executeQueue) && isDoing
+                    }
                   >
                     {eData.index.at(0)}
                   </MultiOrderAvatar>
                   {eData.index.length > 1 ? (
                     <Fragment>
                       <AvatarDivider
-                        isDoing={eData.index.includes(executeQueue) && isDoing}
+                        isDoing={
+                          checkInExecuteIndex(eData.index, executeQueue) &&
+                          isDoing
+                        }
                       />
                       <MultiOrderAvatar
-                        isDoing={eData.index.includes(executeQueue) && isDoing}
+                        isDoing={
+                          checkInExecuteIndex(eData.index, executeQueue) &&
+                          isDoing
+                        }
                       >
                         {eData.index.at(1)}
                       </MultiOrderAvatar>
@@ -476,7 +502,9 @@ function InformationAreaContent({
                 </MultiOrderAvatarBox>
 
                 <MultiOrderName
-                  isDoing={eData.index.includes(executeQueue) && isDoing}
+                  isDoing={
+                    checkInExecuteIndex(eData.index, executeQueue) && isDoing
+                  }
                 >
                   {eData.isReset ? (
                     <MultiOrderResetBox>中斷</MultiOrderResetBox>
@@ -484,7 +512,10 @@ function InformationAreaContent({
 
                   {eData.isInsert ? (
                     <MultiOrderInsertBox
-                      isDoing={eData.index.includes(executeQueue) && isDoing}
+                      isDoing={
+                        checkInExecuteIndex(eData.index, executeQueue) &&
+                        isDoing
+                      }
                       sx={{ display: index === 0 && "none" }}
                     >
                       插單
@@ -504,7 +535,8 @@ function InformationAreaContent({
                       sx={{
                         fontSize: "20px",
                         color:
-                          eData.index.includes(executeQueue) && isDoing
+                          checkInExecuteIndex(eData.index, executeQueue) &&
+                          isDoing
                             ? Colors.lightOrange
                             : Colors.darkGreen,
                       }}

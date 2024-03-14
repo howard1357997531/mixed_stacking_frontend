@@ -10,14 +10,14 @@ import {
   DescText,
   HistoryDetailBox,
   HistoryDetailSmBox,
-  FirstBox,
-  InsertBox,
   NameBox,
   StyleAvatar,
   StyleDialogContent,
   StyleDialogTitle,
-  ResetBox,
   HistoryResetAllBox,
+  HistoryResetState,
+  HistoryInsertState,
+  StateBox,
 } from "../../../styles/HistoryScreen/HistoryDesktop";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -125,35 +125,48 @@ export default function HistoryDialog({ open, closeOpen, data }) {
                 ) : null}
 
                 <HistoryDetailSmBox isFirst={index === 0}>
-                  {hData.isReset ? (
-                    <FirstBox isReset={true}>
-                      <ResetBox>中</ResetBox>
-                      <ResetBox>斷</ResetBox>
-                    </FirstBox>
-                  ) : null}
-
-                  {hData.isInsert ? (
-                    <FirstBox isReset={false}>
-                      <InsertBox>插</InsertBox>
-                      <InsertBox>單</InsertBox>
-                    </FirstBox>
-                  ) : null}
-
                   <AvatarBox>
-                    <StyleAvatar isInsert={hData.isInsert}>
+                    <StyleAvatar data={[hData.isReset, hData.isInsert]}>
                       {hData.index.at(0)}
                     </StyleAvatar>
                     {hData.index.length > 1 ? (
                       <>
                         <AvatarDivider isInsert={hData.isInsert} />
-                        <StyleAvatar isInsert={hData.isInsert}>
+                        <StyleAvatar data={[hData.isReset, hData.isInsert]}>
                           {hData.index.at(1)}
                         </StyleAvatar>
                       </>
                     ) : null}
                   </AvatarBox>
 
-                  <NameBox>{hData.name}</NameBox>
+                  <NameBox>
+                    {hData.isReset ? (
+                      <HistoryResetState
+                        sx={{ marginRight: matches ? "6px" : "4px" }}
+                      >
+                        中斷
+                      </HistoryResetState>
+                    ) : null}
+
+                    {hData.isInsert ? (
+                      <HistoryInsertState
+                        sx={{ marginRight: matches ? "6px" : "4px" }}
+                      >
+                        插單
+                      </HistoryInsertState>
+                    ) : null}
+                    {hData.name}
+                  </NameBox>
+
+                  {/* <StateBox>
+                    {hData.isReset ? (
+                      <HistoryResetState>中斷</HistoryResetState>
+                    ) : null}
+
+                    {hData.isInsert ? (
+                      <HistoryInsertState>插單</HistoryInsertState>
+                    ) : null}
+                  </StateBox> */}
                 </HistoryDetailSmBox>
               </React.Fragment>
             ))}

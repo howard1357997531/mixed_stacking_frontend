@@ -1,3 +1,8 @@
+// nav
+export const NAV = {
+  historyCount: "NAV_historyCount",
+};
+
 // orderList
 export const ORDER_LIST = {
   request: "ORDER_LIST_request",

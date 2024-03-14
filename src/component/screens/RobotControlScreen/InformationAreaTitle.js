@@ -29,14 +29,18 @@ function InformationAreaTitle({
     },
   }));
 
-  const StyleAvatar = styled(Avatar)(({ theme }) => ({
-    display: "inline-flex",
+  const StyleAvatar = styled(Box)(({ theme }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     width: "22px",
     height: "22px",
-    fontSize: 12,
+    fontSize: 14,
     margin: "0px 5px",
     color: Colors.lightOrange,
     backgroundColor: Colors.blue500,
+    borderRadius: "50%",
+    boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
     [theme.breakpoints.down("sm")]: {
       width: "18px",
       height: "18px",

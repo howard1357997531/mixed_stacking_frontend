@@ -13,16 +13,18 @@ import {
   NavLinkImageSmallBox,
   NavLinkImageBoxText,
   UpBtn,
+  NavLinkImageBoxCount,
 } from "../../styles/nav";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import SwipeableEdgeDrawer from "./SwipeableEdgeDrawer";
 import "./css/nav.css";
 import { useDispatch, useSelector } from "react-redux";
-import { ROBOT_CONTROL_SCREEN } from "../../redux/constants";
+import { NAV, ROBOT_CONTROL_SCREEN } from "../../redux/constants";
 
 function Navbar() {
   const dispatch = useDispatch();
+  const { historyCount } = useSelector((state) => state.nav);
   const theme = useTheme();
   const matches_nine = useMediaQuery(theme.breakpoints.up("md"));
   const matches_six = useMediaQuery(theme.breakpoints.up("sm"));
@@ -170,6 +172,11 @@ function Navbar() {
                     <NavLinkImageSmallBox>
                       <img src={"history.png"} alt={"history.png"}></img>
                       <NavLinkImageBoxText>歷史</NavLinkImageBoxText>
+                      {historyCount > 0 ? (
+                        <NavLinkImageBoxCount>
+                          {historyCount}
+                        </NavLinkImageBoxCount>
+                      ) : null}
                     </NavLinkImageSmallBox>
                   </Link>
                 </NavLinkImageBox>

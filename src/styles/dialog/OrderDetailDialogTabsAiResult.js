@@ -149,6 +149,7 @@ export const AiResultAvatar = styled(Avatar)(({ theme }) => ({
   fontSize: "13px",
   fontWeight: 600,
   color: "#fff",
+  border: `2px solid #fff`,
   [theme.breakpoints.down("md")]: {
     width: "25px",
     height: "25px",

@@ -20,8 +20,10 @@ import {
 } from "./reducers/RobotControlScreenReducer";
 import { dialogReducer } from "./reducers/dialogReducer";
 import { toastReducer } from "./reducers/toastReducer";
+import { navReducer } from "./reducers/navReducer";
 
 const reducer = {
+  nav: navReducer,
   HomeButtonHover: HomeButtonHoverReducer,
   dialog: dialogReducer,
   toast: toastReducer,
@@ -44,6 +46,10 @@ const reducer = {
 };
 
 // storage
+const navStorage = localStorage.getItem("nav")
+  ? JSON.parse(localStorage.getItem("nav"))
+  : { historyCount: 0 };
+
 const robotControlScreen_orderSelectStorage = localStorage.getItem(
   "robotControlScreen_orderSelect"
 )
@@ -76,6 +82,7 @@ const robotControlScreen_robotStateStorage = localStorage.getItem(
 
 // preloadedState
 const preloadedState = {
+  nav: navStorage,
   robotControlScreen_orderSelect: robotControlScreen_orderSelectStorage,
   robotControlScreen_multipleOrderSelect:
     robotControlScreen_multipleOrderSelectStorage,

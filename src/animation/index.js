@@ -34,7 +34,8 @@ export const OrderListExeListIndexAnimation = keyframes`
   }
   100% {
     outline: 2.5px solid #1976d2;
-    box-shadow: inset 0px 0px 4px 3px #1976d2;
+    box-shadow: inset 0px 0px 6px 3.5px #1976d2;
+    transform: translateY(-50%);
   }
 `;
 

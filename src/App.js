@@ -98,6 +98,7 @@ function App() {
             "finish",
             "buffer",
             "buffer_to_main",
+            "autoRetrieve",
           ].includes(realtimeData.mode)
         ) {
           dispatch({

@@ -34,6 +34,7 @@ export const NavLinkImageBox = styled(Box)({
 });
 
 export const NavLinkImageSmallBox = styled(Box)({
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -61,6 +62,22 @@ export const NavLinkImageBoxText = styled(Typography)({
     fontSize: "14px",
   },
 });
+
+export const NavLinkImageBoxCount = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: 0,
+  right: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "20px",
+  height: "20px",
+  color: "#fff",
+  fontSize: 13,
+  fontWeight: 600,
+  backgroundColor: Colors.red800,
+  borderRadius: "50%",
+}));
 
 export const UpBtn = styled(KeyboardArrowUpIcon, {
   shouldForwardProp: (prop) => prop !== "visible",

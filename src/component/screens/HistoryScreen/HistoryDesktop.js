@@ -15,6 +15,7 @@ import {
   HistoryTime,
   HistoryTitle,
   HistoryTitleBox,
+  NewText,
   StyleBox,
   StyleCancelButton,
 } from "../../../styles/HistoryScreen/HistoryDesktop";
@@ -29,8 +30,12 @@ import {
   StyleSearchIcon,
 } from "../../../styles/OrderScreen";
 import LoadingCircle from "../../../tool/LoadingCircle";
+import { useDispatch, useSelector } from "react-redux";
+import { NAV } from "../../../redux/constants";
 
 function HistoryDesktop() {
+  const dispatch = useDispatch();
+  const { historyCount } = useSelector((state) => state.nav);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dateInput, setDateInput] = useState(false);
@@ -81,9 +86,21 @@ function HistoryDesktop() {
       axios.get(`${domain}/api/history_record/`).then((res) => {
         setData(res.data);
         setLoading(false);
+        console.log("get");
       });
     } catch (error) {
       setLoading(false);
+    }
+
+    if (historyCount !== 0) {
+      dispatch({ type: NAV.historyCount, payload: 0 });
+      setTimeout(() => {
+        try {
+          axios.post(`${domain}/api/clear_new_history_record/`).then((res) => {
+            console.log("asd");
+          });
+        } catch (error) {}
+      }, 2000);
     }
   }, []);
 
@@ -93,7 +110,7 @@ function HistoryDesktop() {
     setIsFilter(false);
   };
 
-  console.log(groupedData);
+  // console.log(data);
 
   const parseState = (data) => {
     return data === "" || data === null ? false : true;
@@ -164,6 +181,8 @@ function HistoryDesktop() {
                         key={order.id}
                         onClick={() => dialogOpenHandler(order)}
                       >
+                        {order.is_new ? <NewText>New</NewText> : null}
+
                         <HistoryName>
                           {parseCount(order.order_id)} 單
                         </HistoryName>

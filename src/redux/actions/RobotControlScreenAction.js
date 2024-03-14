@@ -1,6 +1,7 @@
 import {
   DIALOG,
   MULTIPLE_ORDER_LIST,
+  NAV,
   ORDER_LIST,
   ROBOT_CONTROL_SCREEN,
   ROBOT_CONTROL_SCREEN_API_executeRobot,
@@ -477,17 +478,17 @@ export const executeRobotAutoRetrieveAction =
         payload: { mode: "autoRetrieve" },
       });
 
-      setTimeout(() => {
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.robotState,
-          payload: { mode: "autoRetrieve" },
-        });
+      // setTimeout(() => {
+      //   dispatch({
+      //     type: ROBOT_CONTROL_SCREEN.robotState,
+      //     payload: { mode: "autoRetrieve" },
+      //   });
 
-        dispatch({
-          type: ROBOT_CONTROL_SCREEN.realtimeItem,
-          payload: { mode: "retrieve" },
-        });
-      }, 2000);
+      //   dispatch({
+      //     type: ROBOT_CONTROL_SCREEN.realtimeItem,
+      //     payload: { mode: "retrieve" },
+      //   });
+      // }, 2000);
 
       const { data } = await axios.post(
         `${domain}/api/executeRobotAutoRetrieve/`
@@ -585,6 +586,9 @@ export const executeRobotFinishAction =
       payload: { data: [] },
     });
 
+    dispatch({ type: NAV.historyCount, payload: 1 });
+
+    // 如果是正常結束跑這， resetAll 不跑這邊
     if (executionListQueue === null) {
       dispatch({
         type: ROBOT_CONTROL_SCREEN.robotExecutionList_reset,
