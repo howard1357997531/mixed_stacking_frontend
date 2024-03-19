@@ -64,10 +64,11 @@ function RobotSettingDialog({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    fontSize: 28,
     fontWeight: 600,
     [theme.breakpoints.down("sm")]: {
       top: "-15px",
-      fontSize: 26,
+      fontSize: 24,
     },
   }));
   const StyleSpeedPlusMinusBox = styled(Box)(({ theme }) => ({
@@ -82,20 +83,19 @@ function RobotSettingDialog({
   const StyleSmallBox = styled(Box)(({ theme }) => ({
     position: "relative",
     display: "flex",
-    width: "48%",
-    height: "100%",
+    width: "45%",
+    height: "90%",
     "&:hover": {
-      transition: "all 0.3s ease-in-out",
-      transform: "scale(1.1)",
       cursor: "pointer",
     },
-    "&:active": {
-      transform: "scale(0.9)",
+    [theme.breakpoints.down("sm")]: {
+      width: "48%",
+      height: "100%",
     },
   }));
   const StylePauseButton = styled(Box)(({ theme }) => ({
     position: "absolute",
-    top: "50%",
+    top: "55%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "80%",
@@ -110,7 +110,7 @@ function RobotSettingDialog({
     shouldForwardProp: (prop) => prop !== "customColor",
   })(({ theme, customColor }) => ({
     position: "absolute",
-    top: "50%",
+    top: "55%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "80%",
@@ -140,7 +140,7 @@ function RobotSettingDialog({
     fontSize: "24px",
     fontWeight: 600,
     [theme.breakpoints.down("sm")]: {
-      fontSize: "20px",
+      fontSize: "18px",
     },
   }));
 
@@ -245,9 +245,7 @@ function RobotSettingDialog({
             </StyleSpeedSmallLeftBox>
 
             <StyleSpeedSmallMiddleBox>
-              <StyleSpeedSmallMiddleBoxText variant="h4">
-                速度
-              </StyleSpeedSmallMiddleBoxText>
+              <StyleSpeedSmallMiddleBoxText>速度</StyleSpeedSmallMiddleBoxText>
               <Box
                 sx={{
                   backgroundColor: "#fff",

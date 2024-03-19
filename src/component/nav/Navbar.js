@@ -167,7 +167,7 @@ function Navbar() {
                   </Link>
                 </NavLinkImageBox>
 
-                <NavLinkImageBox>
+                {/* <NavLinkImageBox>
                   <Link to={"/history"}>
                     <NavLinkImageSmallBox>
                       <img src={"history.png"} alt={"history.png"}></img>
@@ -179,7 +179,7 @@ function Navbar() {
                       ) : null}
                     </NavLinkImageSmallBox>
                   </Link>
-                </NavLinkImageBox>
+                </NavLinkImageBox> */}
               </React.Fragment>
             ) : (
               <React.Fragment>

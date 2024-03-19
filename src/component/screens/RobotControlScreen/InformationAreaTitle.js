@@ -85,9 +85,11 @@ function InformationAreaTitle({
       {informationAreaMode === "order" && robotStateMode !== "activate" ? (
         <Title>{orderSelectData.name}</Title>
       ) : null}
+
       {informationAreaMode === "multipleOrder" && !isDoing ? (
         <Title>{multipleOrderSelectData.name}</Title>
       ) : null}
+
       {informationAreaMode === "executeOrder" &&
       robotStateMode !== "activate" &&
       isDoing ? (
@@ -102,10 +104,11 @@ function InformationAreaTitle({
           </span>
         </Title>
       ) : null}
+
       {/* 手臂停機中階段 */}
       {/* informationAreaMode 的 autoSuccess 會直接用 success */}
       {/* robotStateMode 的 autoRetrieveReset 會直接用 reset */}
-      {["success", "reset", "autoSuccess", "autoRetrieveSuccess"].includes(
+      {/* {["success", "reset", "autoSuccess", "autoRetrieveSuccess"].includes(
         robotStateMode
       ) &&
       ["success", "reset", "autoRetrieveSuccess", "autoRetrieveReset"].includes(
@@ -116,9 +119,10 @@ function InformationAreaTitle({
         <OrderListTitleButton onClick={() => changeModeHandler("executeOrder")}>
           執行清單
         </OrderListTitleButton>
-      ) : null}
+      ) : null} */}
+
       {/* 手臂非執行中階段 */}
-      {![
+      {/* {![
         "activate",
         "success",
         "reset",
@@ -140,9 +144,10 @@ function InformationAreaTitle({
             ? "執行清單"
             : "返回"}
         </OrderListTitleButton>
-      ) : null}
+      ) : null} */}
+
       {/* 手臂執行中階段 */}
-      {["autoRetrieve"].includes(robotStateMode) &&
+      {/* {["autoRetrieve"].includes(robotStateMode) &&
       executeOrderId.length !== 0 &&
       isDoing ? (
         <OrderListTitleButton
@@ -156,7 +161,7 @@ function InformationAreaTitle({
         >
           {["autoRetrieve"].includes(informationAreaMode) ? "執行清單" : "返回"}
         </OrderListTitleButton>
-      ) : null}
+      ) : null} */}
     </InformationAreaTitleBox>
   );
 }

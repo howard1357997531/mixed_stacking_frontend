@@ -102,7 +102,7 @@ export const SixtyRadioWidthButton = styled(Box, {
   backgroundColor: customColor[0],
   "&:hover": {
     backgroundColor: customColor[1],
-    transition: "all 0.1s ease-in-out",
+    transition: "all 0.05s ease-in-out",
     transform: "scale(1.05)",
     cursor: "pointer",
     zIndex: 2,

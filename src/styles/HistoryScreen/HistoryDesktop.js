@@ -9,6 +9,9 @@ import {
 } from "@mui/material";
 import { Colors } from "../theme";
 import CancelIcon from "@mui/icons-material/Cancel";
+import FiberNewIcon from "@mui/icons-material/FiberNew";
+import FiberNewOutlinedIcon from "@mui/icons-material/FiberNewOutlined";
+import FiberNewTwoToneIcon from "@mui/icons-material/FiberNewTwoTone";
 
 export const HistoryContainer = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
@@ -116,7 +119,9 @@ export const HistoryListDate = styled(Typography, {
   },
 }));
 
-export const HistoryListDetial = styled(Box)(({ theme }) => ({
+export const HistoryListDetial = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "is_new",
+})(({ theme, is_new }) => ({
   boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
@@ -124,12 +129,14 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
   height: "55px",
   marginBottom: "7px",
   padding: "0px 10px",
+  paddingLeft: is_new && "6px",
   color: Colors.greyTextBlood,
-  fontWeight: 600,
   backgroundColor: Colors.lightOrangeHover,
+  border: is_new && `3px solid ${Colors.red800}`,
   boxShadow: "1px 1px rgba(0, 0, 0, 0.2)",
+  fontWeight: 600,
   "&:hover": {
-    boxShadow: `1.5px 1.5px ${Colors.blue500}`,
+    boxShadow: !is_new && `1.5px 1.5px ${Colors.blue500}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -140,17 +147,19 @@ export const HistoryListDetial = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     padding: "0px 8px",
+    paddingLeft: is_new && "5px",
     height: "50px",
     fontSize: "14px",
   },
 }));
 
-export const NewText = styled(Typography)(({ theme }) => ({
+export const NewText = styled(FiberNewTwoToneIcon)(({ theme }) => ({
   marginRight: "6px",
   color: Colors.red800,
+  fontSize: 34,
   [theme.breakpoints.down("md")]: {
-    marginRight: "5px",
-    fontSize: 12,
+    marginRight: "3px",
+    fontSize: 28,
   },
 }));
 
@@ -185,7 +194,7 @@ export const HistoryStateCount = styled(Typography)(({ theme }) => ({
 export const HistoryResetState = styled(Typography)(({ theme }) => ({
   boxSizing: "border-box",
   marginRight: "4px",
-  padding: "3px 6px",
+  padding: "2px 4px 1px",
   color: Colors.greyTextBlood,
   backgroundColor: Colors.softOrange,
   fontSize: 14,
@@ -193,7 +202,6 @@ export const HistoryResetState = styled(Typography)(({ theme }) => ({
   borderRadius: "2px",
   boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("sm")]: {
-    padding: "2px 4px",
     fontSize: 12,
   },
 }));
@@ -201,7 +209,7 @@ export const HistoryResetState = styled(Typography)(({ theme }) => ({
 export const HistoryInsertState = styled(Typography)(({ theme }) => ({
   boxSizing: "border-box",
   marginRight: "4px",
-  padding: "3px 6px",
+  padding: "2px 4px 1px",
   color: Colors.lightOrangeHover,
   backgroundColor: Colors.blue500,
   fontSize: 14,
@@ -209,7 +217,6 @@ export const HistoryInsertState = styled(Typography)(({ theme }) => ({
   borderRadius: "2px",
   boxShadow: "inset 0px 0px 2px rgba(0, 0, 0, 0.2)",
   [theme.breakpoints.down("sm")]: {
-    padding: "2px 4px",
     fontSize: 12,
   },
 }));
@@ -217,7 +224,7 @@ export const HistoryInsertState = styled(Typography)(({ theme }) => ({
 export const HistoryResetAllState = styled(Typography)(({ theme }) => ({
   boxSizing: "border-box",
   marginRight: "8px",
-  padding: "3px 6px",
+  padding: "2px 4px 1px",
   color: Colors.lightOrangeHover,
   backgroundColor: Colors.red800,
   fontSize: 14,
@@ -225,7 +232,6 @@ export const HistoryResetAllState = styled(Typography)(({ theme }) => ({
   borderRadius: "2px",
   [theme.breakpoints.down("sm")]: {
     marginRight: "4px",
-    padding: "2px 4px",
     fontSize: 12,
   },
 }));

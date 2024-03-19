@@ -86,7 +86,6 @@ function HistoryDesktop() {
       axios.get(`${domain}/api/history_record/`).then((res) => {
         setData(res.data);
         setLoading(false);
-        console.log("get");
       });
     } catch (error) {
       setLoading(false);
@@ -179,6 +178,7 @@ function HistoryDesktop() {
                     {groupedData[date].map((order) => (
                       <HistoryListDetial
                         key={order.id}
+                        is_new={order.is_new}
                         onClick={() => dialogOpenHandler(order)}
                       >
                         {order.is_new ? <NewText>New</NewText> : null}

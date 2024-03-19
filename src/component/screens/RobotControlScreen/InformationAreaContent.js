@@ -257,7 +257,7 @@ function InformationAreaContent({
             zIndex: 2,
           }}
         >
-          <NoSelectOrderText>啟動手臂中</NoSelectOrderText>
+          <NoSelectOrderText></NoSelectOrderText>
         </Box>
       ) : null}
 
@@ -305,7 +305,7 @@ function InformationAreaContent({
             zIndex: 2,
           }}
         >
-          <NoSelectOrderText>自動取回</NoSelectOrderText>
+          <NoSelectOrderText>自動取回中</NoSelectOrderText>
         </Box>
       ) : null}
 
