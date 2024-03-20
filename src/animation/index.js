@@ -1,6 +1,18 @@
 import { keyframes } from "@emotion/react";
 import { Colors } from "../styles/theme";
 
+export const uploadAnimation = keyframes`
+  0% { transform : translateY(-2px) }
+  50% { transform : translateY(2px) }
+  100% { transform : translateY(-2px) }
+`;
+
+export const dragAnimation = keyframes`
+  0% { transform : scale(1) }
+  50% { transform : scale(1.1) }
+  100% { transform : scale(1) }
+`;
+
 export const aiTrainingBtnAnimation = keyframes`
   0% { transform : scale(1) }
   50% { 

@@ -78,3 +78,12 @@
 /* .css-6hp17o-MuiList-root-MuiMenu-list {
     padding: 0px !important;
 } */
+
+.upload-dash-box::-webkit-scrollbar {
+    width: 5px
+}
+
+.upload-dash-box::-webkit-scrollbar-thumb {
+    background-color: #FFDDB0;
+    border-radius: 5px;
+}

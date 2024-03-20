@@ -423,9 +423,10 @@ export const OrderListName = styled(Box)(({ theme }) => ({
 }));
 
 export const NewText = styled(Typography)(({ theme }) => ({
-  marginRight: "5px",
+  marginRight: "7px",
   color: Colors.red800,
-  [theme.breakpoints.down("md")]: {
+  fontSize: 14,
+  [theme.breakpoints.down("sm")]: {
     fontSize: 14,
   },
 }));
@@ -433,7 +434,7 @@ export const NewText = styled(Typography)(({ theme }) => ({
 export const OrderListNameSelect = styled(Box, {
   shouldForwardProp: (prop) => prop !== "itemSelect",
 })(({ theme, itemSelect }) => ({
-  marginRight: "10px",
+  marginRight: "7px",
   width: "13px",
   height: "13px",
   backgroundColor: itemSelect && Colors.blue500,
