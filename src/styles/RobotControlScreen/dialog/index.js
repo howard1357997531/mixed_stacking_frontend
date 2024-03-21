@@ -201,7 +201,7 @@ export const StyleReportIcon = styled(ReportIcon)(({ theme }) => ({
   color: Colors.orangeDialog,
   fontSize: 22,
   "&:hover": {
-    animation: `${OrderListExeListCheckAnimation} 1s ease`,
+    animation: `${OrderListExeListCheckAnimation} 1.5s ease`,
   },
   [theme.breakpoints.down("md")]: {
     fontSize: 18,
@@ -508,7 +508,7 @@ export const OrderListExeListCheck = styled(CheckCircleIcon)(({ theme }) => ({
   right: "8px",
   fontSize: "24px",
   color: Colors.green,
-  animation: `${OrderListExeListCheckAnimation} 1s ease`,
+  animation: `${OrderListExeListCheckAnimation} 1.5s ease`,
   "@media screen and (orientation: portrait)": {
     right: "10px",
     top: "calc(50% - 13px)",

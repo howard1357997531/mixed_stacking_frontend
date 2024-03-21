@@ -23,7 +23,7 @@ import {
   StyleReportIcon,
   WaitToExecuteText,
 } from "../../../../styles/RobotControlScreen/dialog";
-import { Tooltip, Typography } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import TextEffect from "../../../../tool/TextEffect";
 import { Colors } from "../../../../styles/theme";
 import "./css/OrderListDialogExecutionList.css";

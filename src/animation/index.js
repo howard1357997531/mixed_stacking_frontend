@@ -57,8 +57,8 @@ export const OrderListExeListCheckAnimation = keyframes`
             transform: rotateY(0);
   }
   100% {
-    -webkit-transform: rotateY(-1080deg);
-            transform: rotateY(-1080deg);
+    -webkit-transform: rotateY(-1440deg);
+            transform: rotateY(-1440deg);
   }
 `;
 

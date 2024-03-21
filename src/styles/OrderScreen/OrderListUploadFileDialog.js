@@ -3,8 +3,12 @@ import { Colors } from "../theme";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
-import { dragAnimation, uploadAnimation } from "../../animation";
-import zIndex from "@mui/material/styles/zIndex";
+import {
+  OrderListExeListCheckAnimation,
+  dragAnimation,
+  uploadAnimation,
+} from "../../animation";
+import ReportIcon from "@mui/icons-material/Report";
 
 export const StyleDialogContent = styled(DialogContent, {
   shouldForwardProp: (prop) => prop !== "drag",
@@ -40,10 +44,10 @@ export const DashBox = styled(Box, {
   border: `2px ${data[2] ? "solid" : "dashed"} ${
     data[0] ? Colors.greenHover : Colors.lightOrange
   }`,
-  transition: "all .1s ease-in-out",
+  transition: "all .2s ease-in-out",
   overflowY: "auto",
   [theme.breakpoints.down("sm")]: {
-    width: "50%",
+    width: "60%",
     height: data[1] ? "35%" : "23%",
   },
 }));
@@ -58,6 +62,50 @@ export const DragNameBox = styled(Box, {
   padding: "4px 0px",
   color: data[0] ? Colors.greenHover : Colors.lightOrange,
   fontWeight: 600,
+}));
+
+export const DragIndexBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  display: "flex",
+  justifyContent: "right",
+  alignItems: "center",
+  width: "15%",
+  height: "100%",
+}));
+
+export const DragIndex = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  color: Colors.orange,
+  backgroundColor: data[0] ? Colors.greenHover : Colors.lightOrange,
+  fontSize: 14,
+  fontWeight: 600,
+  borderRadius: "50%",
+  [theme.breakpoints.down("sm")]: {
+    width: "14px",
+    height: "14px",
+  },
+}));
+
+export const DragName = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flex: 1,
+  color: data[0] ? Colors.greenHover : Colors.lightOrange,
+  fontSize: 16,
+  fontWeight: 600,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+  },
 }));
 
 export const UploadTextBox = styled(Box, {
@@ -130,14 +178,38 @@ export const StyleCloudUploadIcon = styled(FileUploadIcon, {
   },
 }));
 
-export const BottonBox = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== "mode",
-})(({ theme, mode }) => ({
-  position: "absolute",
-  bottom: "5%",
-  left: "50%",
-  transform: "translateX(-50%)",
-  color: mode ? Colors.greenHover : Colors.lightOrange,
+export const BottonBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "15%",
+  borderTop: `1px solid ${
+    data[1] ? Colors.red800 : data[0] ? Colors.greenHover : Colors.lightOrange
+  }`,
+}));
+
+export const StyleReportIcon = styled(ReportIcon)(({ theme }) => ({
+  color: Colors.red800,
+  fontSize: 24,
+  animation: `${OrderListExeListCheckAnimation} 1.5s ease`,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 18,
+  },
+}));
+
+export const FileFormat = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== "data",
+})(({ theme, data }) => ({
+  paddingTop: "3px",
+  color: data[1]
+    ? Colors.red800
+    : data[0]
+    ? Colors.greenHover
+    : Colors.lightOrange,
+  // backgroundColor: data[1] && Colors.red800,
+  fontSize: data[1] ? 18 : 16,
   fontWeight: 600,
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
