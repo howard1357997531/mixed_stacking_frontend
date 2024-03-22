@@ -326,7 +326,9 @@ function OrderListUploadFileDialog({ open, onCloseDialog }) {
             </UploadText>
 
             {hasDragItem ? (
-              <UploadBtn onClick={sendDragFileHandler}>上傳</UploadBtn>
+              <UploadBtn mode={modeCheck} onClick={sendDragFileHandler}>
+                上傳
+              </UploadBtn>
             ) : null}
           </UploadTextBox>
 

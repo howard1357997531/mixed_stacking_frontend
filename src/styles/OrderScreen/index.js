@@ -400,9 +400,9 @@ export const OrderListDetial = styled(Box, {
     : "1px 1px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     border: data[0] ? `2px solid ${data[2]}` : "none",
-    boxShadow: data[0]
-      ? `0.5px 0.5px ${data[2]}, -0.5px -0.5px ${data[2]}`
-      : `1.5px 1.5px ${data[2]}`,
+    // boxShadow: data[0]
+    //   ? `0.5px 0.5px ${data[2]}, -0.5px -0.5px ${data[2]}`
+    //   : `1.5px 1.5px ${data[2]}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",

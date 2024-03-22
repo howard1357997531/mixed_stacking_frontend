@@ -20,7 +20,7 @@ export const StyleDialogContent = styled(DialogContent, {
   width: "600px",
   height: "400px",
   padding: "0px !important",
-  backgroundColor: drag ? Colors.orange : Colors.swalBlack,
+  backgroundColor: drag ? Colors.purple400 : Colors.swalBlack,
   [theme.breakpoints.down("md")]: {
     width: "80vw",
     height: "55vh",
@@ -39,7 +39,7 @@ export const DashBox = styled(Box, {
   justifyContent: "center",
   alignItems: "center",
   padding: "4px 0px",
-  width: data[1] ? "35%" : "25%",
+  width: data[1] ? "40%" : "25%",
   height: data[1] ? "35%" : "25%",
   border: `2px ${data[2] ? "solid" : "dashed"} ${
     data[0] ? Colors.greenHover : Colors.lightOrange
@@ -70,8 +70,11 @@ export const DragIndexBox = styled(Box, {
   display: "flex",
   justifyContent: "right",
   alignItems: "center",
-  width: "15%",
+  width: "9%",
   height: "100%",
+  [theme.breakpoints.down("sm")]: {
+    width: "13%",
+  },
 }));
 
 export const DragIndex = styled(Box, {
@@ -82,27 +85,27 @@ export const DragIndex = styled(Box, {
   alignItems: "center",
   width: "16px",
   height: "16px",
-  color: Colors.orange,
+  color: Colors.purple400,
   backgroundColor: data[0] ? Colors.greenHover : Colors.lightOrange,
-  fontSize: 14,
+  fontSize: 12,
   fontWeight: 600,
   borderRadius: "50%",
   [theme.breakpoints.down("sm")]: {
-    width: "14px",
-    height: "14px",
+    fontSize: 12,
   },
 }));
 
 export const DragName = styled(Box, {
   shouldForwardProp: (prop) => prop !== "data",
 })(({ theme, data }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flex: 1,
+  boxSizing: "border-box",
+  padding: "0px 10px",
+  textAlign: "center",
+  width: "85%",
   color: data[0] ? Colors.greenHover : Colors.lightOrange,
   fontSize: 16,
   fontWeight: 600,
+  wordBreak: "break-all", // 可以使過長的單字直接換行
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
   },
@@ -138,8 +141,8 @@ export const UploadBtn = styled(Typography, {
 })(({ theme, mode }) => ({
   marginLeft: "5px",
   padding: "6px 9px",
-  color: Colors.orange,
-  backgroundColor: Colors.lightOrange,
+  color: Colors.purple400,
+  backgroundColor: mode ? Colors.greenHover : Colors.lightOrange,
   fontSize: 14,
   fontWeight: 600,
   borderRadius: "10px",
