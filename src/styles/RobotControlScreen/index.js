@@ -8,6 +8,7 @@ import {
   styled,
 } from "@mui/material";
 import { Colors } from "../theme";
+import { lightGreen } from "@mui/material/colors";
 
 export const RobotControlContainer = styled(Stack)(({ theme }) => ({
   position: "relative",
@@ -27,7 +28,6 @@ export const RobotControlContainer = styled(Stack)(({ theme }) => ({
   "@media screen and (orientation: portrait)": {
     flexDirection: "column",
     height: "initial",
-    marginTop: "30px",
   },
   [theme.breakpoints.down("sm")]: {
     marginTop: "calc(70px + 10px)",
@@ -113,6 +113,242 @@ export const SixtyRadioWidthButton = styled(Box, {
   [theme.breakpoints.down("sm")]: {
     width: "55%",
     padding: "25px 20px",
+  },
+}));
+
+export const SixtyRadioWidthButtonBox2 = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
+  boxSizing: "border-box",
+  position: "relative",
+  width: "60%",
+  padding: "10px 50px",
+  borderRadius: "20px",
+  backgroundColor: Colors.darkGreen,
+  "&:hover": {
+    backgroundColor: mode && Colors.darkGreenHover,
+    transition: mode && "all 0.1s ease-in-out",
+    transform: mode && "scale(1.05)",
+    cursor: "pointer",
+    zIndex: 2,
+  },
+  "&:active": {
+    transform: mode && "scale(0.95)",
+  },
+  [theme.breakpoints.down("lg")]: {
+    padding: "10px 40px",
+  },
+  [theme.breakpoints.down("md")]: {
+    padding: "10px 40px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "55%",
+    padding: "10px 25px",
+  },
+}));
+
+export const RobotSettingBox = styled(Box)(({ theme }) => ({
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  height: "100%",
+  padding: "0px 20px",
+  [theme.breakpoints.down("lg")]: {
+    padding: "0px 0px",
+  },
+}));
+
+export const RobotSettingPauseBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flex: 1,
+}));
+
+export const PauseBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "pause",
+})(({ theme, pause }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "50px",
+  backgroundColor: !pause ? Colors.darkred : Colors.grey,
+  borderRaduis: 5,
+  gap: 8,
+  [theme.breakpoints.down("md")]: {
+    height: "40px",
+  },
+  "@media screen and (orientation: portrait)": {
+    height: "35px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "35px",
+  },
+}));
+
+export const PauseImageSize = styled(Box)(({ theme }) => ({
+  width: "18px",
+  height: "18px",
+  [theme.breakpoints.down("md")]: {
+    width: "15px",
+    height: "15px",
+  },
+  "@media screen and (orientation: portrait)": {
+    width: "15px",
+    height: "15px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "15px",
+    height: "15px",
+  },
+}));
+
+export const PauseBoxText = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "pause",
+})(({ theme, pause }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItens: "center",
+  color: !pause ? "#fff" : Colors.greyTextBlood,
+  fontSize: "18px",
+  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "16px",
+  },
+  "@media screen and (orientation: portrait)": {
+    fontSize: "14px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "14px",
+  },
+}));
+
+export const RobotSettingSpeedBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  flex: 1,
+  gap: 2,
+}));
+
+export const SpeedTitle = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "flex-end",
+  color: Colors.greyTextBlood,
+  fontSize: "16px",
+  fontWeight: 600,
+  "@media screen and (orientation: portrait)": {
+    fontSize: "14px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "13px",
+  },
+}));
+
+export const SpeedBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "flex-start",
+  width: "100%",
+  gap: 2,
+}));
+
+export const SpeedImageBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "50px",
+  height: "50px",
+  [theme.breakpoints.down("md")]: {
+    width: "40px",
+    height: "40px",
+  },
+  "@media screen and (orientation: portrait)": {
+    width: "35px",
+    height: "35px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "35px",
+    height: "35px",
+  },
+}));
+
+export const SpeedImage = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "speedCheck",
+})(({ theme, speedCheck }) => ({
+  display: speedCheck ? "none" : "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "100%",
+  // border: `1px solid ${Colors.grey}`,
+  backgroundColor: Colors.grey,
+}));
+
+export const SpeedImageSize = styled(Box)(({ theme }) => ({
+  width: "25px",
+  height: "25px",
+  [theme.breakpoints.down("md")]: {
+    width: "20px",
+    height: "20px",
+  },
+  "@media screen and (orientation: portrait)": {
+    width: "15px",
+    height: "15px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "15px",
+    height: "15px",
+  },
+}));
+
+export const SpeedTextBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flex: 1,
+  height: "50px",
+  color: Colors.greyTextBlood,
+  backgroundColor: Colors.bgcolorLightorange,
+  fontSize: 24,
+  fontWeight: 600,
+  [theme.breakpoints.down("md")]: {
+    height: "40px",
+    fontSize: 20,
+  },
+  "@media screen and (orientation: portrait)": {
+    height: "35px",
+    fontSize: 18,
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "35px",
+    fontSize: 18,
+  },
+}));
+
+export const FortyRadioWidthButtonBox2 = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "mode",
+})(({ theme, mode }) => ({
+  position: "relative",
+  width: "40%",
+  borderRadius: "20px",
+  backgroundColor: mode ? Colors.grey : Colors.softOrange,
+  "&:hover": {
+    backgroundColor: mode && Colors.greyHover,
+    transition: mode && "all 0.1s ease-in-out",
+    transform: mode && "scale(1.05)",
+    cursor: "pointer",
+    zIndex: 2,
+  },
+  "&:active": {
+    transform: "scale(0.95)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "45%",
   },
 }));
 

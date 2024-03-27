@@ -5,10 +5,20 @@
     height: 70px !important;
 }
 
+.setting-image-box img {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 @media screen and (max-width: 900px) {
     .operation-interface img {
         width: 60px !important;
         height: 60px !important;
+    }
+
+    .setting-image-box img {
+        width: 100% !important;
+        height: 100% !important;
     }
 }
 
@@ -16,6 +26,11 @@
     .operation-interface img {
         width: 50px !important;
         height: 50px !important;
+    }
+
+    .setting-image-box img {
+        width: 100% !important;
+        height: 100% !important;
     }
 }
 
