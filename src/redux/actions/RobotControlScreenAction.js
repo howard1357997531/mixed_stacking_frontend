@@ -12,6 +12,7 @@ import { basicSwal, confirmSwal, timerSwal } from "../../swal";
 import { Colors } from "../../styles/theme";
 import { domain } from "../../env";
 import axios from "axios";
+import { parseExecutionData } from "../../tool/func";
 
 export const orderlistSelectAction = (selectOrderObject) => (dispatch) => {
   dispatch({
@@ -563,17 +564,22 @@ export const executeRobotFinishAction =
     try {
       const startTime = robotExecutionData.startTime;
       const executeOrderStr = robotExecutionData.executeOrderStr;
-      const resetIndex = [...robotExecutionData.resetIndex];
+      const resetIndexCopy = [...robotExecutionData.resetIndex];
       // 如果是第一單就全部中斷不會加入(為了如果一、二單是連一起不會拆散)
       if (executionListQueue !== null && executionListQueue !== 0) {
-        resetIndex.push(executionListQueue);
+        resetIndexCopy.push(executionListQueue);
       }
+      const [datas, insertIndex, resetIndex] = parseExecutionData(
+        executeOrderStr,
+        resetIndexCopy
+      );
       const resetAllIndex = executionListQueue;
       const { _ } = axios.post(`${domain}/api/executeRobotFinish/`, {
-        startTime,
-        executeOrderStr,
-        resetIndex,
+        datas,
+        insertIndex: insertIndex.join(),
+        resetIndex: resetIndex.join(),
         resetAllIndex,
+        startTime,
       });
     } catch (error) {}
     dispatch({

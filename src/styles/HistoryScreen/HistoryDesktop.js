@@ -132,11 +132,10 @@ export const HistoryListDetial = styled(Box, {
   paddingLeft: is_new && "6px",
   color: Colors.greyTextBlood,
   backgroundColor: Colors.lightOrangeHover,
-  border: is_new && `3px solid ${Colors.red800}`,
+  // border: is_new && `3px solid ${Colors.red800}`,
   boxShadow: "1px 1px rgba(0, 0, 0, 0.2)",
   fontWeight: 600,
   "&:hover": {
-    boxShadow: !is_new && `1.5px 1.5px ${Colors.blue500}`,
     cursor: "pointer",
     transform: "scale(1.01)",
     transition: "scale 0.2s ease-in-out",
@@ -153,13 +152,12 @@ export const HistoryListDetial = styled(Box, {
   },
 }));
 
-export const NewText = styled(FiberNewTwoToneIcon)(({ theme }) => ({
-  marginRight: "6px",
+export const NewText = styled(Typography)(({ theme }) => ({
+  marginRight: 6,
   color: Colors.red800,
-  fontSize: 34,
+  fontSize: 14,
   [theme.breakpoints.down("md")]: {
-    marginRight: "3px",
-    fontSize: 28,
+    fontSize: 12,
   },
 }));
 
